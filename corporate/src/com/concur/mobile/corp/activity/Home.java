@@ -106,7 +106,7 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.util.RequestStatus;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;
@@ -1100,6 +1100,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (forceExpirationHome) {
             forceExpirationHome = false;
+            cancelAllDataRequests();
+            clearSessionData();
+            showExpiredDialog();
         } else {
 
             String sessionId = PlatformProperties.getSessionId();
@@ -2273,7 +2276,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         ConcurMobile concurMobile = (ConcurMobile) getApplication();
         ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        if (carConfigList == null) {
+        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
             carConfigList = concurMobile.getService().getCarConfigs();
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

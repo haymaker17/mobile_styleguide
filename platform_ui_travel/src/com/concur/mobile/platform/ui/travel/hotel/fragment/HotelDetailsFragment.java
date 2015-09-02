@@ -19,11 +19,11 @@ import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
 import com.concur.mobile.platform.ui.travel.util.Const;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.*;
+import com.google.android.m4b.maps.GoogleMap;
+import com.google.android.m4b.maps.GoogleMapOptions;
+import com.google.android.m4b.maps.MapFragment;
+import com.google.android.m4b.maps.OnMapReadyCallback;
+import com.google.android.m4b.maps.model.*;
 
 /**
  * Fragment for Hotel Details tab

@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class Link {
 
-    @SerializedName("Links") private List<UserPermission> permissions;
+    @SerializedName("Links")
+    private List<UserPermission> permissions;
 
     public List<UserPermission> getPermissions() {
         return permissions;

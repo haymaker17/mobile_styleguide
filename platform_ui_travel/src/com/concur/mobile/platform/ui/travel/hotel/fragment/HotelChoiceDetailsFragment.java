@@ -52,6 +52,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
     private Bitmap bitmap;
     private boolean progressbarVisible;
     private View progressBar;
+    private ScrollView scrollView;
 
     // empty constructor
     public HotelChoiceDetailsFragment() {
@@ -94,6 +95,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
         final Bundle bundle = i.getExtras();
         // hotel = new HotelSearchResultListItem();
         hotelListItem = (HotelSearchResultListItem) bundle.getSerializable(Const.EXTRA_HOTELS_DETAILS);
+        scrollView = (ScrollView) mRoot.findViewById(R.id.list_scrollView);
 
         // adding parallax view for the image header
         mListView = (ParallaxScollView) mRoot.findViewById(R.id.layout_listview);

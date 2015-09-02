@@ -652,6 +652,14 @@
     <!-- Travel Request -->
     <string name="tr_start_date">Start Date</string>
     <string name="tr_end_date">End Date</string>
+    <string name="tr_start_location">Starting Location</string>
+    <string name="tr_request_amount">Request Amount</string>
+    <string name="tr_end_location">Destination</string>
+    <string name="tr_business_purpose">Business Purpose</string>
+    <string name="tr_submit_request">Submit Request</string>
+    <string name="tr_comment">Comment</string>
+    <string name="tr_required">Required</string>
+    <string name="tr_optional">Optional</string>
     <string name="tr_name">Request Name</string>
     <string name="tr_employee_name">Employee Name</string>
     <string name="tr_header">Request Header</string>
@@ -659,6 +667,7 @@
     <string name="tr_new_request">No Requests</string>
     <string name="tr_new_request_desc">When you add a request, you will see it here</string>
     <string name="tr_new_request_desc_no_create">You can add requests using your Web Concur account</string>
+    <string name="tr_name_parameterized_value">Trip to %%0%%</string>
     <string name="tr_list_header_active">ACTIVE REQUESTS</string>
     <string name="tr_list_header_approved">APPROVED REQUESTS</string>
     <string name="tr_error_recall">An error occured on your request Recall. Please try again on the website for further informations.</string>
@@ -678,6 +687,7 @@
     <string name="tr_segment_block_dropoff">Drop-Off</string>
     <string name="tr_segment_block_checkin">Check-In</string>
     <string name="tr_segment_block_checkout">Check-Out</string>
+    <string name="tr_server_error">A system error occurred. Please try again or contact your administrator.</string>
     <string name="travel_segments">Segments</string>
     <string name="travel_segment_title">Segment</string>
     <string name="travel_request_expected_expenses">Expected Expenses</string>
@@ -1771,117 +1781,117 @@
     <string name="dlg_no_current_location">Current location could not be determined. Please select desired location.</string>
     <string name="hotel_search_near_me">Hotels near me</string>
     <string name="hotel_search_near_me_sub_text">Find a hotel for tonight</string>
-    <string name="custom_fields_not_found">Could not retrieve custom fields.</string>
+    <string name="custom_fields_not_found">Could not retrieve custom fields."</string>
     <!-- end of book hotel for now -->
 
 
     <!-- start of trip rule violaions -->
-<string name="trip_rule_violation_summary">Violation Summary</string>
-<string name="trip_rule_violation_itinerary">Itinerary Rule Violation</string>
-<string name="trip_rule_violation_flight">Flight Rule Violation</string>
-<string name="trip_rule_violation_car">Car Rule Violation</string>
-<string name="trip_rule_violation_hotel">Hotel Rule Violation</string>
-<string name="trip_rule_violation_rail">Rail Rule Violation</string>
-<string name="trip_rule_violation_flight_fare">Airfare quoted total:</string>
-<string name="trip_rule_violation_car_rate">Daily Rate</string>
-<string name="trip_rule_violation_rail_rate">Rate</string>
-<string name="trip_rule_violation_hotel_rate">Rate</string>
-<string name="trip_rule_violation_reason_code">Violation Reason Code:</string>
-<string name="trip_rule_violation_booker_comments">Booker Comments</string>
+    <string name="trip_rule_violation_summary">Violation Summary</string>
+    <string name="trip_rule_violation_itinerary">Itinerary Rule Violation</string>
+    <string name="trip_rule_violation_flight">Flight Rule Violation</string>
+    <string name="trip_rule_violation_car">Car Rule Violation</string>
+    <string name="trip_rule_violation_hotel">Hotel Rule Violation</string>
+    <string name="trip_rule_violation_rail">Rail Rule Violation</string>
+    <string name="trip_rule_violation_flight_fare">Airfare quoted total:</string>
+    <string name="trip_rule_violation_car_rate">Daily Rate</string>
+    <string name="trip_rule_violation_rail_rate">Rate</string>
+    <string name="trip_rule_violation_hotel_rate">Rate</string>
+    <string name="trip_rule_violation_reason_code">Violation Reason Code:</string>
+    <string name="trip_rule_violation_booker_comments">Booker Comments</string>
     <!-- end of trip rule violaions -->
 
 
     <!-- start of Hotel deposit -->
-<string name="hotel_booking_deposit_required">Deposit Required</string>
-<string name="dlg_travel_hotel_deposit_confirm_message">Are you sure you want to reserve this room?\nI understand that my credit card will be charged immediately and no cancellation will be possible later in the booking process. All or portions of the deposit will be forfeited upon cancellation.</string>
+    <string name="hotel_booking_deposit_required">Deposit Required</string>
+    <string name="dlg_travel_hotel_deposit_confirm_message">Are you sure you want to reserve this room?\nI understand that my credit card will be charged immediately and no cancellation will be possible later in the booking process. All or portions of the deposit will be forfeited upon cancellation.</string>
     <!-- end of Hotel deposit -->
 
 
     <!-- start of Pre-sell options -->
-<string name="retrieve_pre_sell_options_failed_message">An error has occurred retrieving sell information fields. Reservation cannot be done at this time. Please try later.</string>
-<string name="rail_detail_select_ticket_delivery">Select Ticket Delivery</string>
-<string name="travel_flight_options">Flight Options</string>
-<string name="dlg_book_missing_field_cvv_number">Please provide CVV Number.</string>
+    <string name="retrieve_pre_sell_options_failed_message">An error has occurred retrieving sell information fields. Reservation cannot be done at this time. Please try later.</string>
+    <string name="rail_detail_select_ticket_delivery">Select Ticket Delivery</string>
+    <string name="travel_flight_options">Flight Options</string>
+    <string name="dlg_book_missing_field_cvv_number">Please provide CVV Number.</string>
     <!-- end of Pre-sell options -->
 
 
     <!-- Start of TaxForms -->
-<string name="retrieve_taxForm">Retrieving Tax Form...</string>
-<string name="retrieve_taxForm_failure">Retrieving Tax Form Fails</string>
+    <string name="retrieve_taxForm">Retrieving Tax Form...</string>
+    <string name="retrieve_taxForm_failure">Retrieving Tax Form Fails</string>
     <!-- End of TaxForms -->
 
 
     <!-- Start of Conditional Actions -->
-<string name="retrieve_conditional_field_action">Retrieving conditional fields...</string>
-<string name="retrieve_conditional_field_action_failure_title">Conditional Fields</string>
-<string name="retrieve_conditional_field_action_failure">Failed to retrieve conditional fields values. Please try again.</string>
+    <string name="retrieve_conditional_field_action">Retrieving conditional fields...</string>
+    <string name="retrieve_conditional_field_action_failure_title">Conditional Fields</string>
+    <string name="retrieve_conditional_field_action_failure">Failed to retrieve conditional fields values. Please try again.</string>
     <!-- End of Conditional Actions -->
 
-<string name="empty_string"></string>
+    <string name="empty_string"></string>
 
     <!-- start of Travel Points -->
-<string name="trip_total_travel_points">Total Travel Points: %%0!total travel points in a trip%%</string>
-<string name="segment_travel_points_pending">Travel Points (Booked)</string>
-<string name="segment_travel_points_posted">Travel Points (Awarded)</string>
-<string name="segment_travel_points_price_to_beat">Price-to-Beat</string>
-<string name="trip_benchmark_price">Benchmark: %%0!price to beat%%</string>
-<string name="search_for_price_to_beat_progress">Retrieving the Price-to-Beat</string>
-<string name="general_search_for_price_to_beat_failed">Sorry, we did not find a Price-to-Beat. Try searching again.</string>
-<string name="general_search_for_price_to_beat_failed_title">Price-to-Beat Search Failed</string>
-<string name="general_price_to_beat_price_unavailable">Unavailable</string>
-<string name="air_price_to_beat_search_departure">Departure:</string>
-<string name="air_price_to_beat_search_arrival">Arrival:</string>
-<string name="air_price_to_beat_search_departure_date">Departure Date:</string>
-<string name="air_price_to_beat_round_trip">Air Price-to-Beat (Round Trip)</string>
-<string name="air_price_to_beat_search_header">Be a smarter travel buyer! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
-<string name="air_price_to_beat_search_header_tp_enabled">Earn Travel Points when you save money! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
-<string name="air_price_to_beat_search_results_header">Booking a flight that costs less than the Price-to-Beat saves your company money!</string>
-<string name="air_price_to_beat_search_results_header_tp_enabled">Booking a flight that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
-<string name="hotel_price_to_beat_search_results_header">Booking a room that costs less than the Price-to-Beat saves your company money!</string>
-<string name="hotel_price_to_beat_search_results_header_tp_enabled">Booking a room that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
-<string name="hotel_price_to_beat_search_header">Be a smarter travel buyer! Enter your hotel search details below to find the Price-to-Beat when booking your room.</string>
-<string name="hotel_price_to_beat_search_header_tp_enabled">Earn Travel Points when you save money! Enter your hotel search details below to find the Price-to-Beat when booking your room.</string>
-<string name="hotel_price_to_beat_search_month_of_stay">Month of stay</string>
-<string name="hotel_price_per_night">per night</string>
-<string name="hotel_price_to_beat_distance_mile_plural">%%0!number of miles%% Miles</string>
-<string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% Mile</string>
-<string name="hotel_price_to_beat_distance_km_singular">%%0!number of kilometres%% Kilometer</string>
-<string name="hotel_price_to_beat_distance_km_plural">%%0!number of kilometres%% Kilometers</string>
-<string name="travel_points_earn_points">Earn %%0!number of points can be earned%% pts.</string>
-<string name="travel_points_use_points">Use %%0!number of points can be used%% pts.</string>
-<string name="travel_points_title">Travel Points</string>
-<string name="travel_points_value">+%%0pts</string>
-<string name="travel_points_p2b_explanation_desc_with_tp">Earn Travel Points when you select options that cost less than the Price-to-Beat. When a trip is expensed, the earned Travel Points are reflected in the total that you can use toward future benefits.</string>
-<string name="travel_points_p2b_explanation_desc">Be a smarter travel buyer! Booking under the Price-to-Beat saves your company money.</string>
-<string name="travel_points_air_booking_workflow_p2b_header">Price-to-Beat: %%0!price to beat%%</string>
-<string name="travel_points_air_booking_workflow_points_header">Travel Points Bank: %%0!total travel points%% points</string>
-<string name="travel_points_hotel_booking_workflow_points_header">You have %%0!total travel points%% Travel Points in your bank.</string>
-<string name="travel_violations_approval_choice_label">How would you like to book?</string>
-<string name="travel_points_violations_header">Violations</string>
-<string name="travel_points_violations_desc_header">Points or Approval</string>
-<string name="travel_points_using_points_explanation_title">Using Points</string>
-<string name="travel_points_using_points_explanation_for_air">You can earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat. You can use Travel Points from your bank to bypass your company\'s typical notification or approval processes for booking out-of-policy options.\n\nThis air reservation requires you to use Travel Points or submit to your company\'a typical notification or approval processes because it is not in compliance with your company\'s travel rules.\n\nAfter you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
-<string name="travel_points_using_points_explanation_for_hotel">You can earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat. You can use Travel Points from your bank to bypass your company\'s typical notification or approval processes for booking out-of-policy options.\n\nThis hotel reservation requires you to use Travel Points or submit to your company\'a typical notification or approval processes because it is not in compliance with your company\'s travel rules.\n\nAfter you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
-<string name="travel_points_continue">Continue</string>
-<string name="travel_points_violations_desc_content">You have policy violations that must be addressed. You may use Travel Points or follow your company\'s normal policy violation workflow.</string>
-<string name="travel_violations_air_for_manager_approval_header">Before reserving this flight in violation of company policy, you must provide a reason.</string>
-<string name="travel_violations_hotel_for_manager_approval_header">Before booking this room in violation of company policy, you must provide a reason.</string>
-<string name="travel_points_use_for_booking">Use %%0!number of points can be used for this booking%% Travel Points</string>
-<string name="travel_points_manager_approval_for_booking">Manager approval</string>
-<string name="travel_points_being_used_for_booking">You are using %%0!number of points being used for this booking%% Travel Points</string>
-<string name="travel_points_address_violations_label">Please address policy violations *</string>
-<string name="travel_points_manage_violations_label">Manage Violations</string>
-<string name="travel_points_p2b_explanation_desc_in_summary_with_tp">The Price-to-Beat range is between %%0!minimum value of price to beat%%-%%1!maximum value of price to beat%%. Selecting options that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
-<string name="travel_points_p2b_explanation_desc_in_summary_with_tp_no_price_range">The Price-to-Beat is %%0!price to beat%%. Selecting options that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
-<string name="travel_points_p2b_explanation_desc_in_summary">The Price-to-Beat range is between %%0!minimum value of price to beat%%-%%1!maximum value of price to beat%%. Booking under the Price-to-Beat saves your company money.</string>
-<string name="travel_points_p2b_explanation_desc_in_summary_no_price_range">The Price-to-Beat is %%0!price to beat%%. Booking under the Price-to-Beat saves your company money.</string>
+    <string name="trip_total_travel_points">Total Travel Points: %%0!total travel points in a trip%%</string>
+    <string name="segment_travel_points_pending">Travel Points (Booked)</string>
+    <string name="segment_travel_points_posted">Travel Points (Awarded)</string>
+    <string name="segment_travel_points_price_to_beat">Price-to-Beat</string>
+    <string name="trip_benchmark_price">Benchmark: %%0!price to beat%%</string>
+    <string name="search_for_price_to_beat_progress">Retrieving the Price-to-Beat</string>
+    <string name="general_search_for_price_to_beat_failed">Sorry, we did not find a Price-to-Beat. Try searching again.</string>
+    <string name="general_search_for_price_to_beat_failed_title">Price-to-Beat Search Failed</string>
+    <string name="general_price_to_beat_price_unavailable">Unavailable</string>
+    <string name="air_price_to_beat_search_departure">Departure:</string>
+    <string name="air_price_to_beat_search_arrival">Arrival:</string>
+    <string name="air_price_to_beat_search_departure_date">Departure Date:</string>
+    <string name="air_price_to_beat_round_trip">Air Price-to-Beat (Round Trip)</string>
+    <string name="air_price_to_beat_search_header">Be a smarter travel buyer! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
+    <string name="air_price_to_beat_search_header_tp_enabled">Earn Travel Points when you save money! Enter your air search details below to find the Price-to-Beat when booking your flight.</string>
+    <string name="air_price_to_beat_search_results_header">Booking a flight that costs less than the Price-to-Beat saves your company money!</string>
+    <string name="air_price_to_beat_search_results_header_tp_enabled">Booking a flight that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
+    <string name="hotel_price_to_beat_search_results_header">Booking a room that costs less than the Price-to-Beat saves your company money!</string>
+    <string name="hotel_price_to_beat_search_results_header_tp_enabled">Booking a room that costs less than the Price-to-Beat earns you Travel Points that you can use later!</string>
+    <string name="hotel_price_to_beat_search_header">Be a smarter travel buyer! Enter your hotel search details below to find the Price-to-Beat when booking your room.</string>
+    <string name="hotel_price_to_beat_search_header_tp_enabled">Earn Travel Points when you save money! Enter your hotel search details below to find the Price-to-Beat when booking your room.</string>
+    <string name="hotel_price_to_beat_search_month_of_stay">Month of stay</string>
+    <string name="hotel_price_per_night">per night</string>
+    <string name="hotel_price_to_beat_distance_mile_plural">%%0!number of miles%% Miles</string>
+    <string name="hotel_price_to_beat_distance_mile_singular">%%0! one %% Mile</string>
+    <string name="hotel_price_to_beat_distance_km_singular">%%0!number of kilometres%% Kilometer</string>
+    <string name="hotel_price_to_beat_distance_km_plural">%%0!number of kilometres%% Kilometers</string>
+    <string name="travel_points_earn_points">Earn %%0!number of points can be earned%% pts.</string>
+    <string name="travel_points_use_points">Use %%0!number of points can be used%% pts.</string>
+    <string name="travel_points_title">Travel Points</string>
+    <string name="travel_points_value">+%%0pts</string>
+    <string name="travel_points_p2b_explanation_desc_with_tp">Earn Travel Points when you select options that cost less than the Price-to-Beat. When a trip is expensed, the earned Travel Points are reflected in the total that you can use toward future benefits.</string>
+    <string name="travel_points_p2b_explanation_desc">Be a smarter travel buyer! Booking under the Price-to-Beat saves your company money.</string>
+    <string name="travel_points_air_booking_workflow_p2b_header">Price-to-Beat: %%0!price to beat%%</string>
+    <string name="travel_points_air_booking_workflow_points_header">Travel Points Bank: %%0!total travel points%% points</string>
+    <string name="travel_points_hotel_booking_workflow_points_header">You have %%0!total travel points%% Travel Points in your bank.</string>
+    <string name="travel_violations_approval_choice_label">How would you like to book?</string>
+    <string name="travel_points_violations_header">Violations</string>
+    <string name="travel_points_violations_desc_header">Points or Approval</string>
+    <string name="travel_points_using_points_explanation_title">Using Points</string>
+    <string name="travel_points_using_points_explanation_for_air">You can earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat. You can use Travel Points from your bank to bypass your company\'s typical notification or approval processes for booking out-of-policy options.\n\nThis air reservation requires you to use Travel Points or submit to your company\'a typical notification or approval processes because it is not in compliance with your company\'s travel rules.\n\nAfter you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
+    <string name="travel_points_using_points_explanation_for_hotel">You can earn Travel Points by selecting airfare or hotel accommodations that cost less than the Price-to-Beat. You can use Travel Points from your bank to bypass your company\'s typical notification or approval processes for booking out-of-policy options.\n\nThis hotel reservation requires you to use Travel Points or submit to your company\'a typical notification or approval processes because it is not in compliance with your company\'s travel rules.\n\nAfter you expense your trip, any Travel Points you earn or use will be reflected in your bank.</string>
+    <string name="travel_points_continue">Continue</string>
+    <string name="travel_points_violations_desc_content">You have policy violations that must be addressed. You may use Travel Points or follow your company\'s normal policy violation workflow.</string>
+    <string name="travel_violations_air_for_manager_approval_header">Before reserving this flight in violation of company policy, you must provide a reason.</string>
+    <string name="travel_violations_hotel_for_manager_approval_header">Before booking this room in violation of company policy, you must provide a reason.</string>
+    <string name="travel_points_use_for_booking">Use %%0!number of points can be used for this booking%% Travel Points</string>
+    <string name="travel_points_manager_approval_for_booking">Manager approval</string>
+    <string name="travel_points_being_used_for_booking">You are using %%0!number of points being used for this booking%% Travel Points</string>
+    <string name="travel_points_address_violations_label">Please address policy violations *</string>
+    <string name="travel_points_manage_violations_label">Manage Violations</string>
+    <string name="travel_points_p2b_explanation_desc_in_summary_with_tp">The Price-to-Beat range is between %%0!minimum value of price to beat%%-%%1!maximum value of price to beat%%. Selecting options that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+    <string name="travel_points_p2b_explanation_desc_in_summary_with_tp_no_price_range">The Price-to-Beat is %%0!price to beat%%. Selecting options that cost less than the Price-to-Beat earns you Travel Points that can be used toward future benefits.</string>
+    <string name="travel_points_p2b_explanation_desc_in_summary">The Price-to-Beat range is between %%0!minimum value of price to beat%%-%%1!maximum value of price to beat%%. Booking under the Price-to-Beat saves your company money.</string>
+    <string name="travel_points_p2b_explanation_desc_in_summary_no_price_range">The Price-to-Beat is %%0!price to beat%%. Booking under the Price-to-Beat saves your company money.</string>
 
     <!-- end of Travel Points -->
 
 
     <!-- start of hotel streaming -->
-<string name="hotel_search_for_rates_progress">Searching for rates</string>
-<string name="hotel_search_for_rates_failed">Could not retrieve rates, please do the search again</string>
+    <string name="hotel_search_for_rates_progress">Searching for rates</string>
+    <string name="hotel_search_for_rates_failed">Could not retrieve rates, please do the search again</string>
     <!-- end of hotel streaming -->
 
 
@@ -1889,178 +1899,179 @@
 
 
     <!-- Start of test drive -->
-<string name="next">Next ></string>
-<string name="universal_tour_welcome_text_concur_mobile">&lt;big>Concur Mobile&lt;/big></string>
-<string name="universal_tour_welcome_text">makes it easy to plan your business trips, capture expenses, and get reimbursed.</string>
-<string name="universal_tour_travel">Book your business trip</string>
-<string name="universal_tour_travel_more">on the go.</string>
-<string name="universal_tour_receipt">Snap a picture</string>
-<string name="universal_tour_receipt_more">of your expense receipt.</string>
-<string name="universal_tour_expense">Submit your expenses</string>
-<string name="universal_tour_expense_more">and get reimbursed.</string>
-<string name="universal_tour_feature_text">Features depend on your company configuration.</string>
-<string name="test_drive_registration">Test Drive</string>
-<string name="test_drive_help">Learn more about Concur</string>
-<string name="test_drive">&lt;big>Test Drive&lt;/big></string>
-<string name="test_drive_limited_text">has limited Concur Mobile functionality</string>
-<string name="test_drive_text">and you will receive educational information and news about Concur products and services.&lt;br/>&lt;br/>Test Drive Concur now, and see to how simple expense can be.</string>
-<string name="test_drive_welcome_text">Test Drive is a great way to learn more about Concur and how it can help you manage your expense reporting.</string>
-<string name="test_drive_username_hint">Enter Email Address</string>
-<string name="test_drive_password_hint">Create Password</string>
-<string name="test_drive_submit">Submit Registration</string>
-<string name="test_drive_terms_and_condition">Registering accepts our</string>
-<string name="test_drive_and">and</string>
-<string name="test_drive_terms">Terms of Use</string>
-<string name="test_drive_policy">Privacy Policy</string>
-<string name="test_drive_email_error">Please enter valid email address.</string>
-<string name="test_drive_password_error">Please enter valid password.</string>
-<string name="test_drive_email_error_title">Invalid Email</string>
-<string name="test_drive_password_error_title">Invalid Password</string>
-<string name="test_drive_sign_in">Sign In</string>
-<string name="test_drive_retry">Retry</string>
-<string name="sign_in_help">Help with Sign In</string>
-<string name="test_drive_reg_error_title">Account Already Exists</string>
-<string name="test_drive_reg_error_message">To access your Concur account, select Sign In</string>
-<string name="test_drive_password_too_short_title">Password Too Short</string>
-<string name="test_drive_title">Test Drive</string>
-<string name="test_drive_welcome_title">Welcome</string>
-<string name="test_drive_tour_welcome_pg1_title">Welcome to Test Drive</string>
-<string name="test_drive_tour_welcome_pg1_subtitle">With Concur you can:</string>
-<string name="test_drive_tour_welcome_pg1_text1">Cut expense reports from hours down to minutes.</string>
-<string name="test_drive_tour_welcome_pg1_text2">Get crystal-clear visibility into your expenses.</string>
-<string name="test_drive_tour_welcome_pg1_text3">Increase productivity and overall morale.</string>
-<string name="test_drive_tour_welcome_pg2_title">Getting started</string>
-<string name="test_drive_tour_welcome_pg2_subtitle">Let\'s get started. We have pre-loaded sample expense reports, card charges and receipts as well as guided overlays to help you on your way.</string>
-<string name="test_drive_tour_welcome_pg2_launch">Launch Test Drive!</string>
-<string name="test_drive_tour_skip">Skip</string>
-<string name="test_drive_expiration_title">Test Drive Expired</string>
-<string name="test_drive_expiration_message">Your Test Drive account has expired. If you would like to learn more about Concur, please contact us at\n</string>
-<string name="test_drive_expiration_close">Close</string>
+    <string name="next">Next ></string>
+    <string name="universal_tour_welcome_text_concur_mobile">&lt;big>Concur Mobile&lt;/big></string>
+    <string name="universal_tour_welcome_text">makes it easy to plan your business trips, capture expenses, and get reimbursed.</string>
+    <string name="universal_tour_travel">Book your business trip</string>
+    <string name="universal_tour_travel_more">on the go.</string>
+    <string name="universal_tour_receipt">Snap a picture</string>
+    <string name="universal_tour_receipt_more">of your expense receipt.</string>
+    <string name="universal_tour_expense">Submit your expenses</string>
+    <string name="universal_tour_expense_more">and get reimbursed.</string>
+    <string name="universal_tour_feature_text">Features depend on your company configuration.</string>
+    <string name="test_drive_registration">Test Drive</string>
+    <string name="test_drive_help">Learn more about Concur</string>
+    <string name="test_drive">&lt;big>Test Drive&lt;/big></string>
+    <string name="test_drive_limited_text">has limited Concur Mobile functionality</string>
+    <string name="test_drive_text">and you will receive educational information and news about Concur products and services.&lt;br/>&lt;br/>Test Drive Concur now, and see to how simple expense can be.</string>
+    <string name="test_drive_welcome_text">Test Drive is a great way to learn more about Concur and how it can help you manage your expense reporting.</string>
+    <string name="test_drive_username_hint">Enter Email Address</string>
+    <string name="test_drive_password_hint">Create Password</string>
+    <string name="test_drive_submit">Submit Registration</string>
+    <string name="test_drive_terms_and_condition">Registering accepts our</string>
+    <string name="test_drive_and">and</string>
+    <string name="test_drive_terms">Terms of Use</string>
+    <string name="test_drive_policy">Privacy Policy</string>
+    <string name="test_drive_email_error">Please enter valid email address.</string>
+    <string name="test_drive_password_error">Please enter valid password.</string>
+    <string name="test_drive_email_error_title">Invalid Email</string>
+    <string name="test_drive_password_error_title">Invalid Password</string>
+    <string name="test_drive_sign_in">Sign In</string>
+    <string name="test_drive_retry">Retry</string>
+    <string name="sign_in_help">Help with Sign In</string>
+    <string name="test_drive_reg_error_title">Account Already Exists</string>
+    <string name="test_drive_reg_error_message">To access your Concur account, select Sign In</string>
+    <string name="test_drive_password_too_short_title">Password Too Short</string>
+    <string name="test_drive_title">Test Drive</string>
+    <string name="test_drive_welcome_title">Welcome</string>
+    <string name="test_drive_tour_welcome_pg1_title">Welcome to Test Drive</string>
+    <string name="test_drive_tour_welcome_pg1_subtitle">With Concur you can:</string>
+    <string name="test_drive_tour_welcome_pg1_text1">Cut expense reports from hours down to minutes.</string>
+    <string name="test_drive_tour_welcome_pg1_text2">Get crystal-clear visibility into your expenses.</string>
+    <string name="test_drive_tour_welcome_pg1_text3">Increase productivity and overall morale.</string>
+    <string name="test_drive_tour_welcome_pg2_title">Getting started</string>
+    <string name="test_drive_tour_welcome_pg2_subtitle">Let\'s get started. We have pre-loaded sample expense reports, card charges and receipts as well as guided overlays to help you on your way.</string>
+    <string name="test_drive_tour_welcome_pg2_launch">Launch Test Drive!</string>
+    <string name="test_drive_tour_skip">Skip</string>
+    <string name="test_drive_expiration_title">Test Drive Expired</string>
+    <string name="test_drive_expiration_message">Your Test Drive account has expired. If you would like to learn more about Concur, please contact us at\n</string>
+    <string name="test_drive_expiration_close">Close</string>
     <!-- End Test Drive -->
 
 
     <!-- Start Home Tour -->
-<string name="home_tour_expense1_title">Take photos of your receipts.</string>
-<string name="home_tour_expense2_title">Add expenses to your report.</string>
-<string name="home_tour_travel1_title">Book travel from anywhere.</string>
-<string name="home_tour_expense1_message">No need to save all that paper.</string>
-<string name="home_tour_expense2_message">Then submit and get reimbursed. \nManagers can approve from anywhere.</string>
-<string name="home_tour_travel1_message">And view upcoming itineraries.</string>
-<string name="home_tour_welcome_to_concur">Welcome to Concur</string>
+    <string name="home_tour_expense1_title">Take photos of your receipts.</string>
+    <string name="home_tour_expense2_title">Add expenses to your report.</string>
+    <string name="home_tour_travel1_title">Book travel from anywhere.</string>
+    <string name="home_tour_expense1_message">No need to save all that paper.</string>
+    <string name="home_tour_expense2_message">Then submit and get reimbursed. \nManagers can approve from anywhere.</string>
+    <string name="home_tour_travel1_message">And view upcoming itineraries.</string>
+    <string name="home_tour_welcome_to_concur">Welcome to Concur</string>
     <!-- End Home Tour -->
 
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Crash fixes</item>
+        <item>\u2022 Fix for Expense Report Approval notifications</item>
+        <item>\u2022 Crash Fix for some OS 5 users during start up</item>
     </string-array>
     <!-- End What's new -->
 
 
     <!-- Password Create and Reset -->
-<string name="password_reset_link_sent_title">Password Reset Link Sent</string>
-<string name="password_reset_link_sent_message">Open the email from this device to reset your password and sign in.</string>
-<string name="password_hint">New Password</string>
-<string name="password_hint_confirm">Confirm New Password</string>
-<string name="password_reset_password_button">Reset Password</string>
-<string name="password_successfully_reset">Password Successfully Reset</string>
-<string name="password_dont_match_title">Passwords Don\'t Match</string>
-<string name="password_dont_match_message">There must have been a typo. Please re-enter the password so it matches exactly in both fields.</string>
-<string name="password_requirement_text">Password can contain letters, numbers and special characters, but no spaces.</string>
-<string name="password_continue">Continue</string>
-<string name="password_invalid_device_title">Invalid Device</string>
-<string name="password_invalid_device_message">The Password reset was requested from another device. Please use the same device from which you requested Password reset.</string>
-<string name="password_expired_title">Email Link Expired</string>
-<string name="password_expired_message">Please try again and use link within 24 hours of receipt.</string>
-<string name="password_mobile_disabled_title">Mobile Disabled</string>
-<string name="password_mobile_disabled_message">Your company has disabled Concur for mobile. Please contact your administrator.</string>
-<string name="password_short_title">Invalid Length</string>
-<string name="password_short_message">Your Password must be at least %%0!length%% characters.</string>
-<string name="password_invalid_title">Invalid Password</string>
-<string name="password_blank">The Password cannot be blank.</string>
-<string name="mobile_password_reset_link_sent_title">Mobile Password (PIN) Reset Link Sent</string>
-<string name="mobile_password_reset_link_sent_message">Open the email from this device to reset your mobile password (PIN) and sign in.</string>
-<string name="mobile_password_hint">New Mobile Password (PIN)</string>
-<string name="mobile_password_hint_confirm">Confirm New Mobile Password (PIN)</string>
-<string name="mobile_password_reset_password_button">Reset Mobile Password (PIN)</string>
-<string name="mobile_password_successfully_reset">Mobile Password (PIN) Successfully Reset</string>
-<string name="mobile_password_only_for_mobile_reminder">The mobile password (PIN) is only used for the Concur Mobile app.</string>
-<string name="mobile_password_invalid_title">Invalid Mobile Password (PIN)</string>
-<string name="mobile_password_invalid_message">Mobile Password (PIN) may be letters, numbers, and special characters but no spaces.</string>
-<string name="mobile_password_blank">The Mobile Password (PIN) cannot be blank.</string>
+    <string name="password_reset_link_sent_title">Password Reset Link Sent</string>
+    <string name="password_reset_link_sent_message">Open the email from this device to reset your password and sign in.</string>
+    <string name="password_hint">New Password</string>
+    <string name="password_hint_confirm">Confirm New Password</string>
+    <string name="password_reset_password_button">Reset Password</string>
+    <string name="password_successfully_reset">Password Successfully Reset</string>
+    <string name="password_dont_match_title">Passwords Don\'t Match</string>
+    <string name="password_dont_match_message">There must have been a typo. Please re-enter the password so it matches exactly in both fields.</string>
+    <string name="password_requirement_text">Password can contain letters, numbers and special characters, but no spaces.</string>
+    <string name="password_continue">Continue</string>
+    <string name="password_invalid_device_title">Invalid Device</string>
+    <string name="password_invalid_device_message">The Password reset was requested from another device. Please use the same device from which you requested Password reset.</string>
+    <string name="password_expired_title">Email Link Expired</string>
+    <string name="password_expired_message">Please try again and use link within 24 hours of receipt.</string>
+    <string name="password_mobile_disabled_title">Mobile Disabled</string>
+    <string name="password_mobile_disabled_message">Your company has disabled Concur for mobile. Please contact your administrator.</string>
+    <string name="password_short_title">Invalid Length</string>
+    <string name="password_short_message">Your Password must be at least %%0!length%% characters.</string>
+    <string name="password_invalid_title">Invalid Password</string>
+    <string name="password_blank">The Password cannot be blank.</string>
+    <string name="mobile_password_reset_link_sent_title">Mobile Password (PIN) Reset Link Sent</string>
+    <string name="mobile_password_reset_link_sent_message">Open the email from this device to reset your mobile password (PIN) and sign in.</string>
+    <string name="mobile_password_hint">New Mobile Password (PIN)</string>
+    <string name="mobile_password_hint_confirm">Confirm New Mobile Password (PIN)</string>
+    <string name="mobile_password_reset_password_button">Reset Mobile Password (PIN)</string>
+    <string name="mobile_password_successfully_reset">Mobile Password (PIN) Successfully Reset</string>
+    <string name="mobile_password_only_for_mobile_reminder">The mobile password (PIN) is only used for the Concur Mobile app.</string>
+    <string name="mobile_password_invalid_title">Invalid Mobile Password (PIN)</string>
+    <string name="mobile_password_invalid_message">Mobile Password (PIN) may be letters, numbers, and special characters but no spaces.</string>
+    <string name="mobile_password_blank">The Mobile Password (PIN) cannot be blank.</string>
     <!-- End Password Create and Reset -->
 
 
     <!-- Apptentive -->
-<string name="apptentive_give_feedback">Give Feedback</string>
-<string name="apptentive_thanks">Thank you for your feedback!</string>
-<string name="apptentive_no_thanks">Cancel</string>
-<string name="apptentive_were_sorry">Give Feedback</string>
-<string name="apptentive_do_you_love_this_app">Did you have a good experience with %s?</string>
-<string name="apptentive_rating_message_fs">Would you like to rate us in the Google Play Store?</string>
-<string name="apptentive_rate_this_app">Rate It!</string>
-<string name="apptentive_intro_dialog_title_default">Thanks for your feedback!</string>
-<string name="apptentive_intro_dialog_body">Please provide feedback on issues you are seeing or any suggestions you may have.</string>
-<string name="apptentive_intro_dialog_edittext_hint"></string>
-<string name="apptentive_thank_you_dialog_body_message_center_disabled"></string>
-<string name="apptentive_thank_you_dialog_body_message_center_disabled_email_required"></string>
+    <string name="apptentive_give_feedback">Give Feedback</string>
+    <string name="apptentive_thanks">Thank you for your feedback!</string>
+    <string name="apptentive_no_thanks">Cancel</string>
+    <string name="apptentive_were_sorry">Give Feedback</string>
+    <string name="apptentive_do_you_love_this_app">Did you have a good experience with %s?</string>
+    <string name="apptentive_rating_message_fs">Would you like to rate us in the Google Play Store?</string>
+    <string name="apptentive_rate_this_app">Rate It!</string>
+    <string name="apptentive_intro_dialog_title_default">Thanks for your feedback!</string>
+    <string name="apptentive_intro_dialog_body">Please provide feedback on issues you are seeing or any suggestions you may have.</string>
+    <string name="apptentive_intro_dialog_edittext_hint"></string>
+    <string name="apptentive_thank_you_dialog_body_message_center_disabled"></string>
+    <string name="apptentive_thank_you_dialog_body_message_center_disabled_email_required"></string>
 
     <!-- Open Source License Information Strings -->
-<string name="open_lic_used_by_preface">Used by:&#160;</string>
-<string name="open_lic_close">Close</string>
+    <string name="open_lic_used_by_preface">Used by:&#160;</string>
+    <string name="open_lic_close">Close</string>
 
     <!-- OCR -->
-<string name="camera">Camera</string>
-<string name="gallery">Gallery</string>
-<string name="pdf">PDF</string>
-<string name="dlg_title_ocr_options">Create a New Expense</string>
-<string name="ocr_progress_status">Processing Receipt</string>
-<string name="ocr_progress_msg">Your expense is being analyzed</string>
-<string name="ocr_progress_status_failed">Processing Error</string>
-<string name="ocr_progress_msg_failed">We had a problem reading the receipt</string>
-<string name="ocr_progress_status_complete">Processing Complete!</string>
-<string name="ocr_field_label_sent_date">Sent for analysis</string>
-<string name="field_hint_add_comment">Add Comment (Optional)</string>
-<string name="field_hint_add_vendor">Add Vendor (Optional)</string>
-<string name="field_hint_add_amount">Add Amount</string>
-<string name="field_label_expense_type">Type</string>
-<string name="skip">Skip</string>
-<string name="matched_expenses">Matched Expenses</string>
-<string name="ocr_status_procesing">Processing\u2026</string>
-<string name="ocr_status_procesing_error">Processing Error</string>
-<string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="pdf">PDF</string>
+    <string name="dlg_title_ocr_options">Create a New Expense</string>
+    <string name="ocr_progress_status">Processing Receipt</string>
+    <string name="ocr_progress_msg">Your expense is being analyzed</string>
+    <string name="ocr_progress_status_failed">Processing Error</string>
+    <string name="ocr_progress_msg_failed">We had a problem reading the receipt</string>
+    <string name="ocr_progress_status_complete">Processing Complete!</string>
+    <string name="ocr_field_label_sent_date">Sent for analysis</string>
+    <string name="field_hint_add_comment">Add Comment (Optional)</string>
+    <string name="field_hint_add_vendor">Add Vendor (Optional)</string>
+    <string name="field_hint_add_amount">Add Amount</string>
+    <string name="field_label_expense_type">Type</string>
+    <string name="skip">Skip</string>
+    <string name="matched_expenses">Matched Expenses</string>
+    <string name="ocr_status_procesing">Processing\u2026</string>
+    <string name="ocr_status_procesing_error">Processing Error</string>
+    <string name="ocr_status_procesing_cancelled">Processing Cancelled</string>
 
     <!-- Minimum Android SDK Support Upgrade Message -->
-<string name="sdk_upgrade_message_important">Important:</string>
-<string name="sdk_upgrade_message_body">This device will not receive updates after this release because it is running an older version of Android.</string>
-<string name="sdk_upgrade_message_see_msg_center">See Message Center for more information.</string>
+    <string name="sdk_upgrade_message_important">Important:</string>
+    <string name="sdk_upgrade_message_body">This device will not receive updates after this release because it is running an older version of Android.</string>
+    <string name="sdk_upgrade_message_see_msg_center">See Message Center for more information.</string>
 
     <!-- Profile Configuration -->
-<string name="profile_fname">First Name</string>
-<string name="profile_lname">Last Name</string>
-<string name="profile_phone">Phone</string>
-<string name="profile_address">Address</string>
-<string name="profile_city">City</string>
-<string name="profile_state">State</string>
-<string name="profile_zipcode">Zipcode</string>
-<string name="profile_country">Country</string>
-<string name="profile_other">Other</string>
-<string name="profile_emergency_contact">Emergency Contact</string>
-<string name="profile_credit_card">Credit Card</string>
-<string name="profile_banck_account">Bank Account</string>
-<string name="profile_add_emergency_contact">Add Emergency Contact</string>
-<string name="profile_add_credit_card">Add New Card</string>
-<string name="profile_add_banck_account">Add New Banck Account</string>
+    <string name="profile_fname">First Name</string>
+    <string name="profile_lname">Last Name</string>
+    <string name="profile_phone">Phone</string>
+    <string name="profile_address">Address</string>
+    <string name="profile_city">City</string>
+    <string name="profile_state">State</string>
+    <string name="profile_zipcode">Zipcode</string>
+    <string name="profile_country">Country</string>
+    <string name="profile_other">Other</string>
+    <string name="profile_emergency_contact">Emergency Contact</string>
+    <string name="profile_credit_card">Credit Card</string>
+    <string name="profile_banck_account">Bank Account</string>
+    <string name="profile_add_emergency_contact">Add Emergency Contact</string>
+    <string name="profile_add_credit_card">Add New Card</string>
+    <string name="profile_add_banck_account">Add New Banck Account</string>
 
     <!-- Menu Items -->
-<string name="menu_sort_expenses">Sort Expenses</string>
-<string name="dialog_sort_expenses_by">Sort Expenses By</string>
-<string name="sort_expenses_by_date_newest">Date (newest)</string>
-<string name="sort_expenses_by_date_oldest">Date (oldest)</string>
-<string name="sort_expenses_by_amount_lowest">Amount (lowest)</string>
-<string name="sort_expenses_by_amount_highest">Amount (highest)</string>
-<string name="sort_expenses_by_expense">Expense Type</string>
-<string name="sort_expenses_by_vendor">Vendor</string>
+    <string name="menu_sort_expenses">Sort Expenses</string>
+    <string name="dialog_sort_expenses_by">Sort Expenses By</string>
+    <string name="sort_expenses_by_date_newest">Date (newest)</string>
+    <string name="sort_expenses_by_date_oldest">Date (oldest)</string>
+    <string name="sort_expenses_by_amount_lowest">Amount (lowest)</string>
+    <string name="sort_expenses_by_amount_highest">Amount (highest)</string>
+    <string name="sort_expenses_by_expense">Expense Type</string>
+    <string name="sort_expenses_by_vendor">Vendor</string>
 
 
-    </resources>
+</resources>

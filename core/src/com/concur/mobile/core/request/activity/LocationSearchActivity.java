@@ -17,12 +17,12 @@ import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.request.adapter.AbstractGenericAdapter;
-import com.concur.mobile.core.request.task.RequestTask;
-import com.concur.mobile.core.request.util.ConnectHelper;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.request.location.Location;
+import com.concur.mobile.platform.request.task.RequestTask;
+import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
 
 import java.net.URLEncoder;
@@ -55,8 +55,7 @@ public class LocationSearchActivity extends Activity {
 
     private Location.LocationType locationType = Location.LocationType.CITY;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_search);
 
@@ -131,8 +130,7 @@ public class LocationSearchActivity extends Activity {
         // MOB-8910 HTC keyboard doesnt not support IME option instead it support Enter.
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            @Override public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || ((event != null) && (
                         (event.getAction() == KeyEvent.ACTION_DOWN) && (event.getKeyCode()
                                 == KeyEvent.KEYCODE_ENTER)))) {
@@ -148,8 +146,7 @@ public class LocationSearchActivity extends Activity {
         // clicked on. This will kick-off a search.
         searchText.setOnTouchListener(new View.OnTouchListener() {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            @Override public boolean onTouch(View v, MotionEvent event) {
                 searchText.setCursorVisible(true);
                 // Is the search glass showing?
                 Drawable searchGlass = searchText.getCompoundDrawables()[2];
@@ -176,8 +173,7 @@ public class LocationSearchActivity extends Activity {
         // Listen for typing in the search filter
         searchText.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void afterTextChanged(Editable s) {
+            @Override public void afterTextChanged(Editable s) {
 
                 if (s.length() >= MIN_SEARCH_LENGTH) {
                     doSearch(TEXT_SEARCH_LONG_DELAY);
@@ -188,12 +184,10 @@ public class LocationSearchActivity extends Activity {
                 }
             }
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
         });
@@ -259,8 +253,7 @@ public class LocationSearchActivity extends Activity {
 
     public class SearchListener implements BaseAsyncRequestTask.AsyncReplyListener {
 
-        @Override
-        public void onRequestSuccess(Bundle resultData) {
+        @Override public void onRequestSuccess(Bundle resultData) {
             manageProgressBarVisibility(false);
             final List<Location> listLocation = RequestParser
                     .parseLocations(resultData.getString(BaseAsyncRequestTask.HTTP_RESPONSE));
@@ -273,8 +266,7 @@ public class LocationSearchActivity extends Activity {
             ((SearchResultsAdapter) searchResultsList.getAdapter()).updateList(listLocation);
         }
 
-        @Override
-        public void onRequestFail(Bundle resultData) {
+        @Override public void onRequestFail(Bundle resultData) {
             manageProgressBarVisibility(false);
             ConnectHelper.displayResponseMessage(getApplicationContext(), resultData,
                     getResources().getString(R.string.tr_error_save));
@@ -283,8 +275,7 @@ public class LocationSearchActivity extends Activity {
             Log.d(Const.LOG_TAG, " onRequestFail in SaveListener...");
         }
 
-        @Override
-        public void onRequestCancel(Bundle resultData) {
+        @Override public void onRequestCancel(Bundle resultData) {
             manageProgressBarVisibility(false);
             ConnectHelper
                     .displayMessage(getApplicationContext(), getResources().getString(R.string.tr_operation_canceled));
@@ -292,8 +283,7 @@ public class LocationSearchActivity extends Activity {
             Log.d(Const.LOG_TAG, " onRequestCancel in SaveListener...");
         }
 
-        @Override
-        public void cleanup() {
+        @Override public void cleanup() {
             asyncReceiverSearch.setListener(null);
         }
 

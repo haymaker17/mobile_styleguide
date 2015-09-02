@@ -15,25 +15,47 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
-import com.concur.mobile.platform.travel.search.hotel.*;
+import com.concur.mobile.platform.travel.search.hotel.BenchmarksCollection;
+import com.concur.mobile.platform.travel.search.hotel.Hotel;
+import com.concur.mobile.platform.travel.search.hotel.HotelBenchmark;
+import com.concur.mobile.platform.travel.search.hotel.HotelComparator;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelRatesRESTResult;
+import com.concur.mobile.platform.travel.search.hotel.HotelSearchPollResultLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelSearchRESTResult;
+import com.concur.mobile.platform.travel.search.hotel.HotelSearchResultLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.view.ListItemAdapter;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelBenchmarkListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelBenchmarksFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFilterFragment.HotelSearchResultsFilterListener;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultFragment.HotelSearchResultsFragmentListener;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultMapFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.util.Format;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Activity to launch the Jarvis Hotel Search
@@ -113,7 +135,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
         PlatformAsyncTaskLoader<HotelSearchRESTResult> hotelSearchAsyncTaskLoader;
 
-        @Override public Loader<HotelSearchRESTResult> onCreateLoader(int id, Bundle bundle) {
+        @Override
+        public Loader<HotelSearchRESTResult> onCreateLoader(int id, Bundle bundle) {
             Context context = getApplicationContext();
             if (!searchDone && pollingURL != null) {
                 // request polling
@@ -135,7 +158,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
         }
 
-        @Override public void onLoaderReset(Loader<HotelSearchRESTResult> loader) {
+        @Override
+        public void onLoaderReset(Loader<HotelSearchRESTResult> loader) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
             if (listItemAdapater != null) {
                 listItemAdapater.setItems(null);
@@ -167,8 +191,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                         hotelSearchRESTResultFrag.hideProgressBar();
                         // hotelSearchRESTResultFrag.showNegativeView();
                         // TODO handle the search errors
-                        Toast.makeText(getApplicationContext(), "Hotel Search Failed. Please try again.",
+                        Toast.makeText(getApplicationContext(), R.string.dlg_travel_hotel_search_failed_general_msg,
                                 Toast.LENGTH_SHORT).show();
+                        finish();
                     } else {
                         searchDone = hotelSearchResult.searchDone;
                         hotelSearchRESTResultFrag.getHotelListView().setAlpha(0.50f);
@@ -182,6 +207,10 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             }
 
                             violations = hotelSearchResult.violations;
+                        } else {
+                            Toast.makeText(getApplicationContext(), R.string.hotel_search_no_hotels_found,
+                                    Toast.LENGTH_LONG).show();
+                            finish();
                         }
 
                         Log.d(Const.LOG_TAG,
@@ -265,7 +294,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
         PlatformAsyncTaskLoader<HotelRatesRESTResult> hotelRatesAsyncTaskLoader;
 
-        @Override public Loader<HotelRatesRESTResult> onCreateLoader(int id, Bundle args) {
+        @Override
+        public Loader<HotelRatesRESTResult> onCreateLoader(int id, Bundle args) {
             Context context = getApplicationContext();
             Hotel hotelSelected = selectedHotelListItem.getHotel();
             String rateUrl = hotelSelected.ratesURL.href;
@@ -318,12 +348,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             // TODO add GA event for booking
         }
 
-        @Override public void onLoaderReset(Loader<HotelRatesRESTResult> loader) {
+        @Override
+        public void onLoaderReset(Loader<HotelRatesRESTResult> loader) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hotel_search_and_result);
 
@@ -382,7 +414,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
         if (callFromDB) {
             hotelSearchRESTResultFrag.showProgressBar(false);
@@ -390,7 +423,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
-    @Override public void fragmentReady() {
+    @Override
+    public void fragmentReady() {
         // signal from fragment that it is loaded
         cacheKey = HotelSearchResultLoader
                 .prepareEndPointUrl(latitude, longitude, distanceUnit, checkInDate, checkOutDate);
@@ -448,7 +482,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         dialogFragment.show(getFragmentManager(), FRAGMENT_SORT_ITEMS);
     }
 
-    @Override public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
+    @Override
+    public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
         if (fragmentTagName.equals(FRAGMENT_SORT_ITEMS)) {
             curSortItem = selectedSpinnerItem;
             sortResults(curSortItem.id);
@@ -459,31 +494,31 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private void sortResults(String sortOrder) {
         String toastMessage = null;
         switch (sortOrder) {
-        case "1":
-            sortByDistance(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_distance).toString();
-            break;
-        case "2":
-            sortByPreference(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_preference).toString();
-            break;
-        case "3":
-            sortByCheapestRoomPrice(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_price).toString();
-            break;
-        case "4":
-            sortByStarRating(hotelListItemsToSort);
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_rating).toString();
-            break;
-        case "5":
-            // default sort that came from server
-            defaultSort();
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
-            break;
-        default:
-            // default sort that came from server
-            defaultSort();
-            toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
+            case "1":
+                sortByDistance(hotelListItemsToSort);
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_distance).toString();
+                break;
+            case "2":
+                sortByPreference(hotelListItemsToSort);
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_preference).toString();
+                break;
+            case "3":
+                sortByCheapestRoomPrice(hotelListItemsToSort);
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_price).toString();
+                break;
+            case "4":
+                sortByStarRating(hotelListItemsToSort);
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_rating).toString();
+                break;
+            case "5":
+                // default sort that came from server
+                defaultSort();
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
+                break;
+            default:
+                // default sort that came from server
+                defaultSort();
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
         }
         // refresh the UI with the updated hotelListItemsTemp
         updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
@@ -567,7 +602,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
      * @param secondarySort the secondary sort.
      */
     protected void sortByComparator(Comparator<Hotel> primarySort, Comparator<Hotel> secondarySort,
-            List<HotelSearchResultListItem> hotelListItemsToSort) {
+                                    List<HotelSearchResultListItem> hotelListItemsToSort) {
         List<Hotel> hotels = null;
 
         // Populate list of hotels with availability error codes that need to be moved to the bottom of the list
@@ -638,7 +673,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
-    @Override public void filterResults(String starRating, Double distance, String nameContaining) {
+    @Override
+    public void filterResults(String starRating, Double distance, String nameContaining) {
         Log.d(Const.LOG_TAG, "**** HotelSearchAndResultActivity.filterResults ****** starRating : " + starRating
                 + " **** distance : " + distance + " **** nameContaining : " + nameContaining + " *** hotelListItems : "
                 + hotelListItems);
@@ -684,7 +720,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     }
 
     private List<HotelSearchResultListItem> filter(String starRating, Double distance, String nameContaining,
-            List<HotelSearchResultListItem> itemsToSort) {
+                                                   List<HotelSearchResultListItem> itemsToSort) {
         boolean starRatingFilterEnabled = (starRating == null ? false : true); // assuming ALL is null
         boolean distanceFilterEnabled = (distance == null ? false : true); // assuming ALL is null
         boolean nameContainingFilterEnabled = (nameContaining == null ? false : true);
@@ -738,7 +774,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         return hotelListItemsTemp;
     }
 
-    @Override public void onFilterClicked() {
+    @Override
+    public void onFilterClicked() {
         if (!hotelSearchRESTResultFrag.progressbarVisible) {
             // show the filter options fragment
             filterFrag = (HotelSearchResultFilterFragment) getFragmentManager()
@@ -759,15 +796,16 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
-    @Override public void onMapsClicked() {
+    @Override
+    public void onMapsClicked() {
         if (isOffline) {
             showOfflineDialog();
         } else if (!hotelSearchRESTResultFrag.progressbarVisible) {
-            int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+            //int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
             mapFragment = (HotelSearchResultMapFragment) getFragmentManager()
                     .findFragmentByTag(FRAGMENT_SEARCH_RESULT_MAP);
-            if (resultCode == ConnectionResult.SUCCESS && listItemAdapater != null
-                    && listItemAdapater.getItems() != null) {
+            //resultCode == ConnectionResult.SUCCESS &&
+            if (listItemAdapater != null && listItemAdapater.getItems() != null) {
                 List<HotelSearchResultListItem> hotelList = listItemAdapater.getItems();
 
                 if (mapFragment == null) {
@@ -798,7 +836,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
-    @Override public void onHeaderClicked() {
+    @Override
+    public void onHeaderClicked() {
         finish();
     }
 
@@ -887,18 +926,19 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-        case Const.REQUEST_CODE_BOOK_HOTEL: {
-            if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK, data);
-                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
-                        "\n\n\n ****** HotelSearchAndResultActivity onActivityResult with result code : " + resultCode);
-                finish();
+            case Const.REQUEST_CODE_BOOK_HOTEL: {
+                if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, data);
+                    Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                            "\n\n\n ****** HotelSearchAndResultActivity onActivityResult with result code : " + resultCode);
+                    finish();
+                }
+                break;
             }
-            break;
-        }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -938,7 +978,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         if (hotelSearchRESTResultFrag.getHotelListView() != null) {
             hotelSearchRESTResultFrag.getHotelListView().setOnItemClickListener(new OnItemClickListener() {
 
-                @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     listItemSelectedPosition = position;
                     hotelListItemClicked((HotelSearchResultListItem) parent.getItemAtPosition(position));
                 }
@@ -983,14 +1024,15 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                             this.getResources().getConfiguration().locale, currencyCode, true, true);
 
                     priceToBeatRangeText = Format.localizeText(this, R.string.price_to_beat_range,
-                            new Object[] { formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice });
+                            new Object[]{formattedMinBenchmarkPrice, formattedMaxBenchmarkPrice});
                 }
                 ((TextView) (priceToBeatView.findViewById(R.id.priceToBeatText)))
                         .setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
                 // init the onclick event
                 priceToBeatView.setOnClickListener(new View.OnClickListener() {
 
-                    @Override public void onClick(View v) {
+                    @Override
+                    public void onClick(View v) {
                         showPriceToBeatFragment(priceToBeatRangeText);
                     }
                 });
@@ -1037,7 +1079,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         lm.restartLoader(HOTEL_POLL_LIST_LOADER_ID, null, hotelSearchRESTResultLoaderCallbacks);
     }
 
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Check if the key event was the Back button and stop any outstanding
         // request of async task
         if (keyCode == KeyEvent.KEYCODE_BACK) {

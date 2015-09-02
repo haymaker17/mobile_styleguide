@@ -1,4 +1,5 @@
 include ':apptentive-android:apptentive-android-sdk'
+include ':google-maps-sdk-m4b'
 include ':evature'
 include ':base'
 include ':platform'

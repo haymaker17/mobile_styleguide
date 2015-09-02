@@ -1,17 +1,15 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Fragment;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.concur.mobile.platform.ui.common.util.ImageCache;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
-
-import java.net.URI;
+import com.concur.mobile.platform.ui.travel.util.ImageFetcher;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
  * This fragment will populate the children of the ViewPager from {@link ImageDetailActivity}.
@@ -22,7 +20,7 @@ public class ImageDetailFragment extends Fragment {
     private String mImageUrl;
     private ImageView mImageView;
 
-    // private ImageFetcher mImageFetcher;
+    private ImageFetcher mImageFetcher;
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
@@ -61,21 +59,32 @@ public class ImageDetailFragment extends Fragment {
         // Inflate and locate the main ImageView
         final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
         mImageView = (ImageView) v.findViewById(R.id.imageView);
-        URI uri = URI.create(mImageUrl);
-        // Attempt to load the image from the image cache, if not there, then the
-        // ImageCache will load it asynchronously and this view will be updated via
-        // the ImageCache broadcast receiver available in BaseActivity.
-        ImageCache imgCache = ImageCache.getInstance(getActivity());
-        Bitmap bitmap = imgCache.getBitmap(uri, null);
-        if (bitmap != null) {
-            mImageView.setImageBitmap(bitmap);
-        }
+        //        URI uri = URI.create(mImageUrl);
+        //        // Attempt to load the image from the image cache, if not there, then the
+        //        // ImageCache will load it asynchronously and this view will be updated via
+        //        // the ImageCache broadcast receiver available in BaseActivity.
+        //        ImageCache imgCache = ImageCache.getInstance(getActivity());
+        //        Bitmap bitmap = imgCache.getBitmap(uri, null);
+        //        if (bitmap != null) {
+        //            mImageView.setImageBitmap(bitmap);
+        //        }
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // Use the parent activity to load the image asynchronously into the ImageView (so a single
+        // cache can be used over all pages in the ViewPager
+        if (ImageDetailActivity.class.isInstance(getActivity())) {
+            mImageFetcher = ((ImageDetailActivity) getActivity()).getImageFetcher();
+            mImageFetcher.loadImage(mImageUrl, mImageView);
+        }
+
+        // Pass clicks on the ImageView to the parent activity to handle
+        if (View.OnClickListener.class.isInstance(getActivity()) && ViewUtil.hasHoneycomb()) {
+            mImageView.setOnClickListener((View.OnClickListener) getActivity());
+        }
 
     }
 

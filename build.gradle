@@ -16,6 +16,7 @@ buildscript {
 
 ext.latestSdkVersion = 21
 ext.lowestSdkSupportVersion = 16
+ext.jacocoVersion = "0.7.5.+"
 
 allprojects {
     repositories {

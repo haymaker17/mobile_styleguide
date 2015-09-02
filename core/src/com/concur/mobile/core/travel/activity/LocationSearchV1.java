@@ -25,6 +25,8 @@ import com.concur.mobile.core.travel.data.LocationChoice;
 import com.concur.mobile.core.travel.rail.data.RailStation;
 import com.concur.mobile.core.travel.service.LocationSearchReply;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 /**
  * @author tejoa Location Search with Search View widget.
  */
+@EventTracker.EventTrackerClassName(getClassName = "Travel-Hotel-Search-Criteria")
 public class LocationSearchV1 extends Activity implements INetworkActivityListener, SearchView.OnQueryTextListener {
 
     public static final int SEARCH_CUSTOM = 0x01;
@@ -79,6 +82,9 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         searchDelayHandler = new Handler();
         searchDelayRunnable = new DelayedSearch();
+
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL,
+                Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
     }
 
     @SuppressWarnings("unchecked") private ArrayList<? extends LocationChoice> extracted(Serializable locBundle) {

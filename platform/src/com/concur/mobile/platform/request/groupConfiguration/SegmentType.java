@@ -33,12 +33,18 @@ public class SegmentType {
         }
     }
 
-    @SerializedName("ID") private String id;
-    @SerializedName("Name") private String name;
-    @SerializedName("DisplayOrder") private Integer displayOrder;
-    @SerializedName("IconCode") private String iconCode;
-    @SerializedName("SegmentFormID") private String segmentFormID;
-    @SerializedName("SegmentTypeCode") private String code;
+    @SerializedName("ID")
+    private String id;
+    @SerializedName("Name")
+    private String name;
+    @SerializedName("DisplayOrder")
+    private Integer displayOrder;
+    @SerializedName("IconCode")
+    private String iconCode;
+    @SerializedName("SegmentFormID")
+    private String segmentFormID;
+    @SerializedName("SegmentTypeCode")
+    private String code;
 
     public String getCode() {
         return code;
