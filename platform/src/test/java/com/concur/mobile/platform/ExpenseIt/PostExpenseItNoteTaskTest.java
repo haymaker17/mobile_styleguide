@@ -14,6 +14,12 @@ import com.concur.mobile.platform.test.PlatformTestApplication;
  */
 public class PostExpenseItNoteTaskTest extends AsyncRequestTest {
 
+    private Long expenseId;
+
+    public void setExpenseId(Long id) {
+        this.expenseId = id;
+    }
+
     public PostExpenseItNoteTaskTest(boolean useMockServer) {
         super(useMockServer);
     }
@@ -38,7 +44,7 @@ public class PostExpenseItNoteTaskTest extends AsyncRequestTest {
         String comment = "ConcurMobile";
 
         ExpenseItNote note = new ExpenseItNote();
-        note.setComment(comment);
+        note.setInfo(comment, expenseId);
 
         return note;
     }

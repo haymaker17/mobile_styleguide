@@ -39,8 +39,10 @@ import com.concur.mobile.platform.expense.provider.ExpenseUtil;
 import com.concur.mobile.platform.expenseit.DeleteExpenseItReceiptAsyncTask;
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItGetImageUrlResponse;
+import com.concur.mobile.platform.expenseit.ExpenseItNote;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.expenseit.GetExpenseItImageUrlAsyncTask;
+import com.concur.mobile.platform.expenseit.PostExpenseItNoteAsyncTask;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
@@ -91,13 +93,15 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private Menu menu;
 
-    private String newComment;
+    private ExpenseItNote newComment;
 
     private ProgressDialogFragment mProgressDialogFragment;
 
     private DeleteExpenseItReceiptAsyncTask mDeleteExpenseItReceiptAsyncTask;
 
     private GetExpenseItImageUrlAsyncTask mGetExpenseItImageUrlAsyncTask;
+
+    private PostExpenseItNoteAsyncTask mPostExpenseItNoteAsyncTask;
 
 //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private SaveReceiptRequestTask mSaveReceiptRequestTask;
@@ -115,11 +119,12 @@ public class ExpenseItDetailActivity extends BaseActivity
     private static String EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER = "EXPENSEIT_RECEIPT_IMAGE_URL_RECEIVER";
     private BaseAsyncResultReceiver mGetExpenseItReceiptImageUrlReceiver;
 
+    private static String EXPENSEIT_POST_COMMENT_RECEIVER = "EXPENSEIT_POST_COMMENT_RECEIVER";
+    private BaseAsyncResultReceiver mPostExpenseItCommentReceiver;
+
 //    Uncomment after refactoring upload receipt into an AsyncTask.
 //    private static String EXPENSEIT_RECEIPT_UPLOAD_RECEIVER = "EXPENSEIT_RECEIPT_UPLOAD_RECEIVER";
 //    private BaseAsyncResultReceiver mExpenseItReceiptUploadReceiver;
-
-//    private ExpenseItItem item;
 
     private ExpenseItReceipt item;
 
@@ -191,6 +196,30 @@ public class ExpenseItDetailActivity extends BaseActivity
         public void cleanup() {
             metricsTiming = 0L;
             mDeleteExpenseItReceiptReceiver = null;
+        }
+    };
+
+    protected BaseAsyncRequestTask.AsyncReplyListener mPostCommentAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PostCommentAsyncReplyListener called.");
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            // TODO: Handle failure, currently fails silently.
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFailed for PostCommentAsyncReplyListener called.");
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancelled for PostCommentAsyncReplyListener called.");
+            mPostExpenseItNoteAsyncTask.cancel(true);
+        }
+
+        @Override
+        public void cleanup() {
+            mPostExpenseItCommentReceiver = null;
         }
     };
 
@@ -391,6 +420,16 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if (newComment != null && (!item.getNote().equals(newComment.getNote().getNote()))) {
+            ConcurCore ConcurCore = this.getConcurCore();
+            IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
+            expEntCache.setShouldFetchExpenseList();
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public void initializeViewReceipt(long receiptId) {
         Intent intent = new Intent(this, ExpenseItReceiptView.class);
         intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
@@ -490,6 +529,14 @@ public class ExpenseItDetailActivity extends BaseActivity
             retainer.put(NEW_COMMENT_FROM_FRAGMENT_KEY, newComment);
         }
 
+        // retain the comment reciever.
+        if (mPostExpenseItCommentReceiver != null) {
+            mPostExpenseItCommentReceiver.setListener(null);
+            if (retainer != null) {
+                retainer.put(EXPENSEIT_POST_COMMENT_RECEIVER, mPostExpenseItCommentReceiver);
+            }
+        }
+
         // Retain the delete receiver.
         if (mDeleteExpenseItReceiptReceiver != null) {
             mDeleteExpenseItReceiptReceiver.setListener(null);
@@ -554,7 +601,15 @@ public class ExpenseItDetailActivity extends BaseActivity
         if (retainer != null) {
 
             if (retainer.contains(NEW_COMMENT_FROM_FRAGMENT_KEY)) {
-                newComment = (String) retainer.get(NEW_COMMENT_FROM_FRAGMENT_KEY);
+                newComment = (ExpenseItNote) retainer.get(NEW_COMMENT_FROM_FRAGMENT_KEY);
+            }
+
+            // Recover the comment receiver
+            if (retainer.contains(EXPENSEIT_POST_COMMENT_RECEIVER)) {
+                mPostExpenseItCommentReceiver = (BaseAsyncResultReceiver) retainer.get(EXPENSEIT_POST_COMMENT_RECEIVER);
+                if (mPostExpenseItCommentReceiver != null) {
+                    mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+                }
             }
 
             // Recover the delete receiver
@@ -665,6 +720,23 @@ public class ExpenseItDetailActivity extends BaseActivity
             mGetExpenseItImageUrlAsyncTask = new GetExpenseItImageUrlAsyncTask(getApplicationContext(), 1,
                     mGetExpenseItReceiptImageUrlReceiver, item.getId());
             mGetExpenseItImageUrlAsyncTask.execute();
+        }
+    }
+
+    private void doSaveCommentAsyncTask() {
+        // set up the receiver
+        if (mPostExpenseItCommentReceiver == null) {
+            mPostExpenseItCommentReceiver = new BaseAsyncResultReceiver(new Handler());
+            mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+        }
+
+        // make the call, unless it's already in use.
+        if (mPostExpenseItNoteAsyncTask != null && mPostExpenseItNoteAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mPostExpenseItCommentReceiver.setListener(mPostCommentAsyncReplyListener);
+        } else {
+            mPostExpenseItNoteAsyncTask = new PostExpenseItNoteAsyncTask(getApplicationContext(), 1,
+                    mPostExpenseItCommentReceiver, newComment);
+            mPostExpenseItNoteAsyncTask.execute();
         }
     }
 
@@ -892,7 +964,11 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     @Override
     public void saveComment(String comment) {
-        this.newComment = comment;
+        if (newComment == null) {
+            newComment = new ExpenseItNote();
+        }
+        newComment.setInfo(comment, item.getId());
+        doSaveCommentAsyncTask();
     }
 
     static class SaveExpenseItReceiver extends BaseBroadcastReceiver<ExpenseItDetailActivity, SaveReceiptRequest> {

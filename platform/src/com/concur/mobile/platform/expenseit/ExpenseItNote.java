@@ -3,7 +3,6 @@ package com.concur.mobile.platform.expenseit;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class ExpenseItNote implements Serializable {
 
@@ -16,23 +15,23 @@ public class ExpenseItNote implements Serializable {
         return expense;
     }
 
-    public void setComment(String note) {
+    public void setInfo(String note, Long id) {
         ExpenseNote exNote = new ExpenseNote();
         exNote.setNote(note);
+        exNote.setId(id);
         this.expense = exNote;
     }
 
     public class ExpenseNote {
 
         @SerializedName("id")
-        private String id;
+        private Long id;
 
         @SerializedName("note")
         private String note;
 
         public ExpenseNote() {
-            long milliSecs = new Date().getTime();
-            id = Long.toString(milliSecs);
+            id = 0L;
             note = "";
         }
 
@@ -44,11 +43,11 @@ public class ExpenseItNote implements Serializable {
             this.note = note;
         }
 
-        public String getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(Long id) {
             this.id = id;
         }
     }

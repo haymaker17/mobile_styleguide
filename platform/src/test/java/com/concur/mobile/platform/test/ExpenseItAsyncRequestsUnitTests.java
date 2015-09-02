@@ -217,7 +217,17 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
 
     @Test
     public void doPostNoteToExpenseItEntry() throws Exception {
+        ExpenseItUploadReceiptTaskTest testUpload = new ExpenseItUploadReceiptTaskTest(useMockServer());
+        doExpenseItTest(testUpload);
+        Long id = testUpload.getExpenseItId();
+
+        Assert.assertNotNull("ExpenseIt Id should not be null", id);
+        if (id == null) {
+            return;
+        }
+
         PostExpenseItNoteTaskTest test = new PostExpenseItNoteTaskTest(useMockServer());
+        test.setExpenseId(id);
         doExpenseItTest(test);
     }
 

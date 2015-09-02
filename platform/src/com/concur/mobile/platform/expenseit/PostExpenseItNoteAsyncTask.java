@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.expenseit;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -36,11 +37,19 @@ public class PostExpenseItNoteAsyncTask extends ExpenseItAsyncRequestTask {
 
     @Override
     protected RequestMethod getRequestMethod() {
-        return RequestMethod.POST;
+        return RequestMethod.PUT;
     }
 
     @Override
     protected String getServiceEndPoint() {
+        if (note != null && note.getNote().getId() > 0L) {
+            Long expenseId = note.getNote().getId();
+            final Uri.Builder builder = Uri.parse(EXPENSES_URL).buildUpon();
+            String endpoint = builder.build().toString();
+            StringBuffer buf = new StringBuffer();
+            buf.append("/").append(expenseId);
+            return endpoint.concat(buf.toString());
+        }
         return EXPENSES_URL;
     }
 
