@@ -26,7 +26,23 @@
     <integer name="ga_dispatchPeriod">120</integer>
 
     <!-- Enable automatic activity tracking -->
-    <bool name="ga_autoActivityTracking">false</bool>
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <string name="com.concur.mobile.core.activity.Preferences">Settings</string>
+    <string name="com.concur.mobile.core.travel.activity.LocationSearchV1">Travel-Hotel-Search-Criteria</string>
+    <string name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch">Travel-Hotel-Search-Criteria</string>
+    <string name="com.concur.mobile.corp.activity.CompanyCodeLoginActivity">Sign In-SSO Company Code</string>
+    <string name="com.concur.mobile.corp.activity.CompanySignOnActivity">Sign In-SSO Company Code</string>
+    <string name="com.concur.mobile.corp.activity.EmailLookupActivity">Sign In-Enter Email</string>
+    <string name="com.concur.mobile.corp.activity.EmailPasswordLookupActivity">Sign In-Enter Email Password</string>
+    <string name="com.concur.mobile.corp.activity.Home">Home</string>
+    <string name="com.concur.mobile.corp.activity.LoginHelp">Sign In-Forgot Password-Enter Email</string>
+    <string name="com.concur.mobile.corp.activity.LoginPasswordActivity">Sign In-Enter Password</string>
+    <string name="com.concur.mobile.corp.activity.MobilePasswordSet">Sign In-Forgot PIN-New PIN</string>
+    <string name="com.concur.mobile.corp.activity.PasswordSet">Sign In-Forgot Password-New Password</string>
+    <string name="com.concur.mobile.corp.activity.Startup">Startup</string>
+    <string name="com.concur.mobile.corp.activity.TestDriveRegistration">Test Drive Registration</string>
+    <string name="com.concur.mobile.corp.activity.UniversalTour">Learn More</string>
 
     <!-- Enable automatic exception tracking -->
     <bool name="ga_reportUncaughtExceptions">true</bool>

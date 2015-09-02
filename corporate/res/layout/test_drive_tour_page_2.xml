@@ -1,78 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/list_group_vertical_margin"
-    android:paddingLeft="@dimen/list_item_horizontal_margin"
-    android:paddingRight="@dimen/list_item_horizontal_margin"
-    android:paddingTop="@dimen/list_group_vertical_margin" >
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:shrinkColumns="*"
+    android:stretchColumns="*">
 
-    <ScrollView
-        android:id="@+id/main_scroll_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdgeLength="20dp"
-        android:fillViewport="true"
-        android:scrollbars="none" >
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5"
+        android:gravity="center">
 
-        <RelativeLayout
-            android:id="@+id/tourPage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+        <ImageView
+            android:id="@+id/tourImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
+            android:scaleType="fitXY"
+            android:src="@drawable/test_drive_tour_image2"/>
+    </TableRow>
 
-            <ImageView
-                android:id="@+id/tourImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="false"
-                android:minHeight="250dp"
-                android:minWidth="250dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/test_drive_tour_img_margin_bottom"
-                android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
-                android:src="@drawable/test_drive_tour_image2" />
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.5"
+        android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/container_layout"
+        <LinearLayout
+            android:id="@+id/container_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:orientation="vertical">
+
+            <include layout="@layout/dot_group_saparator"/>
+
+            <TextView
+                android:id="@+id/td_tour_welcome_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tourImage"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
+                android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
+                android:gravity="center_horizontal"
+                android:text="@string/test_drive_tour_welcome_pg2_title"
+                android:textAppearance="@style/TourText_Material"/>
 
-                <include layout="@layout/dot_group_saparator" />
+            <TextView
+                android:id="@+id/td_tour_welcome_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center_horizontal"
+                android:text="@string/test_drive_tour_welcome_pg2_subtitle"
+                android:textAppearance="@style/TourSmallSecondaryText_Material"/>
 
-                <TextView
-                    android:id="@+id/td_tour_welcome_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
-                    android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
-                    android:gravity="center_horizontal"
-                    android:text="@string/test_drive_tour_welcome_pg2_title"
-                    android:textAppearance="@style/TourText_Material" />
+            <TextView
+                android:id="@+id/td_tour_welcome_subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center_horizontal"
+                android:text="@string/test_drive_tour_welcome_pg2_subtitle1"
+                android:textAppearance="@style/TourSmallSecondaryText_Green_Material"/>
 
-                <TextView
-                    android:id="@+id/td_tour_welcome_subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:text="@string/test_drive_tour_welcome_pg2_subtitle"
-                    android:textAppearance="@style/TourSmallSecondaryText_Material" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/td_tour_welcome_subtitle1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:text="@string/test_drive_tour_welcome_pg2_subtitle1"
-                    android:textAppearance="@style/TourSmallSecondaryText_Green_Material" />
-            </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+    </TableRow>
 
-</RelativeLayout>
+</TableLayout>
