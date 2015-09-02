@@ -203,16 +203,17 @@ public class ExpenseItPostReceipt implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ExpenseItPostReceipt)) return false;
-
-        ExpenseItPostReceipt that = (ExpenseItPostReceipt) o;
-
-        return !(getId() != null ? !getId().equals(that.getId()) : that.getId() != null);
-
+        if(o != null) {
+            if(o instanceof ExpenseItPostReceipt) {
+                return ((ExpenseItPostReceipt)o).getId().equals(getId())
+                    && ((ExpenseItPostReceipt)o).getParsingStatusCode() == getParsingStatusCode();
+            }
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
+        return getId() != null ? (getId()+(new Integer(getParsingStatusCode())).toString()).hashCode() : 0;
     }
 }
