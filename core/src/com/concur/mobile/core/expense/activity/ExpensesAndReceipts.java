@@ -48,6 +48,7 @@ import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTa
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
@@ -126,7 +127,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
     /**
      * Listener used to handle the response for getting the list of SmartExpenses.
      */
-    protected AsyncReplyListener smartExpenseListReplyListener = new AsyncReplyListener() {
+    protected class SmartExpenseListReplyListener implements AsyncReplyListener {
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
@@ -189,11 +190,6 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
      * Receiver for retrieving the list of ExpenseIt items.
      */
     protected BaseAsyncResultReceiver expenseItListReceiver;
-
-    /**
-     * Listener used to handle the response for getting the list of ExpenseIt items.
-     */
-    protected GetExpenseItListAsyncReplyListener expenseItListReplyListener = new GetExpenseItListAsyncReplyListener();
 
     /**
      * Listener for the reply of the ReceiptList MWS call.
@@ -562,7 +558,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             if (retainer.contains(SMART_EXPENSE_LIST_RECEIVER)) {
                 smartExpenseListReceiver = (BaseAsyncResultReceiver) retainer.get(SMART_EXPENSE_LIST_RECEIVER);
                 if (smartExpenseListReceiver != null) {
-                    smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+                    smartExpenseListReceiver.setListener(new SmartExpenseListReplyListener());
                 }
             }
 
@@ -580,7 +576,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             if (retainer.contains(GET_EXPENSE_IT_LIST_RECEIVER)) {
                 expenseItListReceiver = (BaseAsyncResultReceiver) retainer.get(GET_EXPENSE_IT_LIST_RECEIVER);
                 if (expenseItListReceiver != null) {
-                    expenseItListReceiver.setListener(expenseItListReplyListener);
+                    expenseItListReceiver.setListener(new GetExpenseItListAsyncReplyListener(false));
                 }
             }
 
@@ -652,11 +648,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         if (smartExpenseListReceiver == null) {
             smartExpenseListReceiver = new BaseAsyncResultReceiver(new Handler());
-            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+            smartExpenseListReceiver.setListener(new SmartExpenseListReplyListener());
         }
 
         if (smartExpenseAsyncTask != null && smartExpenseAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-            smartExpenseListReceiver.setListener(smartExpenseListReplyListener);
+            smartExpenseListReceiver.setListener(new SmartExpenseListReplyListener());
         } else {
 
             SmartExpenseListRequestTask smartExpReqTask = new SmartExpenseListRequestTask(getConcurCore()
@@ -753,15 +749,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             return;
         }
 
-        expenseItListReplyListener.forceRefresh = foreRefresh;
-
         if (expenseItListReceiver == null) {
             expenseItListReceiver = new BaseAsyncResultReceiver(new Handler());
-            expenseItListReceiver.setListener(expenseItListReplyListener);
+            expenseItListReceiver.setListener(new GetExpenseItListAsyncReplyListener(foreRefresh));
         }
 
         if (expenseItListAsyncTask != null && expenseItListAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-            expenseItListReceiver.setListener(expenseItListReplyListener);
+            expenseItListReceiver.setListener(new GetExpenseItListAsyncReplyListener(foreRefresh));
         } else {
 
             GetExpenseItExpenseListAsyncTask expenseItListReqTask = new GetExpenseItExpenseListAsyncTask(
@@ -1162,7 +1156,11 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     private class GetExpenseItListAsyncReplyListener implements AsyncReplyListener {
 
-        public boolean forceRefresh = false;
+        private final boolean forceRefresh;
+
+        public GetExpenseItListAsyncReplyListener(boolean forceRefresh) {
+            this.forceRefresh =  forceRefresh;
+        }
 
         @Override
         public void onRequestSuccess(Bundle resultData) {
