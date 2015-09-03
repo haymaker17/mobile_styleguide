@@ -429,10 +429,12 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (newComment != null && (!item.getNote().equals(newComment.getNote().getNote()))) {
+        if (newComment != null) {
             ConcurCore ConcurCore = this.getConcurCore();
             IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
-            expEntCache.setShouldFetchExpenseList();
+            if (item.getNote() != null && !item.getNote().equals(newComment.getNote().getNote())) {
+                expEntCache.setShouldFetchExpenseList();
+            }
         }
         super.onBackPressed();
     }
