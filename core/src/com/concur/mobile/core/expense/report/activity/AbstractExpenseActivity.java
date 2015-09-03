@@ -737,6 +737,15 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             }
         }
 
+        // Restore any values to the travel allowance form field views.
+        if (frmFldViewListener != null && lastSavedInstanceState != null) {
+            if (frmFldViewListener.getTaFormFieldViews() != null) {
+                for (FormFieldView frmFldView : frmFldViewListener.getTaFormFieldViews()) {
+                    frmFldView.onRestoreInstanceState(lastSavedInstanceState);
+                }
+            }
+        }
+
         // Restore any current form field view.
         if (frmFldViewListener != null && lastSavedInstanceState != null
                 && lastSavedInstanceState.containsKey(CURRENT_FORM_FIELD_VIEW_KEY)) {
@@ -833,6 +842,13 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
         if (frmFldViewListener != null && frmFldViewListener.isCurrentFormFieldViewSet()) {
             outState.putString(CURRENT_FORM_FIELD_VIEW_KEY, frmFldViewListener.getCurrentFormFieldView().getFormField()
                     .getId());
+        }
+
+        // Save out any travel allowance form field view objects.
+        if (frmFldViewListener != null && frmFldViewListener.getTaFormFieldViews() != null) {
+            for (FormFieldView frmFldView : frmFldViewListener.getTaFormFieldViews()) {
+                frmFldView.onSaveInstanceState(outState);
+            }
         }
     }
 

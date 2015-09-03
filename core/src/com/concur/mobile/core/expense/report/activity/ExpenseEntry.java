@@ -263,39 +263,6 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         // Restore any receivers.
         restoreReceivers();
 
-        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
-            this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
-
-                @Override
-                public void populateTravelAllowanceFields(
-                        List<ExpenseReportFormField> expenseReportFormFields) {
-                    View allowanceFields = findViewById(R.id.allowance_fields);
-                    ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
-
-                    if (allowanceFields == null || viewGroup == null) {
-                        return;
-                    }
-
-                    if (expenseReportFormFields == null || expenseReportFormFields.size() == 0) {
-                        // Nothing to do. There seems to be no fixed allowances available so keep the view GONE.
-                        allowanceFields.setVisibility(View.GONE);
-                        return;
-                    } else {
-                        // Make the view group visible for fixed allowances.
-                        allowanceFields.setVisibility(View.VISIBLE);
-                        taFacade.setExpenseDetailsTAFormFields(expenseReportFormFields);
-                    }
-
-                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
-                            expenseReportFormFields, null);
-
-                    if (frmFldViewListener != null) {
-                        frmFldViewListener.setTaFormFieldViews(frmFldViews);
-                    }
-                }
-            });
-            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRep, expRepEntDet);
-        }
     }
 
     @Override
@@ -656,6 +623,24 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         return expenseTypeChanged;
     }
 
+    /**
+     * Gets whether or not the fixed travel allowance fields have a changed value.
+     *
+     * @return whether the fixed travel allowance fields have changed.
+     */
+    protected boolean hasFixedTAChanged() {
+        boolean taChanged = false;
+        if (frmFldViewListener != null && frmFldViewListener.getTaFormFieldViews() != null) {
+            for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
+                if (field.hasValueChanged()) {
+                    taChanged = true;
+                }
+            }
+        }
+
+        return taChanged;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -663,7 +648,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
      */
     @Override
     protected boolean changesPending() {
-        return (hasAttendeesChanged() || hasExpenseTypeChanged() || hasNoShowCountChanged());
+        return (hasAttendeesChanged() || hasExpenseTypeChanged() || hasNoShowCountChanged() || hasFixedTAChanged());
     }
 
     /*
@@ -1422,6 +1407,9 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 // Set the tax form details.
                 populateTaxFormFields();
 
+                // Handle fixed allowance fields
+                populateTaFields();
+
                 // Combine VendorName fields into one field if both present and
                 // editable.
                 combineVendorNameFields();
@@ -1910,6 +1898,45 @@ public class ExpenseEntry extends AbstractExpenseActivity {
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".populateExpenseDetails: expense entry form field group not found!");
+        }
+    }
+
+    /**
+     * To populate the travel allownace related fields. Only relevant for meals and lodging.
+     */
+    protected void populateTaFields() {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+            this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
+
+                @Override
+                public void populateTravelAllowanceFields(
+                        List<ExpenseReportFormField> expenseReportFormFields) {
+                    View allowanceFields = findViewById(R.id.allowance_fields);
+                    ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
+
+                    if (allowanceFields == null || viewGroup == null) {
+                        return;
+                    }
+
+                    if (expenseReportFormFields == null || expenseReportFormFields.size() == 0) {
+                        // Nothing to do. There seems to be no fixed allowances available so keep the view GONE.
+                        allowanceFields.setVisibility(View.GONE);
+                        return;
+                    } else {
+                        // Make the view group visible for fixed allowances.
+                        allowanceFields.setVisibility(View.VISIBLE);
+                        taFacade.setExpenseDetailsTAFormFields(expenseReportFormFields);
+                    }
+
+                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
+                            expenseReportFormFields, null);
+
+                    if (frmFldViewListener != null) {
+                        frmFldViewListener.setTaFormFieldViews(frmFldViews);
+                    }
+                }
+            });
+            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRep, expRepEntDet);
         }
     }
 
@@ -2534,29 +2561,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         boolean retVal = false;
         final int itemId = item.getItemId();
         if (itemId == R.id.menuSave) {
-            if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
-                this.taFacade.setSaveExpenseEntryTACallback(new TravelAllowanceFacade.SaveExpenseEntryTACallback() {
-                    @Override
-                    public void saveTA() {
-                        showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
-                    }
-
-                    @Override
-                    public void saveTAFinished() {
-                        dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
-                        // Call the original expense save.
-                        save();
-                    }
-                });
-                if (frmFldViewListener.getTaFormFieldViews() != null) {
-                    for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
-                        field.commit();
-                    }
-                }
-                this.taFacade.saveExpenseEntryTA(this.getApplicationContext(), expRep, expRepEntDet);
-            } else {
-                save();
-            }
+            save();
         } else if (itemId == R.id.capture_receipt_picture) {
             if (ConcurCore.isConnected()) {
                 if (!isNewExpense()) {
@@ -2614,9 +2619,41 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         return retVal;
     }
 
+    @Override
+    protected void save() {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+            /**
+             * TA Case: If TA fields are available the TA save needs to be triggered first. As soons as the TA save is done the
+             * normal save routine will be triggered.
+             */
+            this.taFacade.setSaveExpenseEntryTACallback(new TravelAllowanceFacade.SaveExpenseEntryTACallback() {
+                @Override
+                public void saveTA() {
+                    showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                }
+
+                @Override
+                public void saveTAFinished() {
+                    dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                    // Call the normal expense save after the TA save is done.
+                    ExpenseEntry.super.save();
+                }
+            });
+            if (frmFldViewListener.getTaFormFieldViews() != null) {
+                for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
+                    field.commit();
+                }
+            }
+            this.taFacade.saveExpenseEntryTA(this.getApplicationContext(), expRep, expRepEntDet);
+        } else {
+            // If the current expens entry is not TA relevant the normal save will be triggered.
+            super.save();
+        }
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
      */
     @Override

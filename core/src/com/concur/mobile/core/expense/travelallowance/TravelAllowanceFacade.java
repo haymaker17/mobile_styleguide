@@ -132,7 +132,7 @@ public class TravelAllowanceFacade implements IControllerListener {
                     }
 
 
-                    if (itineraryController.getItineraryList().size() == 0) {
+                    if (itineraryController != null && itineraryController.getItineraryList().size() == 0) {
                         if (expenseEntriesCallbackReference != null) {
                             expenseEntriesCallbackReference.enableTAItineraryButton(ItineraryUpdateActivity.class,
                                     true);

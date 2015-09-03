@@ -259,7 +259,7 @@ public class
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
         }
 
-        if (ViewUtil.hasTravelAllowanceFixed(this)) {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && !(this instanceof ExpenseEntryItemization)) {
             ConcurCore app = (ConcurCore) getApplication();
 
             final boolean isInApproval = reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL;
