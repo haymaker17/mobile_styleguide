@@ -340,7 +340,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     private void doUploadReceipt() {
 
-        if(receiptImage != null && (menuAction == MENU_ACTION_CANCEL || menuAction == MENU_ACTION_EDIT)) {
+        if (receiptImage != null && (menuAction == MENU_ACTION_CANCEL || menuAction == MENU_ACTION_EDIT)) {
             uploadReceiptImageToReceiptStore();
         } else if (!TextUtils.isEmpty(localImageFilePath) && menuAction == MENU_ACTION_REPLACE) {
             uploadReceiptToExpenseIt(localImageFilePath);
@@ -428,18 +428,6 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     @Override
-    public void onBackPressed() {
-        if (newComment != null) {
-            ConcurCore ConcurCore = this.getConcurCore();
-            IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
-            if (item.getNote() != null && !item.getNote().equals(newComment.getNote().getNote())) {
-                expEntCache.setShouldFetchExpenseList();
-            }
-        }
-        super.onBackPressed();
-    }
-
-    @Override
     public void initializeViewReceipt(long receiptId) {
         Intent intent = new Intent(this, ExpenseItReceiptView.class);
         intent.putExtra(Const.EXTRA_EXPENSE_IT_RECEIPT_ID, receiptId);
@@ -453,7 +441,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         // Only show the "replace" menu if this ExpenseIt item has failed analysis.
 
-        if(item.isInErrorState()) {
+        if (item.isInErrorState()) {
             this.menu.findItem(R.id.replace_expenseit_receipt).setVisible(true);
         }
 
@@ -502,7 +490,6 @@ public class ExpenseItDetailActivity extends BaseActivity
         DialogFragmentFactory.getAlertDialog(titleString, messageString, R.string.general_yes, -1, R.string.general_no,
                 yesListener, null, null, null).show(getSupportFragmentManager(), CLS_TAG);
     }
-
 
 
     @Override
@@ -974,7 +961,22 @@ public class ExpenseItDetailActivity extends BaseActivity
     }
 
     @Override
+    public void onBackPressed() {
+        if (newComment != null) {
+            ConcurCore ConcurCore = this.getConcurCore();
+            IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
+            expEntCache.setShouldFetchExpenseList();
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public void saveComment(String comment) {
+        if (comment.equals("") && item.getNote() == null) {
+            return;
+        } else if (item.getNote() != null && item.getNote().equals(comment)) {
+            return;
+        }
         if (newComment == null) {
             newComment = new ExpenseItNote();
         }
