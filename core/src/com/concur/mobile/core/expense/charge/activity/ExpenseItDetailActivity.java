@@ -202,12 +202,19 @@ public class ExpenseItDetailActivity extends BaseActivity
     protected BaseAsyncRequestTask.AsyncReplyListener mPutCommentAsyncReplyListener = new BaseAsyncRequestTask.AsyncReplyListener() {
         @Override
         public void onRequestSuccess(Bundle resultData) {
+            // Track count.
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Save Comment");
+
+            // Track timing.
+            EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
+                    System.currentTimeMillis() - metricsTiming, "Save Comment", "");
+
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PutCommentAsyncReplyListener called.");
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            // TODO: Handle failure, currently fails silently.
+            // TODO: Handle failure, currently fails silently if ExpenseIt is down.
             Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFailed for PutCommentAsyncReplyListener called.");
         }
 
@@ -219,6 +226,7 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         @Override
         public void cleanup() {
+            metricsTiming = 0L;
             mPutExpenseItCommentReceiver = null;
         }
     };
@@ -734,6 +742,7 @@ public class ExpenseItDetailActivity extends BaseActivity
         if (mPutExpenseItNoteAsyncTask != null && mPutExpenseItNoteAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
             mPutExpenseItCommentReceiver.setListener(mPutCommentAsyncReplyListener);
         } else {
+            metricsTiming = System.currentTimeMillis();
             mPutExpenseItNoteAsyncTask = new PutExpenseItNoteAsyncTask(getApplicationContext(), 1,
                     mPutExpenseItCommentReceiver, newComment);
             mPutExpenseItNoteAsyncTask.execute();
