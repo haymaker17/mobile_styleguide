@@ -1040,7 +1040,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static boolean isExpenseItUser() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        //To show Expenseit features. We look for both the role and site settings
         return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
+        /* ENABLE THIS ONLY WHEN MODULE IS WORKING ON THE SERVER
+        boolean enabled = prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled();
+        return enabled;
+        */
     }
 
     public static boolean isCardAgreementAccepted() {
@@ -1223,6 +1228,16 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static boolean shouldShowHotelJarvisUI() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
         return prefs.getBoolean(Const.SHOW_JARVIS_HOTEL_UI, false);
+    }
+
+    /**
+     * Gets whether or not ExpenseIt experience is enabled.
+     *
+     * @return boolean
+     */
+    public static boolean isExpenseItExperienceEnabled() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.PREF_ENABLE_EXPENSE_IT_EXPERIENCE, false);
     }
 
     /*

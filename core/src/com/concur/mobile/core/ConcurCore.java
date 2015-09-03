@@ -3195,6 +3195,11 @@ public abstract class ConcurCore extends MultiDexApplication {
         if (enableConditionalFieldEvaluation == null)
             enableConditionalFieldEvaluation = Boolean.FALSE;
 
+        Boolean enableExpenseItExperience = (Boolean) responses
+            .get(Const.LR_SITE_SETTINGS_ENABLE_EXPENSE_IT_EXPERIENCE);
+        if (enableExpenseItExperience == null)
+            enableExpenseItExperience = Boolean.FALSE;
+
         String nshAgreeString = (String) responses.get(Const.NEED_SAFE_HARBOR_AGREEMENT);
         Boolean needSafeHarborAgreement = Parse.safeParseBoolean(nshAgreeString);
         if (needSafeHarborAgreement == null)
@@ -3233,6 +3238,9 @@ public abstract class ConcurCore extends MultiDexApplication {
         PreferenceUtil.savePreference(prefs, Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, hasTravelAllowanceFixed);
         PreferenceUtil.savePreference(prefs, Const.PREF_ALLOW_CONDITIONAL_FIELD_EVALUATION,
                 enableConditionalFieldEvaluation);
+
+        PreferenceUtil.savePreference(prefs, Const.PREF_ENABLE_EXPENSE_IT_EXPERIENCE,
+            enableExpenseItExperience);
 
         // NeedSafeHarborAgreement
         PreferenceUtil.savePreference(prefs, Const.PREF_NSH_AGREE, (needSafeHarborAgreement == null) ? false
