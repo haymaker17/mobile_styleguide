@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
@@ -413,24 +414,20 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
         }
     }
 
-    protected void showOfflineDialog() {
+    protected void showOfflineDialog(int... customMessage) {
         if (isOffline) {
             if (currProgressDialog != null && currProgressDialog.isShowing()) {
                 currProgressDialog.dismiss();
                 currProgressDialog = null;
             }
 
+            if (customMessage.length == 0) {
+                int value = R.string.dlg_no_connectivity_message;
+                customMessage = new int[]{value};
+            }
             DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.dlg_no_connectivity_title),
-                    getString(R.string.dlg_no_connectivity_message))
+                    getString(customMessage[0]))
                     .show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
-            // BaseActivity.this.showDialog(Const.DIALOG_SYSTEM_UNAVAILABLE);
-
-            // CustomDialogFragment dialog = new CustomDialogFragment();
-            //            dialog.setTitle(R.string.dlg_no_connectivity_title);
-            //            dialog.setMessage(R.string.dlg_no_connectivity_message);
-            //            dialog.setPositiveButtonText(R.string.dialog_ok);
-
-            //            dialog.show(getFragmentManager(), "DIALOG_NO_CONNECTIVITY");
 
         }
     }

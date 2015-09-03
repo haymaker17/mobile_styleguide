@@ -1065,7 +1065,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 enableReserveLayout(true);
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
+            showOfflineDialog(R.string.reserve_dlg_no_connectivity_message);
         }
 
         // TODO - travel program Id
