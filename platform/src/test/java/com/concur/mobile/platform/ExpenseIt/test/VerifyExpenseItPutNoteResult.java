@@ -48,7 +48,7 @@ public class VerifyExpenseItPutNoteResult implements VerifyResponse<PutExpenseIt
 
         Assert.assertEquals(MTAG + ": Note", receipt.getNote(), "ConcurMobile");
 
-        Assert.assertNotNull(MTAG + ": Id not Null", receipt.getId());
+        Assert.assertEquals(MTAG + ": Id not Null", receipt.getId(), Long.valueOf(19093406));
 
         Assert.assertNotNull(MTAG + ": Processing engine not Null", receipt.getProcessingEngine());
     }

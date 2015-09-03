@@ -20,6 +20,8 @@ public class PutExpenseItNoteTaskTest extends AsyncRequestTest {
         this.expenseId = id;
     }
 
+    public Long getExpenseId() { return this.expenseId; }
+
     public PutExpenseItNoteTaskTest(boolean useMockServer) {
         super(useMockServer);
     }
@@ -36,7 +38,7 @@ public class PutExpenseItNoteTaskTest extends AsyncRequestTest {
                 0, noteReceiver, getNote());
 
         VerifyExpenseItPutNoteResult verifier = new VerifyExpenseItPutNoteResult();
-        runTest("expenseIt/PostExpenseItNoteResponse.json", task, verifier);
+        runTest("expenseIt/PutExpenseItNoteResponse.json", task, verifier);
     }
 
     protected ExpenseItNote getNote() {
