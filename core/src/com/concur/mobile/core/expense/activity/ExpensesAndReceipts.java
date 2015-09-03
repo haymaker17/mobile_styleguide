@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,7 @@ import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.ui.expense.BuildConfig;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1289,6 +1291,13 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
         @Override
         public void cleanup() {
+            //After calling save image. clear any reference to file path since that triggers a call to the server
+            //when this activity get reset.
+            if (getIntent() != null && getIntent().getExtras() != null) {
+                if (!TextUtils.isEmpty(getIntent().getExtras().getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH))) {
+                    getIntent().removeExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
+                }
+            }
             uploadExpenseItReceiptReceiver = null;
             metricsTiming = 0L;
         }
