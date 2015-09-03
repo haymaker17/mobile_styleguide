@@ -43,7 +43,7 @@ public enum EventTracker {
     @SuppressWarnings("unused")
     private String gaTrackingId; // Google Analytics Tracking ID
 
-    private Double sampleFrequency = 200.0;
+    private Double sampleFrequency = 100.0;
 
     // GA Logger verbosity.
     private static final Logger.LogLevel GA_LOG_VERBOSITY = Logger.LogLevel.VERBOSE;
