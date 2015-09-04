@@ -268,7 +268,7 @@ public class
                     new TravelAllowanceFacade.ExpenseEntriesTACallback() {
 
                         @Override
-                        public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode) {
+                        public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode, final boolean isInApproval) {
                             View button = findViewById(R.id.header_itinerary);
                             if (button == null) {
                                 return;
@@ -288,6 +288,7 @@ public class
                                     intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
                                     intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
                                     intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
+                                    intent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
                                     ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
                                 }
                             });

@@ -397,6 +397,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     cal.setTime(this.defaultDate);
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
+                    cal.set(Calendar.HOUR, 0);
                     emptySegment.setDepartureDateTime(cal.getTime());
                     cal.add(Calendar.MINUTE, 1);
                     emptySegment.setArrivalDateTime(cal.getTime());
@@ -534,7 +535,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void showDeleteDialog() {
         Bundle bundle = new Bundle();
-        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
+//        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
+        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getString(R.string.itin_delete_stop));
         MessageDialogFragment messageDialog = new MessageDialogFragment();
         messageDialog.setArguments(bundle);
         messageDialog.setOnOkListener(onDeleteOkClickListener);

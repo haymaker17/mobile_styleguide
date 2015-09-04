@@ -36,7 +36,7 @@ public class TravelAllowanceFacade implements IControllerListener {
 
 
     public interface ExpenseEntriesTACallback {
-        void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode);
+        void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode, final boolean isInApproval);
 
         void taDateRefreshFinished();
     }
@@ -109,7 +109,7 @@ public class TravelAllowanceFacade implements IControllerListener {
                         DebugUtils.buildLogText(CLASS_TAG, "refreshVisibility",
                                 " Button visible: Approver case and list > 0."));
                 if (expenseEntriesCallbackReference != null) {
-                    expenseEntriesCallbackReference.enableTAItineraryButton(TravelAllowanceActivity.class, false);
+                    expenseEntriesCallbackReference.enableTAItineraryButton(TravelAllowanceActivity.class, false, isInApproval);
                 }
                 return;
             }
@@ -135,12 +135,12 @@ public class TravelAllowanceFacade implements IControllerListener {
                     if (itineraryController != null && itineraryController.getItineraryList().size() == 0) {
                         if (expenseEntriesCallbackReference != null) {
                             expenseEntriesCallbackReference.enableTAItineraryButton(ItineraryUpdateActivity.class,
-                                    true);
+                                    true, isInApproval);
                         }
                     } else {
                         if (expenseEntriesCallbackReference != null) {
                             expenseEntriesCallbackReference.enableTAItineraryButton(TravelAllowanceActivity.class,
-                                    true);
+                                    true, isInApproval);
                         }
                     }
                     return;

@@ -192,7 +192,8 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
 
     private void showDeleteDialog(final Itinerary itinerary) {
         Bundle bundle = new Bundle();
-        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
+//        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
+        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getString(R.string.dlg_expense_confirm_report_delete_title));
         MessageDialogFragment messageDialog = new MessageDialogFragment();
         messageDialog.setArguments(bundle);
         messageDialog.setOnOkListener(new DialogInterface.OnClickListener() {

@@ -54,6 +54,8 @@ public class TravelAllowanceActivity extends BaseActivity
 
     private ViewPagerAdapter viewPagerAdapter;
 
+    private boolean isInApproval;
+
     /**
      * {@inheritDoc}
      */
@@ -106,6 +108,8 @@ public class TravelAllowanceActivity extends BaseActivity
             setSupportActionBar(toolbar);
 
         }
+
+        isInApproval = getIntent().getBooleanExtra(BundleId.IS_IN_APPROVAL, false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ta_travel_allowances);
@@ -240,13 +244,13 @@ public class TravelAllowanceActivity extends BaseActivity
     public void sendMessage(String message) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", "message = " + message));
         if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, true);
+            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
         }
         if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
         }
         if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, false);
+            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
         }
         if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
