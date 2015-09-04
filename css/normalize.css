@@ -84,7 +84,7 @@ body {
  */
 
 a:focus {
-    outline: thin dotted;
+    outline: 0;
 }
 
 /**
@@ -407,6 +407,3 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-
-

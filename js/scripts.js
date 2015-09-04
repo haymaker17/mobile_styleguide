@@ -138,7 +138,7 @@ function setHeader(inTitle,inCategory,topCategory) {
 function getGithubCommits() {
   var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
 
-  $.getJSON("https://api.github.com/repos/haymaker17/mobile_labs/commits", function(data){
+  $.getJSON("https://api.github.com/repos/haymaker17/mobile_styleguide/commits", function(data){
     $.each(data, function(key, val){
       var item = data[key];
       var message = item.commit.message;
