@@ -351,7 +351,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         renderDefaultValues();
 
-        registerForContextMenu(listView);
+        // Disable long press on the rows
+        //registerForContextMenu(listView);
 
         View fab = findViewById(R.id.fab);
         if (fab != null) {
@@ -605,6 +606,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             if (etItinerary != null) {
                 this.itinerary.setName(etItinerary.getText().toString());
             }
+            showProgressBar(true);
             itinController.executeUpdate(this.itinerary);
             taskChain = 1;
             return true;
@@ -696,9 +698,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 return;
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                findViewById(R.id.progressBar).setVisibility(View.GONE);
-                findViewById(R.id.et_itinerary).setEnabled(true);
-                findViewById(R.id.list_view).setEnabled(true);
+                showProgressBar(false);
 
                 if (taskChain != 1) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "Got not needed notification... Ignoring"));
@@ -710,9 +710,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (result != null) {
                         List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                         if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-                            findViewById(R.id.et_itinerary).setEnabled(false);
-                            findViewById(R.id.list_view).setEnabled(false);
+                           showProgressBar(true);
                         }
                     }
                 }
@@ -732,9 +730,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Itinerary Update caused changes to Allowances. Need to refresh..."));
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-                        findViewById(R.id.et_itinerary).setEnabled(false);
-                        findViewById(R.id.list_view).setEnabled(false);
+                       showProgressBar(true);
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
@@ -743,9 +739,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 refreshAdapter();
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                findViewById(R.id.progressBar).setVisibility(View.GONE);
-                findViewById(R.id.et_itinerary).setEnabled(true);
-                findViewById(R.id.list_view).setEnabled(true);
+                showProgressBar(false);
                 if (isSuccess) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Allowances have been saved successfully in order to generate expenses"));
@@ -774,5 +768,18 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         this.adapter.clear();
         this.adapter.addAll(this.itinerary.getSegmentList());
         adapter.notifyDataSetChanged();
+    }
+
+    private void showProgressBar(boolean show) {
+        if (show) {
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+            findViewById(R.id.et_itinerary).setEnabled(false);
+            findViewById(R.id.list_view).setEnabled(false);
+        } else {
+            findViewById(R.id.progressBar).setVisibility(View.GONE);
+            findViewById(R.id.et_itinerary).setEnabled(true);
+            findViewById(R.id.list_view).setEnabled(true);
+        }
+
     }
 }

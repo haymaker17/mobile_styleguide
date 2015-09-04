@@ -88,7 +88,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="144dp"
-        android:id="@+id/list_view" />
+        android:id="@+id/list_view"
+        android:divider="@null"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
