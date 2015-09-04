@@ -47,7 +47,7 @@
         <item name="colorPrimaryDark">@color/Black</item>
     </style>
 
-    <style name="ConcurBaseTheme.NoActionBar">
+    <style name="ConcurBaseTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!--
             Theme customizations available in newer API levels can go in
@@ -56,27 +56,15 @@
         -->
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <!--
-             Following parameter is needed for AppCompat v22.+
-             and relevant only if this style is applied to an
-             activity which inherits from AppCompatActivity.
-         -->
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurBaseTheme.Translucent">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ConcurBaseTheme.Translucent.NoActionBar">
+    <style name="ConcurBaseTheme.Translucent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <!--
-             Following parameter is needed for AppCompat v22.+
-             and relevant only if this style is applied to an
-             activity which inherits from AppCompatActivity.
-         -->
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme" parent="ConcurBaseTheme">
@@ -302,6 +290,24 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+
+    <style name="TourText_Material">
+        <item name="android:textColor">@color/MaterialCharcoal</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TourSmallSecondaryText_Material">
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TourSmallSecondaryText_Green_Material">
+        <item name="android:textColor">@color/MaterialGreen</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
     <!-- End Tour Styles. -->
 
 
@@ -315,4 +321,71 @@
 
     <!-- END Offline Header Styles -->
 
+    <style name="MaterialDesignTheme_Login" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimaryDark">@color/MaterialDarkBlue</item>
+        <item name="colorPrimary">@color/MaterialConcurBlue</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="ConcurBaseTheme.NoActionBar.Material" parent="ConcurBaseTheme.NoActionBar">
+        <item name="android:windowBackground">@color/MaterialWhite</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="ConcurTheme.Translucent.NoActionBar.Material" parent="ConcurBaseTheme.Translucent.NoActionBar">
+        <item name="android:windowBackground">@color/MaterialWhite</item>
+        <item name="colorAccent">@color/MaterialConcurBlue</item>
+    </style>
+
+    <style name="TestRegPrimary_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+    </style>
+
+    <style name="TestRegSecondary_Material">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+    </style>
+
+    <style name="TourSubHeaderBold_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+    </style>
+
+    <style name="TourSubHeaderTextNormal_Material">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/MaterialDarkGray</item>
+    </style>
+
+    <style name="TransparantButton_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_transparent_standard_material</item>
+        <item name="android:height">@dimen/standard_button_height</item>
+        <item name="android:textColor">@color/btn_transparent_text</item>
+    </style>
+
+    <style name="StandardBlueButton_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_blue_standard_material</item>
+        <item name="android:textColor">@color/MaterialWhite</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:height">@dimen/standard_material_button_height</item>
+    </style>
+
+    <style name="Standard_Button_Green_Material">
+        <item name="android:textSize">18sp</item>
+        <item name="android:minWidth">@dimen/standard_button_min_width</item>
+        <item name="android:background">@drawable/btn_green_standard_material</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/MaterialWhite</item>
+        <item name="android:height">@dimen/standard_material_button_height</item>
+    </style>
 </resources>

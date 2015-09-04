@@ -1,6 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import static com.concur.mobile.core.util.Flurry.EVENT_NAME_BACK_BUTTON_CLICK;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +15,8 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.fragment.TestDriveRegistrationFragment;
 import com.concur.mobile.platform.ui.common.IProgressBarListener;
 
+import static com.concur.mobile.core.util.Flurry.EVENT_NAME_BACK_BUTTON_CLICK;
+
 @EventTracker.EventTrackerClassName(getClassName = "Test Drive Registration")
 public class TestDriveRegistration extends BaseActivity implements IProgressBarListener {
 
@@ -28,7 +29,7 @@ public class TestDriveRegistration extends BaseActivity implements IProgressBarL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_drive_main);
+        setContentView(R.layout.main_container);
 
         // Enable the progress mask if needed
         if (savedInstanceState != null) {

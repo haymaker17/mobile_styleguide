@@ -399,11 +399,6 @@ public class Flurry {
     public static final String PARAM_VALUE_MANAGER_APPROVAL = "Manager Approval";
     public static final String PARAM_VALUE_UBER = "Uber";
 
-    public static final String CATEGORY_WAIT_TIME = "Wait Time";
-    public static final String LABEL_WAIT_TIME = "measurement in milliseconds";
-    public static final String ACTION_AUTO_LOGIN_WAIT = "Authenticating View";
-
-
     // SCREEN NAME FOR SIGN IN
     public static final String SCREEN_NAME_EMAIL_LOOKUP = "Sign In-Enter Email";
     public static final String SCREEN_NAME_LOGIN_PASSWORD = "Sign In-Enter Password";

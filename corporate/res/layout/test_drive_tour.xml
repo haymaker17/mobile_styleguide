@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/main_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/blue_background"
-    android:orientation="vertical" >
+    android:background="@color/MaterialWhite"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:weightSum="1">
+
 
         <ViewFlipper
             android:id="@+id/tourFlipper"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_weight="1">
         </ViewFlipper>
 
         <LinearLayout
@@ -24,22 +27,36 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:minHeight="48dp"
-            android:paddingBottom="8dp" >
+            android:paddingBottom="8dp"
+            >
 
             <View
                 android:id="@+id/tourPage1Marker"
                 android:layout_width="@dimen/tour_flipper_square_size"
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
-                android:background="#ffffff" />
+                android:background="@color/MaterialGreen"/>
 
             <View
                 android:id="@+id/tourPage2Marker"
                 android:layout_width="@dimen/tour_flipper_square_size"
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
-                android:background="#66ffffff" />
+                android:background="@color/MaterialLightGray"/>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/test_drive_continue"
+            style="@style/Standard_Button_Green_Material"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/test_drive_submit">
+        </Button>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,79 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/list_group_vertical_margin"
-    android:paddingLeft="@dimen/list_item_horizontal_margin"
-    android:paddingRight="@dimen/list_item_horizontal_margin"
-    android:paddingTop="@dimen/list_group_vertical_margin" >
 
-    <ScrollView
-        android:id="@+id/main_scroll_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdgeLength="20dp"
-        android:fillViewport="true"
-        android:scrollbars="none" >
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:shrinkColumns="*"
+    android:stretchColumns="*">
 
-        <RelativeLayout
-            android:id="@+id/tourPage1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5"
+        android:gravity="center">
 
-            <ImageView
-                android:id="@+id/tourImage"
-                android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/tourImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
+            android:scaleType="fitXY"
+            android:src="@drawable/test_drive_tour_image1"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.5"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/container_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:orientation="vertical">
+
+            <include layout="@layout/dot_group_saparator"/>
+
+            <TextView
+                android:id="@+id/td_tour_welcome_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxWidth="@dimen/test_drive_tour_max_image_size"
-                android:adjustViewBounds="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/test_drive_tour_img_margin_bottom"
-                android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
-                android:scaleType="fitCenter"
-                android:src="@drawable/tour_graphic2" />
+                android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
+                android:gravity="center_horizontal"
+                android:text="@string/test_drive_tour_welcome_pg1_title"
+                android:textAppearance="@style/TourText_Material"/>
+
+            <TextView
+                android:id="@+id/td_tour_welcome_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
+                android:gravity="center_horizontal"
+                android:text="@string/test_drive_tour_welcome_pg1_subtitle"
+                android:textAppearance="@style/TourText_Material"/>
 
             <LinearLayout
-                android:id="@+id/container_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/tourImage"
-                android:orientation="vertical" >
-
-                <include layout="@layout/dot_group_saparator" />
-
-                <TextView
-                    android:id="@+id/td_tour_welcome_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
-                    android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
-                    android:gravity="center"
-                    android:text="@string/test_drive_tour_welcome_pg1_title"
-                    android:textAppearance="@style/TourText" />
-
-                <TextView
-                    android:id="@+id/td_tour_welcome_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
-                    android:gravity="center"
-                    android:text="@string/test_drive_tour_welcome_pg1_subtitle"
-                    android:textAppearance="@style/TourText" />
+                android:id="@+id/container_include_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:orientation="vertical">
 
                 <include
                     android:id="@+id/td_tour_topic1"
-                    layout="@layout/test_drive_tour_topic" />
+                    layout="@layout/test_drive_tour_topic"/>
 
                 <include
                     android:id="@+id/td_tour_topic2"
-                    layout="@layout/test_drive_tour_topic" />
+                    layout="@layout/test_drive_tour_topic"/>
 
                 <include
                     android:id="@+id/td_tour_topic3"
-                    layout="@layout/test_drive_tour_topic" />
+                    layout="@layout/test_drive_tour_topic"/>
             </LinearLayout>
-        </RelativeLayout>
-    </ScrollView>
+        </LinearLayout>
 
-</RelativeLayout>
+    </TableRow>
+
+
+</TableLayout>

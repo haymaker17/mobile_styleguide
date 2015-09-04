@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.util.Format;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
@@ -20,14 +21,11 @@ public class LoginHelpMain extends BaseFragment {
 
         View root = inflater.inflate(R.layout.login_help_main, null);
 
-        // Set the title.
-        getBaseActivity().getSupportActionBar().setTitle(R.string.login_help_with_signin_title);
-
         // Setup the 'work email' popup
         TextView helpTV = (TextView) root.findViewById(R.id.emailHelpText);
         String workEmailText = getActivity().getText(R.string.login_help_work_email).toString();
 
-        StringBuilder workEmailColored = new StringBuilder("<font color=#A9DEFF>");
+        StringBuilder workEmailColored = new StringBuilder("<font color=#0078C8>");
         workEmailColored.append(workEmailText).append("</font>");
 
         String helpText = Format.localizeText(getActivity(), R.string.login_help_email_prompt,
@@ -45,5 +43,4 @@ public class LoginHelpMain extends BaseFragment {
 
         return root;
     }
-
 }

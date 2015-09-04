@@ -120,7 +120,7 @@
         <item name="actionOverflowButtonStyle">@style/ActionBarOverflowButton</item>
     </style>
 
-    <style name="ConcurBaseTheme.NoActionBar">
+    <style name="ConcurBaseTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
 
         <!--
             Theme customizations available in newer API levels can go in
@@ -129,36 +129,20 @@
         -->
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <!--
-             Following parameter is needed for AppCompat v22.+
-             and relevant only if this style is applied to an
-             activity which inherits from AppCompatActivity.
-         -->
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurBaseTheme.Translucent">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="ConcurBaseTheme.Translucent.NoActionBar">
+    <style name="ConcurBaseTheme.Translucent.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <!--
-             Following parameter is needed for AppCompat v22.+
-             and relevant only if this style is applied to an
-             activity which inherits from AppCompatActivity.
-         -->
-        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme" parent="ConcurBaseTheme">
         <item name="android:textAppearanceSmall">@style/PrimaryText</item>
     </style>
-
-    <style name="ConcurTheme.NoActionBar" parent="ConcurBaseTheme.NoActionBar"></style>
-
-    <style name="ConcurTheme.Translucent.NoActionBar" parent="ConcurBaseTheme.Translucent.NoActionBar"></style>
 
     <style name="ConcurTheme.Dialog" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
@@ -266,7 +250,7 @@
     </style>
 
     <style name="TourText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">18sp</item>
     </style>
 
