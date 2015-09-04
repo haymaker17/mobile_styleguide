@@ -9,6 +9,7 @@ dependencies {
     testCompile files('libs/simple-xml-2.7.1.jar')
     testCompile files('libs/jetty.jar')
     testCompile files('libs/commons.io_2.0.1.jar')
+    testCompile 'org.apache.maven:maven-ant-tasks:2.1.3'
 }
 
 android {
