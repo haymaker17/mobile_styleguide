@@ -49,7 +49,6 @@ import com.concur.mobile.platform.expense.smartexpense.SmartExpenseListRequestTa
 import com.concur.mobile.platform.expenseit.ErrorResponse;
 import com.concur.mobile.platform.expenseit.ExpenseItImage;
 import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
-import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItPostReceiptResponse;
 import com.concur.mobile.platform.expenseit.GetExpenseItExpenseListAsyncTask;
 import com.concur.mobile.platform.expenseit.PostExpenseItReceiptAsyncTask;
@@ -58,7 +57,6 @@ import com.concur.mobile.platform.ui.common.util.PreferenceUtil;
 import com.concur.mobile.platform.ui.expense.BuildConfig;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jetty.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;

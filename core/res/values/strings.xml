@@ -1305,7 +1305,7 @@
     <string name="dlg_expense_remove_card_charge_not_supported">Removal of this expense is not supported on mobile.</string>
 
     <plurals name="dlg_expense_remove_mixed_confirm">
-        <item quantity="one">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expense will be deleted.\n\nAre you sure?</item>
+        <item quantity="one">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expense and/or receipt capture will be deleted.\n\nAre you sure?</item>
         <item quantity="other">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expenses will be deleted.\n\nAre you sure?</item>
     </plurals>
 

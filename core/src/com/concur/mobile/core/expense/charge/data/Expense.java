@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.platform.expense.receipt.list.dao.ReceiptDAO;
-import com.concur.mobile.platform.expense.smartexpense.dao.SmartExpenseDAO;
+import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 
 import org.xml.sax.Attributes;
@@ -55,6 +55,8 @@ public class Expense {
         UNKNOWN_EXPENSE // If we can't determine the type of expense based on keys and SmartExpenseId.
 
     };
+
+    private SmartExpense smartExpense;
 
     // The expense entry type.
     private ExpenseEntryType type;
@@ -160,13 +162,15 @@ public class Expense {
         this.receiptCapture = receiptCaptures;
     }
 
-    public Expense(SmartExpenseDAO smartExpense) {
+    public Expense(SmartExpense smartExpense) {
         // Get all keys, then determine what type of expense we're dealing with and build it out
         boolean hasEReceiptId = !(TextUtils.isEmpty(smartExpense.getEReceiptId()));
         boolean hasCctKey = !(TextUtils.isEmpty(smartExpense.getCctKey()));
         boolean hasPctKey = !(TextUtils.isEmpty(smartExpense.getPctKey()));
         boolean hasRcKey = !(TextUtils.isEmpty(smartExpense.getRcKey()));
         boolean hasMeKey = !(TextUtils.isEmpty(smartExpense.getMeKey()));
+
+        this.smartExpense = smartExpense;
 
         // Card icons are shown if any card is present
         shouldShowCardIcon = (hasCctKey || hasPctKey);
@@ -347,6 +351,10 @@ public class Expense {
      */
     public MobileEntry getCashTransaction() {
         return cashTransaction;
+    }
+
+    public SmartExpense getSmartExpense() {
+        return smartExpense;
     }
 
     /**
@@ -644,8 +652,8 @@ public class Expense {
 
         /**
          * Will add a list of receipt capture entries to the list of expenses.
-         * 
-         * @param receiptcaptures
+         *
+         * @param transactions
          */
         private void addReceiptCapturesToExpenses(ArrayList<ReceiptCapture> transactions) {
             if (transactions != null) {
