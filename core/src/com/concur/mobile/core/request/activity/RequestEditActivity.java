@@ -143,7 +143,7 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
 
             //fields Value
             startLocation = "";
-            destination = " "; //TEMP must be  get from WS
+            destination = tr.getMainDestinationName();
             startDate = tr.getStartDate();
             endDate = tr.getEndDate();
             businessPurpose = tr.getPurpose();

@@ -81,6 +81,10 @@ public class RequestDTO implements FormDTO {
     @SerializedName("Exceptions")
     private List<RequestExceptionDTO> exceptions;
 
+    @Expose
+    @SerializedName("MainDestinationName")
+    private String mainDestinationName;
+
     // --- required to post/put
     @Expose
     @SerializedName(("PolicyID"))
@@ -274,6 +278,15 @@ public class RequestDTO implements FormDTO {
         }
         return false;
     }
+
+    public String getMainDestinationName() {
+        return mainDestinationName;
+    }
+
+    public void setMainDestinationName(String mainDestinationName) {
+        this.mainDestinationName = mainDestinationName;
+    }
+
 
     @Override
     public Integer getDisplayOrder() {
