@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
 import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.groupConfiguration.Agency;
 import com.concur.mobile.platform.request.permission.Link;
 import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
@@ -94,6 +95,8 @@ public class RequestDTO implements FormDTO {
     private Link permissionsLink;
 
     private int displayOrder = 1;
+
+    public Agency agency;
 
     @Override
     public String getId() {
@@ -242,6 +245,14 @@ public class RequestDTO implements FormDTO {
 
     public void setHighestExceptionLevel(RequestExceptionDTO.ExceptionLevel highestExceptionLevel) {
         this.highestExceptionLevel = highestExceptionLevel;
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
     }
 
     public List<RequestExceptionDTO> getExceptions() {

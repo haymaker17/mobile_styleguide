@@ -39,11 +39,13 @@ import com.concur.mobile.platform.request.dto.RequestDTO;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestExceptionDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
+import com.concur.mobile.platform.request.groupConfiguration.Agency;
 import com.concur.mobile.platform.request.groupConfiguration.RequestGroupConfiguration;
 import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.request.task.RequestTask;
 import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
+import com.concur.mobile.platform.request.permission.UserPermission;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -137,9 +139,7 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         if (requestId != null) {
             tr = requestListCache.getValue(requestId);
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
-            setCanSave(tr.getApprovalStatus() == RequestDTO.ApprovalStatus.CREATION || tr
-                    .getApprovalStatus() == RequestDTO.ApprovalStatus.RECALLED);
-
+            setCanSave(tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT));
 
             //fields Value
             startLocation = "";
@@ -191,6 +191,10 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             tr.setPolicyId(rgc.getDefaultPolicyId());
             tr.setCurrencyCode(Currency.getInstance(locale).getCurrencyCode());
             tr.setRequestDate(new Date());
+
+            List<Agency> agencies = rgc.getAgencies();
+            tr.setAgency( (agencies.size()>0)?agencies.get(0):null );
+
             setCanSave(true);
 
             //fields Value
