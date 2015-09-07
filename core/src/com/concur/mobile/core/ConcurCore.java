@@ -58,13 +58,11 @@ import com.concur.mobile.core.expense.report.service.AttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.ConditionalFieldAction;
 import com.concur.mobile.core.expense.report.service.ExtendedAttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
-import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
-import com.concur.mobile.core.expense.travelallowance.Itinerary;
-import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
-import com.concur.mobile.core.expense.travelallowance.TaConfig;
-import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
-import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
-import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.ta.service.FixedAllowances;
+import com.concur.mobile.core.expense.ta.service.Itinerary;
+import com.concur.mobile.core.expense.ta.service.ItineraryRow;
+import com.concur.mobile.core.expense.ta.service.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -296,10 +294,8 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
 
-    // Controllers for Allowance and Itinerary handling
-    private TravelAllowanceItineraryController taItineraryController;
-    private FixedTravelAllowanceController fixedTravelAllowanceController;
-    private TravelAllowanceConfigurationController taConfigController;
+    // Controllers for Travel Allowance handling
+    private TravelAllowanceController taController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -1352,65 +1348,56 @@ public abstract class ConcurCore extends MultiDexApplication {
         this.railStationsLastRetrieved = stationsLastRetrieved;
     }
 
-    public TravelAllowanceItineraryController getTaItineraryController() {
-        if (taItineraryController == null) {
-            taItineraryController = new TravelAllowanceItineraryController(this);
-        }
-        return taItineraryController;
-    }
-
     /**
-     * Creates an instance of a {@link FixedTravelAllowanceController}
-     *
-     * @return The controller
+     * To get the new travel allowance controller which handles the entire itinerary,
+     * fixed TA and TA config logic between the UI and the backend.
+     * 
+     * @return the {@link TravelAllowanceController}
      */
-    public FixedTravelAllowanceController getFixedTravelAllowanceController() {
-        if (this.fixedTravelAllowanceController == null) {
-            this.fixedTravelAllowanceController = new FixedTravelAllowanceController(this);
+    public TravelAllowanceController getTaController() {
+        if (taController == null) {
+            taController = new TravelAllowanceController(this.getApplicationContext());
         }
-        return this.fixedTravelAllowanceController;
+        return taController;
     }
 
-    /**
-     * Creates an instance of a {@link TravelAllowanceConfigurationController}
-     *
-     * @return The controller
-     */
-    public TravelAllowanceConfigurationController getTAConfigController() {
-        if (this.taConfigController == null) {
-            this.taConfigController = new TravelAllowanceConfigurationController(this);
-        }
-        return this.taConfigController;
-    }
 
+    @Deprecated
     public TaConfig getTAConfig() {
         return taConfig;
     }
 
+    @Deprecated
     public void setTAConfig(TaConfig taConfig) {
         this.taConfig = taConfig;
     }
 
+    @Deprecated
     public Itinerary getTAItinerary() {
         return taItinerary;
     }
 
+    @Deprecated
     public void setTAItinerary(Itinerary taItinerary) {
         this.taItinerary = taItinerary;
     }
 
+    @Deprecated
     public FixedAllowances getFixedAllowances() {
         return fixedAllowances;
     }
 
+    @Deprecated
     public void setFixedAllowances(FixedAllowances fixedAllowances) {
         this.fixedAllowances = fixedAllowances;
     }
 
+    @Deprecated
     public ItineraryRow getSelectedTAItineraryRow() {
         return taItineraryRow;
     }
 
+    @Deprecated
     public void setSelectedTAItineraryRow(ItineraryRow row) {
         this.taItineraryRow = row;
     }

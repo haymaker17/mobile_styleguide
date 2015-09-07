@@ -449,6 +449,10 @@ public class ViewUtil {
     }
 
     public static boolean hasTravelAllowanceFixed(Context context) {
+        if (context == null) {
+            Log.e("TA", ViewUtil.class.getSimpleName() + " context is null in hasTravelAllowanceFixed.");
+            return false;
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(Const.PREF_HAS_TRAVEL_ALLOWANCE_FIXED, false);
     }

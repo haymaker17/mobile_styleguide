@@ -126,7 +126,7 @@ public class GetTAItinerariesResponseParser extends BaseParser {
             depLoc.setCode(currentItineraryRow.get("DepartLnKey"));
             String departureOffset = null;
             try {
-                departureOffset = currentItineraryRow.get("DepartureTimeZoneOffset");
+                departureOffset = currentItineraryRow.get("DepartTimeZoneOffset");
                 if (departureOffset != null) {
                     long departureOffsetMinutes = Long.parseLong(departureOffset, 10);
                     depLoc.setTimeZoneOffset(departureOffsetMinutes);

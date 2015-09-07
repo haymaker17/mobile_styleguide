@@ -53,6 +53,11 @@ public class FormFieldViewListener implements IFormFieldViewListener {
     private List<FormFieldView> taxFrmFldViews;
 
     /**
+     * Contains a list of travel allowance related form field vie objects.
+     */
+    private List<FormFieldView> taFrmFldViews;
+
+    /**
      * Constructs an instance of <code>FormFieldViewListener</code> with an associated activity.
      * 
      * @param activity
@@ -290,6 +295,24 @@ public class FormFieldViewListener implements IFormFieldViewListener {
      */
     public void setTaxFormFieldViews(List<FormFieldView> frmFldViews) {
         this.taxFrmFldViews = frmFldViews;
+    }
+
+    /**
+     *
+     * @return Travel allowance related form field views.
+     */
+    public List<FormFieldView> getTaFormFieldViews() {
+        return taFrmFldViews;
+    }
+
+    /**
+     * Sets the list of <code>FormFieldView</code> objects associated with this listener.
+     *
+     * @param frmFldViews
+     *            the list of form <code>FormFieldView</code> objects.
+     */
+    public void setTaFormFieldViews(List<FormFieldView> frmFldViews) {
+        this.taFrmFldViews = frmFldViews;
     }
 
     /*

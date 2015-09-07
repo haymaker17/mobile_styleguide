@@ -75,7 +75,8 @@ import com.concur.mobile.core.expense.report.service.SaveReportEntryRequest;
 import com.concur.mobile.core.expense.report.service.TaxForm;
 import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.service.SearchListRequest;
-import com.concur.mobile.core.expense.travelallowance.expensedetails.TAFieldFactory;
+import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.ExpTypeMruAsyncTask;
@@ -241,6 +242,11 @@ public class ExpenseEntry extends AbstractExpenseActivity {
     /** A flag indicating the key elements(location,exptype,date,country, country subcode) has been changed */
     protected boolean isKeyElementChangedForVAT = false;
 
+    /**
+     * The facade handles the entire travel allowance logic in this activity.
+     */
+    private TravelAllowanceFacade taFacade;
+
     /*
      * (non-Javadoc)
      * 
@@ -256,6 +262,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
 
         // Restore any receivers.
         restoreReceivers();
+
     }
 
     @Override
@@ -616,6 +623,24 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         return expenseTypeChanged;
     }
 
+    /**
+     * Gets whether or not the fixed travel allowance fields have a changed value.
+     *
+     * @return whether the fixed travel allowance fields have changed.
+     */
+    protected boolean hasFixedTAChanged() {
+        boolean taChanged = false;
+        if (frmFldViewListener != null && frmFldViewListener.getTaFormFieldViews() != null) {
+            for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
+                if (field.hasValueChanged()) {
+                    taChanged = true;
+                }
+            }
+        }
+
+        return taChanged;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -623,7 +648,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
      */
     @Override
     protected boolean changesPending() {
-        return (hasAttendeesChanged() || hasExpenseTypeChanged() || hasNoShowCountChanged());
+        return (hasAttendeesChanged() || hasExpenseTypeChanged() || hasNoShowCountChanged() || hasFixedTAChanged());
     }
 
     /*
@@ -1376,14 +1401,14 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 // Lockdown read-only fields.
                 lockDownReadOnlyFields();
 
-                // Set the travel allowance fields
-                populateAllowance();
-
                 // Set the expense details.
                 populateFormFields();
 
                 // Set the tax form details.
                 populateTaxFormFields();
+
+                // Handle fixed allowance fields
+                populateTaFields();
 
                 // Combine VendorName fields into one field if both present and
                 // editable.
@@ -1838,39 +1863,6 @@ public class ExpenseEntry extends AbstractExpenseActivity {
     }
 
     /**
-     * To populate the travel allowance fields of a daily allowance expense.
-     */
-    protected void populateAllowance() {
-        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
-
-        if (viewGroup != null) {
-            if (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG")) {
-                ConcurCore app = (ConcurCore) this.getApplication();
-                TAFieldFactory fieldFactory = new TAFieldFactory(this, expRepEntDet, app.getFixedTravelAllowanceController());
-                List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
-                        fieldFactory.getFormFields(), null);
-                if (frmFldViews != null && frmFldViews.size() > 0) {
-                    if (frmFldViewListener != null) {
-                        frmFldViewListener.setFormFieldViews(frmFldViews);
-                    } else {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: frmFldViewListener is null!");
-                    }
-                }
-            } else {
-                // Intention is to show the travel allowances only for daily allowance expenses.
-                View allowanceFields = findViewById(R.id.allowance_fields);
-                if (allowanceFields != null) {
-                    allowanceFields.setVisibility(View.GONE);
-                }
-                return;
-            }
-
-        } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".populateAllowance: expense entry form field group not found!");
-        }
-    }
-
-    /**
      * Will populate the view with expense details.
      */
     protected void populateFormFields() {
@@ -1906,6 +1898,45 @@ public class ExpenseEntry extends AbstractExpenseActivity {
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG + ".populateExpenseDetails: expense entry form field group not found!");
+        }
+    }
+
+    /**
+     * To populate the travel allownace related fields. Only relevant for meals and lodging.
+     */
+    protected void populateTaFields() {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+            this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
+
+                @Override
+                public void populateTravelAllowanceFields(
+                        List<ExpenseReportFormField> expenseReportFormFields) {
+                    View allowanceFields = findViewById(R.id.allowance_fields);
+                    ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
+
+                    if (allowanceFields == null || viewGroup == null) {
+                        return;
+                    }
+
+                    if (expenseReportFormFields == null || expenseReportFormFields.size() == 0) {
+                        // Nothing to do. There seems to be no fixed allowances available so keep the view GONE.
+                        allowanceFields.setVisibility(View.GONE);
+                        return;
+                    } else {
+                        // Make the view group visible for fixed allowances.
+                        allowanceFields.setVisibility(View.VISIBLE);
+                        taFacade.setExpenseDetailsTAFormFields(expenseReportFormFields);
+                    }
+
+                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
+                            expenseReportFormFields, null);
+
+                    if (frmFldViewListener != null) {
+                        frmFldViewListener.setTaFormFieldViews(frmFldViews);
+                    }
+                }
+            });
+            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRep, expRepEntDet);
         }
     }
 
@@ -2588,9 +2619,41 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         return retVal;
     }
 
+    @Override
+    protected void save() {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+            /**
+             * TA Case: If TA fields are available the TA save needs to be triggered first. As soons as the TA save is done the
+             * normal save routine will be triggered.
+             */
+            this.taFacade.setSaveExpenseEntryTACallback(new TravelAllowanceFacade.SaveExpenseEntryTACallback() {
+                @Override
+                public void saveTA() {
+                    showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                }
+
+                @Override
+                public void saveTAFinished() {
+                    dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                    // Call the normal expense save after the TA save is done.
+                    ExpenseEntry.super.save();
+                }
+            });
+            if (frmFldViewListener.getTaFormFieldViews() != null) {
+                for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
+                    field.commit();
+                }
+            }
+            this.taFacade.saveExpenseEntryTA(this.getApplicationContext(), expRep, expRepEntDet);
+        } else {
+            // If the current expens entry is not TA relevant the normal save will be triggered.
+            super.save();
+        }
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
      */
     @Override
@@ -3413,15 +3476,35 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                                         activity.finish();
                                     }
                                 } else {
-                                    activity.actionStatusErrorMessage = intent
-                                            .getStringExtra(Const.REPLY_ERROR_MESSAGE);
-                                    Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
-                                            + activity.actionStatusErrorMessage);
-                                    // Display an error dialog.
-                                    activity.showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_FAILED);
+                                    if (ViewUtil.hasTravelAllowanceFixed(activity) && activity.taFacade != null
+                                            && activity.taFacade.isTaUpdateSucceeded()
+                                            && (activity.expRepEntDet.expKey.equals("FXMLS")
+                                                    || activity.expRepEntDet.expKey.equals("FXLDG"))) {
+                                        // In case the expense amount goes to zero after an TA update the expense update would
+                                        // fail because the expense doesn't exist anymore. Handle this logic in case of TA as
+                                        // normal and trigger an expense list refresh.
+                                        activity.taFacade.resetTaUpdateSucceeded();
+                                        // Dismiss the dialog.
+                                        activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                        IExpenseReportCache expRepCache = ((ConcurCore) activity.getApplication())
+                                                .getExpenseActiveCache();
+                                        expRepCache.setShouldRefreshReportList();
+                                        Intent i = new Intent();
+                                        i.putExtra(BundleId.EXPENSE_DETAILS_TA_UPDATE, true);
+                                        activity.setResult(Activity.RESULT_OK, i);
 
-                                    // Dismiss the dialog.
-                                    activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                        activity.finish();
+                                    } else {
+                                        activity.actionStatusErrorMessage = intent
+                                                .getStringExtra(Const.REPLY_ERROR_MESSAGE);
+                                        Log.e(Const.LOG_TAG, CLS_TAG + ".onReceive: mobile web service error -- "
+                                                + activity.actionStatusErrorMessage);
+                                        // Display an error dialog.
+                                        activity.showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_FAILED);
+
+                                        // Dismiss the dialog.
+                                        activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+                                    }
                                 }
                             } else {
                                 activity.lastHttpErrorMessage = intent.getStringExtra(Const.REPLY_HTTP_STATUS_TEXT);

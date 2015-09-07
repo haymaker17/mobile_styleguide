@@ -438,6 +438,11 @@ public class Flurry {
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION = "Office Location";
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OTHER = "Other";
 
+    // Screen name for Travel Allowance
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL = "Allowance Details: Expense-Report-TravelAllowances-DailyAllowance";
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
+
     /**
      * Formats a Flurry event name based on a category and name.
      *

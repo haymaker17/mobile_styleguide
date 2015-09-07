@@ -9,7 +9,7 @@ import android.content.Context;
 
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
-import com.concur.mobile.core.expense.travelallowance.TaXmlUtil;
+import com.concur.mobile.core.expense.travelallowance.util.TaXmlUtil;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;

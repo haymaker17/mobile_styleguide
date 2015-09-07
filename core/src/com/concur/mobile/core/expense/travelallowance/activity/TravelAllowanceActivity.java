@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ViewPagerAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
@@ -28,6 +29,8 @@ import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,8 @@ import java.util.List;
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class TravelAllowanceActivity extends AppCompatActivity
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
+public class TravelAllowanceActivity extends BaseActivity
         implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback{
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
@@ -49,6 +53,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
     private FixedTravelAllowanceController allowanceController;
 
     private ViewPagerAdapter viewPagerAdapter;
+
+    private boolean isInApproval;
 
     /**
      * {@inheritDoc}
@@ -87,8 +93,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
         ConcurCore app = (ConcurCore) getApplication();
 
-        this.itineraryController = app.getTaItineraryController();
-        this.allowanceController = app.getFixedTravelAllowanceController();
+        this.itineraryController = app.getTaController().getTaItineraryController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
 
         registerControllerActionListener();
 
@@ -102,6 +108,8 @@ public class TravelAllowanceActivity extends AppCompatActivity
             setSupportActionBar(toolbar);
 
         }
+
+        isInApproval = getIntent().getBooleanExtra(BundleId.IS_IN_APPROVAL, false);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ta_travel_allowances);
@@ -126,6 +134,14 @@ public class TravelAllowanceActivity extends AppCompatActivity
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                 setResult(RESULT_OK, resultIntent);
             }
+
+            if (data != null && data.getBooleanExtra(BundleId.REFRESH_FIXED_TA, false)) {
+                this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+                FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
+                if (fixedTaListFrag != null) {
+                    fixedTaListFrag.showRefreshIndicator();
+                }
+            }
         }
     }
 
@@ -146,6 +162,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
             arguments.putString(BundleId.EXPENSE_REPORT_NAME, getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME));
             arguments.putBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED,
                     getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false));
+            arguments.putSerializable(BundleId.EXPENSE_REPORT_DATE, getIntent().getSerializableExtra(BundleId.EXPENSE_REPORT_DATE));
             ViewPagerAdapter.ViewPagerItem itinFrag = new ViewPagerAdapter.ViewPagerItem(
                     getString(R.string.itin_itineraries), SimpleTAItineraryListFragment.class, arguments);
             list.add(itinFrag);
@@ -183,7 +200,7 @@ public class TravelAllowanceActivity extends AppCompatActivity
         }
         FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
         if (fixedTaListFrag != null) {
-            fixedTaListFrag.onRefreshFinished();
+            //fixedTaListFrag.onRefreshFinished();
         }
     }
 
@@ -227,13 +244,13 @@ public class TravelAllowanceActivity extends AppCompatActivity
     public void sendMessage(String message) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", "message = " + message));
         if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, true);
+            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
         }
         if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
         }
         if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, false);
+            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
         }
         if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
@@ -242,23 +259,31 @@ public class TravelAllowanceActivity extends AppCompatActivity
 
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
-        if (controller instanceof TravelAllowanceItineraryController) {
-            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-            if (itinListFrag != null) {
-                itinListFrag.onRefreshFinished();
+
+        if (isSuccess) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
+                    ", action = " + action + ", isSuccess = " + isSuccess));
+            if (controller instanceof TravelAllowanceItineraryController) {
+                TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+                if (itinListFrag != null) {
+                    itinListFrag.onRefreshFinished();
+                }
+
+                SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
+                if (simpleList != null) {
+                    simpleList.onRefreshFinished(result);
+                }
             }
 
-            SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
-            if (simpleList != null) {
-                simpleList.onRefreshFinished(result);
+            if (controller instanceof FixedTravelAllowanceController) {
+                FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
+                if (allowanceFrag != null) {
+                    allowanceFrag.onRefreshFinished();
+                }
             }
-        }
-
-        if (controller instanceof FixedTravelAllowanceController) {
-            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
-            if (allowanceFrag != null) {
-                allowanceFrag.onRefreshFinished();
-            }
+        } else {//TODO TA: Handle error situation
+            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
+                    ", action = " + action + ", isSuccess = " + isSuccess));
         }
     }
 

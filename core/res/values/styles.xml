@@ -146,15 +146,33 @@
 
     <style name="ConcurTheme.Dialog" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme.Dialog.Light" parent="android:Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- MOB-14596 - work around to fix in 2.x devices -->
     <style name="ConcurTheme.Sherlock.Dialog.Light" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="ConcurTheme.Dialog.WhatsNew" parent="@android:style/Theme.Dialog">
@@ -165,6 +183,12 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--
+             Following parameter is needed for AppCompat v22.+
+             and relevant only if this style is applied to an
+             activity which inherits from AppCompatActivity.
+         -->
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!--
@@ -1015,10 +1039,6 @@
     <style name="TAFatListRowDivider.Border">
         <item name="android:background">#dbe1e6</item>
         <item name="android:layout_height">1dp</item>
-    </style>
-
-    <style name="TADailyAllowanceSpinner">
-        <item name="android:popupBackground">#f7fafd</item>
     </style>
 
     <style name="TADailyAllowanceSwitch">

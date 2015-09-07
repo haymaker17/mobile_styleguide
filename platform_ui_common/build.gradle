@@ -5,6 +5,10 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.0'
     compile 'com.getbase:floatingactionbutton:1.9.0'
 
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+
+
     //For multi build purpose comment out following block
     //Please uncomment following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/

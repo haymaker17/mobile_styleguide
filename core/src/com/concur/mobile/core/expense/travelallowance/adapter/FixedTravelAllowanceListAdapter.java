@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance.fragment;
+package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
 import android.text.TextPaint;
@@ -67,7 +67,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         this.context = context;
 
         ConcurCore app = (ConcurCore) context.getApplicationContext();
-        this.allowanceController = app.getFixedTravelAllowanceController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
 
         this.dateFormatter = new DefaultDateFormat(context);
         addAll(allowanceController.getLocationsAndAllowances());

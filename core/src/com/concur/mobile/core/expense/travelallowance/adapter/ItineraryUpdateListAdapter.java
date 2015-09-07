@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -32,7 +33,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onTimeClickListener;
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
-    private OnClickListener onItemClickListener;
+    private OnClickListener onDeleteItemClickListener;
+    private  OnClickListener onReturnToHomeListener;
     private List<ItinerarySegment> segments;
 
     /**
@@ -68,11 +70,15 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
+        private LinearLayout llReturn;
+        private View vBorderCrossing;
+        private ImageView ivDelete;
     }
 
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
                                       final OnClickListener onLocationClickListener,
             final OnClickListener onDateClickListener, final OnClickListener onTimeClickListener,
+            final OnClickListener onReturnToHomeListener,
             List<ItinerarySegment> itinerarySegments) {
 
         super(context, LAYOUT_ID);
@@ -81,7 +87,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onLocationClickListener = onLocationClickListener;
         this.onDateClickListener = onDateClickListener;
         this.onTimeClickListener = onTimeClickListener;
-        this.onItemClickListener = onItemClickListener;
+        this.onReturnToHomeListener = onReturnToHomeListener;
+        this.onDeleteItemClickListener = onItemClickListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
     }
@@ -132,7 +139,12 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder.tvArrivalTimeLabel = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_label);
             holder.tvArrivalTimeValue = (TextView) holder.vArrivalDateTime.findViewById(R.id.tv_time_value);
         }
-    }
+        holder.vBorderCrossing = view.findViewById(R.id.v_border_crossing);
+        if (holder.vBorderCrossing != null) {
+            holder.ivDelete = (ImageView) holder.vBorderCrossing.findViewById(R.id.iv_delete_icon);
+        }
+        holder.llReturn = (LinearLayout) view.findViewById(R.id.ta_return_to_home);
+     }
 
     /**
      * {@inheritDoc}
@@ -148,9 +160,11 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
             createViewHolder(resultView);
             resultView.setTag(holder);
-            if (this.onItemClickListener != null) {
-                if (holder.vMessageArea != null) {
-                    holder.vMessageArea.setOnClickListener(onItemClickListener);
+
+            if (this.onDeleteItemClickListener != null) {
+                if (holder.ivDelete != null) {
+                    holder.ivDelete.setOnClickListener(onDeleteItemClickListener);
+                    holder.ivDelete.setClickable(true);
                 }
             }
             if (this.onLocationClickListener != null) {
@@ -183,10 +197,16 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     holder.vgArrivalTime.setClickable(true);
                 }
             }
+            if (this.onReturnToHomeListener != null){
+                holder.llReturn.setOnClickListener(onReturnToHomeListener);
+            }
+
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
         }
+
+        setPositionInfoTag(holder.ivDelete, i, PositionInfoTag.INFO_NONE);
 
         setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
         setPositionInfoTag(holder.vgDepartureDate, i, PositionInfoTag.INFO_OUTBOUND);
@@ -199,8 +219,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         renderMessageArea(segment);
 
         boolean withStopIcon = true;
+        boolean withDeleteIcon = true;
         if (i == 0) {
             withStopIcon = false;
+            withDeleteIcon = false;
         }
         renderDeparture(segment, withStopIcon);
 
@@ -209,6 +231,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             withStopIcon = false;
         }
         renderArrival(segment, withStopIcon);
+
+        if (segments != null && segments.size() == 1){
+            holder.llReturn.setVisibility(View.VISIBLE);
+        }else{
+            holder.llReturn.setVisibility(View.GONE);
+        }
+        renderBorderCrossing(segment, withDeleteIcon);
 
         return resultView;
     }
@@ -236,6 +265,16 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
         // in the context menu.
         return true;
+    }
+
+    private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
+        //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
+        if (holder.ivDelete != null) {
+            holder.ivDelete.setVisibility(View.VISIBLE);
+            if (!withDeleteIcon || segment.isLocked()) {
+                holder.ivDelete.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     private void renderMessageArea(final ItinerarySegment segment) {

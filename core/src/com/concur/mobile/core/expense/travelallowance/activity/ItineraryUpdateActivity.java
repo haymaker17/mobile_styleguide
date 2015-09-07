@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -26,7 +27,6 @@ import android.widget.Toast;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.expense.activity.ListSearch;
 import com.concur.mobile.core.expense.travelallowance.adapter.ItineraryUpdateListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
@@ -40,7 +40,6 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocatio
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.fragment.DatePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
-import com.concur.mobile.core.expense.travelallowance.fragment.ProgressDialogFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
@@ -49,12 +48,15 @@ import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
 public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener {
 
     /**
@@ -72,9 +74,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private static final String TAG_MESSAGE_DIALOG_FRAGMENT =
             CLASS_TAG + ".message.dialog.fragment";
 
+    private static final String TAG_DELETE_DIALOG_FRAGMENT =
+            CLASS_TAG + ".delete.dialog.fragment";
 
-    private static final String TAG_PROGRESS_DIALOG_FRAGMENT =
-            CLASS_TAG + ".progress.dialog.fragment";
 
     private Itinerary itinerary;
     private int taskChain;
@@ -84,12 +86,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private ItineraryUpdateListAdapter adapter;
     private PositionInfoTag currentPosition;
 
+    private DialogInterface.OnClickListener onDeleteOkClickListener;
     private DatePickerFragment.OnDateSetListener onDateSetListener;
     private TimePickerFragment.OnTimeSetListener onTimeSetListener;
 
     private DatePickerFragment calendarDialog;
     private TimePickerFragment timeDialog;
-    private ProgressDialogFragment progressDialog;
+
+    private Date defaultDate;
 
     /**
      * {@inheritDoc}
@@ -101,16 +105,21 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         this.setContentView(R.layout.ta_update_activity);
 
         ConcurCore app = (ConcurCore) getApplication();
-        this.itinController = app.getTaItineraryController();
-        this.allowanceController = app.getFixedTravelAllowanceController();
-        app.getTAConfigController().refreshConfiguration();
+        this.itinController = app.getTaController().getTaItineraryController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
+        app.getTaController().getTAConfigController().refreshConfiguration();
 
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
 
+        String expenseReportName = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME);
+
         if (savedInstanceState == null) {//very first create
             this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
+            if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_DATE)) {
+                this.defaultDate = (Date) getIntent().getExtras().getSerializable(BundleId.EXPENSE_REPORT_DATE);
+            }
             this.itinController.setItineraryStage(itinerary);
         } else {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary Stage from itinController"));
@@ -119,10 +128,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
 
         if (this.itinerary == null) {
-            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
-            throw new IllegalArgumentException(
-                    "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
-                            + BundleId.ITINERARY + " but nothing found.");
+            this.itinerary = new Itinerary();
+            itinerary.setExpenseReportID(this.expenseReportKey);
+            itinerary.setName(expenseReportName);
+//            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
+//            throw new IllegalArgumentException(
+//                    "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
+//                            + BundleId.ITINERARY + " but nothing found.");
         }
 
         /* To hide the keyboard after the custom spinner selection was done. */
@@ -131,10 +143,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
         window.setSoftInputMode(inputMode);
 
-        View.OnClickListener onItemClickListener;
+        View.OnClickListener onDeleteItemClickListener;
         View.OnClickListener onTimeClickListener;
         View.OnClickListener onDateClickListener;
         View.OnClickListener onLocationClickListener;
+        View.OnClickListener onReturnToHomeListener;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -186,13 +199,22 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             });
         }
 
-        onItemClickListener = new View.OnClickListener() {
+        onDeleteItemClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message tagValue = (Message) v.getTag(R.id.tag_message);
+                PositionInfoTag tagValue = (PositionInfoTag) v.getTag(R.id.tag_key_position);
                 if (tagValue != null) {
-                    showErrorDialog(tagValue);
+                    ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
+                showDeleteDialog();
+            }
+        };
+
+        onDeleteOkClickListener = new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+                deleteSegment(segment);
             }
         };
 
@@ -226,7 +248,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (tagValue != null) {
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
-                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ListSearch.class);
+                Intent locationIntent = new Intent(ItineraryUpdateActivity.this, ItineraryListSearch.class);
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_IS_MRU, true);
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FIELD_ID, "LocName");
                 locationIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SEARCH_FT_CODE, "RPTINFO");
@@ -302,10 +324,19 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
         };
 
+        onReturnToHomeListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (!isDataInconsistent()) {
+                    addNewRow();
+                }
+            }
+        };
+
         ListView listView = (ListView) findViewById(R.id.list_view);
         if (listView != null && this.itinerary != null) {
-            adapter = new ItineraryUpdateListAdapter(this, onItemClickListener, onLocationClickListener,
-                    onDateClickListener, onTimeClickListener, this.itinerary.getSegmentList());
+            adapter = new ItineraryUpdateListAdapter(this, onDeleteItemClickListener, onLocationClickListener,
+                    onDateClickListener, onTimeClickListener, onReturnToHomeListener, this.itinerary.getSegmentList());
             listView.setAdapter(adapter);
         }
 
@@ -320,7 +351,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         renderDefaultValues();
 
-        registerForContextMenu(listView);
+        // Disable long press on the rows
+        //registerForContextMenu(listView);
 
         View fab = findViewById(R.id.fab);
         if (fab != null) {
@@ -361,11 +393,21 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
             } else {
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                emptySegment.setDepartureDateTime(cal.getTime());
-                cal.add(Calendar.MINUTE, 1);
-                emptySegment.setArrivalDateTime(cal.getTime());
+                if(defaultDate != null) {
+                    cal.setTime(this.defaultDate);
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    cal.set(Calendar.HOUR, 0);
+                    emptySegment.setDepartureDateTime(cal.getTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    emptySegment.setArrivalDateTime(cal.getTime());
+                } else {
+                    cal.set(Calendar.SECOND, 0);
+                    cal.set(Calendar.MILLISECOND, 0);
+                    emptySegment.setDepartureDateTime(cal.getTime());
+                    cal.add(Calendar.MINUTE, 1);
+                    emptySegment.setArrivalDateTime(cal.getTime());
+                }
             }
         }
         this.itinerary.getSegmentList().add(emptySegment);
@@ -491,7 +533,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     }
 
-    private void showErrorDialog(Message msg) {
+    private void showDeleteDialog() {
+        Bundle bundle = new Bundle();
+//        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
+        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getString(R.string.itin_delete_stop));
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(bundle);
+        messageDialog.setOnOkListener(onDeleteOkClickListener);
+        messageDialog.show(getSupportFragmentManager(), TAG_DELETE_DIALOG_FRAGMENT);
+    }
+
+    private void showErrorDialog(Message msg) {//Use Toast instead
         if (msg == null) {
             return;
         }
@@ -502,21 +554,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         messageDialog.show(getSupportFragmentManager(), TAG_MESSAGE_DIALOG_FRAGMENT);
     }
 
-    private void showProgressDialog(String progressText) {
-        if (StringUtilities.isNullOrEmpty(progressText)) {
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putString(BundleId.PROGRESS_DIALOG_TEXT, progressText);
-        progressDialog = new ProgressDialogFragment();
-        progressDialog.setArguments(bundle);
-        progressDialog.show(getSupportFragmentManager(), TAG_PROGRESS_DIALOG_FRAGMENT);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.itinerary_save_menu, menu);
+        inflater.inflate(R.menu.ta_itinerary_save_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -567,6 +608,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             if (etItinerary != null) {
                 this.itinerary.setName(etItinerary.getText().toString());
             }
+            showProgressBar(true);
             itinController.executeUpdate(this.itinerary);
             taskChain = 1;
             return true;
@@ -632,6 +674,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         ItinerarySegment segment = (ItinerarySegment) adapter.getItem(info.position);
+        deleteSegment(segment);
+
+        return true;
+    }
+
+    private void deleteSegment(ItinerarySegment segment) {
         if (segment.getId() == null) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Segment id is null so only removing from Itinerary."));
             itinerary.getSegmentList().remove(segment);
@@ -640,8 +688,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Trigger executeDeleteSegment on itinController."));
             itinController.executeDeleteSegment(itinerary.getItineraryID(), segment);
         }
-
-        return true;
     }
 
     @Override
@@ -654,9 +700,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 return;
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
+                showProgressBar(false);
+
                 if (taskChain != 1) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "Got not needed notification... Ignoring"));
                     return;
@@ -667,7 +712,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (result != null) {
                         List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
                         if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
-                            showProgressDialog(" "); //TODO: Add text Calculating Expenses
+                           showProgressBar(true);
                         }
                     }
                 }
@@ -679,7 +724,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Itinerary createdItinerary = (Itinerary) result.getSerializable(BundleId.ITINERARY);
                     this.itinerary = createdItinerary;
                     ConcurCore app = (ConcurCore) getApplication();
-                    allowanceController = app.getFixedTravelAllowanceController();
+                    allowanceController = app.getTaController().getFixedTravelAllowanceController();
                     Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
@@ -687,7 +732,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Itinerary Update caused changes to Allowances. Need to refresh..."));
                     if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
-                        showProgressDialog(" "); //TODO: Add text Calculating Allowances...
+                       showProgressBar(true);
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
@@ -696,9 +741,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 refreshAdapter();
             }
             if (controller instanceof FixedTravelAllowanceController) {
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
+                showProgressBar(false);
                 if (isSuccess) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Allowances have been saved successfully in order to generate expenses"));
@@ -727,5 +770,18 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         this.adapter.clear();
         this.adapter.addAll(this.itinerary.getSegmentList());
         adapter.notifyDataSetChanged();
+    }
+
+    private void showProgressBar(boolean show) {
+        if (show) {
+            findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+            findViewById(R.id.et_itinerary).setEnabled(false);
+            findViewById(R.id.list_view).setEnabled(false);
+        } else {
+            findViewById(R.id.progressBar).setVisibility(View.GONE);
+            findViewById(R.id.et_itinerary).setEnabled(true);
+            findViewById(R.id.list_view).setEnabled(true);
+        }
+
     }
 }
