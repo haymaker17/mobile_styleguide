@@ -49,7 +49,6 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     private IFragmentCallback callback;
     private SimpleItineraryListAdapter adapter;
     private List<Itinerary> itineraryList;
-    private List<Itinerary> itineraryDeletionList;
     private TravelAllowanceItineraryController itineraryController;
 
     private RecyclerView recyclerView;
@@ -92,7 +91,6 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
         View view = inflater.inflate(R.layout.ta_itinerary_simple_list, container, false);
 
         itineraryList = (List<Itinerary>) getArguments().getSerializable(BundleId.ITINERARY_LIST);
-        itineraryDeletionList = new ArrayList<Itinerary>();
 
         if (getArguments() != null) {
             this.expenseReportIsSubmitted = getArguments().getBoolean(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false);
@@ -173,10 +171,12 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
-
         if (result != null) {
             this.itineraryList = (List<Itinerary>) result.getSerializable(BundleId.ITINERARY_LIST);
-            adapter.refreshAdapter(itineraryList);
+            if (this.itineraryList == null) {
+                this.itineraryList = itineraryController.getItineraryList();
+            }
+            adapter.refreshAdapter(this.itineraryList);
         }
     }
 
@@ -211,16 +211,9 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             if (isSuccess) {
                 this.itineraryList = itineraryController.getItineraryList();
                 adapter.refreshAdapter(this.itineraryList);
-                if (this.getView() != null) {
-                    View vFooter = this.getView().findViewById(R.id.v_ta_footer);
-                    if (vFooter != null) {
-                        vFooter.setVisibility(View.GONE);
-                    }
-                }
                 if (this.callback != null) {//We need to refresh the adjustments as they probably have been removed
                     this.callback.sendMessage(ON_REFRESH_MSG_TA);
                 }
-                this.itineraryDeletionList = new ArrayList<Itinerary>();
                 Toast.makeText(this.getActivity(), R.string.general_delete_success, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this.getActivity(), R.string.general_delete_fail, Toast.LENGTH_SHORT).show();

@@ -259,23 +259,31 @@ public class TravelAllowanceActivity extends BaseActivity
 
     @Override
     public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
-        if (controller instanceof TravelAllowanceItineraryController) {
-            TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
-            if (itinListFrag != null) {
-                itinListFrag.onRefreshFinished();
+
+        if (isSuccess) {
+            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
+                    ", action = " + action + ", isSuccess = " + isSuccess));
+            if (controller instanceof TravelAllowanceItineraryController) {
+                TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+                if (itinListFrag != null) {
+                    itinListFrag.onRefreshFinished();
+                }
+
+                SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
+                if (simpleList != null) {
+                    simpleList.onRefreshFinished(result);
+                }
             }
 
-            SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
-            if (simpleList != null) {
-                simpleList.onRefreshFinished(result);
+            if (controller instanceof FixedTravelAllowanceController) {
+                FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
+                if (allowanceFrag != null) {
+                    allowanceFrag.onRefreshFinished();
+                }
             }
-        }
-
-        if (controller instanceof FixedTravelAllowanceController) {
-            FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
-            if (allowanceFrag != null) {
-                allowanceFrag.onRefreshFinished();
-            }
+        } else {//TODO TA: Handle error situation
+            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
+                    ", action = " + action + ", isSuccess = " + isSuccess));
         }
     }
 
