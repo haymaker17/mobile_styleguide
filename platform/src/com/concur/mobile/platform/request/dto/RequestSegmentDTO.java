@@ -1,24 +1,27 @@
 package com.concur.mobile.platform.request.dto;
 
-import com.concur.mobile.platform.request.ConnectExceptionMessage;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class RequestSegmentDTO implements FormDTO {
 
-    @Expose @SerializedName("ID")
+    @Expose
+    @SerializedName("ID")
     private String id;
-    @Expose @SerializedName("DepartureDate")
+    @Expose
+    @SerializedName("DepartureDate")
     private Date departureDate;
-    @Expose @SerializedName("ArrivalDate")
+    @Expose
+    @SerializedName("ArrivalDate")
     private Date arrivalDate;
-    @Expose @SerializedName("FromLocationID")
+    @Expose
+    @SerializedName("FromLocationID")
     private String fromLocationId;
-    @Expose @SerializedName("ToLocationID")
+    @Expose
+    @SerializedName("ToLocationID")
     private String toLocationId;
     @SerializedName("FromLocationName")
     private String fromLocationName;
@@ -26,14 +29,13 @@ public class RequestSegmentDTO implements FormDTO {
     private String toLocationName;
     //@SerializedName()
     private int exceptionCount;
-    @SerializedName("Exceptions")
-    private List<ConnectExceptionMessage> exeptionList = new ArrayList<ConnectExceptionMessage>();
-    @SerializedName("Comments")
-    private List<String> commentList = null;
-    @Expose @SerializedName("Comment")
+    @Expose
+    @SerializedName("Comment")
     private String lastComment;
     @SerializedName("Order")
     private Integer displayOrder;
+    @SerializedName("Exceptions")
+    private List<RequestExceptionDTO> exceptions;
 
     public String getFromLocationId() {
         return fromLocationId;
@@ -66,14 +68,6 @@ public class RequestSegmentDTO implements FormDTO {
 
     public void setLastComment(String lastComment) {
         this.lastComment = lastComment;
-    }
-
-    public List<String> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<String> commentList) {
-        this.commentList = commentList;
     }
 
     @Override
@@ -121,11 +115,11 @@ public class RequestSegmentDTO implements FormDTO {
         this.exceptionCount = exceptionCount;
     }
 
-    public List<ConnectExceptionMessage> getExeptionList() {
-        return exeptionList;
+    public List<RequestExceptionDTO> getExceptions() {
+        return exceptions;
     }
 
-    public void setExeptionList(List<ConnectExceptionMessage> exeptionList) {
-        this.exeptionList = exeptionList;
+    public void setExceptions(List<RequestExceptionDTO> exceptions) {
+        this.exceptions = exceptions;
     }
 }

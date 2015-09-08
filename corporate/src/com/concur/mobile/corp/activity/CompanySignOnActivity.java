@@ -15,15 +15,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
@@ -104,7 +102,6 @@ public class CompanySignOnActivity extends BaseActivity {
 
         setContentView(R.layout.company_signon);
 
-        getSupportActionBar().setTitle(R.string.login_company_sign_on);
         // Get the server url.
         serverUrl = PlatformProperties.getServerAddress();
         String signInMethod = null;
@@ -224,25 +221,6 @@ public class CompanySignOnActivity extends BaseActivity {
 
         // Restore any receivers.
         restoreReceivers();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-        case R.id.menuSettings:
-            Intent i = new Intent(this, Preferences.class);
-            startActivity(i);
-            break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**

@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.concur.core.R;
-import com.concur.mobile.core.request.util.DateUtil;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.platform.request.dto.RequestEntryDTO;
 import com.concur.mobile.platform.request.dto.RequestSegmentDTO;
 import com.concur.mobile.platform.request.groupConfiguration.SegmentType;
+import com.concur.mobile.platform.request.util.DateUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -29,8 +29,7 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         this.context = context;
     }
 
-    @Override
-    public void updateList(List<RequestEntryDTO> listSegments) {
+    @Override public void updateList(List<RequestEntryDTO> listSegments) {
         clearListItems();
         if (listSegments != null) {
             getList().addAll(listSegments);
@@ -38,8 +37,7 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         notifyDataSetChanged();
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(int position, View convertView, ViewGroup parent) {
         RelativeLayout row = (RelativeLayout) convertView;
 
         if (row == null) {
@@ -103,8 +101,7 @@ public class EntryListAdapter extends AbstractGenericAdapter<RequestEntryDTO> {
         return "";
     }
 
-    @Override
-    public boolean isEnabled(int position) {
+    @Override public boolean isEnabled(int position) {
         // --- XXX we do not enable expected expense for now
         return getItem(position).getListSegment().size() > 0;
     }

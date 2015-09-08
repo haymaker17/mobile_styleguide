@@ -171,6 +171,7 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
             ConcurMobile.resetUserTimers();
             ConcurCore.userEntryAppTimer = System.currentTimeMillis();
             Log.d(">>>>>>>> " + Const.LOG_TAG + " >>>>>> ", " Total Time EmailLookup time = " + ConcurCore.userEntryAppTimer);
+
         }
 
     }
@@ -232,7 +233,6 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
         if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)
                 || (signInMethod
                 .equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD))) {
-
             // GA
             if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {// GA
                 EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
@@ -259,14 +259,7 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * com.concur.mobile.platform.ui.common.login.EmailLookupFragment.EmailLookupCallbacks#onEmailLookupRequestFail(android.os
-     * .Bundle)
-     */
-    @SuppressWarnings("unchecked")
+    @Override
     public void onEmailLookupRequestFail(Bundle resultData) {
         boolean dialogShown = false;
 
@@ -297,10 +290,10 @@ public class EmailLookupActivity extends BaseActivity implements IProgressBarLis
     }
 
     /*
-     * (non-Javadoc)
-     * 
-     * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
-     */
+         * (non-Javadoc)
+         *
+         * @see com.concur.mobile.platform.ui.common.login.EmailLookupFragment.OnCompanyCodePressedListener#onButtonPressed()
+         */
     public void onCompanyCodeButtonPressed() {
         Intent i = new Intent(this, CompanyCodeLoginActivity.class);
         startActivityForResult(i, Const.REQUEST_CODE_SSO_LOGIN);

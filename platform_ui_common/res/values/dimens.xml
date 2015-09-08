@@ -30,4 +30,6 @@
     <dimen name="search_result_cell_padding_top">6dp</dimen>
     <dimen name="search_result_cell_padding_bottom">6dp</dimen>
 
+    <!--new button for material design -->
+    <dimen name="standard_material_button_height">44dp</dimen>
 </resources>

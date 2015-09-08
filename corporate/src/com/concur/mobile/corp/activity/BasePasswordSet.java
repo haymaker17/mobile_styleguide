@@ -3,9 +3,6 @@
  */
 package com.concur.mobile.corp.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
 import com.concur.breeze.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
@@ -33,6 +31,9 @@ import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.util.Format;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The superclass for mobile password (PIN) reset, as well as the standard password reset. Activities to reset any type of
@@ -207,7 +208,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
         frag.setPositiveButtonListener(new AlertDialogFragment.OnClickListener() {
 
             public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                Intent i = new Intent(BasePasswordSet.this, EmailLookupActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -215,7 +216,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailLookupActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -279,7 +280,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailLookupActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -298,7 +299,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
         frag.setPositiveButtonListener(new AlertDialogFragment.OnClickListener() {
 
             public void onCancel(FragmentActivity activity, DialogInterface dialog) {
-                Intent i = new Intent(BasePasswordSet.this, EmailLookupActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -306,7 +307,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
             }
 
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                Intent i = new Intent(BasePasswordSet.this, EmailLookupActivity.class);
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 
@@ -461,7 +462,7 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
                 DialogFragmentFactory.getAlertOkayInstance("", R.string.login_failure).show(
                         getSupportFragmentManager(), null);
 
-                Intent i = new Intent(concurMobile, EmailLookupActivity.class);
+                Intent i = new Intent(concurMobile, EmailPasswordLookupActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
 

@@ -55,9 +55,9 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
 
     private BaseAsyncResultReceiver autoLoginReceiver;
 
-    private AutoLoginRequestTask autoLoginRequestTask;
-
     private LoginPasswordFragment loginPasswordFragment;
+
+    private AutoLoginRequestTask autoLoginRequestTask;
 
     private ProgressDialogFragment progressDialog;
 
@@ -175,7 +175,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 DialogFragmentFactory.getAlertOkayInstance(getString(R.string.dlg_system_unavailable_title),
                         getString(R.string.dlg_system_unavailable_message)).show(
                         LoginPasswordActivity.this.getSupportFragmentManager(), null);
-
+                trackLoginStatus(false, signInMethod);
             }
 
             /*
@@ -377,10 +377,10 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
             EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
                     Flurry.LABEL_MANUAL, null);
 
-            if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+            if ((com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO).equalsIgnoreCase(signInMethod)) {
                 EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
                         Flurry.LABEL_LOGIN_USING_SSO, null);
-            } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+            } else if ((com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD).equalsIgnoreCase(signInMethod)) {
                 EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
                         Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
             } else {

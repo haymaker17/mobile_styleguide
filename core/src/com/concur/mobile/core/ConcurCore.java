@@ -58,13 +58,11 @@ import com.concur.mobile.core.expense.report.service.AttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.ConditionalFieldAction;
 import com.concur.mobile.core.expense.report.service.ExtendedAttendeeSearchReply;
 import com.concur.mobile.core.expense.report.service.GetTaxFormReply;
-import com.concur.mobile.core.expense.travelallowance.FixedAllowances;
-import com.concur.mobile.core.expense.travelallowance.Itinerary;
-import com.concur.mobile.core.expense.travelallowance.ItineraryRow;
-import com.concur.mobile.core.expense.travelallowance.TaConfig;
-import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
-import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
-import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
+import com.concur.mobile.core.expense.ta.service.FixedAllowances;
+import com.concur.mobile.core.expense.ta.service.Itinerary;
+import com.concur.mobile.core.expense.ta.service.ItineraryRow;
+import com.concur.mobile.core.expense.ta.service.TaConfig;
+import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceController;
 import com.concur.mobile.core.ipm.service.IpmReply;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -169,7 +167,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected static Context appContext;
 
     // Store autologin starttime, endtime and user click time.
-    public static long startAutologinTime, stopAutoLoginTime, userClickTime,userEntryAppTimer, userSuccessfulLoginTimer;
+    public static long startAutologinTime, stopAutoLoginTime, userClickTime, userEntryAppTimer, userSuccessfulLoginTimer;
 
     // Location - retrieve current location/address form LastLocationTracker
     protected LastLocationTracker lastLocationTracker;
@@ -296,10 +294,8 @@ public abstract class ConcurCore extends MultiDexApplication {
     protected ItineraryRow taItineraryRow;
     protected TaConfig taConfig;
 
-    // Controllers for Allowance and Itinerary handling
-    private TravelAllowanceItineraryController taItineraryController;
-    private FixedTravelAllowanceController fixedTravelAllowanceController;
-    private TravelAllowanceConfigurationController taConfigController;
+    // Controllers for Travel Allowance handling
+    private TravelAllowanceController taController;
 
     // Trips for Approval
     protected List<TripToApprove> tripsToApprove;
@@ -779,20 +775,21 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Reset Auto Login Timers.
-     * */
-    public static void resetAutloLoginTimes(){
-        startAutologinTime =0L;
-        stopAutoLoginTime =0L;
-        userClickTime =0L;
+     */
+    public static void resetAutloLoginTimes() {
+        startAutologinTime = 0L;
+        stopAutoLoginTime = 0L;
+        userClickTime = 0L;
     }
 
     /**
      * Reset User Entry and Successful Login timer.
-     * */
-    public static void resetUserTimers(){
-        userEntryAppTimer=0;
-        userSuccessfulLoginTimer=0;
+     */
+    public static void resetUserTimers() {
+        userEntryAppTimer = 0;
+        userSuccessfulLoginTimer = 0;
     }
+
     // Initialize the platform properties.
     private void initPlatformProperties() {
 
@@ -896,20 +893,24 @@ public abstract class ConcurCore extends MultiDexApplication {
      * <p>
      * Note that if the end-user has not yet logged in, then the value of <code>{userId}</code> may be blank/empty.
      * </p>
-     * 
+     *
      * @return Returns the hashed User ID used for GA tracking.
      */
     public static String getTrackingUserId() {
+        String defUserId = "User Not Logged In";
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
-        String userid = prefs.getString(Const.PREF_USER_ID, "");
-        ClientData clientData = new ClientData(appContext);
-        if (!userid.isEmpty()) {
-            clientData.userId = userid;
-            clientData.key = LoginResult.TAG_ANALYTICS_ID;
-            if (clientData.load()) {
-                userid = clientData.text;
-            }else{
-                userid="";
+        //for GA 9.25+ onwards we need default userid to track data.
+        String userid = prefs.getString(Const.PREF_USER_ID, defUserId);
+        if (!(defUserId.equalsIgnoreCase(userid))) {
+            ClientData clientData = new ClientData(appContext);
+            if (!userid.isEmpty()) {
+                clientData.userId = userid;
+                clientData.key = LoginResult.TAG_ANALYTICS_ID;
+                if (clientData.load()) {
+                    userid = clientData.text;
+                } else {
+                    userid = defUserId;
+                }
             }
         }
         return userid;
@@ -962,12 +963,12 @@ public abstract class ConcurCore extends MultiDexApplication {
         // Initialize the user-agent http header information.
         StringBuilder ua = new StringBuilder();
         switch (product) {
-        case CORPORATE:
-            ua.append("Corporate/");
-            break;
-        default:
-            ua.append("Unknown Mobile/");
-            break;
+            case CORPORATE:
+                ua.append("Corporate/");
+                break;
+            default:
+                ua.append("Unknown Mobile/");
+                break;
         }
         String versionName;
         try {
@@ -993,14 +994,14 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the appropriate Google Analytics Tracking ID for the application.
-     * 
+     *
      * @return the appropriate Google Analytics Tracking ID for the application.
      */
     public abstract String getGATrackingId();
 
     /**
      * Returns the current server address.
-     * 
+     *
      * @return the current server address;
      */
     public synchronized Address getCurrentAddress() {
@@ -1084,23 +1085,22 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * set alternative schedules
-     * */
+     */
     public void setAlternativeFlightSchedules(AlternativeAirScheduleReply results) {
         this.alternativeAirScheduleReply = results;
     }
 
     /**
      * get alternative schedules
-     * */
+     */
     public AlternativeAirScheduleReply getAlternativeFlightSchedules() {
         return alternativeAirScheduleReply;
     }
 
     /**
      * Sets the latest response to a search attendees request.
-     * 
-     * @param results
-     *            a search attendees response.
+     *
+     * @param results a search attendees response.
      */
     public void setAttendeeSearchResults(AttendeeSearchReply results) {
         attendeeSearchResults = results;
@@ -1108,7 +1108,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the latest response to a search attendees request.
-     * 
+     *
      * @return the search attendees response.
      */
     public AttendeeSearchReply getAttendeeSearchResults() {
@@ -1117,9 +1117,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the latest response to an extended attendees search request.
-     * 
-     * @param results
-     *            an extended attendees search response.
+     *
+     * @param results an extended attendees search response.
      */
     public void setExtendedAttendeeSearchResults(ExtendedAttendeeSearchReply results) {
         extendedAttendeeSearchResults = results;
@@ -1127,7 +1126,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the latest response to an extended attendee search request.
-     * 
+     *
      * @return the extended attendees search response.
      */
     public ExtendedAttendeeSearchReply getExtendedAttendeeSearchResults() {
@@ -1136,9 +1135,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the latest response to a search approver request.
-     * 
-     * @param results
-     *            a search approver response.
+     *
+     * @param results a search approver response.
      */
     public void setApproverSearchResults(ApproverSearchReply results) {
         approverSearchResults = results;
@@ -1146,7 +1144,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the latest response to a search approver request.
-     * 
+     *
      * @return the search approver response.
      */
     public ApproverSearchReply getApproverSearchResults() {
@@ -1155,7 +1153,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the last reply from a corp SSO query request.
-     * 
+     *
      * @return the corp sso query reply.
      */
     public CorpSsoQueryReply getCorpSsoQueryReply() {
@@ -1164,9 +1162,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the last reply from a corp SSO query request.
-     * 
-     * @param reply
-     *            the corp sso query reply.
+     *
+     * @param reply the corp sso query reply.
      */
     public void setCorpSsoQueryReply(CorpSsoQueryReply reply) {
         corpSsoQueryReply = reply;
@@ -1174,9 +1171,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the list of attendees that was selected based on an attendee search.
-     * 
-     * @param attendees
-     *            the selected attendee list.
+     *
+     * @param attendees the selected attendee list.
      */
     public void setSelectedAttendees(List<ExpenseReportAttendee> attendees) {
         selectedAttendees = attendees;
@@ -1184,7 +1180,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the attendee that was selected based on an attendee search.
-     * 
+     *
      * @return an attendee that was selected based on an attendee search.
      */
     public List<ExpenseReportAttendee> getSelectedAttendees() {
@@ -1193,9 +1189,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the last downloaded attendee form.
-     * 
-     * @param attendeeForm
-     *            the last downloaded attendee form.
+     *
+     * @param attendeeForm the last downloaded attendee form.
      */
     public void setAttendeeForm(ExpenseReportAttendee attendeeForm) {
         this.attendeeForm = attendeeForm;
@@ -1203,7 +1198,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the last downloaded attendee form.
-     * 
+     *
      * @return the last downloaded attendee form.
      */
     public ExpenseReportAttendee getAttendeeForm() {
@@ -1212,7 +1207,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the list of attendees that are being edited.
-     * 
+     *
      * @return the list of attendees that are being edited.
      */
     public List<ExpenseReportAttendee> getEditedAttendees() {
@@ -1221,9 +1216,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the list of attendees that are being edited.
-     * 
-     * @param attendees
-     *            the list of attendees that are being edited.
+     *
+     * @param attendees the list of attendees that are being edited.
      */
     public void setEditedAttendees(List<ExpenseReportAttendee> attendees) {
         this.editedAttendees = attendees;
@@ -1231,7 +1225,6 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the results for the last AttendeeSaveRequest
-     * 
      */
     public void setAttendeeSaveResults(AttendeeSaveReply results) {
         attendeeSaveResults = results;
@@ -1246,7 +1239,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * set the results from the last call to GetDynamicFieldActions
-     * 
+     *
      * @param conditionalFieldActions
      */
     public void setConditionalFieldActionsResults(List<ConditionalFieldAction> conditionalFieldActions) {
@@ -1255,7 +1248,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Return the results of last call to GetDynamicFieldActions
-     * 
+     *
      * @return
      */
     public List<ConditionalFieldAction> getConditionalFieldActionsResults() {
@@ -1264,9 +1257,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the most recent hotel search results.
-     * 
-     * @param results
-     *            the search results.
+     *
+     * @param results the search results.
      */
     public void setHotelSearchResults(HotelSearchReply results) {
         this.hotelSearchResults = results;
@@ -1274,7 +1266,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the most recent hotel search results.
-     * 
+     *
      * @return the hotel search results.
      */
     public HotelSearchReply getHotelSearchResults() {
@@ -1283,9 +1275,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the most recent retrieved hotel detail information based on property id.
-     * 
-     * @param propertyId
-     *            the hotel property id.
+     *
+     * @param propertyId the hotel property id.
      * @return the hotel details object upon success; <code>null</code> otherwise.
      */
     public HotelChoiceDetail getHotelDetail(String propertyId) {
@@ -1298,11 +1289,9 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Adds to the in-memory cache the hotel detail information for a particular property id.
-     * 
-     * @param propertyId
-     *            the hotel property id.
-     * @param detail
-     *            the hotel detail.
+     *
+     * @param propertyId the hotel property id.
+     * @param detail     the hotel detail.
      */
     public void setHotelDetail(String propertyId, HotelChoiceDetail detail) {
         if (hotelDetailCache == null) {
@@ -1359,63 +1348,56 @@ public abstract class ConcurCore extends MultiDexApplication {
         this.railStationsLastRetrieved = stationsLastRetrieved;
     }
 
-    public TravelAllowanceItineraryController getTaItineraryController() {
-        if (taItineraryController == null) {
-            taItineraryController = new TravelAllowanceItineraryController(this);
-        }
-        return taItineraryController;
-    }
-
     /**
-     * Creates an instance of a {@link FixedTravelAllowanceController}
-     * @return The controller
+     * To get the new travel allowance controller which handles the entire itinerary,
+     * fixed TA and TA config logic between the UI and the backend.
+     * 
+     * @return the {@link TravelAllowanceController}
      */
-    public FixedTravelAllowanceController getFixedTravelAllowanceController() {
-        if (this.fixedTravelAllowanceController == null) {
-            this.fixedTravelAllowanceController = new FixedTravelAllowanceController(this);
+    public TravelAllowanceController getTaController() {
+        if (taController == null) {
+            taController = new TravelAllowanceController(this.getApplicationContext());
         }
-        return this.fixedTravelAllowanceController;
+        return taController;
     }
 
-    /**
-     * Creates an instance of a {@link TravelAllowanceConfigurationController}
-     * @return The controller
-     */
-    public TravelAllowanceConfigurationController getTAConfigController() {
-        if (this.taConfigController == null) {
-            this.taConfigController = new TravelAllowanceConfigurationController(this);
-        }
-        return this.taConfigController;
-    }
 
+    @Deprecated
     public TaConfig getTAConfig() {
         return taConfig;
     }
 
+    @Deprecated
     public void setTAConfig(TaConfig taConfig) {
         this.taConfig = taConfig;
     }
 
+    @Deprecated
     public Itinerary getTAItinerary() {
         return taItinerary;
     }
 
+    @Deprecated
     public void setTAItinerary(Itinerary taItinerary) {
         this.taItinerary = taItinerary;
     }
 
+    @Deprecated
     public FixedAllowances getFixedAllowances() {
         return fixedAllowances;
     }
 
+    @Deprecated
     public void setFixedAllowances(FixedAllowances fixedAllowances) {
         this.fixedAllowances = fixedAllowances;
     }
 
+    @Deprecated
     public ItineraryRow getSelectedTAItineraryRow() {
         return taItineraryRow;
     }
 
+    @Deprecated
     public void setSelectedTAItineraryRow(ItineraryRow row) {
         this.taItineraryRow = row;
     }
@@ -1478,7 +1460,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the current system configuration information related to the current end-users company.
-     * 
+     *
      * @return the current system configuration information related to the current end-users company.
      */
     public SystemConfig getSystemConfig() {
@@ -1490,9 +1472,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the current system configuration information related to the current end-users company.
-     * 
-     * @param systemConfig
-     *            the current system configuration information.
+     *
+     * @param systemConfig the current system configuration information.
      */
     public void setSystemConfig(SystemConfig systemConfig) {
         if (systemConfig == null) {
@@ -1507,7 +1488,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the last time the system configuration was retrieved.
-     * 
+     *
      * @return the last time the system configuration was retrieved.
      */
     public Calendar getSystemConfigLastRetrieved() {
@@ -1516,7 +1497,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the last retrieved list of reason codes.
-     * 
+     *
      * @return the list of reason codes.
      */
     public ReasonCodeReply getReasonCodes() {
@@ -1525,9 +1506,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the current retrieved list of reason codes.
-     * 
-     * @param reasonCodes
-     *            the list of reason codes.
+     *
+     * @param reasonCodes the list of reason codes.
      */
     public void setReasonCodes(ReasonCodeReply reasonCodes) {
         this.reasonCodes = reasonCodes;
@@ -1535,7 +1515,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the travel custom fields configuration.
-     * 
+     *
      * @return returns the last retrieved travel custom fields configuration.
      */
     public TravelCustomFieldsConfig getTravelCustomFieldsConfig() {
@@ -1544,9 +1524,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the travel custom fields configuration.
-     * 
-     * @param config
-     *            an instance of <code>TravelCustomFieldsConfig</code>.
+     *
+     * @param config an instance of <code>TravelCustomFieldsConfig</code>.
      */
     public void setTravelCustomFieldsConfig(TravelCustomFieldsConfig config) {
         travelCustomFieldsConfig = config;
@@ -1554,9 +1533,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the last time the system configuration was retrieved.
-     * 
-     * @param systemConfigLastRetrieved
-     *            the last time the system configuration was retrieved.
+     *
+     * @param systemConfigLastRetrieved the last time the system configuration was retrieved.
      */
     public void setSystemConfigLastRetrieved(Calendar systemConfigLastRetrieved) {
         this.systemConfigLastRetrieved = systemConfigLastRetrieved;
@@ -1565,7 +1543,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     /**
      * Gets the current user configuration information associated with the currently logged in end-user. This method will call
      * <code>ConcurMobile.initUserConfig</code> if the user configuration information is not currently loaded.
-     * 
+     *
      * @return an instance of <code>UserConfig</code> or <code>null</code> if no local information.
      */
     public UserConfig getUserConfig() {
@@ -1577,9 +1555,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the current user configuration information.
-     * 
-     * @param userConfig
-     *            the user configuration information.
+     *
+     * @param userConfig the user configuration information.
      */
     public void setUserConfig(UserConfig userConfig) {
         if (userConfig == null) {
@@ -1594,7 +1571,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the time at which the last update to user configuration information was obtained.
-     * 
+     *
      * @return the time at which the last user configuration information was obtained.
      */
     public Calendar getUserConfigLastRetrieved() {
@@ -1603,7 +1580,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the time at which the last update to user configuration information was obtained.
-     * 
+     *
      * @param userConfigLastRetrieved
      */
     public void setUserConfigLastRetrieved(Calendar userConfigLastRetrieved) {
@@ -1613,7 +1590,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     /**
      * Will update a text view component whose resource id is <code>R.id.dataBarLastUpdate</code> in the view associated with the
      * <code>screen</code> activity with the
-     * 
+     *
      * @param screen
      * @param date
      */
@@ -1635,7 +1612,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Retrieve a reference to the single instance of our service
-     * 
+     *
      * @return A reference to the {@link ConcurService} or null if not connected
      */
     public ConcurService getService() {
@@ -1644,7 +1621,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Return the Activity used for handling export of a report to a local format (such as PDF)
-     * 
+     *
      * @return An Activity that can be launched to handle the export or null if no such Activity exists in the product
      */
     public Class<? extends Activity> getExportActivity() {
@@ -1653,7 +1630,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets a reference to the in-memory itinerary cache.
-     * 
+     *
      * @return a reference to an <code>IItineraryCache</code> itinerary cache.
      */
     public IItineraryCache getItinCache() {
@@ -1662,7 +1639,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>IExpenseReportCache</code> for reports that have been submitted for approval.
-     * 
+     *
      * @return an instance of <code>IExpenseReportCache</code> for reports that have been submitted for approval.
      */
     public IExpenseReportCache getExpenseApprovalCache() {
@@ -1671,7 +1648,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>IExpenseReportCache</code> for active reports to be submitted for approval.
-     * 
+     *
      * @return an instance of <code>IExpenseReportCache</code> for active reports to be submitted for approval.
      */
     public IExpenseReportCache getExpenseActiveCache() {
@@ -1680,7 +1657,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>IExpenseEntryCache</code> associated with this application.
-     * 
+     *
      * @return an instance of <code>IExpenseEntryCache</code>.
      */
     public IExpenseEntryCache getExpenseEntryCache() {
@@ -1689,7 +1666,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>ReceiptStoreCache</code> associated with the application.
-     * 
+     *
      * @return an instance of <code>ReceiptStoreCache</code>.
      */
     public ReceiptStoreCache getReceiptStoreCache() {
@@ -1698,7 +1675,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Sets the currently-being-used entry form.
-     * 
+     *
      * @param ed
      */
     public void setCurrentEntryDetailForm(ExpenseReportEntryDetail ed) {
@@ -1708,7 +1685,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     /**
      * Returns the currently-being-used entry form. If you did not just make a service request to get this form then do not assume
      * the value here is what you want.
-     * 
+     *
      * @return
      */
     public ExpenseReportEntryDetail getCurrentEntryDetailForm() {
@@ -1754,8 +1731,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     }
 
     /**
-     * @param viewedPriceToBeatListLastRetrieved
-     *            the viewedPriceToBeatListLastRetrieved to set
+     * @param viewedPriceToBeatListLastRetrieved the viewedPriceToBeatListLastRetrieved to set
      */
     public void setViewedPriceToBeatListLastRetrieved(Calendar viewedPriceToBeatListLastRetrieved) {
         this.viewedPriceToBeatListLastRetrieved = viewedPriceToBeatListLastRetrieved;
@@ -1769,8 +1745,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     }
 
     /**
-     * @param viewedPriceToBeatList
-     *            the viewedPriceToBeatList to set
+     * @param viewedPriceToBeatList the viewedPriceToBeatList to set
      */
     public void setViewedPriceToBeatList(boolean viewedPriceToBeatList) {
         this.viewedPriceToBeatList = viewedPriceToBeatList;
@@ -1855,7 +1830,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>RequestCache</code> for requests that have been retrieved.
-     * 
+     *
      * @return an instance of <code>RequestCache</code>
      */
     public Cache<String, RequestDTO> getRequestListCache() {
@@ -1864,7 +1839,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>RequestCache</code> for the retrieved requests forms / request segments forms.
-     * 
+     *
      * @return an instance of <code>RequestCache</code>
      */
     public Cache<String, ConnectForm> getRequestFormFieldsCache() {
@@ -1941,7 +1916,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets the instance of <code>View</code> that provides a promotional view as part of the "What's New" dialog.
-     * 
+     *
      * @return an instance of <code>View</code> that provides a promotional view.
      */
     public View getPromoView(Context ctx) {
@@ -2009,11 +1984,9 @@ public abstract class ConcurCore extends MultiDexApplication {
     /**
      * An aggregator method to keep all dialogs consist across the application. To use this method an activity must override their
      * onCreateDialog() and call this one.
-     * 
-     * @param activity
-     *            A {@link Activity} object.
-     * @param id
-     *            The id of the desired dialog. See {@link Const} for the constant values.
+     *
+     * @param activity A {@link Activity} object.
+     * @param id       The id of the desired dialog. See {@link Const} for the constant values.
      * @return
      */
     public Dialog createDialog(final Activity activity, int id) {
@@ -2021,700 +1994,700 @@ public abstract class ConcurCore extends MultiDexApplication {
         ProgressDialog dialog = null;
 
         switch (id) {
-        case Const.DIALOG_LOGIN_WAIT:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_logging_in));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_REGISTER_PIN:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_registering));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_RETRIEVE_ITINS:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_retrieving_itin));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_TRAVEL_RETRIEVE_FLIGHT_STATS:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_travel_flight_stat_retrieve));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_RETRIEVE_EXPENSE_APPROVALS:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieving_exp_rep));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_APPROVE_REPORT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_report_approve_failed);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+            case Const.DIALOG_LOGIN_WAIT:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_logging_in));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_REGISTER_PIN:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_registering));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_RETRIEVE_ITINS:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_retrieving_itin));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_TRAVEL_RETRIEVE_FLIGHT_STATS:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_travel_flight_stat_retrieve));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_RETRIEVE_EXPENSE_APPROVALS:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieving_exp_rep));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_APPROVE_REPORT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_report_approve_failed);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_NO_PDF_VIEWER: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_no_viewer);
-            dlgBldr.setMessage(R.string.dlg_expense_no_pdf_viewer);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // NOTE: Explicitly call 'cancel' rather than
-                    // 'dismiss' as there are cancel listeners
-                    // in both 'ExpenseReceipt' and 'ViewImage' to
-                    // handle finishing the respective
-                    // activities. A dismiss listener will be invoked
-                    // upon orientation change which
-                    // which can result in 'ExpenseReceipt' and
-                    // 'ViewImage' prematurely being "finished".
-                    dialog.cancel();
-                }
-            });
-            return dlgBldr.create();
-        }
-        // Use NoConnectivityDialogFragment for any future uses of this dialog.
-        case Const.DIALOG_NO_CONNECTIVITY: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_no_connectivity_title);
-            dlgBldr.setMessage(R.string.dlg_no_connectivity_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_REMOVE_REPORT_EXPENSE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_remove_report_expense_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_CAMERA_IMAGE_IMPORT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_camera_image_import_failed_title);
-            dlgBldr.setMessage(R.string.dlg_expense_camera_image_import_failed_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_REPORT_DETAIL:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieving_exp_detail));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_SAVE_RECEIPT:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_saving_receipt));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_SAVE_RECEIPT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_save_receipt_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_NO_IMAGING_CONFIGURATION: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_no_imaging_configuration_title);
-            dlgBldr.setMessage(R.string.dlg_expense_no_imaging_configuration_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_ADD_REPORT_RECEIPT_SUCCEEDED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_save_report_receipt_title);
-            dlgBldr.setMessage(R.string.dlg_expense_save_report_receipt_succeeded_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_ADD_REPORT_RECEIPT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_save_report_receipt_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_NO_EXTERNAL_STORAGE_AVAILABLE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_no_external_storage_available_title);
-            dlgBldr.setMessage(R.string.dlg_expense_no_external_storage_available_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_RECEIPT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_save_report_entry_receipt_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_CLEAR_RECEIPT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_clear_report_entry_receipt_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_DELETE_REPORT_PROGRESS: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.deleting_report));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_EXPENSE_DELETE_REPORT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_report_delete_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_IMAGE_URL:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_expense_retrieve_receipt_image_url));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_IMAGE_URL_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_e_receipt_unavailable_title);
-            dlgBldr.setMessage(R.string.dlg_e_receipt_unavailable);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_POLICY_ERROR_PROMPT: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.report_submit_error);
-            dlgBldr.setMessage(getText(R.string.report_submit_policy_error));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_NO_EXPENSE_TYPE_CURRENCY: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_no_expense_type_currency_title);
-            dlgBldr.setMessage(getText(R.string.dlg_expense_no_expense_type_currency_message));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_UNDEFINED_EXPENSE_TYPE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.report_submit_error);
-            dlgBldr.setMessage(getText(R.string.report_submit_undefined_expense_type));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_MISSING_RECEIPT: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.report_submit_missing_receipt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_REJECT_COMMENT_PROMPT: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.send_back_comment_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        // Use SystemUnavailableDialogFragment for this case if making a new
-        // system unavailable alert dialog
-        case Const.DIALOG_SYSTEM_UNAVAILABLE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_system_unavailable_title);
-            dlgBldr.setMessage(getText(R.string.dlg_system_unavailable_message));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_EXPENSES_RETRIEVE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expenses_retrieve_failed_title);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieve_exp_receipt));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_EXPENSE_RETRIEVE_REPORT_RECEIPT:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieve_report_receipt));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_TRAVEL_RETRIEVE_HOTEL_DETAIL:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieve_travel_hotel_detail));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_TRAVEL_RETRIEVE_HOTEL_DETAIL_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_retrieve_travel_hotel_detail_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_NO_AIR_PERMISSION: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.general_air_booking);
-            dlgBldr.setMessage(R.string.dlg_no_air_permission_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_FLEX_FARE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.general_air_booking);
-            dlgBldr.setMessage(R.string.dlg_no_air_flex_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_BOOKING_CUSTOM_REQUIRED_FIELDS: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.general_travel_booking);
-            dlgBldr.setMessage(R.string.dlg_booking_custom_required_fields_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.general_travel_profile);
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-            int travelProfile = prefs.getInt(Const.PREF_TRAVEL_PROFILE_STATUS,
-                    Const.TRAVEL_PROFILE_ALL_REQUIRED_DATA_PLUS_TSA);
-            dlgBldr.setMessage(ViewUtil.getTextResourceIdForProfileCheck(travelProfile));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_SAVE:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_expense_save));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            break;
-        case Const.DIALOG_EXPENSE_DELETE:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_expense_delete));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(false);
-            break;
-        case Const.DIALOG_EXPENSE_ADD_TO_REPORT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_add_to_report_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_APPROVAL_RETRIEVE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_approval_retrieve_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_ACTIVE_REPORT_RETRIEVE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_active_report_retrieve_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_travel_itinerary_retrieve_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_travel_itinerary_retrieve));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_EXPENSE_REPORT_DETAIL_RETRIEVE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_report_detail_retrieve_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_SAVE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_save_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_DELETE_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_delete_failed_title);
-            dlgBldr.setMessage("");
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_DOWNLOAD_RECEIPT_FAILED: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_upload_receipt_failed_title);
-            dlgBldr.setMessage(R.string.dlg_expense_upload_receipt_failed_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_UNAVAILABLE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.dlg_receipt_unavailable));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_E_RECEIPT_UNAVAILABLE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(getText(R.string.dlg_e_receipt_unavailable_title));
-            dlgBldr.setMessage(getText(R.string.dlg_e_receipt_unavailable));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_MOBILE_ENTRY: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(getText(R.string.dlg_retrieve_outofpocket));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_RETRIEVE_CARDS:
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_retrieving_cards));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_TRANSACTION_DATE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_transaction_date_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_VENDOR_NAME: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_vendor_name_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_TYPE: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_type_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_CURRENCY: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_currency_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_AMOUNT: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_quick_expense_amount_title);
-            dlgBldr.setMessage(R.string.dlg_quick_expense_amount_message);
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_OUT_OF_POCKET_EXPENSE_LOCATION_NAME: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_location_name_prompt));
-            dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
-        }
-        case Const.DIALOG_EXPENSE_RETRIEVE_ACTIVE_REPORTS: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_retrieving_active_reports));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_EXPENSE_ENTRY_FORM: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_retrieving_expense_form));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_EXPENSE_CREATE_REPORT: {
-            dialog = new ProgressDialog(activity);
-            dialog.setMessage(this.getText(R.string.dlg_creating_report));
-            dialog.setIndeterminate(true);
-            dialog.setCancelable(true);
-            break;
-        }
-        case Const.DIALOG_WHATS_NEW: {
-            List<View> views = new ArrayList<View>();
-            View promo = getPromoView(activity);
-            if (promo != null) {
-                views.add(promo);
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
             }
-            View whatsNew = getWhatsNewView(activity);
-            if (whatsNew != null) {
-                views.add(whatsNew);
+            case Const.DIALOG_EXPENSE_NO_PDF_VIEWER: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_no_viewer);
+                dlgBldr.setMessage(R.string.dlg_expense_no_pdf_viewer);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // NOTE: Explicitly call 'cancel' rather than
+                        // 'dismiss' as there are cancel listeners
+                        // in both 'ExpenseReceipt' and 'ViewImage' to
+                        // handle finishing the respective
+                        // activities. A dismiss listener will be invoked
+                        // upon orientation change which
+                        // which can result in 'ExpenseReceipt' and
+                        // 'ViewImage' prematurely being "finished".
+                        dialog.cancel();
+                    }
+                });
+                return dlgBldr.create();
             }
-            MultiViewDialog mvDialog = new MultiViewDialog(activity, R.style.ConcurTheme_Dialog_WhatsNew, views);
-            return mvDialog;
-        }
-        // Use PromptToRateDialogFragment for this case from now on. Make sure
-        // to check if ConcurCore.isConnected()
-        case Const.DIALOG_PROMPT_TO_RATE: {
-            FeedbackManager.with(activity).showRatingsPrompt();
+            // Use NoConnectivityDialogFragment for any future uses of this dialog.
+            case Const.DIALOG_NO_CONNECTIVITY: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_no_connectivity_title);
+                dlgBldr.setMessage(R.string.dlg_no_connectivity_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_REMOVE_REPORT_EXPENSE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_remove_report_expense_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_CAMERA_IMAGE_IMPORT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_camera_image_import_failed_title);
+                dlgBldr.setMessage(R.string.dlg_expense_camera_image_import_failed_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_REPORT_DETAIL:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieving_exp_detail));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_SAVE_RECEIPT:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_saving_receipt));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_SAVE_RECEIPT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_save_receipt_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_NO_IMAGING_CONFIGURATION: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_no_imaging_configuration_title);
+                dlgBldr.setMessage(R.string.dlg_expense_no_imaging_configuration_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_ADD_REPORT_RECEIPT_SUCCEEDED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_save_report_receipt_title);
+                dlgBldr.setMessage(R.string.dlg_expense_save_report_receipt_succeeded_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_ADD_REPORT_RECEIPT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_save_report_receipt_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_NO_EXTERNAL_STORAGE_AVAILABLE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_no_external_storage_available_title);
+                dlgBldr.setMessage(R.string.dlg_expense_no_external_storage_available_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY_RECEIPT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_save_report_entry_receipt_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_CLEAR_RECEIPT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_clear_report_entry_receipt_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_DELETE_REPORT_PROGRESS: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.deleting_report));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_EXPENSE_DELETE_REPORT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_report_delete_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_IMAGE_URL:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_expense_retrieve_receipt_image_url));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_IMAGE_URL_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_e_receipt_unavailable_title);
+                dlgBldr.setMessage(R.string.dlg_e_receipt_unavailable);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_POLICY_ERROR_PROMPT: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.report_submit_error);
+                dlgBldr.setMessage(getText(R.string.report_submit_policy_error));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_NO_EXPENSE_TYPE_CURRENCY: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_no_expense_type_currency_title);
+                dlgBldr.setMessage(getText(R.string.dlg_expense_no_expense_type_currency_message));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_UNDEFINED_EXPENSE_TYPE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.report_submit_error);
+                dlgBldr.setMessage(getText(R.string.report_submit_undefined_expense_type));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_MISSING_RECEIPT: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.report_submit_missing_receipt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_REJECT_COMMENT_PROMPT: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.send_back_comment_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            // Use SystemUnavailableDialogFragment for this case if making a new
+            // system unavailable alert dialog
+            case Const.DIALOG_SYSTEM_UNAVAILABLE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_system_unavailable_title);
+                dlgBldr.setMessage(getText(R.string.dlg_system_unavailable_message));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_EXPENSES_RETRIEVE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expenses_retrieve_failed_title);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieve_exp_receipt));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_EXPENSE_RETRIEVE_REPORT_RECEIPT:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieve_report_receipt));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_TRAVEL_RETRIEVE_HOTEL_DETAIL:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieve_travel_hotel_detail));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_TRAVEL_RETRIEVE_HOTEL_DETAIL_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_retrieve_travel_hotel_detail_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_NO_AIR_PERMISSION: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.general_air_booking);
+                dlgBldr.setMessage(R.string.dlg_no_air_permission_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_FLEX_FARE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.general_air_booking);
+                dlgBldr.setMessage(R.string.dlg_no_air_flex_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_BOOKING_CUSTOM_REQUIRED_FIELDS: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.general_travel_booking);
+                dlgBldr.setMessage(R.string.dlg_booking_custom_required_fields_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.general_travel_profile);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+                int travelProfile = prefs.getInt(Const.PREF_TRAVEL_PROFILE_STATUS,
+                        Const.TRAVEL_PROFILE_ALL_REQUIRED_DATA_PLUS_TSA);
+                dlgBldr.setMessage(ViewUtil.getTextResourceIdForProfileCheck(travelProfile));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_SAVE:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_expense_save));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                break;
+            case Const.DIALOG_EXPENSE_DELETE:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_expense_delete));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(false);
+                break;
+            case Const.DIALOG_EXPENSE_ADD_TO_REPORT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_add_to_report_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_APPROVAL_RETRIEVE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_approval_retrieve_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_ACTIVE_REPORT_RETRIEVE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_active_report_retrieve_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_travel_itinerary_retrieve_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_TRAVEL_RETRIEVE_ITINERARY: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_travel_itinerary_retrieve));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_EXPENSE_REPORT_DETAIL_RETRIEVE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_report_detail_retrieve_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_SAVE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_save_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_DELETE_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_delete_failed_title);
+                dlgBldr.setMessage("");
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_DOWNLOAD_RECEIPT_FAILED: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_upload_receipt_failed_title);
+                dlgBldr.setMessage(R.string.dlg_expense_upload_receipt_failed_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_RECEIPT_UNAVAILABLE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.dlg_receipt_unavailable));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_E_RECEIPT_UNAVAILABLE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(getText(R.string.dlg_e_receipt_unavailable_title));
+                dlgBldr.setMessage(getText(R.string.dlg_e_receipt_unavailable));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_MOBILE_ENTRY: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(getText(R.string.dlg_retrieve_outofpocket));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_RETRIEVE_CARDS:
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_retrieving_cards));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_TRANSACTION_DATE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_transaction_date_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_VENDOR_NAME: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_vendor_name_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_TYPE: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_type_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_CURRENCY: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_currency_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_AMOUNT: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_quick_expense_amount_title);
+                dlgBldr.setMessage(R.string.dlg_quick_expense_amount_message);
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_OUT_OF_POCKET_EXPENSE_LOCATION_NAME: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setMessage(getText(R.string.out_of_pocket_expense_location_name_prompt));
+                dlgBldr.setPositiveButton(activity.getText(R.string.okay), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
+            }
+            case Const.DIALOG_EXPENSE_RETRIEVE_ACTIVE_REPORTS: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_retrieving_active_reports));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_EXPENSE_ENTRY_FORM: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_retrieving_expense_form));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_EXPENSE_CREATE_REPORT: {
+                dialog = new ProgressDialog(activity);
+                dialog.setMessage(this.getText(R.string.dlg_creating_report));
+                dialog.setIndeterminate(true);
+                dialog.setCancelable(true);
+                break;
+            }
+            case Const.DIALOG_WHATS_NEW: {
+                List<View> views = new ArrayList<View>();
+                View promo = getPromoView(activity);
+                if (promo != null) {
+                    views.add(promo);
+                }
+                View whatsNew = getWhatsNewView(activity);
+                if (whatsNew != null) {
+                    views.add(whatsNew);
+                }
+                MultiViewDialog mvDialog = new MultiViewDialog(activity, R.style.ConcurTheme_Dialog_WhatsNew, views);
+                return mvDialog;
+            }
+            // Use PromptToRateDialogFragment for this case from now on. Make sure
+            // to check if ConcurCore.isConnected()
+            case Const.DIALOG_PROMPT_TO_RATE: {
+                FeedbackManager.with(activity).showRatingsPrompt();
 
             /*
              * if (ConcurCore.isConnected()) { AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
@@ -2739,22 +2712,22 @@ public abstract class ConcurCore extends MultiDexApplication {
              * 
              * } else { Log.d(Const.LOG_TAG, "showdialog.rate : offline"); }
              */
-            break;
-        }
-        case Const.DIALOG_EXPENSE_NO_EXPENSE_TYPES: {
-            AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
-            dlgBldr.setTitle(R.string.dlg_expense_no_expense_types_title);
-            dlgBldr.setMessage(R.string.dlg_expense_no_expense_types_message);
-            dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
+                break;
+            }
+            case Const.DIALOG_EXPENSE_NO_EXPENSE_TYPES: {
+                AlertDialog.Builder dlgBldr = new AlertDialog.Builder(activity);
+                dlgBldr.setTitle(R.string.dlg_expense_no_expense_types_title);
+                dlgBldr.setMessage(R.string.dlg_expense_no_expense_types_message);
+                dlgBldr.setPositiveButton(getText(R.string.okay), new DialogInterface.OnClickListener() {
 
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            return dlgBldr.create();
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                return dlgBldr.create();
 
-        }
+            }
         }
         return dialog;
     }
@@ -2763,17 +2736,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into the default {@link SharedPreferences} used by the application.
-     * 
+     *
+     * @param ctx   The {@link Context}. Typically a calling {@link Activity}
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link String} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, String value)}
-     *             instead.
-     * 
-     * @param ctx
-     *            The {@link Context}. Typically a calling {@link Activity}
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link String} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, String value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(Context ctx, String name, String value) {
@@ -2783,17 +2752,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into the default {@link SharedPreferences} used by the application.
-     * 
+     *
+     * @param ctx   The {@link Context}. Typically a calling {@link Activity}
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link Boolean} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, boolean value)}
-     *             instead.
-     * 
-     * @param ctx
-     *            The {@link Context}. Typically a calling {@link Activity}
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link Boolean} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(Context ctx, String name, boolean value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(Context ctx, String name, boolean value) {
@@ -2803,17 +2768,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into an existing {@link SharedPreferences}
-     * 
+     *
+     * @param prefs A {@link SharedPreferences} to hold the preference.
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link String} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, String value)}
-     *             instead.
-     * 
-     * @param prefs
-     *            A {@link SharedPreferences} to hold the preference.
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link String} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, String value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(SharedPreferences prefs, String name, String value) {
@@ -2824,17 +2785,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into an existing {@link SharedPreferences}
-     * 
+     *
+     * @param prefs A {@link SharedPreferences} to hold the preference.
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link Long} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Long value)}
-     *             instead.
-     * 
-     * @param prefs
-     *            A {@link SharedPreferences} to hold the preference.
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link Long} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Long value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(SharedPreferences prefs, String name, Long value) {
@@ -2845,16 +2802,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into an existing {@link SharedPreferences}
-     * 
+     *
+     * @param prefs A {@link SharedPreferences} to hold the preference.
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link Integer} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Integer value)}
-     *             instead.
-     * @param prefs
-     *            A {@link SharedPreferences} to hold the preference.
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link Integer} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, Integer value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(SharedPreferences prefs, String name, Integer value) {
@@ -2865,16 +2819,13 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save a preference value into an existing {@link SharedPreferences}
-     * 
+     *
+     * @param prefs A {@link SharedPreferences} to hold the preference.
+     * @param name  The name of the shared preference. See {@link Const} for a list of names.
+     * @param value The {@link Boolean} value to save
      * @deprecated - use
-     *             {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, boolean value)}
-     *             instead.
-     * @param prefs
-     *            A {@link SharedPreferences} to hold the preference.
-     * @param name
-     *            The name of the shared preference. See {@link Const} for a list of names.
-     * @param value
-     *            The {@link Boolean} value to save
+     * {@link com.concur.mobile.platform.ui.common.util.PreferenceUtil#savePreference(SharedPreferences prefs, String name, boolean value)}
+     * instead.
      */
     @Deprecated
     public void savePreference(SharedPreferences prefs, String name, boolean value) {
@@ -2936,13 +2887,10 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Will examine a responses map from a login response and update any preferences based on the results.
-     * 
-     * @param sessionId
-     *            a session id.
-     * @param cm
-     *            the application instance.
-     * @param responses
-     *            a map of response values.
+     *
+     * @param sessionId a session id.
+     * @param cm        the application instance.
+     * @param responses a map of response values.
      */
     public static void saveLoginResponsePreferences(String sessionId, ConcurCore cm, Map<String, Object> responses) {
 
@@ -3200,7 +3148,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Check traveller role for the user.
-     * */
+     */
     public boolean isTraveler(String roles) {
         boolean canTravel = roles.contains(Const.MOBILE_TRAVELER);
         return canTravel;
@@ -3208,7 +3156,7 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Gets whether or not there is a session available.
-     * 
+     *
      * @return returns whether there is a session available.
      */
     public boolean isSessionAvailable() {
@@ -3335,9 +3283,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Remove the AsyncTask reference with the activity. Called from Async Task onPostExecute.
-     * 
-     * @param task
-     *            - Async Task to be removed
+     *
+     * @param task - Async Task to be removed
      */
     public void removeTask(CustomAsyncRequestTask task) {
         for (Entry<String, List<CustomAsyncRequestTask>> entry : mActivityTaskMap.entrySet()) {
@@ -3358,11 +3305,9 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Save the AsyncTask reference with the activity. Called from Async Task onPreExecute
-     * 
-     * @param activity
-     *            - activity instance
-     * @param task
-     *            - Async Task
+     *
+     * @param activity - activity instance
+     * @param task     - Async Task
      */
     public void addTask(Activity activity, CustomAsyncRequestTask task) {
         String key = activity.getClass().getCanonicalName();
@@ -3377,9 +3322,8 @@ public abstract class ConcurCore extends MultiDexApplication {
 
     /**
      * Lookup all AsyncTasks that have been started on behalf of this Activity and null out their Activity references.
-     * 
-     * @param activity
-     *            - activity instance that is going to be destroyed
+     *
+     * @param activity - activity instance that is going to be destroyed
      */
     public void detach(Activity activity) {
         List<CustomAsyncRequestTask> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName());
@@ -3393,9 +3337,8 @@ public abstract class ConcurCore extends MultiDexApplication {
     /**
      * Notified by the onRestoreInstanceState of the new Activity instance. Set the Activity reference to all of the AsyncTasks
      * that are still running.
-     * 
-     * @param activity
-     *            - new activity instance that is re-created
+     *
+     * @param activity - new activity instance that is re-created
      */
     public void attach(Activity activity) {
         List<CustomAsyncRequestTask> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName());
@@ -3414,8 +3357,7 @@ public abstract class ConcurCore extends MultiDexApplication {
     }
 
     /**
-     * @param ipmMsgResults
-     *            the ipmMsgResults to set
+     * @param ipmMsgResults the ipmMsgResults to set
      */
     public void setIpmMsgResults(IpmReply ipmMsgResults) {
         this.ipmMsgResults = ipmMsgResults;

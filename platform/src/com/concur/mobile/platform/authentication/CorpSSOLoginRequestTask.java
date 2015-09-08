@@ -3,11 +3,6 @@
  */
 package com.concur.mobile.platform.authentication;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -19,6 +14,11 @@ import com.concur.mobile.platform.service.PlatformAsyncRequestTask;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.Format;
 import com.concur.platform.PlatformProperties;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * An extension of <code>PlatformAsyncRequestTask</code> for the purposes of performing a mobile session login given a web-session
@@ -166,6 +166,8 @@ public class CorpSSOLoginRequestTask extends PlatformAsyncRequestTask {
             } else {
                 // Update the config content provider.
                 ConfigUtil.updateLoginInfo(getContext(), loginResult);
+                // update client data
+                ConfigUtil.updateAnalyticsIdInClientData(getContext(), loginResult);
                 // Update Platform properties.
                 if (loginResult.accessToken != null) {
                     PlatformProperties.setAccessToken(loginResult.accessToken.key);

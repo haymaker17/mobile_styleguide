@@ -1,7 +1,5 @@
 package com.concur.mobile.platform.ui.common.login;
 
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -36,6 +34,8 @@ import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment.OnCanc
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
+
+import java.util.Locale;
 
 /**
  * Fragment used to perform an authentication of a user, given a login ID.
@@ -109,7 +109,7 @@ public class LoginPasswordFragment extends PlatformFragment implements View.OnCl
          * 
          * @param success
          *            <code>true</code> if the Login request
-         * @param failureType
+         * @param message
          *            string indicating the reason for failing the Email Lookup. For example: <code>FAILURE_REASON_OFFLINE</code>.
          */
         public void trackLoginStatus(boolean success, String message);
@@ -118,7 +118,7 @@ public class LoginPasswordFragment extends PlatformFragment implements View.OnCl
          * Invoked when the user presses the Sign-In button to authenticate. Implementing classes should be responsible for things
          * like displaying a progress dialog, saving the credentials to the DB store, etc.
          * 
-         * @param loginId
+         * @param userId
          *            The login username/email.
          * @param pinOrPassword
          *            The user's PIN or Password used for authentication.

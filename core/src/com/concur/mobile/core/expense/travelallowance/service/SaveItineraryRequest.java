@@ -45,7 +45,7 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
     @Override
     protected String getPostBody() {
         TravelAllowanceConfigurationController taConfig = ((ConcurCore) context.getApplicationContext())
-                .getTAConfigController();
+                .getTaController().getTAConfigController();
         StringBuilder sb = new StringBuilder();
 
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

@@ -41,10 +41,8 @@ import com.concur.mobile.core.expense.report.approval.activity.ExpenseApproval;
 import com.concur.mobile.core.invoice.activity.InvoicesWebView;
 import com.concur.mobile.core.invoice.activity.PurchaseRequestsWebView;
 import com.concur.mobile.core.request.activity.LocationSearchActivity;
-import com.concur.mobile.core.request.activity.RequestEntryActivity;
-import com.concur.mobile.core.request.activity.RequestHeaderActivity;
+import com.concur.mobile.core.request.activity.RequestEditActivity;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.activity.RequestSummaryActivity;
 import com.concur.mobile.core.travel.activity.AgencyInformation;
 import com.concur.mobile.core.travel.activity.ImageActivity;
 import com.concur.mobile.core.travel.activity.LocationSearch;
@@ -181,7 +179,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
 //            , HotelSearchRooms.class
 //            , HotelVoiceSearchActivity.class
                 , ImageActivity.class
-                // , ImageDetailActivity.class
+                //, ImageDetailActivity.class
                 , InvoicesWebView.class
                 , ListSearch.class
                 , LocationCheckIn.class
@@ -213,10 +211,8 @@ public class CorporateUITestSuite extends CorporateTestSuite {
                 , ReceiptShare.class
                 , ReceiptShareStatus.class
                 , Register.class
-                , RequestEntryActivity.class
-                , RequestHeaderActivity.class
+                , RequestEditActivity.class
                 , RequestListActivity.class
-                , RequestSummaryActivity.class
                 // , RestHotelSearch.class
                 , RuleViolationSummary.class
                 , SegmentDetail.class

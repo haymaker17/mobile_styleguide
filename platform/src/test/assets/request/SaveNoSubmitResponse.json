@@ -1,0 +1,54 @@
+{
+  "Request": {
+    "LoginID": "acsontos@outtask.com",
+    "RequestID": "33EV",
+    "CurrencyCode": "USD",
+    "CurrencyName": "US, Dollar",
+    "PolicyID": "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ",
+    "PolicyName": "Default Request Policy",
+    "CreationDate": "2015-08-24T08:59:02",
+    "EmployeeName": "André Stephen Csontos",
+    "ApprovalStatusName": "Not Submitted",
+    "ApprovalStatusCode": "Q_NOTF",
+    "AuthorizedDate": null,
+    "SubmitDate": null,
+    "TotalPostedAmount": 0,
+    "TotalApprovedAmount": 0,
+    "TotalRemainingAmount": 0,
+    "ApprovalLimitDate": null,
+    "AgencyOfficeName": "",
+    "HeaderFormID": "gWtQwHAXzuCYOB3HfH6$pmp74dYQq3rP4pSg",
+    "HighestExceptionLevel": "NON_BLOCKING",
+    "LastModifiedDate": "2015-08-24T08:59:02",
+    "Comments": [],
+    "Exceptions": [
+      {
+        "Code": "OBOPURPO",
+        "Message": "Purpose should be related to Business.",
+        "Level": "NON_BLOCKING"
+      }
+    ],
+    "SegmentsEntries": [],
+    "UserPermissions": {
+      "Links": [
+        {
+          "Method": "POST",
+          "Url": "http://localhost/api/v3.1/travelrequest/requests/33EV/submit?doSubmit=False&forceSubmit=False",
+          "Action": "submit"
+        },
+        {
+          "Method": "PUT",
+          "Url": "http://localhost/api/v3.1/travelrequest/requests?doSubmit=False&forceSubmit=False",
+          "Action": "save"
+        }
+      ]
+    },
+    "Name": "Trip in March",
+    "Purpose": "March trip test",
+    "StartDate": null,
+    "EndDate": null,
+    "AgencyOfficeID": null
+  },
+  "ID": "33EV",
+  "URI": "http://localhost/api/v3.1/travelrequest/requests/33EV?doSubmit=False&forceSubmit=False"
+}

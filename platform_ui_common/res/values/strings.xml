@@ -48,6 +48,7 @@
     <string name="dlg_dependent_field_value_title">Dependent Field Value</string>
     <string name="dlg_dependent_field_value_message">Please fill in parent field \'%%0%%\' first.</string>
     <string name="swipe_for_more">Swipe for more</string>
+    <string name="or">OR</string>
 
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
@@ -57,12 +58,13 @@
 
     <!-- Login UI Strings -->
     <!-- Email Lookup -->
-    <string name="email_lookup_hint">Work email or Concur username</string>
-    <string name="email_lookup_continue">Continue</string>
+    <string name="email_lookup_hint">Enter Work Email or Username</string>
+    <string name="email_lookup_continue">Next</string>
     <string name="email_lookup_unable_to_login_title">Unable to Sign In</string>
     <string name="email_lookup_unable_to_login_msg">We are unable to sign you in with this information.</string>
     <string name="email_lookup_wrong_email_format_title">Invalid Email or Username</string>
     <string name="email_lookup_wrong_email_username_format_msg">Your entry does not appear to be a valid email or Concur username.</string>
+    <string name="email_lookup_label">Sign in</string>
 
     <!-- PIN/Password Login Strings -->
     <string name="login_enter_password_pin">Mobile Password (PIN)</string>
@@ -70,13 +72,14 @@
     <string name="login_no_offline">Offline sign in is not available.  A successful sign in must occur while online before offline mode can be used.</string>
     <string name="register_button">Need to set your PIN?</string>
     <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
-    <string name="login_help_with_signin_password">Forgot Password?</string>
+    <string name="login_help_with_signin_password">Forgot your Password?</string>
     <string name="login_password">Password</string>
     <string name="login_password_or_pin_invalid">Try again to re-enter your password or select I Forgot to receive sign in instructions.</string>
     <string name="login_invalid_concur_credentials">Incorrect Password</string>
     <string name="try_again">Try Again</string>
     <string name="i_forgot">I Forgot</string>
     <string name="dlg_logging_in">Signing in&#8230;</string>
+    <string name="dlg_retrieve">Retrieving information&#8230;</string>
     <string name="login_500_error_title">The server encountered an error.</string>
     <string name="login_500_error_message"> If you continue to experience problems, please contact your Company Administrator.</string>
     <string name="login_403_error_title">Unable to Sign In</string>
@@ -84,6 +87,6 @@
     <string name="login_403_error_reset">Reset</string>
 
     <!-- SSO Login -->
-    <string name="sso_sign_in">Company Code Sign In</string>
+    <string name="sso_sign_in">SSO Company Code Sign In</string>
 
 </resources>

@@ -129,7 +129,7 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
 
         itineraryList.add(itinerary);
 
-       // TODO: Add the itinerary list to the controller.
+       controller.getItineraryList().addAll(itineraryList);
 
 
         // Compact Itinerary Test data
@@ -184,7 +184,7 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
         createSimpleItineraryTestData();
         List<CompactItinerary> accualData = controller.getCompactItineraryList();
 
-        assertEquals(3, accualData.size());
+        assertEquals(1, accualData.size());
         int i = 0;
         for (CompactItinerary acctualCompItin : accualData) {
             CompactItinerary expectedCompItin = compactItineraryList.get(i);

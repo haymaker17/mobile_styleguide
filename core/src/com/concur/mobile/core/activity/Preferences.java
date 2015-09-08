@@ -36,6 +36,7 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.Notifications;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
+import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.platform.authentication.AccessToken;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
@@ -1567,7 +1568,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                 autoLogin = false;
             }
         }
-
+        //check if you have valid session, if you do then call autologin because you have valid session. if not then set autologin to false
+        if(!autoLogin){
+            if(!SessionManager.isSessionExpire(app)){
+                autoLogin=true;
+            }
+        }
         if (autoLogin) {
             if (sessionInfo != null) {
                 // create a bundle and persist the value in the bundle
@@ -1606,12 +1612,34 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
                                                           UserAndSessionInfoUtil
                                                                   .updateUserAndSessionInfo(ConcurCore.getContext(),
                                                                           emailLookupBundle);
+                                                          EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                                                                  Flurry.LABEL_AUTO_LOGIN, null);
+
+                                                          String signInMethod = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
+
+                                                          if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                                                              EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                                                      Flurry.LABEL_LOGIN_USING_SSO, null);
+                                                          } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                                                              EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                                                      Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+                                                          } else {
+                                                              EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                                                      Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                                                          }
                                                       }
                                                   }
 
                                                   public void onRequestFail(Bundle resultData) {
 
                                                       Log.d(Const.LOG_TAG, "expire login as autoLogin is disabled");
+                                                      // Analytics stuff.
+                                                      EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                                                              Flurry.LABEL_AUTO_LOGIN, null);
+                                                      EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                                                              Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                                                      EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                                                              Flurry.LABEL_SERVER_ERROR, null);
                                                       // need to expire the login
                                                       app.expireLogin(true);
 

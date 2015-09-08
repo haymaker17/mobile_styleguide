@@ -1,37 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:background="@drawable/blue_background">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/MaterialWhite">
 
-    <LinearLayout
+    <View
+        android:id="@+id/main_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"/>
+
+    <ScrollView
+        android:id="@+id/main_scroll_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/list_group_vertical_margin"
-        android:layout_marginLeft="@dimen/list_item_horizontal_margin"
-        android:layout_marginRight="@dimen/list_item_horizontal_margin"
-        android:layout_marginTop="@dimen/list_group_vertical_margin"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_layout"
+        android:fadingEdgeLength="20dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/help_topic_subheader"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:textAppearance="@style/TourSubHeaderBold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/help_topic_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="8dp"
-            android:textAppearance="@style/TourSubHeaderTextNormal" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="18dp"
+                android:orientation="vertical">
 
-</ScrollView>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="1dp">
+
+                    <ImageView
+                        android:id="@+id/concurlogo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:contentDescription="@string/app_name"
+                        android:padding="20dp"
+                        android:src="@drawable/concur_logo_sign_in"
+                        />
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="20dp"
+                        />
+                    <TextView
+                        android:id="@+id/help_topic_subheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:textAppearance="@style/TourSubHeaderBold_Material"/>
+
+                    <TextView
+                        android:id="@+id/help_topic_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:textAppearance="@style/TourSubHeaderTextNormal_Material"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

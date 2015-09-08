@@ -3,7 +3,6 @@
     android:id="@+id/splash_relative_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/SplashScreenColor"
     android:orientation="vertical" >
 
     <ImageView
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/logo" />
+        android:src="@drawable/concur_logo_sign_in" />
 
     <LinearLayout
         android:id="@+id/splash_liner_layout"

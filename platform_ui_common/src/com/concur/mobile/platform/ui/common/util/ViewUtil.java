@@ -1,11 +1,5 @@
 package com.concur.mobile.platform.ui.common.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,22 +7,35 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.Browser;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.concur.mobile.platform.ui.common.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Partial port of ViewUtil in core. Only APIs relevant to platform.ui.common is included here.
@@ -155,7 +162,7 @@ public class ViewUtil {
     /**
      * Will set the text to be displayed in a <code>TextView</code> component within a <code>View</code>.
      * 
-     * @param view
+     * @param parent
      *            the parent view containing the TextView
      * @param field_view_res_id
      *            the resource id of the view containing text view.
@@ -390,8 +397,8 @@ public class ViewUtil {
     /**
      * Will get the text displayed in <code>TextView</code> component within a <code>View</code>.
      * 
-     * @param activity
-     *            the activity containing the view.
+     * @param rootView
+     *            root view.
      * @param field_view_res_id
      *            the resource id of the view containing text view.
      * @param field_name_res_id
@@ -547,6 +554,67 @@ public class ViewUtil {
         if (immMthdMngr != null) {
             immMthdMngr.hideSoftInputFromWindow(windowToken, 0);
         }
+    }
+
+    public static void setClearIconToEditText(final EditText editText){
+        editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float rawX = event.getRawX();
+                    int right = editText.getRight();
+                    Drawable array = editText.getCompoundDrawables()[DRAWABLE_RIGHT];
+                    if (array != null) {
+                        Rect bound = array.getBounds();
+                        if (bound != null) {
+                            if (rawX >= (right - bound.width())) {
+                                editText.setText("");
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.sign_in_clear_icon, 0);
+                } else {
+                    editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                }
+            }
+        });
+    }
+
+    public static boolean isEmulator() {
+        boolean retVal = false;
+        String product  = Build.PRODUCT;
+        if (product.matches(".*_?sdk_?.*")) {
+            retVal = true;
+        } else {
+            retVal = false;
+        }
+        return retVal;
     }
 
 }

@@ -1,7 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -10,14 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
+import com.concur.mobile.core.expense.travelallowance.adapter.FixedTravelAllowanceListAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -35,10 +35,6 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
     public static final String ON_REFRESH_MSG = CLASS_TAG + ".refreshAllowances";
 
-    /**
-     * The activity context
-     */
-    private Context context;
 
     private IFragmentCallback callback;
 
@@ -47,7 +43,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
      */
     private IDateFormat dateFormatter;
 
-    private ListAdapter adapter;
+    private FixedTravelAllowanceListAdapter adapter;
 
     /**
      * The listener to be notified, whenever a fixed travel allowance is selected
@@ -55,6 +51,10 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     private IFixedTravelAllowanceSelectedListener fixedTASelectedListener;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private FixedTravelAllowanceController allowanceController;
+
+    private Locale locale;
 
     /**
      * Container Activity to implement this interface in order to be notified
@@ -68,24 +68,12 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         public void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        this.context = this.getActivity();
-        this.dateFormatter = new DefaultDateFormat(context);
-
-        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity());
-        setListAdapter(adapter);
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
 
@@ -107,7 +95,6 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
      */
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
         renderSummary();
     }
@@ -119,6 +106,19 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     public void onAttach(Activity activity) {
 
         super.onAttach(activity);
+
+        if (this.allowanceController == null) {
+            ConcurCore app = (ConcurCore) activity.getApplicationContext();
+            this.allowanceController = app.getTaController()
+                    .getFixedTravelAllowanceController();
+        }
+
+        this.locale = activity.getResources().getConfiguration().locale;
+        
+
+        this.dateFormatter = new DefaultDateFormat(activity.getApplicationContext());
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity().getApplicationContext());
+        setListAdapter(adapter);
 
         try {
             this.callback = (IFragmentCallback) activity;
@@ -140,6 +140,13 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         super.onDetach();
         this.callback = null;
         this.fixedTASelectedListener = null;
+        this.dateFormatter = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshAdapter();
     }
 
     /**
@@ -163,6 +170,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
      */
     @Override
     public void onRefresh() {
+        getListView().setEnabled(false);
         if (this.callback != null) {
             this.callback.sendMessage(ON_REFRESH_MSG);
         } else {
@@ -176,6 +184,14 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             adapter =  new FixedTravelAllowanceListAdapter(getActivity());
             setListAdapter(adapter);
             renderSummary();
+            getListView().setEnabled(true);
+        }
+    }
+
+    public void showRefreshIndicator() {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+            getListView().setEnabled(false);
         }
     }
 
@@ -188,11 +204,12 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             return;
         }
 
-        ConcurCore app = (ConcurCore) context.getApplicationContext();
-        FixedTravelAllowanceController allowanceController = app.getFixedTravelAllowanceController();
         List<FixedTravelAllowance> allowances = allowanceController.getFixedTravelAllowances();
         if (allowances == null || allowances.size() == 0) {
+            getActivity().findViewById(R.id.ta_summary).setVisibility(View.GONE);
             return;
+        } else {
+            getActivity().findViewById(R.id.ta_summary).setVisibility(View.VISIBLE);
         }
 
         TextView tvTitle = (TextView) getActivity().findViewById(R.id.tv_title);
@@ -239,11 +256,21 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             return;
         }
         if (amount != null) {
-            Locale locale = context.getResources().getConfiguration().locale;
             tvAmount.setText(FormatUtil.formatAmount(amount, locale, crnCode, true, true));
         } else {
             tvAmount.setText(StringUtilities.EMPTY_STRING);
         }
+    }
+
+
+    private void refreshAdapter() {
+        if (allowanceController == null) {
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
+        this.adapter.clear();
+        this.adapter.addAll(this.allowanceController.getLocationsAndAllowances());
+        adapter.notifyDataSetChanged();
     }
 
 }
