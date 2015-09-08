@@ -231,7 +231,7 @@ public class HotelChoiceDetailsFragment extends PlatformFragmentV1 implements On
 
         public void roomItemClicked(HotelRoomListItem roomListItem);
 
-        public void onMapsClicked();//LatLng post
+        public void onMapsClicked(boolean fromDetailsFragmentMapView);//LatLng post
 
         public void setHeaderImageURL(String headerImageURL);
 
