@@ -82,6 +82,9 @@ public class RequestDTO implements FormDTO {
     private List<RequestExceptionDTO> exceptions;
 
     @Expose
+    @SerializedName("MainDestinationID")
+    private String mainDestinationId;
+
     @SerializedName("MainDestinationName")
     private String mainDestinationName;
 
@@ -101,6 +104,9 @@ public class RequestDTO implements FormDTO {
     private int displayOrder = 1;
 
     public Agency agency;
+
+    private String startLocationName;
+    private String startLocationId;
 
     @Override
     public String getId() {
@@ -287,6 +293,29 @@ public class RequestDTO implements FormDTO {
         this.mainDestinationName = mainDestinationName;
     }
 
+    public String getMainDestinationId() {
+        return mainDestinationId;
+    }
+
+    public void setMainDestinationId(String mainDestinationId) {
+        this.mainDestinationId = mainDestinationId;
+    }
+
+    public String getStartLocationName() {
+        return startLocationName;
+    }
+
+    public void setStartLocationName(String startLocationName) {
+        this.startLocationName = startLocationName;
+    }
+
+    public String getStartLocationId() {
+        return startLocationId;
+    }
+
+    public void setStartLocationId(String startLocationId) {
+        this.startLocationId = startLocationId;
+    }
 
     @Override
     public Integer getDisplayOrder() {

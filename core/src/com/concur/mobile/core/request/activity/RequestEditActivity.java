@@ -45,7 +45,6 @@ import com.concur.mobile.platform.request.location.Location;
 import com.concur.mobile.platform.request.task.RequestTask;
 import com.concur.mobile.platform.request.util.ConnectHelper;
 import com.concur.mobile.platform.request.util.RequestParser;
-import com.concur.mobile.platform.request.permission.UserPermission;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -94,15 +93,6 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
     private RequestGroupConfigurationCache groupConfigurationCache = null;
     private BaseAsyncResultReceiver asyncRequestActionReceiver;
 
-    //Edit Values
-    private String startLocation = null;
-    private String destination = null;
-    private Date startDate = null;
-    private Date endDate = null;
-    private String businessPurpose = null;
-    private String comment = null;
-    private double totalAmount = 0f;
-
     private ConnectFormField commentCFF;
 
     private int requiredColor;
@@ -140,16 +130,6 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             tr = requestListCache.getValue(requestId);
             form = formFieldsCache.getFormFields(tr.getHeaderFormId());
             setCanSave(tr.isActionPermitted(RequestParser.PermittedAction.SUBMIT));
-
-            //fields Value
-            startLocation = "";
-            destination = tr.getMainDestinationName();
-            startDate = tr.getStartDate();
-            endDate = tr.getEndDate();
-            businessPurpose = tr.getPurpose();
-            comment = tr.getLastComment();
-            totalAmount = tr.getTotal();
-
 
             /**** UI SETTINGS ****/
             //Hide Start Location in any case
@@ -193,12 +173,12 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             tr.setRequestDate(new Date());
 
             List<Agency> agencies = rgc.getAgencies();
-            tr.setAgency( (agencies.size()>0)?agencies.get(0):null );
+            tr.setAgency((agencies.size() > 0) ? agencies.get(0) : null);
 
             setCanSave(true);
 
             //fields Value
-            totalAmount = 0f;
+            tr.setTotal(0d);
         }
 
         asyncRequestActionReceiver = new BaseAsyncResultReceiver(new Handler());
@@ -373,9 +353,9 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         String month = new DateFormatSymbols().getMonths()[monthOfYear];
         this.dateTappedView.setText("" + month.substring(0, 3) + " " + dayOfMonth + ", " + year);
         if (this.dateTappedView.getId() == R.id.requestEditStartDateLayout) {
-            startDate = new Date(year, monthOfYear, dayOfMonth);
+            tr.setStartDate(new Date(year, monthOfYear, dayOfMonth));
         } else if (this.dateTappedView.getId() == R.id.requestEditEndDateLayout) {
-            endDate = new Date(year, monthOfYear, dayOfMonth);
+            tr.setEndDate(new Date(year, monthOfYear, dayOfMonth));
         }
     }
 
@@ -460,12 +440,16 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             // --- creates the listener
             asyncRequestActionReceiver.setListener(new SaveAndSubmitListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestTask(RequestEditActivity.this, 1, asyncRequestActionReceiver, tr.getId() != null ?
+            final RequestTask task = new RequestTask(RequestEditActivity.this, 1, asyncRequestActionReceiver, tr.getId() != null ?
                     ConnectHelper.Action.UPDATE_AND_SUBMIT :
                     ConnectHelper.Action.CREATE_AND_SUBMIT, tr.getId()).setPostBody(RequestParser.toJson(tr))
                     .addUrlParameter(RequestTask.P_REQUEST_DO_SUBMIT, Boolean.TRUE.toString())
                     .addUrlParameter(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.TRUE.toString())
-                    .addResultData(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.TRUE.toString()).execute();
+                    .addResultData(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.TRUE.toString());
+            if (tr.getId() != null) {
+                task.addUrlParameter(RequestTask.P_REQUEST_ID, tr.getId());
+            }
+            task.execute();
         }
     }
 
@@ -575,12 +559,16 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
             // --- creates the listener
             asyncRequestActionReceiver.setListener(new SaveAndSubmitListener());
             // --- onRequestResult calls cleanup() on execution, so listener will be destroyed by processing
-            new RequestTask(RequestEditActivity.this, 1, asyncRequestActionReceiver, tr.getId() != null ?
+            final RequestTask task = new RequestTask(RequestEditActivity.this, 1, asyncRequestActionReceiver, tr.getId() != null ?
                     ConnectHelper.Action.UPDATE_AND_SUBMIT :
                     ConnectHelper.Action.CREATE_AND_SUBMIT, tr.getId()).setPostBody(RequestParser.toJson(tr))
                     .addUrlParameter(RequestTask.P_REQUEST_DO_SUBMIT, Boolean.TRUE.toString())
                     .addUrlParameter(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.FALSE.toString())
-                    .addResultData(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.FALSE.toString()).execute();
+                    .addResultData(RequestTask.P_REQUEST_FORCE_SUBMIT, Boolean.FALSE.toString());
+            if (tr.getId() != null) {
+                task.addUrlParameter(RequestTask.P_REQUEST_ID, tr.getId());
+            }
+            task.execute();
         }
 
     }
@@ -634,55 +622,57 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         TextView textView;
 
         //Starting Location
-        if (startLocation != null) {
+        if (tr.getStartLocationId() != null) {
             textView = (TextView) findViewById(R.id.requestEditStartLocation);
-            textView.setText(startLocation);
+            textView.setText(tr.getStartLocationName());
+            textView.setHint(tr.getStartLocationId());
         }
 
         //Destination
-        if (destination != null) {
+        if (tr.getMainDestinationId() != null) {
             textView = (TextView) findViewById(R.id.requestEditDestination);
-            textView.setText(destination);
+            textView.setText(tr.getMainDestinationName());
+            textView.setHint(tr.getMainDestinationId());
         }
 
         //Start Date
-        if (startDate != null) {
+        if (tr.getStartDate() != null) {
             textView = (TextView) findViewById(R.id.requestEditStartDate);
-            textView.setText(df.format(startDate));
+            textView.setText(df.format(tr.getStartDate()));
         }
 
         //End Date
-        if (endDate != null) {
+        if (tr.getEndDate() != null) {
             textView = (TextView) findViewById(R.id.requestEditEndDate);
-            textView.setText(df.format(endDate));
+            textView.setText(df.format(tr.getEndDate()));
         }
 
         //Business Purpose
-        if (businessPurpose != null) {
+        if (tr.getPurpose() != null) {
             textView = (TextView) findViewById(R.id.requestEditBusinessPurpose);
-            textView.setText(businessPurpose);
+            textView.setText(tr.getPurpose());
         }
 
         //Comment
-        if (startLocation != null) {
+        if (tr.getLastComment() != null) {
             textView = (TextView) findViewById(R.id.requestEditComment);
-            textView.setText(comment);
+            textView.setText(tr.getLastComment());
         }
 
         //Total Amount
         textView = (TextView) findViewById(R.id.requestEditAmount);
-        float amount = ((float) ((int) (totalAmount * 100f))) / 100f;
+        float amount = ((float) ((int) (tr.getTotal() * 100f))) / 100f;
         final String formattedAmount = FormatUtil.formatAmount(amount,
                 getApplicationContext().getResources().getConfiguration().locale, tr.getCurrencyCode(), true, true);
         textView.setText(formattedAmount);
 
     }
 
-    /** check required for specifique field */
+    /** check required for specific field */
 
     /**
      * check state of all fields
-     * view!=null : specifique field
+     * view!=null : specific field
      * view==null : all fields
      */
     private boolean validateFields(View view) {
@@ -691,28 +681,28 @@ public class RequestEditActivity extends BaseActivity implements OnClickListener
         if (view == null || view.getId() == R.id.requestEditStartDateLayout) {
             textView = (TextView) findViewById(R.id.requestEditStartDate);
             isValid &= this.validateTextField(textView);
-            if (isValid) {
-                tr.setStartDate(startDate);
-            }
         }
         if (view == null || view.getId() == R.id.requestEditEndDateLayout) {
             textView = (TextView) findViewById(R.id.requestEditEndDate);
             isValid &= this.validateTextField(textView);
-            if (isValid) {
-                tr.setStartDate(endDate);
-            }
         }
         if (view == null || view.getId() == R.id.requestEditStartLocationLayout) {
-            textView = (TextView) findViewById(R.id.requestEditStartLocation);
-            isValid &= this.validateTextField(textView);
-            if (isValid) {
-                // TODO : set start location on segment ?
+            //In Update mode we hide the startLocation field, we do not have to check it then
+            RelativeLayout startLocationLayout = (RelativeLayout) findViewById(R.id.requestEditStartLocationLayout);
+            if (startLocationLayout.getVisibility() == View.VISIBLE) {
+                textView = (TextView) findViewById(R.id.requestEditStartLocation);
+                isValid &= this.validateTextField(textView);
+                if (isValid) {
+                    // TODO : set start location on segment ?
+                }
             }
         }
         if (view == null || view.getId() == R.id.requestEditDestinationLayout) {
             textView = (TextView) findViewById(R.id.requestEditDestination);
             isValid &= this.validateTextField(textView);
             if (isValid) {
+                tr.setMainDestinationName(textView.getText().toString());
+                tr.setMainDestinationId(textView.getHint().toString());
                 // TODO : set destination on segment ?
             }
         }
