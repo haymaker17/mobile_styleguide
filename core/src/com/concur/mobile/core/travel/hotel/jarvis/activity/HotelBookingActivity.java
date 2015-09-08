@@ -34,6 +34,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.concur.core.R;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -72,6 +74,7 @@ import java.util.List;
 /**
  * @author RatanK
  */
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_RESERVE)
 public class HotelBookingActivity extends TravelBaseActivity implements SpinnerDialogFragmentCallbackListener,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
@@ -222,6 +225,12 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private TextView roomDescView;
     private boolean isBookingInProgress;
     private LinearLayout reserveLayout;
+
+    // for GA tracking
+    private boolean suggestedAvailable;
+    private boolean suggestedHotel;
+
+
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
@@ -365,6 +374,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // initialize the view
         initView();
+
+        // for GA tracking
+        suggestedAvailable = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE, false);
+        suggestedHotel = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL, false);
 
     }
 
@@ -811,6 +824,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         DialogFragmentFactoryV1
                 .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement.toString())
                 .show(getFragmentManager(), "");
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_CANCELLATION_POLICY_VIEWED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_CANCELLATION_POLICY_VIEWED);
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
@@ -929,6 +945,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     @SuppressLint("ShowToast")
     private void doBooking() {
         if (!isOffline) {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_RESERVE_CLICKED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_RESERVE_CLICKED);
 
             enableReserveLayout(false);
             boolean hasAllRequiredFields = true;
@@ -1022,6 +1040,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                     public void onClick(Activity activity, DialogInterface dialog, int which) {
                         lm.initLoader(HOTEL_BOOKING_LOADER_ID, null, bookingLoaderListener);
                         isBookingInProgress = true;
+                        trackReserveConfirmed();
                     }
 
                     @Override
@@ -1079,6 +1098,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             curViolationReason = selectedSpinnerItem;
             updateViolationReasonsView();
         } else if (fragmentTagName.equals(CREDIT_CARDS_SPINNER_FRAGMENT)) {
+            if(curCardChoice != null && curCardChoice.id != selectedSpinnerItem.id) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_CHANGE_CARDS);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_CHANGE_CARDS);
+            }
             curCardChoice = selectedSpinnerItem;
             updateCardView();
         }
@@ -1174,4 +1197,42 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         txtView.setText(formattedAmount);
     }
 
+    // for GA tracking
+    private void trackReserveConfirmed() {
+        String eventLabel = null;
+        if(suggestedHotel) {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_BOOKED;
+        } else if(suggestedAvailable) {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_AVAILABLE;
+        } else {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_UNAVAILABLE;
+        }
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_RESERVE_CONFIRMED + " - " + eventLabel);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_RESERVE_CONFIRMED, eventLabel);
+
+
+        // Violation Reason selected
+        if(violations != null && selectedViolationReasons != null) {
+            String violationReasonEventLabel = null;
+            boolean justificationTextFilled = false;
+            for(ViolationReason selectedViolationReason : selectedViolationReasons) {
+                for(String[] violation: violationReasons) {
+                    if(selectedViolationReason.violationReasonCode.equalsIgnoreCase(violation[0])) {
+                        violationReasonEventLabel = violation[1];
+                        break;
+                    }
+                }
+                justificationTextFilled = (selectedViolationReason.justification == null ? false : true);
+            }
+            if(violationReasonEventLabel != null) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_REASON + " - " + violationReasonEventLabel);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_REASON, violationReasonEventLabel);
+            }
+            if(justificationTextFilled) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_JUSTIFICATION);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_JUSTIFICATION);
+            }
+        }
+    }
 }

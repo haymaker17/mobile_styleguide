@@ -36,6 +36,8 @@ public class Const {
     public static final String EXTRA_HOTEL_IMAGE_ITEM = "hotel.image";
     public static final String EXTRA_HOTEL_LOCATION = "hotel.location";
     public static final String EXTRA_HOTEL_IMAGES = "hotel.images";
+    public static final String EXTRA_TRAVEL_SUGGESTED_HOTEL = "travel.suggested.hotel";
+    public static final String EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE = "travel.suggested.hotel.available";
 
     // Activity result codes
     public static final int REQUEST_CODE_LOCATION = 1;

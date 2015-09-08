@@ -432,12 +432,72 @@ public class Flurry {
     public static final String LABEL_BAD_CREDENTIALS = "Bad Credentials";
     public static final String LABEL_OFFLINE = "Offline";
 
-    public static final String EVENT_CATEGORY_TRAVEL_HOTEL = "TRAVEL-HOTEL";
+    //////////////////////////// start of Jarvis Hotel events
+
+    // categories
+    public static final String EVENT_CATEGORY_TRAVEL = "Travel";
+    public static final String EVENT_CATEGORY_TRAVEL_HOTEL = "Travel-Hotel";
+    public static final String EVENT_CATEGORY_TRAVEL_BOOK = "Travel-Book";
+
+    // screen names
+    public static final String SCREEN_NAME_TRAVEL_TRIPS = "Travel-Trips";
+    public static final String SCREEN_NAME_TRAVEL_TRIP_DETAILS = "Travel-TripDetails";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_SEARCH_CRITERIA = "Travel-Hotel-Search-Criteria";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_SEARCH_RESULTS = "Travel-Hotel-Search-Results";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW = "Travel-Hotel-HotelOverview";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_ROOMS = "Travel-Hotel-HotelOverview-Rooms";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_DETAILS = "Travel-Hotel-Overview-Details";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_PHOTOS = "Travel-Hotel-Overview-Photos";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_RESERVE = "Travel-Hotel-Reserve";
+
+    // event actions
+    public static final String EVENT_ACTION_PLUS = "Plus";
+    public static final String EVENT_ACTION_ADD_TO_TRIP = "AddToTrip";
+    public static final String EVENT_ACTION_TRAVEL_BOOK = "Book Travel";
     public static final String EVENT_ACTION_TRAVEL_DESTINATION_TAPPED = "Destination Tapped";
-    public static final String EVENT_ACTION_TRAVEL_SEARCH_INITIATED = "Search initiated";
+    public static final String EVENT_ACTION_SEARCH_INITIATED = "Search Initiated";
+    public static final String EVENT_ACTION_MICROPHONE_TAPPED = "Microphone Tapped";
+    public static final String EVENT_ACTION_TRAVEL_VIEWED_HOTELS = "Viewed Hotels";
+    public static final String EVENT_ACTION_SEARCH_CRITERIA_HEADER_TAPPED = "Criteria Header Tapped";
+    public static final String EVENT_ACTION_MAP_NAVBAR_ALL_HOTELS = "Map:NavBar AllHotels";
+    public static final String EVENT_ACTION_HOTEL_SELECTED = "Hotel Selected";
+    public static final String EVENT_ACTION_SORT = "Sort";
+    public static final String EVENT_ACTION_FILTER = "Filter";
+    public static final String EVENT_ACTION_NAVBAR_BACK_BUTTON_TAPPED = "Navbar Back Button Tapped";
+    public static final String EVENT_ACTION_ROOM_SELECT = "Room Select";
+    public static final String EVENT_ACTION_CALL_HOTEL_TAPPED = "Call Hotel Tapped";
+    public static final String EVENT_ACTION_MAP_DETAILS_SINGLE_HOTEL = "Map:Details SingleHotel";
+    public static final String EVENT_ACTION_ROOM_BUTTON_SELECT = "Room Button Select";
+    public static final String EVENT_ACTION_MAP_NAVBAR_SINGLE_HOTEL = "Map:NavBar SingleHotel";
+    public static final String EVENT_ACTION_PHOTO_TAPPED = "Photo Tapped";
+    public static final String EVENT_ACTION_CANCELLATION_POLICY_VIEWED = "Cancellation Policy Viewed";
+    public static final String EVENT_ACTION_RESERVE_CLICKED = "Reserve Clicked";
+    public static final String EVENT_ACTION_RESERVE_CONFIRMED = "Reserve Confirmed";
+    public static final String EVENT_ACTION_CHANGE_CARDS = "Change Cards";
+    public static final String EVENT_ACTION_REASON = "Reason";
+    public static final String EVENT_ACTION_JUSTIFICATION = "Justification";
+
+
+    // event labels
     public static final String EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION = "Current Location";
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION = "Office Location";
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OTHER = "Other";
+    public static final String EVENT_LABEL_HOTEL_PROPERTY_ID = "PropertyId";
+    public static final String EVENT_LABEL_HOTEL_RECOMMENDATION_SCORE = "Recommendation Score";
+    public static final String EVENT_LABEL_HOTEL_RECOMMENDED = "Recommended";
+    public static final String EVENT_LABEL_HOTEL_RECOMMENDED_TYPE = "RecType";
+    public static final String EVENT_LABEL_DISTANCE = "Distance";
+    public static final String EVENT_LABEL_PREFERRED = "Preferred";
+    public static final String EVENT_LABEL_PRICE = "Price";
+    public static final String EVENT_LABEL_RATING = "Rating";
+    public static final String EVENT_LABEL_SUGGESTED = "Suggested";
+    public static final String EVENT_LABEL_STAR_RATING = "Star Rating";
+    public static final String EVENT_LABEL_WITH_NAMES_CONTAINING = "With Names Containing";
+    public static final String EVENT_LABEL_HOTEL_SUGGESTED_BOOKED = "Suggested Booked";
+    public static final String EVENT_LABEL_HOTEL_SUGGESTED_AVAILABLE = "Suggested Available";
+    public static final String EVENT_LABEL_HOTEL_SUGGESTED_UNAVAILABLE = "Suggested Unavailable";
+
+    //////////////////////////// end of Jarvis Hotel events
 
     /**
      * Formats a Flurry event name based on a category and name.

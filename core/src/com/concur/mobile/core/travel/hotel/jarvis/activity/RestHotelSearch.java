@@ -56,7 +56,7 @@ import java.util.TimeZone;
  *
  * @author Tejoa
  */
-@EventTracker.EventTrackerClassName(getClassName = "Travel-Hotel-Search-Criteria")
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_SEARCH_CRITERIA)
 public class RestHotelSearch extends TravelBaseActivity
         implements LoaderManager.LoaderCallbacks<TravelCustomFieldsConfig>,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
@@ -283,6 +283,9 @@ public class RestHotelSearch extends TravelBaseActivity
             if (!ConcurCore.isConnected()) {
                 showOfflineDialog();
             } else {
+                Log.d(com.concur.mobile.platform.ui.travel.util.Const.LOG_TAG, "RestHotelSearch*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_MICROPHONE_TAPPED);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL,
+                        Flurry.EVENT_ACTION_MICROPHONE_TAPPED);
                 ConcurCore core = (ConcurCore) ConcurCore.getContext();
                 Intent i = new Intent(RestHotelSearch.this, HotelVoiceSearchActivity.class);
                 i.putExtra("currentLocation", core.getCurrentLocation());
@@ -823,8 +826,8 @@ public class RestHotelSearch extends TravelBaseActivity
             eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
         }
 
-        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
-        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_SEARCH_INITIATED,
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SEARCH_INITIATED,
                 eventLabelSearchLocation);
 
         startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
