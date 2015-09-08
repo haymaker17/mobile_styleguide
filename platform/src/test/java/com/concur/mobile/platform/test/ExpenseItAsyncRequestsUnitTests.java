@@ -94,6 +94,13 @@ public class ExpenseItAsyncRequestsUnitTests extends PlatformAsyncRequestTestUti
         test.doTest();
     }
 
+    @Test
+    public void testConsumerKey() {
+        String consumerKey = ExpenseItServerUtil.getExpenseItServer(ExpenseItServerUtil.Server.PRODUCTION).second;
+        String obfuscate = ExpenseItServerUtil.Server.obfuscate(consumerKey);
+        Assert.assertTrue("Key should be the same", ExpenseItServerUtil.Server.PRODUCTION.getProdKey().equals(obfuscate.trim()));
+    }
+
     /**
      * Note that this is a special test which needs to handle both mockServer and regular server.
      * this can be called from any other test.

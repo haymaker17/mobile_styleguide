@@ -28,7 +28,7 @@ public class ExpenseItServerUtil {
     private static final String FILE_INSTALLATION_ID = "installationID";
 
     public enum Server {
-        PRODUCTION("Production", "https://api.expenseit.com", "M0NBOTc3QTMzQkI0MzhGRTdBM0EzQUQ2MUE0Q0M4NTg="),
+        PRODUCTION("Production", "https://api.expenseit.com", "QzQ3OTI4NUQ1NTI0NjM5MUQyQjAzMDg1NUMyRENENkQ="),
         DEV("Development", "https://api.dev.expenseit.com", "QTJCMURBQjZDMzM5NjczQ0I4RDQwQUMzQjhDNTFGNEE="),
         RQA2("RQA2", "https://api-rqa2-expenseit.concurtech.net", "OTRDOEExRjUzODFCN0UzQUY5QjQ4QUQyMTZDN0E5RDE="),
         RQA3("RQA3", "https://api-rqa3-expenseit.concurtech.net", "MEE1NDc3QjI3RkY2NjQ5NzBGQTYwMEEzNjBGQjU3NkE="),
