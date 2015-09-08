@@ -91,7 +91,7 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
             return;
         }
 
-        startActivityForResult(resultsIntent, Const.REQUEST_CODE_BACK_BUTTON_PRESSED);
+        startActivityForResult(resultsIntent, Const.REQUEST_CODE_BOOK_HOTEL);
 
     }
 
@@ -101,11 +101,29 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
             case Const.REQUEST_CODE_BACK_BUTTON_PRESSED: {
                 // back button press on started activity
                 getIntent().putExtra(RESET_UI_ON_RESUME, true);
+                break;
+            }
+            case Const.REQUEST_CODE_BOOK_HOTEL: {
+                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                        "\n\n\n ****** HotelVoiceSearchActivity onActivityResult with REQUEST_CODE_BOOK_HOTEL result code : "
+                                + resultCode);
+                if (resultCode == RESULT_OK) {
+                    // Hotel was booked, set the result code to okay and show Itineary.
+                    String itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
+                    String bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
+                    Intent i = new Intent(HotelVoiceSearchActivity.this, ShowHotelItinerary.class);
+                    i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
+                    i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".HotelVoiceSearchActivity start activity to retrieve itinerary");
+                    HotelVoiceSearchActivity.this.startActivity(i);
+                    finish();
+                } else if (resultCode == RESULT_CANCELED) {
+                    getIntent().putExtra(RESET_UI_ON_RESUME, true);
+                }
+                break;
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
-
     } // onActivityResult()
 
     @Override
