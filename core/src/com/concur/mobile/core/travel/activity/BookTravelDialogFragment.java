@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.data.UserConfig;
 import com.concur.mobile.core.eva.activity.VoiceSearchActivity;
 import com.concur.mobile.core.travel.air.activity.AirSearch;
 import com.concur.mobile.core.travel.air.activity.VoiceAirSearchActivity;
@@ -34,6 +33,7 @@ import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.TravelUtil;
 import com.concur.mobile.core.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -258,23 +258,16 @@ public class BookTravelDialogFragment extends DialogFragment {
                         }
                     } else if (voiceActivity == VoiceHotelSearchActivity.class && Preferences.shouldShowHotelJarvisUI()) {
                         // Jarvis New voice search UI
+
                         ConcurCore core = (ConcurCore) ConcurCore.getContext();
                         Intent i = new Intent(getActivity(), HotelVoiceSearchActivity.class);
-                        i.putExtra("currentLocation", core.getCurrentLocation());
-                        i.putExtra("currentAddress", core.getCurrentAddress());
-                        UserConfig userConfig = core.getUserConfig();
-                        String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
-                        if (distanceUnit == null) {
-                            distanceUnit = "M";
-                        } else {
-                            distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
-                        }
-                        i.putExtra(com.concur.mobile.platform.ui.travel.util.Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
+                        TravelUtil.addSearchIntent(i);
 
                         startActivity(i);
 
-                    } else {
+                    } else
 
+                    {
                         Intent i = new Intent(getActivity(), voiceActivity);
                         if (isFromMoreMenu) {
                             i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);

@@ -3,7 +3,11 @@
  */
 package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
-import android.app.*;
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.graphics.Color;
@@ -15,11 +19,16 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
@@ -29,7 +38,12 @@ import com.concur.mobile.core.travel.activity.LocationSearchV1;
 import com.concur.mobile.core.travel.data.CompanyLocation;
 import com.concur.mobile.core.travel.data.LocationChoice;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.util.*;
+import com.concur.mobile.core.util.BookingDateUtil;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.FormatUtil;
+import com.concur.mobile.core.util.TravelUtil;
+import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
@@ -162,23 +176,23 @@ public class RestHotelSearch extends TravelBaseActivity
                 int searchMode = savedInstanceState.getInt(LOCATION_TYPE);
                 Bundle locBundle = savedInstanceState.getBundle(LOCATION);
                 switch (searchMode) {
-                case LocationSearchV1.SEARCH_COMPANY_LOCATIONS: {
-                    currentLocation = new CompanyLocation(locBundle);
-                    break;
-                }
-                case LocationSearchV1.SEARCH_CUSTOM: {
-                    currentLocation = new LocationChoice(locBundle);
-                    break;
-                }
-                case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
-                    currentLocation = null;
-                    searchNearMe = true;
-                    break;
-                }
-                default: {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".initializeFieldState: invalid search mode of '" + searchMode
-                            + "' on result intent.");
-                }
+                    case LocationSearchV1.SEARCH_COMPANY_LOCATIONS: {
+                        currentLocation = new CompanyLocation(locBundle);
+                        break;
+                    }
+                    case LocationSearchV1.SEARCH_CUSTOM: {
+                        currentLocation = new LocationChoice(locBundle);
+                        break;
+                    }
+                    case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
+                        currentLocation = null;
+                        searchNearMe = true;
+                        break;
+                    }
+                    default: {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".initializeFieldState: invalid search mode of '" + searchMode
+                                + "' on result intent.");
+                    }
                 }
 
                 fromLocationSearchIntent = savedInstanceState.getBoolean(FROM_LOCATION_SEARCH_INTENT);
@@ -202,7 +216,8 @@ public class RestHotelSearch extends TravelBaseActivity
         }
     }
 
-    @Override protected void onSaveInstanceState(Bundle outState) {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         // Save the location
@@ -261,41 +276,35 @@ public class RestHotelSearch extends TravelBaseActivity
      * 
      * @see android.app.Activity#onRestoreInstanceState(android.os.Bundle)
      */
-    @Override protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         // No-op. In the 'onCreate' method below the values for the fields
         // are being reset. The default implementation appears to restore the
         // UI values to blank values so this no-op override blocks our reset
         // values from being trounced.
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_voice_v1, menu);
         return true;
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         return Preferences.shouldAllowVoiceBooking();
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menuVoice) {
             if (!ConcurCore.isConnected()) {
                 showOfflineDialog();
             } else {
                 ConcurCore core = (ConcurCore) ConcurCore.getContext();
                 Intent i = new Intent(RestHotelSearch.this, HotelVoiceSearchActivity.class);
-                i.putExtra("currentLocation", core.getCurrentLocation());
-                i.putExtra("currentAddress", core.getCurrentAddress());
-                UserConfig userConfig = core.getUserConfig();
-                String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
-                if (distanceUnit == null) {
-                    distanceUnit = "M";
-                } else {
-                    distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
-                }
-                i.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
-
+                TravelUtil.addSearchIntent(i);
                 RestHotelSearch.this.startActivity(i);
             }
             return true;
@@ -303,7 +312,8 @@ public class RestHotelSearch extends TravelBaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Instruct the window manager to only show the soft keyboard when the
@@ -326,7 +336,8 @@ public class RestHotelSearch extends TravelBaseActivity
 
         searchButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
@@ -475,23 +486,23 @@ public class RestHotelSearch extends TravelBaseActivity
         calendarDialog = new CalendarPickerDialogV1();
         bundle = new Bundle();
         switch (id) {
-        case CHECK_IN_DATE_DIALOG: {
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkInDate.get(Calendar.YEAR));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkInDate.get(Calendar.MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkInDate.get(Calendar.DAY_OF_MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
-            isCheckin = true;
-            break;
-        }
-        case CHECK_OUT_DATE_DIALOG: {
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkOutDate.get(Calendar.YEAR));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkOutDate.get(Calendar.MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkOutDate.get(Calendar.DAY_OF_MONTH));
-            bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
+            case CHECK_IN_DATE_DIALOG: {
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkInDate.get(Calendar.YEAR));
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkInDate.get(Calendar.MONTH));
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkInDate.get(Calendar.DAY_OF_MONTH));
+                bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
+                isCheckin = true;
+                break;
+            }
+            case CHECK_OUT_DATE_DIALOG: {
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_YEAR, checkOutDate.get(Calendar.YEAR));
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_MONTH, checkOutDate.get(Calendar.MONTH));
+                bundle.putInt(CalendarPickerDialogV1.KEY_INITIAL_DAY, checkOutDate.get(Calendar.DAY_OF_MONTH));
+                bundle.putInt(CalendarPickerDialogV1.KEY_TEXT_COLOR, Color.parseColor("#a5a5a5"));
 
-            isCheckin = false;
-            break;
-        }
+                isCheckin = false;
+                break;
+            }
         }
 
         DialogId = id;
@@ -525,7 +536,8 @@ public class RestHotelSearch extends TravelBaseActivity
         // Hook up the handler
         location.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!ConcurCore.isConnected()) {
                     showOfflineDialog();
                 } else {
@@ -552,69 +564,70 @@ public class RestHotelSearch extends TravelBaseActivity
 
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-        case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE: {
-            // MOB-14331
-            super.onActivityResult(requestCode, resultCode, data);
-            break;
-        }
-        case Const.REQUEST_CODE_LOCATION: {
-            if (resultCode == RESULT_OK) {
-                Bundle locBundle = data.getBundleExtra(LocationChoice.LOCATION_BUNDLE);
-                // obtain the search mode that provided the choice.
-                int searchMode = data.getIntExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, -1);
-                if (searchMode != -1) {
-                    switch (searchMode) {
-                    case LocationSearchV1.SEARCH_COMPANY_LOCATIONS: {
-                        currentLocation = new CompanyLocation(locBundle);
-                        break;
+            case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE: {
+                // MOB-14331
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+            }
+            case Const.REQUEST_CODE_LOCATION: {
+                if (resultCode == RESULT_OK) {
+                    Bundle locBundle = data.getBundleExtra(LocationChoice.LOCATION_BUNDLE);
+                    // obtain the search mode that provided the choice.
+                    int searchMode = data.getIntExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, -1);
+                    if (searchMode != -1) {
+                        switch (searchMode) {
+                            case LocationSearchV1.SEARCH_COMPANY_LOCATIONS: {
+                                currentLocation = new CompanyLocation(locBundle);
+                                break;
+                            }
+                            case LocationSearchV1.SEARCH_CUSTOM: {
+                                currentLocation = new LocationChoice(locBundle);
+                                break;
+                            }
+                            case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
+                                currentLocation = null;
+                                searchNearMe = true;
+                                break;
+                            }
+                            default: {
+                                Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: invalid search mode of '" + searchMode
+                                        + "' on result intent.");
+                            }
+                        }
+                        // flag to be saved in the instance state for showing the
+                        // text in the location field
+                        fromLocationSearchIntent = true;
+                        updateLocationButton();
+                        checkSearchButton();
+                    } else {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: no search mode used flag set on result intent.");
                     }
-                    case LocationSearchV1.SEARCH_CUSTOM: {
-                        currentLocation = new LocationChoice(locBundle);
-                        break;
-                    }
-                    case LocationSearchV1.SEARCH_CURRENT_LOCATION: {
-                        currentLocation = null;
-                        searchNearMe = true;
-                        break;
-                    }
-                    default: {
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: invalid search mode of '" + searchMode
-                                + "' on result intent.");
-                    }
-                    }
-                    // flag to be saved in the instance state for showing the
-                    // text in the location field
-                    fromLocationSearchIntent = true;
-                    updateLocationButton();
-                    checkSearchButton();
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: no search mode used flag set on result intent.");
                 }
+                break;
             }
-            break;
-        }
-        case Const.REQUEST_CODE_BOOK_HOTEL: {
-            Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
-                    "\n\n\n ****** RestHotelSearch onActivityResult with REQUEST_CODE_BOOK_HOTEL result code : "
-                            + resultCode);
-            if (resultCode == RESULT_OK) {
-                // Hotel was booked, set the result code to okay.
-                String itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
-                String bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
-                Intent i = new Intent(RestHotelSearch.this, ShowHotelItinerary.class);
-                i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
-                i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
-                Log.d(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
-                RestHotelSearch.this.startActivity(i);
-                finish();
+            case Const.REQUEST_CODE_BOOK_HOTEL: {
+                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                        "\n\n\n ****** RestHotelSearch onActivityResult with REQUEST_CODE_BOOK_HOTEL result code : "
+                                + resultCode);
+                if (resultCode == RESULT_OK) {
+                    // Hotel was booked, set the result code to okay.
+                    String itinLocator = data.getStringExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR);
+                    String bookingRecordLocator = data.getStringExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR);
+                    Intent i = new Intent(RestHotelSearch.this, ShowHotelItinerary.class);
+                    i.putExtra(Const.EXTRA_TRAVEL_ITINERARY_LOCATOR, itinLocator);
+                    i.putExtra(Const.EXTRA_TRAVEL_RECORD_LOCATOR, bookingRecordLocator);
+                    Log.d(Const.LOG_TAG, CLS_TAG + ".RestHotelSearch start activity to retrieve itinerary");
+                    RestHotelSearch.this.startActivity(i);
+                    finish();
 
-            } else if (resultCode == RESULT_CANCELED) {
-                // Hotel Search cancelled or did not go further with the booking
+                } else if (resultCode == RESULT_CANCELED) {
+                    // Hotel Search cancelled or did not go further with the booking
+                }
+                break;
             }
-            break;
-        }
 
         }
 
@@ -692,13 +705,15 @@ public class RestHotelSearch extends TravelBaseActivity
         // Hook up the handlers
         checkInDateView.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 showCalendarDialog(CHECK_IN_DATE_DIALOG);
             }
         });
         checkOutDateView.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 showCalendarDialog(CHECK_OUT_DATE_DIALOG);
             }
         });
@@ -741,11 +756,11 @@ public class RestHotelSearch extends TravelBaseActivity
             String formattedName = null;
             if (currentLocation.state == null || currentLocation.state.length() == 0) {
                 formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry,
-                        new Object[] { currentLocation.city, ((CompanyLocation) currentLocation).country });
+                        new Object[]{currentLocation.city, ((CompanyLocation) currentLocation).country});
             } else {
                 formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
-                        new Object[] { currentLocation.city, currentLocation.state,
-                                ((CompanyLocation) currentLocation).country });
+                        new Object[]{currentLocation.city, currentLocation.state,
+                                ((CompanyLocation) currentLocation).country});
             }
             intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
             intent.putExtra("searchNearCompanyLocation", true);
@@ -784,26 +799,7 @@ public class RestHotelSearch extends TravelBaseActivity
 
         intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
 
-        // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
-        // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
-        // the platform. Hence passing in to the next activities. Same with the ruleViolationExplanationRequired
-        SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
-        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null
-                && sysConfig.getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
-        if (reasonCodesCore != null) {
-            ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
-            for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {
-                violationReasons.add(new String[] { reasonCode.id, reasonCode.description });
-            }
-            intent.putExtra("violationReasons", violationReasons);
-        }
-        // Check whether SystemConfig stipulates that 'violation justification' is required.
-        if (sysConfig != null && sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
-                .getRuleViolationExplanationRequired()) {
-            intent.putExtra("ruleViolationExplanationRequired", true);
-        } else {
-            intent.putExtra("ruleViolationExplanationRequired", false);
-        }
+        TravelUtil.addViolationsReasons(intent);
 
         intent.putExtra("currentTripId", cliqbookTripId);
         Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
@@ -817,9 +813,9 @@ public class RestHotelSearch extends TravelBaseActivity
         intent.putExtra("searchNearMe", searchNearMe);
 
         String eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OTHER;
-        if(searchNearMe) {
+        if (searchNearMe) {
             eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION;
-        } else if(currentLocation instanceof CompanyLocation) {
+        } else if (currentLocation instanceof CompanyLocation) {
             eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
         }
 
@@ -926,7 +922,8 @@ public class RestHotelSearch extends TravelBaseActivity
         }
     }
 
-    @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+    @Override
+    public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
 
         if (update) {
             showProgressBar(getString(R.string.dlg_travel_retrieve_custom_fields_update_progress_message));
@@ -938,8 +935,9 @@ public class RestHotelSearch extends TravelBaseActivity
         return asyncLoader;
     }
 
-    @Override public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
-            TravelCustomFieldsConfig travelCustomFieldsConfig) {
+    @Override
+    public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+                               TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
         hideProgressBar();
 
@@ -961,7 +959,8 @@ public class RestHotelSearch extends TravelBaseActivity
                     final int WHAT = 1;
                     Handler handler = new Handler() {
 
-                        @Override public void handleMessage(Message msg) {
+                        @Override
+                        public void handleMessage(Message msg) {
                             if (msg.what == WHAT) {
                                 initTravelCustomFieldsView();
                             }
@@ -974,11 +973,13 @@ public class RestHotelSearch extends TravelBaseActivity
 
     }
 
-    @Override public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+    @Override
+    public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
         Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
     }
 
-    @Override public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+    @Override
+    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;
@@ -1003,7 +1004,8 @@ public class RestHotelSearch extends TravelBaseActivity
             this.isCheckIn = isCheckIn;
         }
 
-        @Override public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
+        @Override
+        public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
             BookingDateUtil dateUtil = new BookingDateUtil();
             if (isCheckIn) {
 
@@ -1083,6 +1085,30 @@ public class RestHotelSearch extends TravelBaseActivity
             app.expireLogin(true);
 
             finish();
+        }
+    }
+
+
+    private void addViolationsReasons(Intent intent) {
+        // get the hotel violation reasons from the SystemConfig and pass it on to the activities.
+        // since the platform systemconfig request is not being invoked by the application, we cannot use the getHotelReasons from
+        // the platform. Hence passing in to the next activities. Same with the ruleViolationExplanationRequired
+        SystemConfig sysConfig = ((ConcurCore) getApplication()).getSystemConfig();
+        ArrayList<com.concur.mobile.core.travel.data.ReasonCode> reasonCodesCore = (sysConfig != null
+                && sysConfig.getHotelReasons() != null) ? sysConfig.getHotelReasons() : null;
+        if (reasonCodesCore != null) {
+            ArrayList<String[]> violationReasons = new ArrayList<String[]>(reasonCodesCore.size());
+            for (com.concur.mobile.core.travel.data.ReasonCode reasonCode : reasonCodesCore) {
+                violationReasons.add(new String[]{reasonCode.id, reasonCode.description});
+            }
+            intent.putExtra("violationReasons", violationReasons);
+        }
+        // Check whether SystemConfig stipulates that 'violation justification' is required.
+        if (sysConfig != null && sysConfig.getRuleViolationExplanationRequired() != null && sysConfig
+                .getRuleViolationExplanationRequired()) {
+            intent.putExtra("ruleViolationExplanationRequired", true);
+        } else {
+            intent.putExtra("ruleViolationExplanationRequired", false);
         }
     }
 
