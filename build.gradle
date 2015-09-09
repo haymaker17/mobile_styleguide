@@ -18,6 +18,7 @@ buildscript {
 
 ext.latestSdkVersion = 21
 ext.lowestSdkSupportVersion = 16
+ext.jacocoVersion = "0.7.5.+"
 
 allprojects {
     repositories {
@@ -46,10 +47,6 @@ subprojects {
                         renderscript.srcDirs = ['src']
                         res.srcDirs = ['res']
                         assets.srcDirs = ['assets']
-                    }
-
-                    androidTest{
-                        java.srcDirs = ['src/test/java']
                     }
 
                     // Move the tests to tests/java, tests/res, etc...

@@ -1,11 +1,5 @@
 package com.concur.mobile.corp.activity;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +13,12 @@ import com.concur.mobile.core.expense.report.approval.activity.Approval;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This activity will foreground the app, if running or will perform startup if not.
@@ -101,7 +101,7 @@ public class ForegroundApp extends Activity {
                                 finish();
                             } else if (type != null && type.equalsIgnoreCase("MOB_SSO_LGIN")) {
                                 String companyCode = queryMap.get("companycode");
-                                Intent intent = new Intent(this, EmailLookupActivity.class);
+                                Intent intent = new Intent(this, EmailPasswordLookupActivity.class);
                                 intent.putExtra(EmailLookupActivity.EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, true);
                                 if (companyCode != null && companyCode.length() > 0) {
                                     intent.putExtra(Const.EXTRA_SSO_COMPANY_CODE, companyCode);

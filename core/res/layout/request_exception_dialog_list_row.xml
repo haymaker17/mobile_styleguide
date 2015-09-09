@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp">
+
+
+        <LinearLayout
+            android:id="@+id/requestExceptionDialogIconLayout"
+            android:orientation="vertical"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/requestExceptionDialogIcon"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/requestExceptionDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starting Location"
+            android:textSize="12sp"
+            android:textColor="#a7b6bf"
+            android:layout_toRightOf="@id/requestExceptionDialogIconLayout"/>
+
+
+        <TextView
+            android:id="@+id/requestExceptionDialogMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:singleLine="false"
+            android:textSize="16sp"
+            android:layout_marginRight="16dp"
+            android:textColor="#1d78bd"
+            android:layout_below="@id/requestExceptionDialogTitle"
+            android:layout_alignLeft="@id/requestExceptionDialogTitle"
+            android:background="@android:color/transparent"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

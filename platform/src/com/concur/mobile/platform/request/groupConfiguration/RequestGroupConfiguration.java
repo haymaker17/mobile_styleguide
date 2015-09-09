@@ -9,13 +9,20 @@ import java.util.List;
  */
 public class RequestGroupConfiguration {
 
-    @SerializedName("ID") private String id;
-    @SerializedName("Name") private String name;
-    @SerializedName("DefaultPolicyID") private String defaultPolicyId;
-    @SerializedName("AgencyOffices") private List<Agency> agencies;
-    @SerializedName("Policies") private List<Policy> policies;
-    @SerializedName("RequestTypes") private List<RequestType> requestTypes;
-    @SerializedName("URI") private String uri;
+    @SerializedName("ID")
+    private String id;
+    @SerializedName("Name")
+    private String name;
+    @SerializedName("DefaultPolicyID")
+    private String defaultPolicyId;
+    @SerializedName("AgencyOffices")
+    private List<Agency> agencies;
+    @SerializedName("Policies")
+    private List<Policy> policies;
+    @SerializedName("RequestTypes")
+    private List<RequestType> requestTypes;
+    @SerializedName("URI")
+    private String uri;
 
     private String defaultFormId = null;
 

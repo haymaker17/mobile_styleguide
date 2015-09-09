@@ -297,8 +297,12 @@ public class Flurry {
     public static final String PARAM_VALUE_REFRESH_DATA = "Refresh Data";
     public static final String PARAM_VALUE_LOCATION_CHECK_IN = "Location Checkin";
     public static final String PARAM_VALUE_TRAVEL_REQUEST = "Travel Request";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_CLICK = "Travel Request Click";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST = "Travel Request List";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_RECALL_ACTION = "Travel Request List Recall Action";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_ROW_TAP_ACTION = "Travel Request List Row Tap Action";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_SUMMARY = "Travel Request Summary";
+    public static final String PARAM_VALUE_TRAVEL_REQUEST_LIST_PLUS_BUTTON = "Travel Request List Plus Button";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_HEADER = "Travel Request Header";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_ENTRY = "Travel Request Entry";
     public static final String PARAM_VALUE_TRAVEL_REQUEST_LOCATION = "Travel Request Location";
@@ -405,11 +409,6 @@ public class Flurry {
     public static final String PARAM_VALUE_MANAGER_APPROVAL = "Manager Approval";
     public static final String PARAM_VALUE_UBER = "Uber";
 
-    public static final String CATEGORY_WAIT_TIME = "Wait Time";
-    public static final String LABEL_WAIT_TIME = "measurement in milliseconds";
-    public static final String ACTION_AUTO_LOGIN_WAIT = "Authenticating View";
-
-
     // SCREEN NAME FOR SIGN IN
     public static final String SCREEN_NAME_EMAIL_LOOKUP = "Sign In-Enter Email";
     public static final String SCREEN_NAME_LOGIN_PASSWORD = "Sign In-Enter Password";
@@ -448,6 +447,11 @@ public class Flurry {
     public static final String EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION = "Current Location";
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION = "Office Location";
     public static final String EVENT_LABEL_TRAVEL_SEARCH_OTHER = "Other";
+
+    // Screen name for Travel Allowance
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL = "Allowance Details: Expense-Report-TravelAllowances-DailyAllowance";
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
 
     /**
      * Formats a Flurry event name based on a category and name.

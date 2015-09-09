@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -37,6 +38,8 @@ import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -44,49 +47,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL)
 public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
-
-    private static class CustomArrayAdapter<String> extends ArrayAdapter<String>
-    {
-        public CustomArrayAdapter(Context ctx, List<String> objects)
-        {
-            super(ctx, android.R.layout.simple_spinner_item, objects);
-        }
-
-        //other constructors
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-
-//            method is responsible for the Textviews of the dropDown
-            View view = super.getDropDownView(position, convertView, parent);
-
-            //we know that simple_spinner_item has android.R.id.text1 TextView:
-
-            TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setTextColor(Color.parseColor("#383F46"));
-
-            return view;
-
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-//            method is responsible for the Textview of the text shown initially
-            View view = super.getView(position, convertView, parent);
-
-            //we know that simple_spinner_item has android.R.id.text1 TextView:
-
-            TextView text = (TextView)view.findViewById(android.R.id.text1);
-            text.setTextColor(Color.parseColor("#383F46"));
-
-            return view;
-
-        }
-
-
-    }
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -118,6 +80,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ta_fixed_travel_allowance_details_activity);
 
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_daily_allowance);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -125,6 +89,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.ta_daily_allowance);
+
 
         Intent callerIntent = this.getIntent();
         allowance = null;
@@ -146,7 +111,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         this.dateFormatter = new DefaultDateFormat(this);
 
         ConcurCore app = (ConcurCore) getApplication();
-        this.allowanceController = app.getFixedTravelAllowanceController();
+        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
         allowanceController.registerListener(this);
 
         controlData = allowanceController.getControlData();
@@ -172,7 +137,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.itinerary_save_menu, menu);
+        inflater.inflate(R.menu.ta_itinerary_save_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -201,12 +166,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
             allowances.add(this.allowance);
             allowanceController.executeUpdate(allowances, expenseReportKey);
-
+            ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+            bar.setVisibility(View.VISIBLE);
+            item.setEnabled(false);
+            disableAllFields();
         }
 
         return super.onOptionsItemSelected(item);
-
     }
+
 
     /**
      * Render breakfast section
@@ -371,13 +339,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         if (isEditable) {
+//            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(this, android.R.layout.simple_spinner_item, new ArrayList<ICode>(controlData.getLodgingTypeValues().values()));
+//            spinner.setAdapter(adapter);
             renderSpinner(spinner, allowance.getLodgingType(), controlData.getLodgingTypeValues(), true);
         }
         TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
         renderTextViewProvision(tvValue, allowance.getLodgingType());
-//            if (tvValue != null) {
-//                tvValue.setText(allowance.getLodgingType().toString());
-//            }
+            if (tvValue != null) {
+                tvValue.setText(allowance.getLodgingType().toString());
+            }
 
     }
 
@@ -552,28 +522,21 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 if (map == null) {
                     map = controlData.getProvidedMealValues();
                 }
-                List<String> list = new ArrayList<String>();
-                int index = 0;
-                int selectedIndex = -1;
-                for (Map.Entry<String,ICode> entry : map.entrySet()){
-                    if (entry.getValue().getCode().equals(provisionCode.getCode())){
-                        selectedIndex = index;
-                    }
-                    list.add(entry.getValue().toString());
-                    index++;
-                }
-                ArrayAdapter<String> adapter = new CustomArrayAdapter<>(this, list);
+                List<ICode> list = new ArrayList<ICode>(map.values());
+
+                ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(this, android.R.layout.simple_spinner_item, list);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
 
+                int selectedIndex = list.indexOf(provisionCode);
                 if (selectedIndex > -1) {
                     spinner.setSelection(selectedIndex);
                 }
                 spinner.setVisibility(View.VISIBLE);
-
             }
         }
     }
+
 
     private void makeDividerGone(int resourceID){
         View divider = (View) this.findViewById(resourceID);
@@ -703,9 +666,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                     "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
                 Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
-                allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+                //allowanceController.refreshFixedTravelAllowances(expenseReportKey);
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
+                resultIntent.putExtra(BundleId.REFRESH_FIXED_TA, true);
                 this.setResult(RESULT_OK, resultIntent);
                 onBackPressed(); //Leave the screen on success.
             } else {
@@ -718,6 +682,17 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             renderHeader(allowance);
         }
 
+    }
+
+    private void disableAllFields() {
+        findViewById(R.id.sv_breakfast_provided).setEnabled(false);
+        findViewById(R.id.sp_breakfast_provided).setEnabled(false);
+        findViewById(R.id.sv_lunch_provided).setEnabled(false);
+        findViewById(R.id.sp_lunch_provided).setEnabled(false);
+        findViewById(R.id.sv_dinner_provided).setEnabled(false);
+        findViewById(R.id.sp_dinner_provided).setEnabled(false);
+        findViewById(R.id.sp_lodging_provided).setEnabled(false);
+        findViewById(R.id.sv_overnight).setEnabled(false);
     }
 
 }

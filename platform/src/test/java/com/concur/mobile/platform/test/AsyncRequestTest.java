@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.test;
 
@@ -36,7 +36,7 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * Provides an abstract class that can be extended to execute and wait for the response from an async request task.
- * 
+ *
  * @author andrewk
  */
 public abstract class AsyncRequestTest {
@@ -57,7 +57,7 @@ public abstract class AsyncRequestTest {
     protected HandlerThread handlerThread;
 
     /**
-     * Contains a reference to a mock MWS server.
+     * Contains a reference to a mock server.
      */
     protected MockServer mockServer;
 
@@ -76,32 +76,6 @@ public abstract class AsyncRequestTest {
 
     public boolean useMockServer() {
         return useMockServer;
-    }
-
-    /**
-     * Get the stream bytes
-     * @param is
-     * @return
-     * @throws IOException
-     */
-    private static byte[] getBytes(InputStream is) throws IOException {
-
-        int len;
-        int size = 1024;
-        byte[] buf;
-
-        if (is instanceof ByteArrayInputStream) {
-            size = is.available();
-            buf = new byte[size];
-            len = is.read(buf, 0, size);
-        } else {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            buf = new byte[size];
-            while ((len = is.read(buf, 0, size)) != -1)
-                bos.write(buf, 0, len);
-            buf = bos.toByteArray();
-        }
-        return buf;
     }
 
     /**
@@ -181,10 +155,9 @@ public abstract class AsyncRequestTest {
      * <br>
      * <b>NOTE:</b> Upon test completion, if <code>expectedResultCode</code> does not match the test result code; the test will
      * report a failure.
-     * 
-     * @param expectedResultCode
-     *            contains one of <code>BaseAsyncRequestTask.RESULT_OK</code>, <code>BaseAsyncRequestTask.RESULT_CANCEL</code> or
-     *            <code>BaseAsyncRequestTask.RESULT_ERROR</code>.
+     *
+     * @param expectedResultCode contains one of <code>BaseAsyncRequestTask.RESULT_OK</code>, <code>BaseAsyncRequestTask.RESULT_CANCEL</code> or
+     *                           <code>BaseAsyncRequestTask.RESULT_ERROR</code>.
      * @see BaseAsyncRequestTask
      */
     public void setExpectedResultCode(int expectedResultCode) {
@@ -205,7 +178,7 @@ public abstract class AsyncRequestTest {
 
     /**
      * Gets the expected result code for the test.
-     * 
+     *
      * @return returns the expected result code for the test.
      */
     public int getExpectedResult() {
@@ -214,10 +187,10 @@ public abstract class AsyncRequestTest {
 
     /**
      * Gets the response from the server.
-     * 
+     *
      * @return returns the response from the server.
      */
-    public String getResponseString(BaseAsyncRequestTask reqTask) {
+    public <T extends BaseAsyncRequestTask> String getResponseString(T reqTask) {
         String response = null;
 
         InputStream ins = reqTask.getResponse();
@@ -249,7 +222,7 @@ public abstract class AsyncRequestTest {
 
     /**
      * Sets the instance of <code>MockServer</code> associated with this test.
-     * 
+     *
      * @param mockServer
      *            contains a reference
      */
@@ -260,30 +233,50 @@ public abstract class AsyncRequestTest {
     /**
      * Will set the mock response on <code>server</code> to the contents of <code>mockRespFile</code> located in
      * <code>assets</code>.
-     * 
-     * @param server
-     *            contains the mock MWS server reference.
-     * @param httpStatusCode
-     *            contains the HTTP response status code.
-     * @param mockRespFile
-     *            contains the file path relative to the <code>assets</code> application path of the response data.
+     *
+     * @param server         contains the mock MWS server reference.
+     * @param httpStatusCode contains the HTTP response status code.
+     * @param mockRespFile   contains the file path relative to the <code>assets</code> application path of the response data.
      */
     public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile) throws Exception {
         setMockResponse(server, httpStatusCode, mockRespFile, null);
     }
 
     /**
+     * Get the stream bytes
+     *
+     * @param is
+     * @return
+     * @throws IOException
+     */
+    private static byte[] getBytes(InputStream is) throws IOException {
+
+        int len;
+        int size = 1024;
+        byte[] buf;
+
+        if (is instanceof ByteArrayInputStream) {
+            size = is.available();
+            buf = new byte[size];
+            len = is.read(buf, 0, size);
+        } else {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            buf = new byte[size];
+            while ((len = is.read(buf, 0, size)) != -1)
+                bos.write(buf, 0, len);
+            buf = bos.toByteArray();
+        }
+        return buf;
+    }
+
+    /**
      * Will set the mock response on <code>server</code> to the contents of <code>mockRespFile</code> located in
      * <code>assets</code>.
-     * 
-     * @param server
-     *            contains the mock MWS server reference.
-     * @param httpStatusCode
-     *            contains the HTTP response status code.
-     * @param mockRespFile
-     *            contains the file path relative to the <code>assets</code> application path of the response data.
-     * @param headers
-     *            contains the response headers.
+     *
+     * @param server         contains the mock MWS server reference.
+     * @param httpStatusCode contains the HTTP response status code.
+     * @param mockRespFile   contains the file path relative to the <code>assets</code> application path of the response data.
+     * @param responseHeaders        contains the response headers.
      */
     public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile,
             Map<String, String> responseHeaders) throws Exception {
@@ -363,7 +356,7 @@ public abstract class AsyncRequestTest {
 
     /**
      * Will retrieve the instance of <code>Handler</code> used to send the result.
-     * 
+     *
      * @return returns an instance of <code>Handler</code> used to send the result.
      */
     protected Handler getHander() {
@@ -378,11 +371,10 @@ public abstract class AsyncRequestTest {
 
     /**
      * Will launch an instance of <code>BaseAsyncRequestTask</code>.
-     * 
-     * @param requestTask
-     *            contains a reference to a <code>BaseAsyncRequestTask</code>.
+     *
+     * @param requestTask contains a reference to a <code>BaseAsyncRequestTask</code>.
      */
-    protected void launchRequest(BaseAsyncRequestTask requestTask) {
+    protected <T extends BaseAsyncRequestTask> void launchRequest(T requestTask) {
 
         // Ensure the result is constructed prior to launching the request task.
         result = new AsyncRequestResult();
@@ -393,9 +385,8 @@ public abstract class AsyncRequestTest {
 
     /**
      * Will wait for the request to be completed prior to returning.
-     * 
-     * @throws InterruptedException
-     *             throws interrupted exception if the wait was interrupted.
+     *
+     * @throws InterruptedException throws interrupted exception if the wait was interrupted.
      */
     protected void waitForResult() throws InterruptedException {
 
@@ -408,6 +399,54 @@ public abstract class AsyncRequestTest {
             ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".waitForResult: got login result.");
         }
 
+    }
+
+    /**
+     * Executes task, retrieve result and returns true if the resultCode is OK
+     *
+     * @param task the task to execute
+     * @return whether the resultCode is OK or not
+     */
+    protected <T extends BaseAsyncRequestTask> boolean populateTaskResult(T task) {
+        boolean isOk = false;
+        task.setRetainResponse(true);
+
+        // Launch the request.
+        launchRequest(task);
+
+        try {
+            // Wait for the result.
+            waitForResult();
+        } catch (InterruptedException intExc) {
+            if (DEBUG) {
+                ShadowLog.e(com.concur.mobile.platform.test.Const.LOG_TAG,
+                        CLS_TAG + ".doTest: interrupted while acquiring login result.");
+            }
+            result.resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
+        }
+
+        // Examine the result.
+        if (result != null) {
+
+            // Verify result code.
+            verifyExpectedResultCode(CLS_TAG);
+
+            switch (result.resultCode) {
+                case BaseAsyncRequestTask.RESULT_CANCEL: {
+                    Assert.fail("Result canceled");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_ERROR: {
+                    Assert.fail("Result error");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_OK: {
+                    isOk = true;
+                    break;
+                }
+            }
+        }
+        return isOk;
     }
 
     /**
@@ -549,7 +588,7 @@ public abstract class AsyncRequestTest {
 
     /**
      * An extension of <code>CountDownLatch</code> used to store the result of an asynchronous request.
-     * 
+     *
      * @author andrewk
      */
     protected class AsyncRequestResult extends CountDownLatch {

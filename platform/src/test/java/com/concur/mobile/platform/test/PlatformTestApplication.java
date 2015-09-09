@@ -2,6 +2,8 @@ package com.concur.mobile.platform.test;
 
 import android.app.Application;
 
+import com.concur.mobile.platform.util.Parse;
+
 /**
  * An extension of <code>Application</code> representing the platform test application.
  *
@@ -11,6 +13,13 @@ public class PlatformTestApplication extends Application {
 
     // Contains a reference to the application.
     private static PlatformTestApplication app;
+
+    // Contains whether or not a mock MWS server instance should be used.
+    private static final boolean useMockServer;
+
+    static {
+        useMockServer = Parse.safeParseBoolean(System.getProperty(Const.USE_MOCK_SERVER, "true"));
+    }
 
     @Override
     public void onCreate() {
@@ -32,4 +41,14 @@ public class PlatformTestApplication extends Application {
     public static PlatformTestApplication getApplication() {
         return PlatformTestApplication.app;
     }
+
+    /**
+     * Gets whether or not a mock server should be used.
+     *
+     * @return returns whether or not a mock server should be used.
+     */
+    public static boolean useMockServer() {
+        return PlatformTestApplication.app.useMockServer;
+    }
+
 }

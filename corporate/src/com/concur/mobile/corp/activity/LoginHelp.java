@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewConfiguration;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.fragment.LoginHelpMain;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.ui.common.util.ViewUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +59,15 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
 
     protected String signInMethod;
 
+    // Double Tap Finger
+    private static final int TIMEOUT = ViewConfiguration.getDoubleTapTimeout() + 100;
+
+    private long mFirstDownTime = 0;
+
+    private boolean mSeparateTouches = false;
+
+    private byte mTwoFingerTapCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +83,6 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
             }
         }
         initiateFooterLayout();
-
         // We have an email, shoot it to the fragment which will show it in a Readonly field.
         FragmentManager fm = getSupportFragmentManager();
         loginHelpFragment = (BaseFragment) fm.findFragmentByTag(FRAGMENT_LOGIN_HELP_MAIN);
@@ -139,7 +149,7 @@ public class LoginHelp extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
 
         EditText emailView = (EditText) findViewById(R.id.email);
-
+        ViewUtil.setClearIconToEditText(emailView);
         resetEmail = emailView.getText().toString();
 
         if (resetEmail.trim().length() > 0) {

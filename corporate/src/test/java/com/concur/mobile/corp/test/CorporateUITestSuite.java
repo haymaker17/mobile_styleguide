@@ -41,10 +41,8 @@ import com.concur.mobile.core.expense.report.approval.activity.ExpenseApproval;
 import com.concur.mobile.core.invoice.activity.InvoicesWebView;
 import com.concur.mobile.core.invoice.activity.PurchaseRequestsWebView;
 import com.concur.mobile.core.request.activity.LocationSearchActivity;
-import com.concur.mobile.core.request.activity.RequestEntryActivity;
-import com.concur.mobile.core.request.activity.RequestHeaderActivity;
+import com.concur.mobile.core.request.activity.RequestEditActivity;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.activity.RequestSummaryActivity;
 import com.concur.mobile.core.travel.activity.AgencyInformation;
 import com.concur.mobile.core.travel.activity.ImageActivity;
 import com.concur.mobile.core.travel.activity.LocationSearch;
@@ -76,14 +74,6 @@ import com.concur.mobile.core.travel.car.activity.CarSearchNoResults;
 import com.concur.mobile.core.travel.car.activity.CarSearchProgress;
 import com.concur.mobile.core.travel.car.activity.CarSearchResults;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
-import com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch;
-import com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearchResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchNoResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchResults;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails;
-import com.concur.mobile.core.travel.hotel.activity.HotelSearchRooms;
 import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
@@ -114,10 +104,6 @@ import com.concur.mobile.corp.activity.Startup;
 import com.concur.mobile.corp.activity.TestDriveRegistration;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.activity.UniversalTour;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity;
-import com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity;
 import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 
 import org.junit.Test;
@@ -140,124 +126,122 @@ public class CorporateUITestSuite extends CorporateTestSuite {
         List<Class<? extends Activity>> failedActivities = new ArrayList<>();
         List<Class<? extends Activity>> successfulLaunchActivities = new ArrayList<>();
         List<Class<? extends Activity>> activities = Arrays.asList(
-            AgencyInformation.class
-            , AirFlightDetail.class
-            , AirPriceToBeatSearch.class
-            , AirPriceToBeatSearchResults.class
-            , AirResultsList.class
-            , AirSearch.class
-            , AirSearchNoResults.class
-            , AirSearchProgress.class
-            , AirSearchResultsSummary.class
-            , AlternativeAirScheduleList.class
-            , Approval.class
-            , ApptentiveActivity.class
-            , ApptentiveListActivity.class
-            , AttendeeSearch.class
-            , BaseActivity.class
-            , BaseActivity.class
-            , CarSearch.class
-            , CarSearchDetail.class
-            , CarSearchNoResults.class
-            , CarSearchProgress.class
-            , CarSearchResults.class
-            , CompanyCodeLoginActivity.class
-            , CompanySignOnActivity.class
-            , EmailLookupActivity.class
-            , ExpenseApproval.class
-            , ExpenseAttendeeEdit.class
-            , ExpenseAttendeePreview.class
-            , ExpenseDetail.class
-            , ExpenseDuplicateAttendee.class
-            , ExpenseEntries.class
-            , ExpenseEntry.class
-            , ExpenseEntryAttendee.class
-            , ExpenseHotelWizard.class
-            , ExpenseReceipt.class
-            , ExpenseReceiptCombined.class
-            , ExpenseReportHeader.class
-            , ExpensesAndReceipts.class
-            , ExpensesAndReceiptsActivity.class
-            , ExpenseSendBack.class
-            , FileSearchActivity.class
-            , ForegroundApp.class
-            , Home.class
-            , HotelBookingActivity.class
-            , HotelChoiceDetailsActivity.class
-            , HotelPriceToBeatSearch.class
-            , HotelPriceToBeatSearchResults.class
-            , HotelReserveRoom.class
-            , HotelSearch.class
-            , HotelSearchAndResultActivity.class
-            , HotelSearchNoResults.class
-            , HotelSearchResults.class
-            , HotelSearchRoomDetails.class
-            , HotelSearchRooms.class
-            , HotelVoiceSearchActivity.class
-            , ImageActivity.class
-            , ImageDetailActivity.class
-            , InvoicesWebView.class
-            , ListSearch.class
-            , LocationCheckIn.class
-            , LocationSearch.class
-            , LocationSearchActivity.class
-            , LocationSearchV1.class
-            , Login.class
-            , LoginHelp.class
-            , LoginHelpTopic.class
-            , LoginPasswordActivity.class
-            , LogView.class
-            , MessageCenter.class
-            , OfferList.class
-            , OfferWebView.class
-            , OffLineUploadList.class
-            , OpenSourceLicenseDisplay.class
-            , OpenSourceLicenseInfo.class
-            , Preferences.class
-            , PreLogin.class
-            , ProfileInfo.class
-            , PurchaseRequestsWebView.class
-            , QuickExpense.class
-            , RailSearch.class
-            , RailSearchDetail.class
-            , RailSearchNoResults.class
-            , RailSearchProgress.class
-            , RailSearchResults.class
-            , RailSearchResultsFares.class
-            , ReceiptShare.class
-            , ReceiptShareStatus.class
-            , Register.class
-            , RequestEntryActivity.class
-            , RequestHeaderActivity.class
-            , RequestListActivity.class
-            , RequestSummaryActivity.class
-            , RestHotelSearch.class
-            , RuleViolationSummary.class
-            , SegmentDetail.class
-            , SegmentList.class
+                AgencyInformation.class
+                , AirFlightDetail.class
+                , AirPriceToBeatSearch.class
+                , AirPriceToBeatSearchResults.class
+                , AirResultsList.class
+                , AirSearch.class
+                , AirSearchNoResults.class
+                , AirSearchProgress.class
+                , AirSearchResultsSummary.class
+                , AlternativeAirScheduleList.class
+                , Approval.class
+                , ApptentiveActivity.class
+                , ApptentiveListActivity.class
+                , AttendeeSearch.class
+                , BaseActivity.class
+                , BaseActivity.class
+                , CarSearch.class
+                , CarSearchDetail.class
+                , CarSearchNoResults.class
+                , CarSearchProgress.class
+                , CarSearchResults.class
+                , CompanyCodeLoginActivity.class
+                , CompanySignOnActivity.class
+                , EmailLookupActivity.class
+                , ExpenseApproval.class
+                , ExpenseAttendeeEdit.class
+                , ExpenseAttendeePreview.class
+                , ExpenseDetail.class
+                , ExpenseDuplicateAttendee.class
+                , ExpenseEntries.class
+                , ExpenseEntry.class
+                , ExpenseEntryAttendee.class
+                , ExpenseHotelWizard.class
+                , ExpenseReceipt.class
+                , ExpenseReceiptCombined.class
+                , ExpenseReportHeader.class
+                , ExpensesAndReceipts.class
+                , ExpensesAndReceiptsActivity.class
+                , ExpenseSendBack.class
+                , FileSearchActivity.class
+                , ForegroundApp.class
+                , Home.class
+//            , HotelBookingActivity.class
+//            , HotelChoiceDetailsActivity.class
+//            , HotelPriceToBeatSearch.class
+//            , HotelPriceToBeatSearchResults.class
+//            , HotelReserveRoom.class
+//            , HotelSearch.class
+//            , HotelSearchAndResultActivity.class
+//            , HotelSearchNoResults.class
+//            , HotelSearchResults.class
+//            , HotelSearchRoomDetails.class
+//            , HotelSearchRooms.class
+//            , HotelVoiceSearchActivity.class
+                , ImageActivity.class
+                , ImageDetailActivity.class
+                , InvoicesWebView.class
+                , ListSearch.class
+                , LocationCheckIn.class
+                , LocationSearch.class
+                , LocationSearchActivity.class
+                , LocationSearchV1.class
+                , Login.class
+                , LoginHelp.class
+                , LoginHelpTopic.class
+                , LoginPasswordActivity.class
+                , LogView.class
+                , MessageCenter.class
+                , OfferList.class
+                , OfferWebView.class
+                , OffLineUploadList.class
+                , OpenSourceLicenseDisplay.class
+                , OpenSourceLicenseInfo.class
+                , Preferences.class
+                , PreLogin.class
+                , ProfileInfo.class
+                , PurchaseRequestsWebView.class
+                , QuickExpense.class
+                , RailSearch.class
+                , RailSearchDetail.class
+                , RailSearchNoResults.class
+                , RailSearchProgress.class
+                , RailSearchResults.class
+                , RailSearchResultsFares.class
+                , ReceiptShare.class
+                , ReceiptShareStatus.class
+                , Register.class
+                , RequestEditActivity.class
+                , RequestListActivity.class
+                , RestHotelSearch.class
+                , RuleViolationSummary.class
+                , SegmentDetail.class
+                , SegmentList.class
 //            ,ShowHotelItinerary.class
 //            ,ShowHotelMap.class
-            , SimpleWebViewActivity.class
-            , Startup.class
-            , TAExpensesActivity.class
-            , TAItineraryActivity.class
-            , TAStopActivity.class
-            , TestDriveRegistration.class
-            , TestDriveTour.class
-            , Tour.class
-            , TravelBaseActivity.class
-            , TravelCustomFieldSearch.class
-            , TravelPointsExplanation.class
-            , TravelRequestApprovalsWebView.class
-            , TravelViolationsApprovalChoice.class
-            , TravelViolationsForManagerApproval.class
-            , TripList.class
-            , UniversalTour.class
-            , ViewActivity.class
-            , ViewImage.class
-            , VoiceAirSearchActivity.class
-            , VoiceCarSearchActivity.class
-            , VoiceHotelSearchActivity.class
+                , SimpleWebViewActivity.class
+                , Startup.class
+                , TAExpensesActivity.class
+                , TAItineraryActivity.class
+                , TAStopActivity.class
+                , TestDriveRegistration.class
+                , TestDriveTour.class
+                , Tour.class
+                , TravelBaseActivity.class
+                , TravelCustomFieldSearch.class
+                , TravelPointsExplanation.class
+                , TravelRequestApprovalsWebView.class
+                , TravelViolationsApprovalChoice.class
+                , TravelViolationsForManagerApproval.class
+                , TripList.class
+                , UniversalTour.class
+                , ViewActivity.class
+                , ViewImage.class
+                , VoiceAirSearchActivity.class
+                , VoiceCarSearchActivity.class
+                , VoiceHotelSearchActivity.class
             /*
             ----Gov Activities----
             ,TaxFormReceiver.class

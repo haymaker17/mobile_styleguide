@@ -282,7 +282,6 @@ public class EmailLookupFragment extends PlatformFragment implements OnClickList
             if (!emailLookupCallbacks.isNetworkConnected()){
                 new NoConnectivityDialogFragment().show(getFragmentManager(), null);
                 emailLookupCallbacks.trackEmailLookupFailure(EmailLookupCallbacks.FAILURE_REASON_OFFLINE);
-                
                 return;
             } else  { 
                 String emailOrUsername = emailView.getText().toString().trim();

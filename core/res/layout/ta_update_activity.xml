@@ -20,7 +20,8 @@
             android:titleTextAppearance="@style/TAToolbarTitle"
             android:contentInsetStart="72dp"
             app:contentInsetStart="72dp"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <TextView
             android:id="@+id/tv_toolbar_text"
@@ -31,6 +32,14 @@
             android:layout_marginRight="16dp"
             android:text="@string/itin_stops_infotext"
             android:textAppearance="@style/TASubTitle.White" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -79,7 +88,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="144dp"
-        android:id="@+id/list_view" />
+        android:id="@+id/list_view"
+        android:divider="@null"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

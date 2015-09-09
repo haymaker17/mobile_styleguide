@@ -8,7 +8,7 @@ import java.util.Locale;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
-import com.concur.mobile.core.request.util.DateUtil;
+import com.concur.mobile.platform.request.util.DateUtil;
 
 /**
  * @author OlivierB

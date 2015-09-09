@@ -37,7 +37,7 @@ public abstract class MockServer {
     /**
      * Contains the address name upon which clients should connect.
      */
-    private static final String ADDRESS = "localhost";
+    public static final String ADDRESS = "localhost";
 
     // Contains the reference to the Jetty server object.
     private Server server;

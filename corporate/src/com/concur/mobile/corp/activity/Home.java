@@ -106,7 +106,7 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.core.request.util.RequestStatus;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;
@@ -813,11 +813,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (((ssoReply != null && ssoReply.ssoEnabled && ssoReply.ssoUrl != null)) || (sessionInfo != null
                 && (!TextUtils.isEmpty(sessionInfo.getSSOUrl())))) {
             // Company sign-on.
-            login = new Intent(Home.this, EmailLookupActivity.class);
+            login = new Intent(Home.this, EmailPasswordLookupActivity.class);
             login.putExtra(EmailLookupActivity.EXTRA_ADVANCE_TO_COMPANY_SIGN_ON, true);
         } else {
             // PIN-based login.
-            login = new Intent(Home.this, EmailLookupActivity.class);
+            login = new Intent(Home.this, EmailPasswordLookupActivity.class);
             login.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
         }
         startActivity(login);
@@ -857,7 +857,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         PlatformProperties.setAccessToken(null);
                         PlatformProperties.setSessionId(null);
 
-                        Intent login = new Intent(Home.this, EmailLookupActivity.class);
+                        Intent login = new Intent(Home.this, EmailPasswordLookupActivity.class);
                         login.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
 
                         startActivity(login);
@@ -1493,7 +1493,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         ConfigUtil.removeExpenseItLoginInfo(this);
 
         // Go back to the EmailLookup screen.
-        Intent i = new Intent(this, EmailLookupActivity.class);
+        Intent i = new Intent(this, EmailPasswordLookupActivity.class);
         i.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
         ConcurCore ConcurCore = (ConcurCore) getApplication();
         ConcurService ConcurService = ConcurCore.getService();

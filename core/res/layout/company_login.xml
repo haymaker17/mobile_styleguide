@@ -3,7 +3,7 @@
     style="@style/ConcurTheme"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/blue_background"
+    android:background="@color/MaterialWhite"
     android:orientation="vertical" >
 
     <!-- Include the standard header bits -->
@@ -27,12 +27,11 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/sso_sign_in_sub_title"
-            android:textAppearance="@style/TourSmallPrimaryText" />
+            android:textAppearance="@style/TestRegPrimary_Material" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/square_border"
             android:orientation="vertical"
             android:padding="1dp" >
 
@@ -41,17 +40,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/square_no_border"
                 android:hint="@string/sso_sign_in_hint_text"
                 android:imeOptions="actionGo"
                 android:inputType="textEmailAddress|textAutoComplete|textAutoCorrect|textNoSuggestions|textFilter|textVisiblePassword"
                 android:maxLines="1"
                 android:padding="10dp"
-                android:textAppearance="@style/PrimaryText" />
+                android:textColor="@color/MaterialConcurBlue"
+                android:backgroundTint="@color/MaterialConcurBlue"
+                android:textSize="14dp"/>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp" />
         </LinearLayout>
 
         <View

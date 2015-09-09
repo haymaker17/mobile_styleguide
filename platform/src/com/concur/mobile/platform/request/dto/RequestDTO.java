@@ -1,5 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
+import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.groupConfiguration.Agency;
 import com.concur.mobile.platform.request.permission.Link;
 import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
@@ -15,52 +17,99 @@ import java.util.Map;
  */
 public class RequestDTO implements FormDTO {
 
-    public enum ApprovalStatus {
+    public enum ApprovalStatus implements IFormField.EnumField<ApprovalStatus> {
         CREATION("Q_NOTF"),
         PENDING_VALIDATION("Q_PEND"),
         PENDING_EBOOKING("Q_PEBK"),
         APPROVED("Q_APPR"),
         RECALLED("Q_RESU");
 
-        private String code;
+        private String name;
 
-        ApprovalStatus(String code) {
-            this.code = code;
+        ApprovalStatus(String name) {
+            this.name = name;
         }
 
-        public String getCode() {
-            return code;
+        @Override
+        public String getName() {
+            return name;
         }
     }
 
-    @Expose @SerializedName("RequestID") private String id;
-    @Expose @SerializedName("Name") private String name;
-    @Expose @SerializedName("Purpose") private String purpose;
-    @Expose @SerializedName("CurrencyCode") private String currencyCode;
-    @SerializedName("EmployeeName") private String employeeName;
-    @SerializedName("ApprovalStatusName") private String approvalStatus;
-    @Expose @SerializedName("ApprovalStatusCode") private String approvalStatusCode;
-    @SerializedName("TotalApprovedAmount") private Double total;
-    @Expose @SerializedName("StartDate") private Date startDate;
-    @Expose @SerializedName("EndDate") private Date endDate;
-    @Expose @SerializedName("CreationDate") private Date requestDate;
-    @Expose @SerializedName("Comment") private String lastComment;
-    @SerializedName("UserLoginID") private String userLoginId;
-    @SerializedName("ApproverLoginID") private String approverLoginId;
-    @SerializedName("SegmentTypes") private String segmentListString;
-    @SerializedName("HighestExceptionLevel") private String highestExceptionLevel;
-    @Expose @SerializedName("HeaderFormID") private String headerFormId;
+    @Expose
+    @SerializedName("RequestID")
+    private String id;
+    @Expose
+    @SerializedName("Name")
+    private String name;
+    @Expose
+    @SerializedName("Purpose")
+    private String purpose;
+    @Expose
+    @SerializedName("CurrencyCode")
+    private String currencyCode;
+    @SerializedName("EmployeeName")
+    private String employeeName;
+    @SerializedName("ApprovalStatusName")
+    private String approvalStatusName;
+    @Expose
+    @SerializedName("ApprovalStatusCode")
+    private ApprovalStatus approvalStatus;
+    @SerializedName("TotalApprovedAmount")
+    private Double total;
+    @Expose
+    @SerializedName("StartDate")
+    private Date startDate;
+    @Expose
+    @SerializedName("EndDate")
+    private Date endDate;
+    @Expose
+    @SerializedName("CreationDate")
+    private Date requestDate;
+    @Expose
+    @SerializedName("Comment")
+    private String lastComment;
+    @SerializedName("Comments")
+    private List<RequestCommentDTO> commentHistory;
+    @SerializedName("LoginID")
+    private String userLoginId;
+    @SerializedName("HighestExceptionLevel")
+    private RequestExceptionDTO.ExceptionLevel highestExceptionLevel;
+    @Expose
+    @SerializedName("HeaderFormID")
+    private String headerFormId;
+    @SerializedName("Exceptions")
+    private List<RequestExceptionDTO> exceptions;
+
+    @Expose
+    @SerializedName("MainDestinationID")
+    private String mainDestinationId;
+
+    @SerializedName("MainDestinationName")
+    private String mainDestinationName;
 
     // --- required to post/put
-    @Expose @SerializedName(("PolicyID")) private String policyId;
+    @Expose
+    @SerializedName(("PolicyID"))
+    private String policyId;
+
+    @SerializedName("SegmentsEntries")
+    private List<RequestEntryDTO> entryList;
 
     private Map<String, RequestEntryDTO> entriesMap;
 
-    @SerializedName("UserPermissions") private Link permissionsLink;
+    @SerializedName("UserPermissions")
+    private Link permissionsLink;
 
     private int displayOrder = 1;
 
-    @Override public String getId() {
+    public Agency agency;
+
+    private String startLocationName;
+    private String startLocationId;
+
+    @Override
+    public String getId() {
         return id;
     }
 
@@ -100,20 +149,20 @@ public class RequestDTO implements FormDTO {
         this.employeeName = employeeName;
     }
 
-    public String getApprovalStatus() {
+    public String getApprovalStatusName() {
+        return approvalStatusName;
+    }
+
+    public void setApprovalStatusName(String approvalStatusName) {
+        this.approvalStatusName = approvalStatusName;
+    }
+
+    public ApprovalStatus getApprovalStatus() {
         return approvalStatus;
     }
 
-    public void setApprovalStatus(String approvalStatus) {
+    public void setApprovalStatus(ApprovalStatus approvalStatus) {
         this.approvalStatus = approvalStatus;
-    }
-
-    public String getApprovalStatusCode() {
-        return approvalStatusCode;
-    }
-
-    public void setApprovalStatusCode(String approvalStatusCode) {
-        this.approvalStatusCode = approvalStatusCode;
     }
 
     public Double getTotal() {
@@ -164,22 +213,6 @@ public class RequestDTO implements FormDTO {
         this.userLoginId = userLoginId;
     }
 
-    public String getApproverLoginId() {
-        return approverLoginId;
-    }
-
-    public void setApproverLoginId(String approverLoginId) {
-        this.approverLoginId = approverLoginId;
-    }
-
-    public String getSegmentListString() {
-        return segmentListString;
-    }
-
-    public void setSegmentListString(String segmentList) {
-        this.segmentListString = segmentList;
-    }
-
     public String getHeaderFormId() {
         return headerFormId;
     }
@@ -208,12 +241,36 @@ public class RequestDTO implements FormDTO {
         this.policyId = policyId;
     }
 
-    public String getHighestExceptionLevel() {
+    public List<RequestCommentDTO> getCommentHistory() {
+        return commentHistory;
+    }
+
+    public void setCommentHistory(List<RequestCommentDTO> commentHistory) {
+        this.commentHistory = commentHistory;
+    }
+
+    public RequestExceptionDTO.ExceptionLevel getHighestExceptionLevel() {
         return highestExceptionLevel;
     }
 
-    public void setHighestExceptionLevel(String highestExceptionLevel) {
+    public void setHighestExceptionLevel(RequestExceptionDTO.ExceptionLevel highestExceptionLevel) {
         this.highestExceptionLevel = highestExceptionLevel;
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
+
+    public List<RequestExceptionDTO> getExceptions() {
+        return exceptions;
+    }
+
+    public void setExceptions(List<RequestExceptionDTO> exceptions) {
+        this.exceptions = exceptions;
     }
 
     public boolean isActionPermitted(RequestParser.PermittedAction action) {
@@ -228,7 +285,40 @@ public class RequestDTO implements FormDTO {
         return false;
     }
 
-    @Override public Integer getDisplayOrder() {
+    public String getMainDestinationName() {
+        return mainDestinationName;
+    }
+
+    public void setMainDestinationName(String mainDestinationName) {
+        this.mainDestinationName = mainDestinationName;
+    }
+
+    public String getMainDestinationId() {
+        return mainDestinationId;
+    }
+
+    public void setMainDestinationId(String mainDestinationId) {
+        this.mainDestinationId = mainDestinationId;
+    }
+
+    public String getStartLocationName() {
+        return startLocationName;
+    }
+
+    public void setStartLocationName(String startLocationName) {
+        this.startLocationName = startLocationName;
+    }
+
+    public String getStartLocationId() {
+        return startLocationId;
+    }
+
+    public void setStartLocationId(String startLocationId) {
+        this.startLocationId = startLocationId;
+    }
+
+    @Override
+    public Integer getDisplayOrder() {
         return displayOrder;
     }
 }

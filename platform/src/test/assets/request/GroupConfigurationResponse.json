@@ -1,0 +1,113 @@
+{
+    "Items": [
+        {
+            "Name": "Global",
+            "DefaultPolicyID": "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ",
+            "RequestTypes": [
+                {
+                    "Code": "AUTHORIZATION",
+                    "Name": "Authorization"
+                },
+                {
+                    "Code": "CASH_ADVANCE",
+                    "Name": "Cash Advance"
+                },
+                {
+                    "Code": "EVENT",
+                    "Name": "Event"
+                },
+                {
+                    "Code": "TRAVEL",
+                    "Name": "Travel"
+                }
+            ],
+            "Policies": [
+                {
+                    "ID": "gWohOcl7WcxM03C$pI9KkCBItqEQC$s0PKNRA",
+                    "Name": "CO Request Policy",
+                    "IsDefault": false,
+                    "NoCreation": false,
+                    "HeaderFormID": "gWtQwHAXzuCYOB3HfH6$pmp74dYQq3rP4pSg",
+                    "SegmentTypes": [
+                        {
+                            "ID": "gWmdpedYdnw1JhZHpaiidZ1XHc$p$prMA",
+                            "Name": "Air Ticket",
+                            "SegmentFormID": "gWtQwHAXzuCdzCcaL8nDu$stpaoEJQDQkTPA",
+                            "IconCode": "AIRFR",
+                            "DisplayOrder": 1,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "AIRFR"
+                        },
+                        {
+                            "ID": "gWmVhecIbgfE5n8kMe1lgTFHdb7aZ7Q",
+                            "Name": "Car Rental",
+                            "SegmentFormID": "gWtQwHAXzuCd6sKiD7Pi4BXTtfnbvgF$ppbw",
+                            "IconCode": "CARRT",
+                            "DisplayOrder": 3,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "CARRT"
+                        },
+                        {
+                            "ID": "gWnRhYtwJUGxEuCsJLy34VHx1Ud5BAQ",
+                            "Name": "Railway Ticket",
+                            "SegmentFormID": "gWtQwHAXzuCd$p806GVxCdBVKo3rKvsXrrSA",
+                            "IconCode": "RAILF",
+                            "DisplayOrder": 2,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "RAILF"
+                        }
+                    ]
+                },
+                {
+                    "ID": "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ",
+                    "Name": "Default Request Policy",
+                    "IsDefault": true,
+                    "NoCreation": false,
+                    "HeaderFormID": "gWtQwHAXzuCYOB3HfH6$pmp74dYQq3rP4pSg",
+                    "SegmentTypes": [
+                        {
+                            "ID": "gWmdpedYdnw1JhZHpaiidZ1XHc$p$prMA",
+                            "Name": "Air Ticket",
+                            "SegmentFormID": "gWtQwHAXzuCdzCcaL8nDu$stpaoEJQDQkTPA",
+                            "IconCode": "AIRFR",
+                            "DisplayOrder": 1,
+                            "SegmentCustomFormID": "gWtQwHAXzuCcJyar$p3dx$sUzAFQPOH3GZ0Zw",
+                            "SegmentTypeCode": "AIRFR"
+                        },
+                        {
+                            "ID": "gWmVhecIbgfE5n8kMe1lgTFHdb7aZ7Q",
+                            "Name": "Car Rental",
+                            "SegmentFormID": "gWtQwHAXzuCd6sKiD7Pi4BXTtfnbvgF$ppbw",
+                            "IconCode": "CARRT",
+                            "DisplayOrder": 3,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "CARRT"
+                        },
+                        {
+                            "ID": "gWm5vf9UDfe0LFYBh45Nk4KQ$sVIKRdQ",
+                            "Name": "Hotel Reservation",
+                            "SegmentFormID": "gWtQwHAXzuCd5jgqAhaCk$spbR4crQb0MXcg",
+                            "IconCode": "HOTEL",
+                            "DisplayOrder": 4,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "HOTEL"
+                        },
+                        {
+                            "ID": "gWnRhYtwJUGxEuCsJLy34VHx1Ud5BAQ",
+                            "Name": "Railway Ticket",
+                            "SegmentFormID": "gWtQwHAXzuCd$p806GVxCdBVKo3rKvsXrrSA",
+                            "IconCode": "RAILF",
+                            "DisplayOrder": 2,
+                            "SegmentCustomFormID": null,
+                            "SegmentTypeCode": "RAILF"
+                        }
+                    ]
+                }
+            ],
+            "AgencyOffices": [],
+            "ID": "gWu0JRJM2GV8YgqpYvVy8UNDTmXbyjXS49A",
+            "URI": "http://localhost/api/v3.1/travelrequest/requestgroupconfigurations/gWu0JRJM2GV8YgqpYvVy8UNDTmXbyjXS49A"
+        }
+    ],
+    "NextPage": null
+}
