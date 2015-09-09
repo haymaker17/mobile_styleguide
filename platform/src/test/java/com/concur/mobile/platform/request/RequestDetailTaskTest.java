@@ -41,6 +41,7 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
     protected static final String MOCK_TO_LOC_ID = "gWoH$sYdLcIWJ8htEYF$sOCLa1d4oqWAx35lw";
     protected static final String MOCK_FROM_LOC_ID = "gWkf$s2FZT$pVA8fw6oAc76Ij4lNWYPwIT9Cg";
 
+
     public RequestDetailTaskTest(boolean useMockServer) {
         super(useMockServer);
     }
@@ -80,7 +81,7 @@ public class RequestDetailTaskTest extends AsyncRequestTest {
         final RequestDTO requestDTO;
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "request/DetailResponse.json");
             requestDTO = initMockedTR();

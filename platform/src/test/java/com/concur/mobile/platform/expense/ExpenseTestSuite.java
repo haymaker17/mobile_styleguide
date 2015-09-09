@@ -1,3 +1,7 @@
+/*
+* Copyright (c) 2015 Concur Technologies, Inc.
+*/
+
 package com.concur.mobile.platform.expense;
 
 import com.concur.mobile.platform.expense.list.test.ExpenseListRequestTaskTest;
@@ -7,35 +11,18 @@ import com.concur.mobile.platform.receipt.list.test.DeleteReceiptRequestTaskTest
 import com.concur.mobile.platform.receipt.list.test.GetReceiptRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.ReceiptListRequestTaskTest;
 import com.concur.mobile.platform.receipt.list.test.SaveReceiptRequestTaskTest;
-import com.concur.mobile.platform.test.ConcurPlatformTestRunner;
-import com.concur.mobile.platform.test.PlatformTestApplication;
-import com.concur.mobile.platform.test.PlatformTestSuite;
+import com.concur.mobile.platform.test.PlatformAsyncRequestTestUtil;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.annotation.Config;
 
 /**
  * Created by OlivierB on 20/08/2015.
  */
-@RunWith(ConcurPlatformTestRunner.class)
-@Config(manifest = "src/test/AndroidManifest.xml", assetDir = "assets")
-public class ExpenseTestSuite extends PlatformTestSuite {
+public class ExpenseTestSuite extends PlatformAsyncRequestTestUtil {
 
-    private boolean loginDone = false;
-
-    @Before
-    public void configure() throws Exception {
-        if (!loginDone) {
-            // Init the login request
-            doPinPasswordLogin();
-            loginDone = true;
-        }
-        if (PlatformTestApplication.useMockServer()) {
-            // Init mock server.
-            initMockServer();
-        }
+    @Override
+    protected boolean useMockServer() {
+        return true;
     }
 
     /**
@@ -45,12 +32,7 @@ public class ExpenseTestSuite extends PlatformTestSuite {
      */
     @Test
     public void doExpenseList() throws Exception {
-
-        ExpenseListRequestTaskTest expenseListTest = new ExpenseListRequestTaskTest(PlatformTestApplication.useMockServer());
-        initTaskMockServer(expenseListTest);
-
-        // Run the ExpenseListRequestTask test.
-        expenseListTest.doTest();
+        doTest(new ExpenseListRequestTaskTest(useMockServer()));
     }
 
     /**
@@ -60,12 +42,7 @@ public class ExpenseTestSuite extends PlatformTestSuite {
      */
     @Test
     public void doSmartExpenseList() throws Exception {
-
-        SmartExpenseListRequestTaskTest smartExpenseListTest = new SmartExpenseListRequestTaskTest( PlatformTestApplication.useMockServer());
-        initTaskMockServer(smartExpenseListTest);
-
-        // Run the ExpenseListRequestTask test.
-        smartExpenseListTest.doTest();
+        doTest(new SmartExpenseListRequestTaskTest(useMockServer()));
     }
 
     /**
@@ -75,58 +52,45 @@ public class ExpenseTestSuite extends PlatformTestSuite {
      */
     @Test
     public void doReceiptList() throws Exception {
-
-        boolean useMockServer = PlatformTestApplication.useMockServer();
-        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest(useMockServer);
-        initTaskMockServer(receiptListTest);
-
-        // Run the ReceiptListRequestTask test.
-        receiptListTest.doTest();
+        ReceiptListRequestTaskTest receiptListTest = new ReceiptListRequestTaskTest(useMockServer());
+        doTest(receiptListTest);
 
         // Run the GetReceiptRequestTask test with a receipt image id.
-        GetReceiptRequestTaskTest getReceiptTest = new GetReceiptRequestTaskTest(useMockServer);
+        GetReceiptRequestTaskTest getReceiptTest = new GetReceiptRequestTaskTest(useMockServer());
         getReceiptTest.setReceiptIdSource(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_ID);
-        initTaskMockServer(getReceiptTest);
-        getReceiptTest.doTest();
+        doTest(getReceiptTest);
 
         // Run the GetReceiptRequestTask test with a receipt Uri.
-        getReceiptTest = new GetReceiptRequestTaskTest(useMockServer);
+        getReceiptTest = new GetReceiptRequestTaskTest(useMockServer());
         getReceiptTest.setReceiptIdSource(GetReceiptRequestTaskTest.ReceiptIdSource.SOURCE_URI);
-        initTaskMockServer(getReceiptTest);
-        getReceiptTest.doTest();
+        doTest(getReceiptTest);
 
         // Run the SaveReceiptRequestTask with just a receipt Uri.
-        SaveReceiptRequestTaskTest saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer);
+        SaveReceiptRequestTaskTest saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
         saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
-        initTaskMockServer(saveReceiptTest);
         // The Roboelectric ContentResolver current throws an UnsupportedException upon attempting to read
         // from a content Uri input stream!
         // saveReceiptTest.doTest();
 
         // Run the SaveReceiptRequestTask with an input stream.
-        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer);
+        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
         saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_INPUT_STREAM);
-        initTaskMockServer(saveReceiptTest);
-        saveReceiptTest.doTest();
+        doTest(saveReceiptTest);
 
         // Run the SaveReceiptRequestTask with a byte array.
-        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer);
+        saveReceiptTest = new SaveReceiptRequestTaskTest(useMockServer());
         saveReceiptTest.setReceiptSource(SaveReceiptRequestTaskTest.ReceiptSource.SOURCE_BYTE_ARRAY);
-        initTaskMockServer(saveReceiptTest);
-        saveReceiptTest.doTest();
+        doTest(saveReceiptTest);
 
         // Run the DeleteReceiptRequestTask with receipt uri.
-        DeleteReceiptRequestTaskTest deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer);
+        DeleteReceiptRequestTaskTest deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer());
         deleteReceiptTest.setReceiptSource(DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_URI);
-        initTaskMockServer(deleteReceiptTest);
-        deleteReceiptTest.doTest();
+        doTest(deleteReceiptTest);
 
         // Run the DeleteReceiptRequestTask with a receipt image id.
-        deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer);
+        deleteReceiptTest = new DeleteReceiptRequestTaskTest(useMockServer());
         deleteReceiptTest.setReceiptSource(DeleteReceiptRequestTaskTest.ReceiptSource.SOURCE_RECEIPT_IMAGE_ID);
-        initTaskMockServer(deleteReceiptTest);
-        deleteReceiptTest.doTest();
-
+        doTest(deleteReceiptTest);
     }
 
     /**
@@ -136,11 +100,6 @@ public class ExpenseTestSuite extends PlatformTestSuite {
      */
     @Test
     public void doSaveMobileEntry() throws Exception {
-
-        SaveMobileEntryRequestTaskTest saveMETest = new SaveMobileEntryRequestTaskTest(PlatformTestApplication.useMockServer());
-        initTaskMockServer(saveMETest);
-
-        // Run the SaveMobileEntryRequestTask test.
-        saveMETest.doTest();
+        doTest(new SaveMobileEntryRequestTaskTest(useMockServer()));
     }
 }
