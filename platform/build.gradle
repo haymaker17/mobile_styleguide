@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'jacoco'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -15,11 +16,34 @@ android {
     compileSdkVersion 21
     buildToolsVersion "22.0.1"
 
+    /* START test coverage */
+    buildTypes {
+        release { }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    defaultConfig {
+        testHandleProfiling true
+        testFunctionalTest true
+        multiDexEnabled true
+    }
+
+    packagingOptions {
+        exclude 'plugin.properties'
+        exclude 'lib/armeabi/libdatabase_sqlcipher.so'
+        exclude 'lib/armeabi/libsqlcipher_android.so'
+        exclude 'lib/armeabi/libstlport_shared.so'
+        exclude 'META-INF/LICENSE.txt'
+    }
+    /* END test coverage */
+
     //For multi build purpose uncomment following block.
     // Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-    //publishNonDefault true
+    publishNonDefault true
 
     /*##############   #####################     ##########################     ###################*/
 
@@ -60,19 +84,37 @@ android {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-//    productFlavors {
-//        production{
-//
-//        }
-//
-//        ocr{
-//            prefix = "com.concur.breeze.ocr"
-//            resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
-//            resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
-//            resValue "string", "sync_adapter_travel_authority", prefix+".platform.travel"
-//            resValue "string", "sync_adapter_acc_type", prefix+".platform.common.account"
-//        }
-//    }
+    productFlavors {
+        production{
+
+        }
+
+        newLoginTest{
+            prefix = "com.concur.breeze.newlogin.test"
+            resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
+            resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
+            resValue "string", "sync_adapter_travel_authority", prefix+".platform.travel"
+            resValue "string", "sync_adapter_acc_type", prefix+".platform.common.account"
+        }
+    }
 
     /*##############   #####################     ##########################     ###################*/
 }
+
+/* START test coverage */
+jacoco {
+    toolVersion  = "0.7.2.+"
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    classDirectories = fileTree(dir: './build/intermediates/classes/production/debug')
+    sourceDirectories = files('src/com/concur')
+    executionData = files("$buildDir/jacoco/testDebug.exec")
+}
+/* END test coverage */

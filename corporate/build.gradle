@@ -70,24 +70,24 @@ android {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-//    productFlavors {
-//        production {
-//
-//        }
-//        ocr {
-//            applicationId "com.concur.breeze.ocr"
-//            resValue "string", "app_name", "ConcurOCR"
-//
-//            buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
-//            buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
-//
-//            resValue "string", "authority_expense", applicationId + ".platform.expense"
-//            resValue "string", "authority_config", applicationId + ".platform.config"
-//            resValue "string", "authority_travel", applicationId + ".platform.travel"
-//            resValue "string", "authenticator_acc_type", applicationId + ".platform.common.account"
-//
-//        }
-//    }
+    productFlavors {
+        production {
+
+        }
+        newLoginTest {
+            applicationId "com.concur.breeze.newlogin.test"
+            resValue "string", "app_name", "AndroidNewLogin"
+
+            buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
+            buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
+
+            resValue "string", "authority_expense", applicationId + ".platform.expense"
+            resValue "string", "authority_config", applicationId + ".platform.config"
+            resValue "string", "authority_travel", applicationId + ".platform.travel"
+            resValue "string", "authenticator_acc_type", applicationId + ".platform.common.account"
+
+        }
+    }
     /*##############   #####################     ##########################     ###################*/
 
 }
