@@ -89,7 +89,7 @@ android {
 
         }
 
-        newLogin{
+        newLoginFinal{
             prefix = "com.concur.breeze.newlogin"
             resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
             resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
