@@ -74,9 +74,9 @@ android {
         production {
 
         }
-        newLoginTest {
-            applicationId "com.concur.breeze.newlogin.test"
-            resValue "string", "app_name", "AndroidNewLogin"
+        developerRelease {
+            applicationId "com.concur.breeze.developer.release"
+            resValue "string", "app_name", "devRelease"
 
             buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
             buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
