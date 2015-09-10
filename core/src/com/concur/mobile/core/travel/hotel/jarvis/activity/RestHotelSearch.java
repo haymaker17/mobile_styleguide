@@ -45,6 +45,7 @@ import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.TravelUtil;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.service.MWSPlatformManager;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.ui.common.view.SearchListFormFieldView;
@@ -119,6 +120,7 @@ public class RestHotelSearch extends TravelBaseActivity
     private LoaderManager lm;
     private boolean update = false;
     private PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
+
 
     // /////////////////////////////////////////////////////////////////
 
@@ -361,7 +363,7 @@ public class RestHotelSearch extends TravelBaseActivity
             }
         });
 
-        checkSearchButton();
+        // checkSearchButton();
 
         // restoreReceivers();
 
@@ -394,6 +396,7 @@ public class RestHotelSearch extends TravelBaseActivity
             //                // search.
             //            }
         }
+
     }
 
     private void setActionBar() {
@@ -456,11 +459,16 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     private void getCurrentLocation() {
-        Address currAdd = ((ConcurCore) ConcurCore.getContext()).getCurrentAddress();
-        if (currAdd == null) {
-            // txtView.setText(s);
-            // Display a toast message indicating current
-            // location cannot be determined.
+        ConcurCore core = (ConcurCore) ConcurCore.getContext();
+        LastLocationTracker locTracker = core.getLocationTracker();
+        Address currAdd = locTracker.getCurrentAddress();
+        if (TravelUtil.isLocationEnabled(getApplicationContext()) && currAdd == null) {
+            //user enabled location service while searching hotels - from RestHotelSearch screen
+            locTracker.startLocationTrace(CLS_TAG, null, true, com.concur.mobile.core.util.Const.LOC_UPDATE_MIN_TIME, com.concur.mobile.core.util.Const.LOC_UPDATE_MIN_DISTANCE);
+            Log.e(Const.LOG_TAG, CLS_TAG + ". startLocationTrace ");
+            currAdd = locTracker.getCurrentAddress();
+        } else if (currAdd == null) {
+            // Display a toast message indicating current location cannot be determined.
             showToast(R.string.dlg_no_current_location);
         } else {
             currentLocation = new LocationChoice();
@@ -468,18 +476,11 @@ public class RestHotelSearch extends TravelBaseActivity
             strBldr.append(currAdd.getLocality());
             strBldr.append(", ");
             strBldr.append(currAdd.getCountryCode());
-            currentLocation.setName(strBldr.toString());// used
-            // for
-            // displaying
-            // in
-            // the
-            // search
-            // progress
-            // screen
+            //used for displaying in the search progress screen
+            currentLocation.setName(strBldr.toString());
             currentLocation.latitude = Double.toString(currAdd.getLatitude());
             currentLocation.longitude = Double.toString(currAdd.getLongitude());
         }
-        // txtView.setText(R.string.general_current_location);
 
     }
 
@@ -568,6 +569,23 @@ public class RestHotelSearch extends TravelBaseActivity
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+//        mGoogleApiClient.connect();
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        stopLocationUpdates();
+
+    }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case SearchListFormFieldView.SEARCH_LIST_REQUEST_CODE: {
@@ -604,7 +622,7 @@ public class RestHotelSearch extends TravelBaseActivity
                         // text in the location field
                         fromLocationSearchIntent = true;
                         updateLocationButton();
-                        checkSearchButton();
+                        // checkSearchButton();
                     } else {
                         Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult: no search mode used flag set on result intent.");
                     }
@@ -725,124 +743,128 @@ public class RestHotelSearch extends TravelBaseActivity
 
     protected void doSearch() {
         // Get the values
-        String latitude = currentLocation.latitude;
-        String longitude = currentLocation.longitude;
+        if (currentLocation == null) {
+            getCurrentLocation();
+        } else {
+            String latitude = currentLocation.latitude;
+            String longitude = currentLocation.longitude;
 
-        //To send searchNearMe flag for maps
-        TextView txtView = (TextView) location.findViewById(R.id.field_value);
-        if (txtView != null) {
-            if (txtView.getText().equals(getString(R.string.general_current_location))) {
-                searchNearMe = true;
-                if (currentLocation == null) {
-                    showToast(R.string.dlg_no_current_location);
+            //To send searchNearMe flag for maps
+            TextView txtView = (TextView) location.findViewById(R.id.field_value);
+            if (txtView != null) {
+                if (txtView.getText().equals(getString(R.string.general_current_location))) {
+                    searchNearMe = true;
+                    if (currentLocation == null) {
+                        showToast(R.string.dlg_no_current_location);
+                    }
+                } else {
+                    searchNearMe = false;
+
                 }
-            } else {
-                searchNearMe = false;
 
             }
+            // String distanceUnit = currentDistanceUnit.id;
+            // String distanceValue = currentDistanceAmount.id;
+            String namesContaining = null;
 
-        }
-        // String distanceUnit = currentDistanceUnit.id;
-        // String distanceValue = currentDistanceAmount.id;
-        String namesContaining = null;
+            ConcurCore core = (ConcurCore) ConcurCore.getContext();
+            core.setViewedPriceToBeatList(false);
 
-        ConcurCore core = (ConcurCore) ConcurCore.getContext();
-        core.setViewedPriceToBeatList(false);
-
-        if (withNamesContaining != null) {
-            namesContaining = withNamesContaining.getText().toString().trim().toLowerCase();
-        }
-
-        Intent intent = new Intent(this, HotelSearchAndResultActivity.class);
-
-        if (currentLocation instanceof CompanyLocation) {
-            String formattedName = null;
-            if (currentLocation.state == null || currentLocation.state.length() == 0) {
-                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry,
-                        new Object[]{currentLocation.city, ((CompanyLocation) currentLocation).country});
-            } else {
-                formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
-                        new Object[]{currentLocation.city, currentLocation.state,
-                                ((CompanyLocation) currentLocation).country});
+            if (withNamesContaining != null) {
+                namesContaining = withNamesContaining.getText().toString().trim().toLowerCase();
             }
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
-            intent.putExtra("searchNearCompanyLocation", true);
-        } else {
-            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
+
+            Intent intent = new Intent(this, HotelSearchAndResultActivity.class);
+
+            if (currentLocation instanceof CompanyLocation) {
+                String formattedName = null;
+                if (currentLocation.state == null || currentLocation.state.length() == 0) {
+                    formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry,
+                            new Object[]{currentLocation.city, ((CompanyLocation) currentLocation).country});
+                } else {
+                    formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
+                            new Object[]{currentLocation.city, currentLocation.state,
+                                    ((CompanyLocation) currentLocation).country});
+                }
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, formattedName);
+                intent.putExtra("searchNearCompanyLocation", true);
+            } else {
+                intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_LOCATION, currentLocation.getName());
+            }
+
+            intent.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, fromLocationSearchIntent);
+
+            // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
+            // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
+            // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
+            UserConfig userConfig = core.getUserConfig();
+            String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
+            String customTravelText = (userConfig != null && userConfig.customTravelText != null) ?
+                    userConfig.customTravelText.hotelRulesViolationText :
+                    null;
+            if (distanceUnit == null) {
+                distanceUnit = "M";
+            } else {
+                distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
+            }
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
+
+            intent.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
+            intent.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
+
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING, namesContaining);
+
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN,
+                    Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR, checkInDate);
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT,
+                    Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR, checkOutDate);
+
+            intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
+
+            TravelUtil.addViolationsReasons(intent);
+
+            intent.putExtra("currentTripId", cliqbookTripId);
+            Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
+            intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
+
+            intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
+
+            if (customTravelText != null && !customTravelText.isEmpty()) {
+                intent.putExtra("customTravelText", customTravelText);
+            }
+            intent.putExtra("searchNearMe", searchNearMe);
+
+            String eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OTHER;
+            if (searchNearMe) {
+                eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION;
+            } else if (currentLocation instanceof CompanyLocation) {
+                eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
+            }
+
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SEARCH_INITIATED,
+                    eventLabelSearchLocation);
+
+            startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
         }
-
-        intent.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, fromLocationSearchIntent);
-
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_AMOUNT, currentDistanceAmount.name);
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_ID, distanceValue);
-        // intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_NAME, currentDistanceUnit.name);
-        UserConfig userConfig = core.getUserConfig();
-        String distanceUnit = userConfig != null ? userConfig.distanceUnitPreference : null;
-        String customTravelText = (userConfig != null && userConfig.customTravelText != null) ?
-                userConfig.customTravelText.hotelRulesViolationText :
-                null;
-        if (distanceUnit == null) {
-            distanceUnit = "M";
-        } else {
-            distanceUnit = (distanceUnit.equalsIgnoreCase("Miles") ? "M" : "K");
-        }
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_DISTANCE_UNIT_ID, distanceUnit);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_LATITUDE, latitude);
-        intent.putExtra(Const.EXTRA_TRAVEL_LONGITUDE, longitude);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_NAMES_CONTAINING, namesContaining);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN,
-                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkInDate));
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_IN_CALENDAR, checkInDate);
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT,
-                Format.safeFormatCalendar(FormatUtil.SHORT_DAY_DISPLAY, checkOutDate));
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_CHECK_OUT_CALENDAR, checkOutDate);
-
-        intent.putExtra(Const.EXTRA_TRAVEL_CLIQBOOK_TRIP_ID, cliqbookTripId);
-
-        TravelUtil.addViolationsReasons(intent);
-
-        intent.putExtra("currentTripId", cliqbookTripId);
-        Boolean showGDSName = userConfig != null ? userConfig.showGDSNameInSearchResults : false;
-        intent.putExtra(Const.EXTRA_TRAVEL_HOTEL_SEARCH_SHOW_GDS_NAME, showGDSName);
-
-        intent.putExtra("travelCustomFieldsConfig", travelCustomFieldsConfig);
-
-        if (customTravelText != null && !customTravelText.isEmpty()) {
-            intent.putExtra("customTravelText", customTravelText);
-        }
-        intent.putExtra("searchNearMe", searchNearMe);
-
-        String eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OTHER;
-        if (searchNearMe) {
-            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_CURRENT_LOCATION;
-        } else if (currentLocation instanceof CompanyLocation) {
-            eventLabelSearchLocation = Flurry.EVENT_LABEL_TRAVEL_SEARCH_OFFICE_LOCATION;
-        }
-
-        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SEARCH_INITIATED + " - " + eventLabelSearchLocation);
-        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SEARCH_INITIATED,
-                eventLabelSearchLocation);
-
-        startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
     }
 
     // ///////////////////////////////////////////////////////////////////////////
     // Check in/out field methods - end
     // ///////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Will check fields and enable/disable the search button.
-     */
-    protected void checkSearchButton() {
-        if (currentLocation != null) {
-            searchButton.setEnabled(true);
-        } else {
-            searchButton.setEnabled(false);
-        }
-    }
+//    /**
+//     * Will check fields and enable/disable the search button.
+//     */
+//    protected void checkSearchButton() {
+//        if (currentLocation != null) {
+//            searchButton.setEnabled(true);
+//        } else {
+//            searchButton.setEnabled(false);
+//        }
+//    }
 
     /**
      * Will initialize the travel custom fields view.
@@ -990,6 +1012,7 @@ public class RestHotelSearch extends TravelBaseActivity
         lm.restartLoader(2, null, this);
     }
 
+
     /**
      * Handle the date selection event Adjust the check in/out time as necessary to prevent invalid ordering.
      */
@@ -1113,6 +1136,17 @@ public class RestHotelSearch extends TravelBaseActivity
         } else {
             intent.putExtra("ruleViolationExplanationRequired", false);
         }
+    }
+
+    /**
+     * Stops and unregisters the Location Provider receiver.
+     */
+    private void stopLocationUpdates() {
+        // Unregister location requestor, if this activity is to be destroyed
+        // if the one time location request has been fulfilled, the requestor
+        // will be automatically unregistered.
+        LastLocationTracker locTracker = ((ConcurCore) getApplication()).getLocationTracker();
+        locTracker.stopLocationTrace(CLS_TAG);
     }
 
 }

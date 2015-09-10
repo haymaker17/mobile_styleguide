@@ -1,6 +1,10 @@
 package com.concur.mobile.core.util;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.data.SystemConfig;
@@ -64,5 +68,33 @@ public class TravelUtil {
         } else {
             intent.putExtra("ruleViolationExplanationRequired", false);
         }
+    }
+
+    /**
+     * Verify location service is enabled
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+        } else {
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+
+
     }
 }
