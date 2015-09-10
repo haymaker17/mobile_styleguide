@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -31,6 +32,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 	private IFragmentCallback callback;
 
 	private boolean hideBC;
+	private boolean isTraveller;
 	private ListAdapter adapter;
 
 	@Override
@@ -41,23 +43,25 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 		TravelAllowanceItineraryController controller = app.getTaController().getTaItineraryController();
 
 		Bundle bundle = getArguments();
+		isTraveller = false;
 		if (bundle != null) {
-			if (bundle.containsKey(Const.EXTRA_EXPENSE_REPORT_KEY)){
+			if (bundle.containsKey(Const.EXTRA_EXPENSE_REPORT_KEY)) {
 				expenseReportKey = bundle.getString(Const.EXTRA_EXPENSE_REPORT_KEY);
 			}
 			if (bundle.getBoolean(BundleId.IS_EDIT_MODE, false)) {//Traveller
+				isTraveller = true;
 				if (app.getTaController().getTAConfigController().getTravelAllowanceConfigurationList() != null
 						&& !app.getTaController().getTAConfigController().getTravelAllowanceConfigurationList().isUseBorderCrossTime()) {
 					hideBC = true;
 				}
-			} else {
-				hideBC = true; //Hide Border Crossing for Approver too!
+//			} else {
+//				hideBC = true; //Hide Border Crossing for Approver too!
 			}
 		}
 
 		List<CompactItinerary> compactItinList = controller.getCompactItineraryList();
 
-		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), compactItinList, hideBC);
+		adapter = new TravelAllowanceItineraryListAdapter(getActivity(), compactItinList, isTraveller, hideBC);
 
 		setListAdapter(adapter);
 
@@ -111,7 +115,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 		ConcurCore app = (ConcurCore) getActivity().getApplication();
 		TravelAllowanceItineraryController controller = app.getTaController().getTaItineraryController();
 
-		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), controller.getCompactItineraryList(), hideBC);
+		adapter =  new TravelAllowanceItineraryListAdapter(getActivity(), controller.getCompactItineraryList(), isTraveller, hideBC);
 		setListAdapter(adapter);
 	}
 }

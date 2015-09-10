@@ -392,6 +392,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     cal.add(Calendar.MINUTE, 1);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
+                if (itinerary.getSegmentList().size() == 1) {
+                    emptySegment.setArrivalLocation(lastSegment.getDepartureLocation());
+                }
             } else {
                 if(defaultDate != null) {
                     cal.setTime(this.defaultDate);
