@@ -736,6 +736,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
+                    showProgressBar(false);
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
                 refreshAdapter();
