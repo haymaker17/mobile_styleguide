@@ -136,6 +136,7 @@ import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import org.apache.http.HttpStatus;
@@ -536,15 +537,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
 
-            hideFooter();
-            hideBookFooterButton();
-            hideMileageFooterButton();
-            // OCR: Disable backdoor Easter egg.
-            if (!Preferences.isOCRUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
-                hideQuickExpenseFooterButton();
-            }
-            hideReceiptFooterButton();
-            hideTravelRequestRow();
+        hideFooter();
+        hideBookFooterButton();
+        hideMileageFooterButton();
+        // OCR: Disable backdoor Easter egg.
+        if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+            hideQuickExpenseFooterButton();
+        }
+        hideReceiptFooterButton();
+        hideTravelRequestRow();
 
             // Hide the travel UI elements, if need be.
             boolean isTraveler = RolesUtil.isTraveler(Home.this);
@@ -594,19 +595,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             // Hide the expense section, if need be.
             if (RolesUtil.isExpenser(Home.this)) {
                 // OCR: Disable backdoor Easter egg.
-                if (!Preferences.isOCRUser()/*
-                                         * || !Preferences.shouldUseNewOcrFeatures ()
-                                         */) {
+                if (!Preferences.isExpenseItUser()) {
                     showQuickExpenseFooterButton();
                     showReceiptFooterButton();
                 } else {
-                    // With the new OCR design, we use camera icon with Expense
-                    // label, so hide the QE btn and show the Camera btn with
-                    // updated text
+                    /* MOB-24972 - Disable to show QE at bottom of screen again.
                     hideQuickExpenseFooterButton();
-                    showReceiptFooterButton();
-                    TextView view = (TextView) findViewById(R.id.homeCameraText);
-                    view.setText(R.string.home_footer_button_expense);
+                    */
+                    hideReceiptFooterButton();
+                    showExpenseItFooterButton();
                 }
                 if (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this) && showPersonalCarMileage()) {
                     showMileageFooterButton();
@@ -1488,6 +1485,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // some of the expiration flags used at Startup.java.
         Preferences.clearSession(prefs);
 
+        //Clear ExpenseIt Login Info
+        ExpenseItProperties.setAccessToken(null);
+        Preferences.setUserLoggedOnToExpenseIt(false);
+
+        // Update the config content provider.
+        ConfigUtil.removeExpenseItLoginInfo(this);
+
         // Go back to the EmailLookup screen.
         Intent i = new Intent(this, EmailPasswordLookupActivity.class);
         i.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
@@ -1745,19 +1749,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 EventTracker.INSTANCE.track(Flurry.CATEGORY_HOME, Flurry.EVENT_NAME_ACTION, params);
                 break;
             }
-            case R.id.homeCamera: {
-                // OCR
-                if (Preferences.isOCRUser() && /*
-                                            * Preferences.shouldUseNewOcrFeatures () &&
-                                            */!RolesUtil.isTestDriveUser()) {
-                    // Create the fragment and show it as a dialog.
-                    DialogFragment newFragment = new ReceiptChoiceDialogFragment();
-                    newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-                } else {
-                    cancelAllDataRequests();
-                    captureReceipt();
-                }
 
+            case R.id.homeExpenseIt: {
+                DialogFragment newFragment = new ReceiptChoiceDialogFragment();
+                newFragment.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+                break;
+            }
+
+            case R.id.homeCamera: {
+                cancelAllDataRequests();
+                captureReceipt();
                 break;
             }
             case R.id.homeRowBookCar:
@@ -2506,6 +2507,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         setViewGone(R.id.homeQuickExpense);
     }
 
+    private void showExpenseItFooterButton() {
+        showFooter();
+        setViewVisible(R.id.homeExpenseIt);
+    }
+
+    private void hideExpenseItFooterButton() {
+        setViewGone(R.id.homeExpenseIt);
+    }
+
     private void showTravelRequestRow() {
         showFooter();
         setViewVisible(R.id.homeRowTR);
@@ -2676,6 +2686,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             numVisible++;
         }
 
+        if (findViewById(R.id.homeExpenseIt).getVisibility() == View.VISIBLE) {
+            numVisible++;
+        }
+
         if (findViewById(R.id.homeMileage).getVisibility() == View.VISIBLE) {
             numVisible++;
         }
@@ -2694,6 +2708,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         buttonText = (TextView) findViewById(R.id.homeCameraText);
+        buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+
+        buttonText = (TextView) findViewById(R.id.homeExpenseItText);
         buttonText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         buttonText = (TextView) findViewById(R.id.homeMileageText);
@@ -3265,7 +3282,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         // Add ExpenseIt item.
-        if (Preferences.isOCRUser()) {
+        if (Preferences.isExpenseItUser()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
                     R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
                     new Runnable() {
@@ -3676,6 +3693,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
         newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
         newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
         newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
         newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
         newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -3713,6 +3732,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
         it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
         it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
         it.putExtra(Const.EXTRA_SHOW_MENU, true);
         it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
         it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);

@@ -13,11 +13,12 @@ import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncRequestTask.AsyncReplyListener;
-import com.concur.mobile.platform.test.server.MockMWSServer;
+import com.concur.mobile.platform.test.server.MockServer;
 
 import junit.framework.AssertionFailedError;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.robolectric.shadows.ShadowLog;
 
@@ -56,14 +57,98 @@ public abstract class AsyncRequestTest {
     protected HandlerThread handlerThread;
 
     /**
-     * Contains a reference to a mock MWS server.
+     * Contains a reference to a mock server.
      */
-    protected MockMWSServer mockServer;
+    protected MockServer mockServer;
 
     /**
      * Contains the expected result code based on the design of the test. Defaults to <code>BaseAsyncRequestTask.RESULT_OK</code>.
      */
     protected int expectedResultCode = BaseAsyncRequestTask.RESULT_OK;
+
+    public abstract void doTest() throws Exception;
+
+    private final boolean useMockServer;
+
+    public AsyncRequestTest(boolean useMockServer) {
+        this.useMockServer =  useMockServer;
+    }
+
+    public boolean useMockServer() {
+        return useMockServer;
+    }
+
+    /**
+     * Will perform the test throwing an exception if the test fails.
+     *
+     * @throws Exception throws an exception if the test fails.
+     */
+    public void runTest(String mockFile, BaseAsyncRequestTask reqTask, VerifyResponse verifyResponse) throws Exception {
+
+        Context context = PlatformTestApplication.getApplication();
+
+        // Set the mock response if the mock server is being used.
+        if (useMockServer()) {
+
+            // Set the mock response for the test.
+            Map<String, String> responseHeaders = new HashMap<>();
+
+            // Set the content-type.
+            responseHeaders.put("Content-Type", "application/json");
+            // Set the mock response for the test.
+            setMockResponse(mockServer, HttpStatus.SC_OK, mockFile, responseHeaders);
+        }
+
+        //Make the call
+        reqTask.setRetainResponse(true);
+
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launching the request.");
+
+        // Launch the request.
+        launchRequest(reqTask);
+
+        ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: launched the request.");
+
+        try {
+
+            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: waiting for result.");
+            // Wait for the result.
+            waitForResult();
+
+            ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: obtained result.");
+
+        } catch (InterruptedException intExc) {
+            ShadowLog.e(Const.LOG_TAG, CLS_TAG + ".doTest: interrupted while acquiring login result.");
+            result.resultCode = BaseAsyncRequestTask.RESULT_CANCEL;
+        }
+
+        // Examine the result.
+        if (result != null) {
+
+            // Verify result code.
+            verifyExpectedResultCode(CLS_TAG);
+
+            switch (result.resultCode) {
+                case BaseAsyncRequestTask.RESULT_CANCEL: {
+                    ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result cancelled.");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_ERROR: {
+                    ShadowLog.d(Const.LOG_TAG, CLS_TAG + ".doTest: result error.");
+                    break;
+                }
+                case BaseAsyncRequestTask.RESULT_OK: {
+
+                    // Verify the result.
+                    String response = getResponseString(reqTask);
+                    Assert.assertNotNull("request response is null", response);
+
+                    verifyResponse.verify(context, verifyResponse.serializeResponse(response));
+                    break;
+                }
+            }
+        }
+    }
 
     /**
      * Sets the expected result code for the test. <br>
@@ -131,17 +216,18 @@ public abstract class AsyncRequestTest {
         Assert.assertEquals(CLS_TAG + ".verifyExpectedResult: " + message, expectedResultCode, result.resultCode);
     }
 
-    /**
-     * Sets the instance of <code>MockMWSServer</code> associated with this test.
-     *
-     * @param mockServer contains a reference
-     */
-    public void setMockServer(MockMWSServer mockServer) {
-        this.mockServer = mockServer;
+    public MockServer getMockServer() {
+        return mockServer;
     }
 
-    public MockMWSServer getMockServer() {
-        return mockServer;
+    /**
+     * Sets the instance of <code>MockServer</code> associated with this test.
+     *
+     * @param mockServer
+     *            contains a reference
+     */
+    public void setMockServer(MockServer mockServer) {
+        this.mockServer = mockServer;
     }
 
     /**
@@ -152,7 +238,7 @@ public abstract class AsyncRequestTest {
      * @param httpStatusCode contains the HTTP response status code.
      * @param mockRespFile   contains the file path relative to the <code>assets</code> application path of the response data.
      */
-    public void setMockResponse(MockMWSServer server, int httpStatusCode, String mockRespFile) throws Exception {
+    public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile) throws Exception {
         setMockResponse(server, httpStatusCode, mockRespFile, null);
     }
 
@@ -190,10 +276,10 @@ public abstract class AsyncRequestTest {
      * @param server         contains the mock MWS server reference.
      * @param httpStatusCode contains the HTTP response status code.
      * @param mockRespFile   contains the file path relative to the <code>assets</code> application path of the response data.
-     * @param headers        contains the response headers.
+     * @param responseHeaders        contains the response headers.
      */
-    public void setMockResponse(MockMWSServer server, int httpStatusCode, String mockRespFile,
-                                Map<String, String> responseHeaders) throws Exception {
+    public void setMockResponse(MockServer server, int httpStatusCode, String mockRespFile,
+            Map<String, String> responseHeaders) throws Exception {
 
         // Set the mock response HTTP status code.
         server.setResponseHttpStatusCode(httpStatusCode);

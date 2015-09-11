@@ -1,5 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+apply plugin: 'jacoco'
+
 buildscript {
     repositories {
         jcenter()
@@ -66,3 +68,141 @@ subprojects {
     }
 }
 
+/ * BEGIN CODE COVERAGE * /
+
+/**
+ *  List of modules that require Jacoco
+ */
+def includedInJacocoFullReport = [
+        'base',
+        'core',
+//        'corporate',
+        'platform',
+        'platform_ui_travel',
+//        'platform_ui_common',
+//        'platform_ui_expense'
+]
+
+/**
+ *  Apply additional build steps to sub-projects
+ */
+subprojects { prj ->
+
+    // Apply Jacoco only if the project is in the include list
+    if (includedInJacocoFullReport.contains(prj.name)) {
+
+        apply plugin: 'jacoco'
+
+        jacoco {
+            version '0.7.2.+'
+        }
+
+        task jacocoReport(type: JacocoReport, dependsOn: 'testDebug') {
+            group = 'Reporting'
+            description = 'Generate Jacoco coverage reports after running tests.'
+
+            reports {
+                xml.enabled = true
+                html.enabled = true
+            }
+
+            classDirectories = fileTree(
+                    dir: 'build/intermediates/classes/debug',
+                    excludes: [
+                            '**/R*.class',
+                            '**/BuildConfig*'
+                    ]
+            )
+
+            sourceDirectories = files('src')
+            executionData = files('build/jacoco/testDebug.exec')
+
+            doFirst {
+                files('build/intermediates/classes/debug').getFiles().each { file ->
+                    if (file.name.contains('$$')) {
+                        file.renameTo(file.path.replace('$$', '$'))
+                    }
+                }
+            }
+        }
+    }
+}
+
+jacoco {
+    toolVersion '0.7.2.+'
+}
+
+/**
+ *  Root task that generates an aggregated Jacoco test coverage report for all sub-projects
+ */
+task jacocoFullReport(type: JacocoReport, group: 'Coverage reports') {
+    group = 'Reporting'
+    description = 'Generates an aggregate report from all subprojects'
+
+    // Get list of projects which should be included in the report
+    def projects = new ArrayList()
+    subprojects.each { prj ->
+        if (includedInJacocoFullReport.contains(prj.name)) {
+            projects.add(prj)
+        }
+    }
+
+    //noinspection GrUnresolvedAccess
+    dependsOn(projects.jacocoReport)
+
+    additionalSourceDirs = generateSourceFiles(projects)
+    sourceDirectories = generateSourceFiles(projects)
+    classDirectories = generateClassDirs(projects)
+    executionData = files(projects.jacocoReport.executionData)
+
+    reports {
+        html {
+            enabled true
+            destination 'build/reports/jacoco/full'
+        }
+        xml {
+            enabled true
+            destination 'build/reports/jacoco/full/jacocoFullReport.xml'
+        }
+    }
+
+    doFirst {
+        //noinspection GroovyAssignabilityCheck
+        executionData = files(executionData.findAll { it.exists() })
+    }
+}
+
+/**
+ *  Generate a FileCollection of all projects source files
+ */
+FileCollection generateSourceFiles(Collection projects) {
+    def dirs = []
+
+    projects.each { prj ->
+        dirs.add("${prj.name}/src")
+    }
+
+    return files(dirs)
+}
+
+/**
+ *  Generate a FileCollection of all projects class files
+ */
+FileCollection generateClassDirs(Collection projects) {
+    def tree = fileTree('directory does not exists') // I know it's ugly :)
+
+    projects.each { prj ->
+        //noinspection GrReassignedInClosureLocalVar
+        tree += fileTree(
+                dir: "${prj.name}/build/intermediates/classes/debug",
+                excludes: [
+                        '**/R*.class',
+                        '**/BuildConfig*'
+                ]
+        )
+    }
+
+    return tree
+}
+
+/ * END CODE COVERAGE * /

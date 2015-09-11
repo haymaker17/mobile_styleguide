@@ -23,6 +23,10 @@ public class RecallTaskTest extends AsyncRequestTest {
     private RequestParser requestParser;
     private String requestIdForRecall;
 
+    public RecallTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     public void doSampleSubmit() throws Exception {
         String requestId = null;
         final RequestDTO tr = new RequestDTO();
@@ -62,7 +66,7 @@ public class RecallTaskTest extends AsyncRequestTest {
     public void doTest() throws Exception {
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, ""/*"request/SaveNoSubmitResponse.json"*/);
             requestIdForRecall = "ABCD";

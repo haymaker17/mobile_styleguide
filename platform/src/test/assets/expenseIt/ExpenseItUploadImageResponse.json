@@ -1,0 +1,15 @@
+{
+  "expenses": [{
+    "id": "19093406",
+    "note": null,
+    "ccType": null,
+    "createdAt": "2015-07-13 09:25:58",
+    "sentToCteAt": null,
+    "imageDataUrl": null,
+    "totalImageCount": 1,
+    "totalImagesUploaded": 1,
+    "parsingStatusCode": 0,
+    "eta": 103,
+    "processingEngine": "R"
+  }]
+}

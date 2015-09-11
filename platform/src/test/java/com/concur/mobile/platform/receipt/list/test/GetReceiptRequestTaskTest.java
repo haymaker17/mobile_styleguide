@@ -38,11 +38,15 @@ public class GetReceiptRequestTaskTest extends AsyncRequestTest {
 
     private static final boolean DEBUG = false;
 
-    public static enum ReceiptIdSource {
+    public enum ReceiptIdSource {
         SOURCE_URI, SOURCE_ID
-    };
+    }
 
     private ReceiptIdSource idSource;
+
+    public GetReceiptRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Will construct an instance of <code>GetReceiptRequestTaskTest</code> with a test type.
@@ -50,7 +54,7 @@ public class GetReceiptRequestTaskTest extends AsyncRequestTest {
      * @param idSource
      *            contains the source of the receipt id.
      */
-    public GetReceiptRequestTaskTest(ReceiptIdSource idSource) {
+    public void setReceiptIdSource(ReceiptIdSource idSource) {
         this.idSource = idSource;
     }
 
@@ -60,12 +64,13 @@ public class GetReceiptRequestTaskTest extends AsyncRequestTest {
      * @throws Exception
      *             throws an exception if the test fails.
      */
+    @Override
     public void doTest() throws Exception {
 
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             Map<String, String> responseHeaders = new HashMap<String, String>();
             // Set the content-type.

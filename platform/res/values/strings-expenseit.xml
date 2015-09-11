@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- EXPENSEIT STRINGS -->
+    <string name="expenseit_expense_processing_time">Average processing time: %s</string>
+    <string name="expenseit_expense_detail_submitted">Analyzing receipt</string>
+    <string name="expenseit_expense_list_error">Analyzing error</string>
+    <string name="expenseit_expense_detail_queued_waiting">Waiting for upload</string>
+    <string name="expenseit_expense_detail_uploading">Uploading receipt</string>
+    <string name="expenseit_expense_detail_export_pending">Waiting for export</string>
+    <string name="expenseit_expense_detail_delete_pending">Waiting for delete</string>
+    <string name="expenseit_expense_detail_save_pending">Waiting for save</string>
+    <string name="expenseit_expense_detail_create_pending">Creating expense</string>
+    <string name="expenseit_expense_detail_user_needed">We are sorry, but we need your input to continue.</string>
+    <string name="expenseit_expense_detail_success">Operation finished successfully!</string>
+    <string name="expenseit_expense_permanent_failure">Permanent failure!</string>
+    <string name="expenseit_expense_detail_not_analyzed">Something went wrong. Please retake the image and submit again.</string>
+    <string name="expenseit_expense_detail_not_receipt">This image does not contain a receipt.</string>
+    <string name="expenseit_expense_detail_unreadable">We were unable to read this receipt. Please retake the image and submit again.</string>
+    <string name="expenseit_expense_detail_mulitple">This image contains multiple receipts. Please submit only one receipt per image.</string>
+
+    <string name="expenseit_eta_min">%1$d mins %2$02d secs</string>
+    <string name="expenseit_eta_sec">%1$d secs</string>
+    <string name="expenseit_eta_na">N/A</string>
+
+    <string name="expenseit_powered_by">Powered by ExpenseIt</string>
+    <string name="expenseit_analyzing_note">We\'ll be back with your analyzed receipt info shortly.</string>
+    <string name="expenseit_failure_note">Analysis failed!</string>
+
+    <string name="expenseit_failure_message">We were unable to read this receipt. Please retake the image and submit again.</string>
+
+    <string name="expenseit_details_label_uploaded">Receipt Uploaded</string>
+    <string name="expenseit_details_label_processing_time">Processing Time</string>
+    <string name="expenseit_details_value_processing_time">Average</string>
+    <string name="expenseit_details_label_sent_for_analysis_time">Sent for Analysis</string>
+
+    <string name="expenseit_cancel_dialog_message">Cancelling analysis</string>
+    <string name="expenseit_replace_dialog_message">Replacing analysis</string>
+    <string name="expenseit_converting_dialog_message">Preparing to edit</string>
+    <string name="expenseit_cancel_confirmation_message">Stop receipt analysis and create an expense manually?</string>
+    <string name="expenseit_finished_processing_title">Receipt analysis complete!</string>
+    <string name="expenseit_finished_processing_message">Your receipt has finished analysis and can be found in the list of Expenses.</string>
+    <string name="expenseit_service_unavailable">Service Unavailable!</string>
+    <string name="expenseit_unexpected_error">An unexpected error occurred. Please try again later.</string>
+
+    <string name="expenseit_stop_processing_button">Stop</string>
+    <string name="expenseit_replace_receipt_button">Replace</string>
+    <string name="expenseit_delete_receipt_button">Delete</string>
+    <string name="expenseit_edit_receipt_button">Edit</string>
+
+    <string name="expenseit_char_limit">%s/500</string>
+    <!-- EXPENSEIT STRINGS END -->
+
+</resources>
