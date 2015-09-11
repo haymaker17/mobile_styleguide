@@ -190,15 +190,11 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
 
     @Override
     public void onFindRoomsClicked() {
-        if (isOffline) {
-            showOfflineDialog();
-        } else {
-            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
-            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
-            FragmentManager fm = hotelDetailsFrag.getFragmentManager();
-            if (fm.findFragmentByTag(TAB_ROOMS) != null) {
-                hotelDetailsFrag.mTabHost.setCurrentTab(1);
-            }
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
+        FragmentManager fm = hotelDetailsFrag.getFragmentManager();
+        if (fm.findFragmentByTag(TAB_ROOMS) != null) {
+            hotelDetailsFrag.mTabHost.setCurrentTab(1);
         }
 
     }
@@ -209,7 +205,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             showOfflineDialog();
 
         } else {
-            if(fromDetailsFragmentMapView) {
+            if (fromDetailsFragmentMapView) {
                 Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_MAP_DETAILS_SINGLE_HOTEL);
                 EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_MAP_DETAILS_SINGLE_HOTEL);
             } else {
@@ -313,7 +309,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                     intent.putExtra("customTravelText", customTravelText);
                 }
                 intent.putExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE, suggestedAvailable);
-                if(hotelListItem.getHotel().recommended != null) {
+                if (hotelListItem.getHotel().recommended != null) {
                     intent.putExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL, hotelListItem.getHotel().recommended.getSuggestedCategory() == null ? false : true);
                 }
 

@@ -422,7 +422,7 @@ public class BaseActivity extends Activity implements INetworkActivityListener {
             }
 
             if (customMessage.length == 0) {
-                int value = R.string.dlg_no_connectivity_message;
+                int value = R.string.hotel_dlg_no_connectivity_message;
                 customMessage = new int[]{value};
             }
             DialogFragmentFactoryV1.getAlertOkayInstance(getString(R.string.dlg_no_connectivity_title),
