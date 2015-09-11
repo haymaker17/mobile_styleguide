@@ -3282,7 +3282,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         // Add ExpenseIt item.
-        if (Preferences.isExpenseItUser()) {
+        if (Preferences.shouldShowExpenseItAd()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
                     R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
                     new Runnable() {
