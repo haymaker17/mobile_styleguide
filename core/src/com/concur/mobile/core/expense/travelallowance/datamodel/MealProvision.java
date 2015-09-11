@@ -29,12 +29,6 @@ public class MealProvision implements Comparable<MealProvision>, Serializable, I
     private String codeDescription;
 
     /**
-     * Create a new MealProvision instance
-     */
-    public MealProvision() {
-    }
-
-    /**
      * Creates a new MealProvision instance
      * @param code The coded representation of a provision e.g. "PRO"
      * @param codeDescription The human readable value associated with the code e.g. "Provided"
