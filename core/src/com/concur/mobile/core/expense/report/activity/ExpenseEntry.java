@@ -1905,7 +1905,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
      * To populate the travel allownace related fields. Only relevant for meals and lodging.
      */
     protected void populateTaFields() {
-        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && ("FXMLS".equals(expRepEntDet.expKey) || "FXLDG".equals(expRepEntDet.expKey))) {
             this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
 
                 @Override
@@ -2621,7 +2621,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
 
     @Override
     protected void save() {
-        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && ("FXMLS".equals(expRepEntDet.expKey) || "FXLDG".equals(expRepEntDet.expKey))) {
             /**
              * TA Case: If TA fields are available the TA save needs to be triggered first. As soons as the TA save is done the
              * normal save routine will be triggered.
@@ -3478,8 +3478,8 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                                 } else {
                                     if (ViewUtil.hasTravelAllowanceFixed(activity) && activity.taFacade != null
                                             && activity.taFacade.isTaUpdateSucceeded()
-                                            && (activity.expRepEntDet.expKey.equals("FXMLS")
-                                                    || activity.expRepEntDet.expKey.equals("FXLDG"))) {
+                                            && ("FXMLS".equals(activity.expRepEntDet.expKey)
+                                                    || "FXLDG".equals(activity.expRepEntDet.expKey))) {
                                         // In case the expense amount goes to zero after an TA update the expense update would
                                         // fail because the expense doesn't exist anymore. Handle this logic in case of TA as
                                         // normal and trigger an expense list refresh.
