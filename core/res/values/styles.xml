@@ -1065,6 +1065,8 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <style name="ConcurBaseTheme.NoActionBar.TADefault" />
+
     <!-- END Default style for daily allowance layout -->
 
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +36,11 @@ import java.util.List;
 /**
  * Created by D049515 on 15.06.2015.
  */
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
+@EventTracker.EventTrackerClassName(getClassName = TravelAllowanceActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
 public class TravelAllowanceActivity extends BaseActivity
         implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback{
+
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 
