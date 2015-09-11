@@ -117,7 +117,7 @@ public class HotelVoiceSearchActivity extends VoiceSearchActivity {
                     Log.d(Const.LOG_TAG, CLS_TAG + ".HotelVoiceSearchActivity start activity to retrieve itinerary");
                     HotelVoiceSearchActivity.this.startActivity(i);
                     finish();
-                } else if (resultCode == RESULT_CANCELED) {
+                } else {
                     getIntent().putExtra(RESET_UI_ON_RESUME, true);
                 }
                 break;
