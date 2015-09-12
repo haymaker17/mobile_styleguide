@@ -115,8 +115,8 @@
     <string name="account_locked">Account Locked</string>
     <string name="account_locked_message">We are unable to sign you in at this time.  Please contact your company\'s help desk or travel/expense department.</string>
     <string name="sso_sign_in_title">Sign in with SSO</string>
-    <string name="sso_sign_in_sub_title">Use SSO if your company has issued an SSO a company code.</string>
-    <string name="sso_sign_in_hint_text">Enter SSO Company Code</string>
+    <string name="sso_sign_in_sub_title">If your company has issued a company code, enter it here.</string>
+    <string name="sso_sign_in_hint_text">Company Code</string>
     <string name="sso_sign_in_footer_text">If you don\'t know if you need a company code, check with your company administrator.</string>
     <string name="sso_sign_in_company_code_error_message">Wrong company code: Please enter your company code.</string>
     <string name="sso_sign_in_company_code_error_title">Company Code</string>
