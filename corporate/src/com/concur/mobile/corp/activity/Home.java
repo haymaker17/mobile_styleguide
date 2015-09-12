@@ -1101,8 +1101,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             clearSessionData();
             showExpiredDialog();
         } else {
-
-            String sessionId = PlatformProperties.getSessionId();
+            ConcurMobile concurMobile = (ConcurMobile) getApplication();
+            SessionInfo sessionInfo = ConfigUtil.getSessionInfo(concurMobile.getApplicationContext());
+            String sessionId = sessionInfo.getSessionId();
             if (sessionId == null || sessionId.length() == 0) {
 
                 if (getIntent().hasExtra(REMOTE_WIPE)) {
