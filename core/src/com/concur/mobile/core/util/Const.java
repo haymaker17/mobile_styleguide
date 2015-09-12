@@ -1,10 +1,10 @@
 package com.concur.mobile.core.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.Activity;
 import android.graphics.Bitmap.CompressFormat;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class Const {
 
@@ -331,6 +331,11 @@ public final class Const {
 
     // User is loggedIn to ExpenseIt
     public static final String PREF_USER_LOGGED_IN_EXPENSE_IT = "pref_user_logged_in_expense_it";
+
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT = "pref_first_run_experience_upgrade_expense_it";
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_TRAVEL = "pref_first_run_experience_upgrade_travel";
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT_TRAVEL = "pref_first_run_experience_upgrade_expense_it_travel";
+
 
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
