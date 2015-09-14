@@ -879,10 +879,16 @@ public class QuickExpense extends BaseActivity {
                                 mobileEntry.getTransactionDateCalendar()));
                     }
                 }
+                if (intent.hasExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY)) {
+                    String comment = intent.getStringExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY);
+                    mobileEntry.setComment(comment);
+                }
 
                 mobileEntry.setReceiptImageId(ocrReceiptImageId);
                 receiptViewOnly = true;
-                showOCRConversionInstructions();
+
+                // Removed 'OCR failed' banner on manual expense conversion from ExpenseIt item.
+                // showOCRConversionInstructions();
             }
 
             expenseEntry = new Expense(mobileEntry);
