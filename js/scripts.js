@@ -34,6 +34,7 @@ $(function() {
       currentHash.parent("li").addClass('active');
 
    }
+   
 
 }); /* end document.ready ------------ */
 
@@ -135,30 +136,84 @@ function setHeader(inTitle,inCategory,topCategory) {
 
 
 // get the commit notes from github so there's a changelist on the site
-function getGithubCommits() {
-  var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
+function doChangelist(response) {
+	var meta = response.meta;
+	var data = response.data;
+	
+	var older = meta.Link[0];
+	var first = meta.Link[1];
+	var newer = meta.Link[2];
 
-  $.getJSON("https://api.github.com/repos/haymaker17/mobile_styleguide/commits", function(data){
-    $.each(data, function(key, val){
-      var item = data[key];
+    outputChangelist(data,older,first,newer)
+
+}
+
+
+//loop through each changelist item and build the table. also build the pagination. 
+function outputChangelist(inData,inOlder,inFirst,inNewer) {
+	
+	var html = "<thead><tr><th class='td_20'>Date</th><th class='td_60'>Description</th></tr></thead><tbody>";
+	var links = "<div class='clangelist_nav'>";
+	
+	//for pagination
+	if (inOlder != undefined) {
+		links += "<a href='#' data-link='" + inOlder[0] + "' class='float_left'>older changes</a>";
+	}
+/*
+	if (inFirst != undefined) {
+		links += "<a href='#' data-link='" + inFirst[0] + "' class='centered'>latest checkins</a>";
+	}
+*/
+    if (inNewer != undefined) {
+	    links += "<a href='#' data-link='" + inNewer[0] + "' class='float_right'>newer changes</a>";
+    }
+    
+    links += "";
+    
+	
+	//loop through the data and spit out the html for the changes
+	$.each(inData, function(key, val){
+      var item    = inData[key];
       var message = item.commit.message;
+      var url     = item.html_url;
       
       //format date
       var formattedDate = new Date(item.commit.author.date);
       var d = formattedDate.getDate();
-      var m =  formattedDate.getMonth();
+      var m = formattedDate.getMonth();
       m += 1;  // JavaScript months are 0-11
       var y = formattedDate.getFullYear();
 
       var date = (m + "." + d + "." + y);
 
-	  html+= "<tr><td>" + date + "</td><td>" + message + "</td></tr>";
+	  html+= "<tr><td>" + date + "</td><td><a href='" + url + "'>" + message + "</a></td></tr>";
     });
 
-    html += "</tbody>"
 
+	//append html
+    html += "</tbody>";
     $(".changelist").html(html);
-  });
+    $(".table_nav").html(links)
+    
+    //function to re-fire the script when a link is clicked on
+    $(".clangelist_nav").on('click', "a", function(ev){
+	    ev.preventDefault();
+	    
+		var newPage = $(this).data("link");
+		createChangeListScript(newPage);
+		
+	});
+}
+
+
+
+// create the script to add the changelist. This is so we can get the link header files for pagination
+function createChangeListScript(inLink) {
+	
+	var script = document.createElement('script');
+	script.src = inLink;
+	
+	document.getElementsByTagName('head')[0].appendChild(script);
 
 }
 
@@ -185,34 +240,11 @@ function toggleSidebar(inState) {
 }
 
 
+
 //scrolly stuff
 $(window).scroll(function () {
-     //fadeinElements();
      fixHeader();
  });
-
-
-// function fadeinElements() {
-//    /* Check the location of each desired element */
-//    $('.fadeinElement').each(function(i) {
-
-//        var height_of_object = $(this).outerHeight();
-//        var bottom_of_object = $(this).offset().top + height_of_object;
-//        var middle_of_object = bottom_of_object - (height_of_object);
-//        var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-//        /* If the object is completely visible in the window, fade it it */
-//        if (bottom_of_window > middle_of_object) {
-
-//            // $(this).animate({
-//            //     'opacity': '1'
-//            // }, 500);
-
-//            $(this).addClass("visible");
-
-//        }
-//    });
-// }
 
 
 
