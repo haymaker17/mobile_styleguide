@@ -74,8 +74,8 @@ android {
         production {
 
         }
-        developerRelease {
-            applicationId "com.concur.breeze.developer.release"
+        developerReleaseTest {
+            applicationId "com.concur.breeze.developer.release.test"
             resValue "string", "app_name", "devRelease"
 
             buildConfigField "String", "AUTHORITY", "\"${applicationId}\""

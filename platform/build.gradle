@@ -89,8 +89,8 @@ android {
 
         }
 
-        developerRelease{
-            prefix = "com.concur.breeze.developer.release"
+        developerReleaseTest{
+            prefix = "com.concur.breeze.developer.release.test"
             resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
             resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
             resValue "string", "sync_adapter_travel_authority", prefix+".platform.travel"

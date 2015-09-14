@@ -62,7 +62,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_breakfast"
                     android:textAppearance="@style/TALabel" />
 
                 <Switch
@@ -70,7 +69,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_breakfast"
                     style="@style/TADailyAllowanceSwitch"
                     android:visibility="visible" />
 
@@ -109,7 +107,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_lunch"
                     android:textAppearance="@style/TALabel" />
 
                 <Switch
@@ -117,7 +114,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_lunch"
                     style="@style/TADailyAllowanceSwitch"
                     android:visibility="visible" />
 
@@ -156,7 +152,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_dinner"
                     android:textAppearance="@style/TALabel" />
 
                 <Switch
@@ -164,7 +159,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_dinner"
                     style="@style/TADailyAllowanceSwitch"
                     android:visibility="visible" />
 
