@@ -1042,8 +1042,13 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static boolean isExpenseItUser() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-        //To show ExpenseIt features. We look for both the role and site settings
-        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled();
+
+        //TODO: REMOVE THIS CHECK ONLY WHEN MODULE IS WORKING ON PROD SERVER
+        boolean isExpenseItExperienceEnabled = ExpenseItProperties.getServerAddress().equals("https://api.expenseit.com") ?
+            true : isExpenseItExperienceEnabled();
+
+        //To show Expenseit features. We look for both the role and site settings
+        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled;
     }
 
     public static boolean isCardAgreementAccepted() {
