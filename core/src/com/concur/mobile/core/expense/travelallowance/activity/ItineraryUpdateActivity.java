@@ -260,7 +260,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         onDateSetListener = new DatePickerFragment.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int requestCode, int year, int month, int day) {
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
@@ -506,7 +506,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             date.setTime(itinerary.getSegmentList().get(currentPosition.getPosition()).getArrivalDateTime());
         }
 
-        bundle.putSerializable(DatePickerFragment.BUNDLE_ID_DATE, date.getTime());
+        bundle.putSerializable(BundleId.DATE, date.getTime());
+        bundle.putInt(BundleId.INTERVAL, 5);
 
         timeDialog = new TimePickerFragment();
         timeDialog.setArguments(bundle);
@@ -526,7 +527,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             date.setTime(itinerary.getSegmentList().get(currentPosition.getPosition()).getArrivalDateTime());
         }
 
-        bundle.putSerializable(DatePickerFragment.BUNDLE_ID_DATE, date.getTime());
+        bundle.putSerializable(BundleId.DATE, date.getTime());
 
         calendarDialog = new DatePickerFragment();
 
