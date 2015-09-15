@@ -439,12 +439,14 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     }
 
     private void initSortOptions() {
-        sortItems = new SpinnerItem[5];
-        sortItems[0] = new SpinnerItem("1", getString(R.string.hotel_search_results_sort_option_distance));
-        sortItems[1] = new SpinnerItem("2", getString(R.string.hotel_search_results_sort_option_preferred));
-        sortItems[2] = new SpinnerItem("3", getString(R.string.hotel_search_results_sort_option_price));
-        sortItems[3] = new SpinnerItem("4", getString(R.string.hotel_search_results_sort_option_rating));
-        sortItems[4] = new SpinnerItem("5", getString(R.string.hotel_search_results_sort_option_suggested));
+        sortItems = new SpinnerItem[6];
+        sortItems[0] = new SpinnerItem("1", getString(R.string.hotel_search_results_sort_option_default));
+        sortItems[1] = new SpinnerItem("2", getString(R.string.hotel_search_results_sort_option_distance));
+        sortItems[2] = new SpinnerItem("3", getString(R.string.hotel_search_results_sort_option_preferred));
+        sortItems[3] = new SpinnerItem("4", getString(R.string.hotel_search_results_sort_option_price));
+        sortItems[4] = new SpinnerItem("5", getString(R.string.hotel_search_results_sort_option_rating));
+        sortItems[5] = new SpinnerItem("6", getString(R.string.hotel_search_results_sort_option_suggested));
+
     }
 
     // get hotels from database and populate the list items
@@ -483,8 +485,8 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         if (curSortItem != null) {
             dialogFragment.curSpinnerItemId = curSortItem.id;
         } else {
-            // default to 'suggested' i.e. server sort or 'distance'
-            dialogFragment.curSpinnerItemId = sortItems[4].id;
+            // default to 'default' i.e. server sort or 'distance'
+            dialogFragment.curSpinnerItemId = sortItems[0].id;
         }
         dialogFragment.show(getFragmentManager(), FRAGMENT_SORT_ITEMS);
     }
@@ -501,31 +503,30 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     private void sortResults(String sortOrder) {
         String toastMessage = null;
         switch (sortOrder) {
-            case "1":
+            case "2":
                 sortByDistance(hotelListItemsToSort);
                 toastMessage = getText(R.string.hotel_search_results_sorted_by_distance).toString();
                 break;
-            case "2":
+            case "3":
                 sortByPreference(hotelListItemsToSort);
                 toastMessage = getText(R.string.hotel_search_results_sorted_by_preference).toString();
                 break;
-            case "3":
+            case "4":
                 sortByCheapestRoomPrice(hotelListItemsToSort);
                 toastMessage = getText(R.string.hotel_search_results_sorted_by_price).toString();
                 break;
-            case "4":
+            case "5":
                 sortByStarRating(hotelListItemsToSort);
                 toastMessage = getText(R.string.hotel_search_results_sorted_by_rating).toString();
                 break;
-            case "5":
-                // default sort that came from server
-                defaultSort();
+            case "6":
+                sortBySuggestion(hotelListItemsToSort);
                 toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
                 break;
             default:
                 // default sort that came from server
                 defaultSort();
-                toastMessage = getText(R.string.hotel_search_results_sorted_by_suggestion).toString();
+                toastMessage = getText(R.string.hotel_search_results_sorted_by_default).toString();
         }
         // refresh the UI with the updated hotelListItemsTemp
         updateResultsFragmentUI(hotelListItemsToSort, toastMessage);
@@ -688,6 +689,19 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
         }
     }
 
+    /**
+     * Sort the list of hotels primarily by suggestion, secondarily by preference.
+     */
+    protected void sortBySuggestion(List<HotelSearchResultListItem> hotelListItemsToSort) {
+        // Construct the primary/secondary sorts.
+        Comparator<Hotel> primarySort = new HotelComparator(HotelComparator.CompareField.RECOMMENDATION,
+                HotelComparator.CompareOrder.DESCENDING);
+        HotelComparator secondarySort = new HotelComparator(HotelComparator.CompareField.PREFERENCE,
+                HotelComparator.CompareOrder.DESCENDING);
+        // Perform the actual sort.
+        sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
+    }
+
     @Override
     public void filterResults(String starRating, Double distance, String nameContaining) {
         Log.d(Const.LOG_TAG, "**** HotelSearchAndResultActivity.filterResults ****** starRating : " + starRating
@@ -792,17 +806,17 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
             // start of GA tracking
             StringBuilder filterEventLabel = new StringBuilder();
-            if(starRatingFilterEnabled) {
+            if (starRatingFilterEnabled) {
                 filterEventLabel.append(Flurry.EVENT_LABEL_STAR_RATING);
             }
-            if(distanceFilterEnabled) {
-                if(filterEventLabel.length() > 0) {
+            if (distanceFilterEnabled) {
+                if (filterEventLabel.length() > 0) {
                     filterEventLabel.append(", ");
                 }
                 filterEventLabel.append(Flurry.EVENT_LABEL_DISTANCE);
             }
-            if(nameContainingFilterEnabled) {
-                if(filterEventLabel.length() > 0) {
+            if (nameContainingFilterEnabled) {
+                if (filterEventLabel.length() > 0) {
                     filterEventLabel.append(", ");
                 }
                 filterEventLabel.append(Flurry.EVENT_LABEL_WITH_NAMES_CONTAINING);
@@ -1024,7 +1038,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             hotelListItems.clear();
         }
 
-        //MOB-24365 - show the server sorted results as it is. cache this result set to be used to sort on 'suggested' option rather than retrieving again from database
+        //MOB-24365 - show the server sorted results as it is. cache this result set to be used to sort on 'default' option rather than retrieving again from database
         serverSortedHotelListItemsCache = new ArrayList<HotelSearchResultListItem>(hotelListItemsToSort.size());
         serverSortedHotelListItemsCache.addAll(hotelListItemsToSort);
 
@@ -1176,7 +1190,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDATION_SCORE;
                 paramValues[1] = Double.toString(item.getHotel().recommended.totalScore);
 
-                if(!suggestedAvailable) {
+                if (!suggestedAvailable) {
                     suggestedAvailable = (item.getHotel().recommended.getSuggestedCategory() == null ? false : true);
                 }
             }
