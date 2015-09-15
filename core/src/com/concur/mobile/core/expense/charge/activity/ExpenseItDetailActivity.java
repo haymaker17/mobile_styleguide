@@ -205,11 +205,11 @@ public class ExpenseItDetailActivity extends BaseActivity
         @Override
         public void onRequestSuccess(Bundle resultData) {
             // Track count.
-            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Save Comment");
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Add Comment");
 
             // Track timing.
             EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
-                    System.currentTimeMillis() - metricsTiming, "Save Comment", "");
+                    System.currentTimeMillis() - metricsTiming, "Add Comment", "");
 
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PutCommentAsyncReplyListener called.");
         }
