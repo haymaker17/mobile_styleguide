@@ -57,7 +57,7 @@
 
     <!-- Login UI Strings -->
     <!-- Email Lookup -->
-    <string name="email_lookup_hint">Enter Work Email or Username</string>
+    <string name="email_lookup_hint">Work Email or Username</string>
     <string name="email_lookup_continue">Next</string>
     <string name="email_lookup_unable_to_login_title">Unable to Sign In</string>
     <string name="email_lookup_unable_to_login_msg">We are unable to sign you in with this information.</string>
@@ -71,7 +71,7 @@
     <string name="login_no_offline">Offline sign in is not available.  A successful sign in must occur while online before offline mode can be used.</string>
     <string name="register_button">Need to set your PIN?</string>
     <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
-    <string name="login_help_with_signin_password">Forgot your Password?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
     <string name="login_password">Password</string>
     <string name="login_password_or_pin_invalid">Try again to re-enter your password or select I Forgot to receive sign in instructions.</string>
     <string name="login_invalid_concur_credentials">Incorrect Password</string>

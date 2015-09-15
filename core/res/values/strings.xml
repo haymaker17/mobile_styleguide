@@ -92,7 +92,7 @@
     <string name="login_help_bad_email_dialog_title">Invalid Email</string>
     <string name="login_help_bad_email_dialog_message">Please input a valid email address to receive sign-in instructions.</string>
     <string name="login_help_topic_header">Or Select a Help Topic</string>
-    <string name="login_help_submit">Reset Password</string>
+    <string name="login_help_submit">Send my Sign In Details</string>
     <string name="pin_create_title">Mobile PIN</string>
     <string name="pin_create_prompt">Set your Mobile PIN to sign in to Concur.</string>
     <string name="pin_create_pin_hint">New PIN</string>
