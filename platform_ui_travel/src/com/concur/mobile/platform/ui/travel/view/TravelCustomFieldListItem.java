@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.activity;
+package com.concur.mobile.platform.ui.travel.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;

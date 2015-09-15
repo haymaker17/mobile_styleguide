@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
@@ -34,6 +35,7 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     private double latitude;
     private double longitude;
     private boolean searchNearMe;
+    private View mainView;
 
     // empty constructor
     public HotelMapFragment() {
@@ -44,9 +46,11 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         args = getArguments();
-
-        // inflate the details fragment
-        View mainView = inflater.inflate(R.layout.hotel_map_layout, container, false);
+        //Google maps are failing for S3 and HTC devices
+        if (mainView == null) {
+            // inflate the details fragment
+            mainView = inflater.inflate(R.layout.hotel_map_layout, container, false);
+        }
 
         setUpMap();
         if (googleMap != null) {

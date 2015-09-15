@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 /**
  * @author tejoa Location Search with Search View widget.
  */
-@EventTracker.EventTrackerClassName(getClassName = "Travel-Hotel-Search-Criteria")
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_SEARCH_CRITERIA)
 public class LocationSearchV1 extends Activity implements INetworkActivityListener, SearchView.OnQueryTextListener {
 
     public static final int SEARCH_CUSTOM = 0x01;
@@ -83,6 +84,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         searchDelayHandler = new Handler();
         searchDelayRunnable = new DelayedSearch();
 
+        Log.d(com.concur.mobile.platform.ui.travel.util.Const.LOG_TAG, "LocationSearchV1*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
         EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL,
                 Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
     }

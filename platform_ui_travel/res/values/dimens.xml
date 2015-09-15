@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="image_thumbnail_spacing">6dp</dimen>
-    <dimen name="image_thumbnail_size">100dp</dimen>
+    <dimen name="image_thumbnail_size">80dp</dimen>
 
     <!-- Define standard dimensions to comply with Holo-style grids and rhythm. -->
 

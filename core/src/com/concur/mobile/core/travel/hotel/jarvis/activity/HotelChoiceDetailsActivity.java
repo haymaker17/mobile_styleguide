@@ -1,9 +1,10 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.app.ActivityOptions;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -13,13 +14,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.concur.core.R;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.travel.search.hotel.Hotel;
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
-import com.concur.mobile.platform.ui.travel.hotel.fragment.*;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelDetailsFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelImagesFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelMapFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomDetailFragment;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelRoomListItem;
+import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelSearchResultListItem;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomFieldsConfig;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ParallaxScollView;
@@ -34,14 +44,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * @author tejoa
  */
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW)
 public class HotelChoiceDetailsActivity extends TravelBaseActivity
-        implements HotelChoiceDetailsFragmentListener, OnMapReadyCallback {
+        implements HotelChoiceDetailsFragmentListener, HotelDetailsFragment.HotelDetailsFragmentListener, OnMapReadyCallback {
 
     public static final String CLS_TAG = HotelChoiceDetailsActivity.class.getSimpleName();
     public static final String FRAGMENT_HOTEL_DETAILS = "FRAGMENT_HOTEL_DETAILS";
@@ -66,9 +75,8 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     private String customTravelText;
     private HotelMapFragment hotelMapFragment;
 
-    // private ParallaxScollListView mListView;
-    // private ImageView mImageView;
-    // private HotelSearchResultListItem hotel;
+    // for GA tracking
+    private boolean suggestedAvailable;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,7 +99,7 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         if (item.getItemId() == R.id.map) {
             if (hotel != null) {
 
-                onMapsClicked();
+                onMapsClicked(false);
             } else {
                 Toast.makeText(getApplicationContext(), R.string.map_unavailable, Toast.LENGTH_SHORT).show();
             }
@@ -152,6 +160,8 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         if (i.hasExtra("customTravelText")) {
             customTravelText = i.getStringExtra("customTravelText");
         }
+
+        suggestedAvailable = i.getBooleanExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE, false);
     }
 
     @Override
@@ -159,6 +169,8 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
         if (isOffline) {
             showOfflineDialog();
         } else {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_PHOTO_TAPPED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_PHOTO_TAPPED);
             final Intent i = new Intent(this, ImageDetailActivity.class);
             i.putExtra(ImageDetailActivity.EXTRA_IMAGE, id);
             Bundle bundle = new Bundle();
@@ -178,23 +190,28 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
 
     @Override
     public void onFindRoomsClicked() {
-        if (isOffline) {
-            showOfflineDialog();
-        } else {
-            FragmentManager fm = hotelDetailsFrag.getFragmentManager();
-            if (fm.findFragmentByTag(TAB_ROOMS) != null) {
-                hotelDetailsFrag.mTabHost.setCurrentTab(1);
-            }
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_ROOM_BUTTON_SELECT);
+        FragmentManager fm = hotelDetailsFrag.getFragmentManager();
+        if (fm.findFragmentByTag(TAB_ROOMS) != null) {
+            hotelDetailsFrag.mTabHost.setCurrentTab(1);
         }
 
     }
 
     @Override
-    public void onMapsClicked() { //LatLng post
+    public void onMapsClicked(boolean fromDetailsFragmentMapView) { //LatLng post
         if (isOffline) {
             showOfflineDialog();
 
         } else {
+            if (fromDetailsFragmentMapView) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_MAP_DETAILS_SINGLE_HOTEL);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_MAP_DETAILS_SINGLE_HOTEL);
+            } else {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_MAP_NAVBAR_SINGLE_HOTEL);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_MAP_NAVBAR_SINGLE_HOTEL);
+            }
             //  int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
             // TODO customize ShowMaps to view single and multiple hotels
@@ -267,6 +284,9 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 Toast.makeText(getApplicationContext(), R.string.hotel_dialog_deposit_required_msg, Toast.LENGTH_LONG)
                         .show();
             } else {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_ROOM_SELECT);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_ROOM_SELECT);
+
                 Intent intent = new Intent(this, HotelBookingActivity.class);
                 // TODO - have a singleton class and set these objects there to share with other activities?
                 intent.putExtra("roomSelected", roomListItem.getHotelRoom());
@@ -288,6 +308,11 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
                 if (customTravelText != null) {
                     intent.putExtra("customTravelText", customTravelText);
                 }
+                intent.putExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE, suggestedAvailable);
+                if (hotelListItem.getHotel().recommended != null) {
+                    intent.putExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL, hotelListItem.getHotel().recommended.getSuggestedCategory() == null ? false : true);
+                }
+
                 startActivityForResult(intent, Const.REQUEST_CODE_BOOK_HOTEL);
             }
 
@@ -315,18 +340,29 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
-        case Const.REQUEST_CODE_BOOK_HOTEL: {
-            if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK, data);
-                Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
-                        "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
-                finish();
+            case Const.REQUEST_CODE_BOOK_HOTEL: {
+                if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, data);
+                    Log.d(com.concur.mobile.platform.util.Const.LOG_TAG,
+                            "\n\n\n ****** HotelChoiceDetailsActivity onActivityResult with result code : " + resultCode);
+                    finish();
+                }
+                break;
             }
-            break;
-        }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
 
     } // onActivityResult()
+
+    public void callHotel(String phoneNumberCleaned) {
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_CALL_HOTEL_TAPPED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_CALL_HOTEL_TAPPED);
+
+        // start the phone dialer
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + phoneNumberCleaned));
+
+        startActivity(callIntent);
+    }
 }
