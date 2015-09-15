@@ -114,6 +114,7 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
         if (fragmentView != null) {
             getViewReceiptTransition();
+            setReceiptIdLabelAndFieldValues();
             setUploadDateLabelAndFieldValues();
             setCommentLabelAndFieldValues();
 
@@ -144,6 +145,14 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
 
         LinearLayout message = (LinearLayout) fragmentView.findViewById(R.id.expenseit_error_message_field);
         message.setVisibility(View.VISIBLE);
+    }
+
+    private void setReceiptIdLabelAndFieldValues() {
+        View receiptIdView = fragmentView.findViewById(R.id.expenseit_receipt_id_field);
+        TextView receiptIdLabel = (TextView) receiptIdView.findViewById(R.id.field_name);
+        receiptIdLabel.setText(R.string.expenseit_receipt_id_label);
+        String receiptIdValue = Long.toString(receiptId);
+        ViewUtil.setTextViewText(fragmentView, R.id.expenseit_receipt_id_field, R.id.field_value, receiptIdValue, true);
     }
 
     private void setUploadDateLabelAndFieldValues() {

@@ -177,6 +177,12 @@
                             android:orientation="vertical">
 
                             <include
+                                android:id="@+id/expenseit_receipt_id_field"
+                                layout="@layout/static_text_form_field"/>
+
+                            <include layout="@layout/group_separator"/>
+
+                            <include
                                 android:id="@+id/expenseit_capture_date"
                                 layout="@layout/static_text_form_field"/>
 

@@ -49,6 +49,7 @@
     <string name="expenseit_edit_receipt_button">Edit</string>
 
     <string name="expenseit_char_limit">%s/500</string>
+    <string name="expenseit_receipt_id_label">Receipt ID</string>
     <!-- EXPENSEIT STRINGS END -->
 
 </resources>
