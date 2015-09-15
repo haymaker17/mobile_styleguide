@@ -567,8 +567,12 @@ public class QuickExpense extends BaseActivity {
         if (getIntent().hasExtra(ExpenseItDetailActivity.EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY)) {
             showChangeLossConfirmationPrompt();
         } else {
-            super.onBackPressed();
+            close();
         }
+    }
+
+    private void close() {
+        finish();
     }
 
     private void showChangeLossConfirmationPrompt() {
@@ -579,7 +583,7 @@ public class QuickExpense extends BaseActivity {
         AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
             @Override
             public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
-                QuickExpense.super.onBackPressed();
+                close();
             }
 
             @Override
@@ -875,10 +879,16 @@ public class QuickExpense extends BaseActivity {
                                 mobileEntry.getTransactionDateCalendar()));
                     }
                 }
+                if (intent.hasExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY)) {
+                    String comment = intent.getStringExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY);
+                    mobileEntry.setComment(comment);
+                }
 
                 mobileEntry.setReceiptImageId(ocrReceiptImageId);
                 receiptViewOnly = true;
-                showOCRConversionInstructions();
+
+                // Removed 'OCR failed' banner on manual expense conversion from ExpenseIt item.
+                // showOCRConversionInstructions();
             }
 
             expenseEntry = new Expense(mobileEntry);
