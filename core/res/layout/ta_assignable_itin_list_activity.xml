@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_title_bar"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextAppearance="@style/TAToolbarTitle"
+            android:titleTextAppearance="@style/TAToolbarTitle"
+            android:background="@android:color/transparent"
+            android:elevation="3dp"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="72dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/itin_stops_infotext_with_available_itineraries"
+            android:textAppearance="@style/TASubTitle.White" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#2f6996"
+        android:textSize="18sp"
+        android:text="@string/ta_available_itineraries"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/listView"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:elevation="4dp"
+            android:src="@drawable/icon_add_button_plus"
+            app:backgroundTint="#2f6996"
+            app:fabSize="normal"
+            app:layout_anchor="@id/listView"
+            app:layout_anchorGravity="bottom|right|end" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

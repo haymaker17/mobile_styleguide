@@ -12,6 +12,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllow
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
+import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
@@ -98,7 +99,7 @@ public class FixedTravelAllowanceController extends BaseController {
      * @param expenseReportKey
      * @return true, if request has been sent, otherwise false
      */
-    public boolean refreshFixedTravelAllowances(String expenseReportKey) {
+    public boolean refreshFixedTravelAllowances(String expenseReportKey, final IRequestListener requestor) {
 
         if (StringUtilities.isNullOrEmpty(expenseReportKey)) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshFixedTravelAllowances", "Report Key is null! Refused." ));
@@ -122,6 +123,10 @@ public class FixedTravelAllowanceController extends BaseController {
                 //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
                 fillTAMap();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
+                if (requestor != null) {
+                    requestor.onRequestSuccess();
+                }
+
                 int size = 0;
                 if (fixedTravelAllowances != null) {
                     size = fixedTravelAllowances.size();
@@ -133,8 +138,12 @@ public class FixedTravelAllowanceController extends BaseController {
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
+                if (requestor != null) {
+                    requestor.onRequestSuccess();
+                }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                         "refreshFixedTravelAllowances->onRequestFail", "Reading fixed TAs failed"));
+
             }
 
             @Override

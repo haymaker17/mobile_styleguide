@@ -8,6 +8,7 @@ import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.report.data.ExpenseReport;
 import com.concur.mobile.core.expense.report.data.ExpenseReportEntryDetail;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField;
+import com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
@@ -134,7 +135,7 @@ public class TravelAllowanceFacade implements IControllerListener {
 
                     if (itineraryController != null && itineraryController.getItineraryList().size() == 0) {
                         if (expenseEntriesCallbackReference != null) {
-                            expenseEntriesCallbackReference.enableTAItineraryButton(ItineraryUpdateActivity.class,
+                            expenseEntriesCallbackReference.enableTAItineraryButton(AssignableItineraryListActivity.class,
                                     true, isInApproval);
                         }
                     } else {
@@ -190,7 +191,7 @@ public class TravelAllowanceFacade implements IControllerListener {
             if (saveTACallback != null) {
                 saveTACallback.saveTAFinished();
             }
-            ((FixedTravelAllowanceController) controller).refreshFixedTravelAllowances(expRep.reportKey);
+            ((FixedTravelAllowanceController) controller).refreshFixedTravelAllowances(expRep.reportKey, null);
         }
     }
 
@@ -202,10 +203,10 @@ public class TravelAllowanceFacade implements IControllerListener {
             configRefreshDone = true;
         }
 
-        fixedTravelAllowanceController.refreshFixedTravelAllowances(this.expRep.reportKey);
+        fixedTravelAllowanceController.refreshFixedTravelAllowances(this.expRep.reportKey, null);
         itineraryController.getItineraryList().clear();
         itineraryController.registerListener(this);
-        itineraryController.refreshItineraries(expRep.reportKey, isInApproval);
+        itineraryController.refreshItineraries(expRep.reportKey, isInApproval, null);
     }
 
     public void setupExpenseEntryTAFields(Context context, ExpenseReport expenseReport, ExpenseReportEntryDetail expRepEntDet) {

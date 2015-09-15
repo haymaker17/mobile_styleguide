@@ -27,6 +27,6 @@ public final class BundleId {
     public static final String EXPENSE_DETAILS_TA_UPDATE = "travelallowance.expenseDetail.update";
     public static final String REFRESH_FIXED_TA = "travelallowance.refresh.fixed.ta";
     public static final String IS_IN_APPROVAL = "isInApproval";
-
+    public static final String ASSIGNABLE_ITINERARIES = "travelallowance.assignable.itineraries";
 
 }

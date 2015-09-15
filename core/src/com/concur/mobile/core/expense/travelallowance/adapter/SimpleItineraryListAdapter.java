@@ -30,7 +30,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         TextView tvValue;
         TextView tvSubtitle1;
         TextView tvSubtitle2;
-        ImageView ivDelete;
+        ImageView ivRowAction;
 
         public ViewHolder(View v) {
             super(v);
@@ -39,7 +39,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             tvValue = (TextView) vContent.findViewById(R.id.tv_value);
             tvSubtitle1 = (TextView) vContent.findViewById(R.id.tv_subtitle_1);
             tvSubtitle2 = (TextView) vContent.findViewById(R.id.tv_subtitle_2);
-            ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
+            ivRowAction = (ImageView) v.findViewById(R.id.iv_row_action_icon);
         }
     }
 
@@ -75,7 +75,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         }
 
         if (onDeleteClickListener != null) {
-            ImageView ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
+            ImageView ivDelete = (ImageView) v.findViewById(R.id.iv_row_action_icon);
             if (ivDelete != null) {
                 ivDelete.setOnClickListener(onDeleteClickListener);
             }
@@ -92,10 +92,10 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             holder.tvTitle.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(itinerary.getName());
         }
-        if (holder.ivDelete != null) {
-            holder.ivDelete.setVisibility(View.VISIBLE);
+        if (holder.ivRowAction != null) {
+            holder.ivRowAction.setVisibility(View.VISIBLE);
             if (!deleteEnabled || itinerary.isLocked()) {
-                holder.ivDelete.setVisibility(View.GONE);
+                holder.ivRowAction.setVisibility(View.GONE);
             }
         }
         if (holder.tvValue != null) {

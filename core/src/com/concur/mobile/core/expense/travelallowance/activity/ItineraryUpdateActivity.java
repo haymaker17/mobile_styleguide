@@ -731,7 +731,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     this.setResult(RESULT_OK, resultIntent);
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Itinerary Update caused changes to Allowances. Need to refresh..."));
-                    if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey)) {
+                    if (allowanceController.refreshFixedTravelAllowances(this.expenseReportKey, null)) {
                        showProgressBar(true);
                     }
                 } else {
