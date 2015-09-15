@@ -1,6 +1,7 @@
 package com.concur.mobile.corp.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.appdynamics.eumagent.runtime.Instrumentation;
 import com.concur.breeze.R;
@@ -31,6 +33,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.Notifications;
+import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.ConcurMobile;
@@ -73,7 +76,7 @@ public class Startup extends BaseActivity {
     private SessionInfo sessionInfo;
 
     // List of languages the Eva API currently supports.
-    private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[] { "US", "GB", "AU", "CA" });
+    private static final List<String> TESTDRIVE_USER_COUNTRIES = Arrays.asList(new String[]{"US", "GB", "AU", "CA"});
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,23 +84,23 @@ public class Startup extends BaseActivity {
 
         Product p = ((ConcurMobile) getApplication()).getProduct();
         switch (p) {
-        case CORPORATE:
-            setContentView(R.layout.splash);
-            // MOB-20174 - AppDynaics stuff.
-            Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(), true);
+            case CORPORATE:
+                setContentView(R.layout.splash);
+                // MOB-20174 - AppDynaics stuff.
+                Instrumentation.start("AD-AAB-AAA-FUF", getApplicationContext(), true);
 
-            new Handler().postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
 
-                public void run() {
-                    doSplashFinish();
-                }
+                    public void run() {
+                        doSplashFinish();
+                    }
 
-            }, SPLASH_DELAY);
+                }, SPLASH_DELAY);
 
-            break;
-        default:
-            // No splash
-            isSplashDone = true;
+                break;
+            default:
+                // No splash
+                isSplashDone = true;
         }
 
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -105,7 +108,8 @@ public class Startup extends BaseActivity {
         }
 
         //reset timer
-        ConcurMobile.resetUserTimers();;
+        ConcurMobile.resetUserTimers();
+        ;
     }
 
     /*
@@ -190,10 +194,10 @@ public class Startup extends BaseActivity {
                     serverUrl = sessionInfo.getServerUrl();
                 }
 
-                if(sessionInfo!=null){
+                if (sessionInfo != null) {
                     sessionInfo.setServerUrl(serverUrl);
                 }
-                if(serverUrl!=null && !serverUrl.isEmpty()){
+                if (serverUrl != null && !serverUrl.isEmpty()) {
                     //set platformproperties
                     PlatformProperties.setServerAddress(serverUrl);
                 }
@@ -319,10 +323,61 @@ public class Startup extends BaseActivity {
     }
 
     private void startHomeScreen() {
-        startIntent = new Intent(this, Home.class);
+        boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        //check roles
+        if (!(RolesUtil.isTestDriveUser()) && Preferences.shouldShowExpenseItAd()) {
+            if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
+                shownExpenseIt = true;
+                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+            } else {
+                shownExpenseIt = false;
+            }
+        }
+        if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
+            if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
+                shownTravel = true;
+                Preferences.setFirstRunExpUpgradeTravel(prefs);
+            } else {
+                shownTravel = false;
+            }
+        }
 
-        boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-        startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
+        if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
+            shownBoth = true;
+            shownExpenseIt = true;
+            shownTravel = true;
+            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+            Preferences.setFirstRunExpUpgradeTravel(prefs);
+            Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+        } else if (shownExpenseIt && shownTravel) {
+            shownBoth = true;
+            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+        } else {
+            shownBoth = false;
+        }
+
+        if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
+            Toast.makeText(ctx, "This is ExpenseIT and Travel User", Toast.LENGTH_LONG).show();
+            startIntent = new Intent(this, FirstRunExpItTravelTour.class);
+            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
+            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
+        } else if (!shownExpenseIt && Preferences.shouldShowExpenseItAd()) {
+            Toast.makeText(ctx, "This is ExpenseIT Only User", Toast.LENGTH_LONG).show();
+            startIntent = new Intent(this, FirstRunExpItTour.class);
+            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
+            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
+        } else if (!shownTravel && RolesUtil.isTraveler(ctx)) {
+            Toast.makeText(ctx, "This is Travel Only User", Toast.LENGTH_LONG).show();
+            startIntent = new Intent(this, FirstRunTravelTour.class);
+            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
+            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
+        } else {
+            startIntent = new Intent(this, Home.class);
+            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
+            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
+        }
     }
 
     private void startCompanySignOn() {
@@ -410,50 +465,50 @@ public class Startup extends BaseActivity {
             final int requestID = resultData.getInt(BaseAsyncRequestTask.REQUEST_ID);
 
             switch (requestID) {
-            case AUTO_LOGIN_REQUEST_ID: {
-                // MOB-18782 Check remote wipe.
-                if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
-                    showRemoteWipeDialog();
-                } else {
-
-                    SessionInfo sessionInfo = ConfigUtil.getSessionInfo(Startup.this);
-                    String sessionId = sessionInfo.getSessionId();
-
-                    if (TextUtils.isEmpty(sessionId)) {
-                        startLoginScreen();
+                case AUTO_LOGIN_REQUEST_ID: {
+                    // MOB-18782 Check remote wipe.
+                    if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
+                        showRemoteWipeDialog();
                     } else {
-                        // Save the login information.
-                        UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
 
-                        // Statistics Notification
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
-                        EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+                        SessionInfo sessionInfo = ConfigUtil.getSessionInfo(Startup.this);
+                        String sessionId = sessionInfo.getSessionId();
 
-                        startHomeScreen();
+                        if (TextUtils.isEmpty(sessionId)) {
+                            startLoginScreen();
+                        } else {
+                            // Save the login information.
+                            UserAndSessionInfoUtil.updateUserAndSessionInfo(Startup.this, emailLookupBundle);
+
+                            // Statistics Notification
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
+                            EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_AUTHENTICATION, params);
+
+                            startHomeScreen();
+                        }
+
+                        // Don't come back here
+                        doLoginFinish();
                     }
-
-                    // Don't come back here
-                    doLoginFinish();
+                    break;
                 }
-                break;
-            }
-            case VALIDATE_PASSWORD_REQUEST_ID: {
-                AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
-                        .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault());
-                autoLoginRequestTask.execute();
+                case VALIDATE_PASSWORD_REQUEST_ID: {
+                    AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
+                            .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault());
+                    autoLoginRequestTask.execute();
 
-                break;
-            }
-            default: {
-                if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
-                    showRemoteWipeDialog();
-                } else {
-                    displayUnableToLoginDialog("StartupLoginListner.onRequestSuccess(): "
-                            + "Login returned sucessfully, but with unknown request ID: " + requestID);
+                    break;
                 }
-                break;
-            }
+                default: {
+                    if (resultData.getBoolean(LoginResponseKeys.REMOTE_WIPE_KEY, false)) {
+                        showRemoteWipeDialog();
+                    } else {
+                        displayUnableToLoginDialog("StartupLoginListner.onRequestSuccess(): "
+                                + "Login returned sucessfully, but with unknown request ID: " + requestID);
+                    }
+                    break;
+                }
             }
         }
 
@@ -494,10 +549,10 @@ public class Startup extends BaseActivity {
                                 public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
                                     Log.e(Const.LOG_TAG, debugMessage);
                                     startLoginScreen();
-                            doLoginFinish();
-                        }
+                                    doLoginFinish();
+                                }
 
-                    });
+                            });
             dialog.setCancelable(false);
             dialog.show(getSupportFragmentManager(), null);
         }
