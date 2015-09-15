@@ -1904,7 +1904,7 @@
 
 
     <!-- Start of test drive -->
-    <string name="next">Next</string>
+    <string name="next">Next ></string>
     <string name="universal_tour_welcome_text_concur_mobile">&lt;big>Concur Mobile&lt;/big></string>
     <string name="universal_tour_welcome_text">makes it easy to plan your business trips, capture expenses, and get reimbursed.</string>
     <string name="universal_tour_travel">Book your business trip</string>
@@ -2079,10 +2079,6 @@
     <string name="sort_expenses_by_amount_highest">Amount (highest)</string>
     <string name="sort_expenses_by_expense">Expense Type</string>
     <string name="sort_expenses_by_vendor">Vendor</string>
-
-    <!-- New First Run Experinece -->
-    <string name="first_run_exp_it_page_1_title">Turn receipt into expense, as you go</string>
-    <string name="first_run_exp_it_page_1_msg">Expense it now available in concur app. Take photos of your receipts and ExpenseIt will turn the images into expenses for you.</string>
 
 
 </resources>

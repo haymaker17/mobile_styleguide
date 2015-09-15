@@ -751,68 +751,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
     private void gotoHome(Bundle emailLookup) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Intent startIntent=null;
-        if(!(Preferences.isFirstTimeRunning(prefs))){
-            boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
-            Context ctx = ConcurCore.getContext();
-            //check roles
-            if (!(RolesUtil.isTestDriveUser()) && Preferences.shouldShowExpenseItAd()) {
-                if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
-                    shownExpenseIt = true;
-                    Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-                } else {
-                    shownExpenseIt = false;
-                }
-            }
-            if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
-                if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
-                    shownTravel = true;
-                    Preferences.setFirstRunExpUpgradeTravel(prefs);
-                } else {
-                    shownTravel = false;
-                }
-            }
-
-            if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
-                shownBoth = true;
-                shownExpenseIt = true;
-                shownTravel = true;
-                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-                Preferences.setFirstRunExpUpgradeTravel(prefs);
-                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-            } else if (shownExpenseIt && shownTravel) {
-                shownBoth = true;
-                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-            } else {
-                shownBoth = false;
-            }
-
-            if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
-                Toast.makeText(ctx, "This is ExpenseIT and Travel User", Toast.LENGTH_LONG).show();
-                startIntent = new Intent(this, FirstRunExpItTravelTour.class);
-                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-            } else if (!shownExpenseIt && Preferences.shouldShowExpenseItAd()) {
-                Toast.makeText(ctx, "This is ExpenseIT Only User", Toast.LENGTH_LONG).show();
-                startIntent = new Intent(this, FirstRunExpItTour.class);
-                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-            } else if (!shownTravel && RolesUtil.isTraveler(ctx)) {
-                Toast.makeText(ctx, "This is Travel Only User", Toast.LENGTH_LONG).show();
-                startIntent = new Intent(this, FirstRunTravelTour.class);
-                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-            } else {
-                startIntent = new Intent(this, Home.class);
-                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-            }
-        }else{
-            startIntent = new Intent(this, Home.class);
-            logUserTimings(emailLookup);
-        }
-        startActivity(startIntent);
+        Intent i = new Intent(this, Home.class);
+        logUserTimings(emailLookup);
+        startActivity(i);
         this.setResult(Activity.RESULT_OK);
         this.finish();
     }
