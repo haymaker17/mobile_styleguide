@@ -181,7 +181,7 @@ public class LoginResponseParser {
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION,
                 ssInstance.isConditionalFieldEvaluationEnabled());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_SPDY, ssInstance.isSpdyEnabled());
-
+        parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_EXPENSE_IT_EXPERIENCE, ssInstance.isExpenseItExperienceEnabled());
         if (abTestID != null) {
             parseMap.put(Const.LR_ABTEST_ID, abTestID);
         }

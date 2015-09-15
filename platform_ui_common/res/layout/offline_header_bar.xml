@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/offline_header"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@color/offline_header"
     android:orientation="vertical"
-    android:visibility="gone"
-    >
-	
-		<TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"
-		android:gravity="center_horizontal"			
-		style="@style/OfflineHeaderText"
-		android:text="@string/offline_header_text"
-	/>
-		
-	<View
-		android:layout_width="fill_parent"
-		android:layout_height="1px"
-		android:background="@color/White"
-	/> 		
-	
+    android:visibility="gone">
+
+    <TextView
+        style="@style/OfflineHeaderText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_horizontal"
+        android:text="@string/offline_header_text" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/White" />
+
 </LinearLayout>
 
 

@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.request.dto;
 
 import com.concur.mobile.platform.common.formfield.IFormField;
+import com.concur.mobile.platform.request.groupConfiguration.Agency;
 import com.concur.mobile.platform.request.permission.Link;
 import com.concur.mobile.platform.request.permission.UserPermission;
 import com.concur.mobile.platform.request.util.RequestParser;
@@ -80,6 +81,13 @@ public class RequestDTO implements FormDTO {
     @SerializedName("Exceptions")
     private List<RequestExceptionDTO> exceptions;
 
+    @Expose
+    @SerializedName("MainDestinationID")
+    private String mainDestinationId;
+
+    @SerializedName("MainDestinationName")
+    private String mainDestinationName;
+
     // --- required to post/put
     @Expose
     @SerializedName(("PolicyID"))
@@ -94,6 +102,11 @@ public class RequestDTO implements FormDTO {
     private Link permissionsLink;
 
     private int displayOrder = 1;
+
+    public Agency agency;
+
+    private String startLocationName;
+    private String startLocationId;
 
     @Override
     public String getId() {
@@ -244,6 +257,14 @@ public class RequestDTO implements FormDTO {
         this.highestExceptionLevel = highestExceptionLevel;
     }
 
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
+    }
+
     public List<RequestExceptionDTO> getExceptions() {
         return exceptions;
     }
@@ -262,6 +283,38 @@ public class RequestDTO implements FormDTO {
             }
         }
         return false;
+    }
+
+    public String getMainDestinationName() {
+        return mainDestinationName;
+    }
+
+    public void setMainDestinationName(String mainDestinationName) {
+        this.mainDestinationName = mainDestinationName;
+    }
+
+    public String getMainDestinationId() {
+        return mainDestinationId;
+    }
+
+    public void setMainDestinationId(String mainDestinationId) {
+        this.mainDestinationId = mainDestinationId;
+    }
+
+    public String getStartLocationName() {
+        return startLocationName;
+    }
+
+    public void setStartLocationName(String startLocationName) {
+        this.startLocationName = startLocationName;
+    }
+
+    public String getStartLocationId() {
+        return startLocationId;
+    }
+
+    public void setStartLocationId(String startLocationId) {
+        this.startLocationId = startLocationId;
     }
 
     @Override

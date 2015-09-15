@@ -493,6 +493,11 @@ public class SmartExpense implements SmartExpenseDAO {
     private Uri contentUri;
 
     /**
+     * The last time this SmartExpense was synced with the remote server.
+     */
+    protected Calendar lastSyncTime;
+
+    /**
      * Contains the list of smart expenses.
      */
     protected List<SmartExpenseDAO> smartExpenses;
@@ -1039,6 +1044,11 @@ public class SmartExpense implements SmartExpenseDAO {
     }
 
     @Override
+    public Calendar getLastSyncTime() {
+        return lastSyncTime;
+    }
+
+    @Override
     public Uri getContentURI(Context context, String userId) {
         if (!TextUtils.isEmpty(smartExpenseId)) {
             String[] columnNames = { Expense.SmartExpenseColumns.SMART_EXPENSE_ID, Expense.SmartExpenseColumns.USER_ID };
@@ -1499,5 +1509,7 @@ public class SmartExpense implements SmartExpenseDAO {
     public void setAverageDailyRate(Double averageDailyRate) {
         this.averageDailyRate = averageDailyRate;
     }
-
+    public void setLastSyncTime(Calendar calendar){
+        lastSyncTime = calendar;
+    }
 }

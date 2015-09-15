@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/expense_check_parent"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/list_selector_gradient_background"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/list_cell_padding_bottom"
+              android:paddingLeft="@dimen/list_cell_padding_left"
+              android:paddingRight="@dimen/list_cell_padding_right"
+              android:paddingTop="@dimen/list_cell_padding_top">
+
+    <CheckBox
+        android:id="@+id/expense_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/list_cell_padding_left">
+
+        <TextView
+            android:id="@+id/expenseit_processing_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:ellipsize="end"
+            android:gravity="top|left"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:text="@string/expenseit_expense_detail_submitted"
+            android:textAppearance="@style/ListCellHeaderText"/>
+
+        <TextView
+            android:id="@+id/expenseit_upload_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+            android:ellipsize="end"
+            android:gravity="top|left"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:text="Upload date"
+            android:textAppearance="@style/ListCellSubHeaderText"/>
+
+        <TextView
+            android:id="@+id/expenseit_details_processing_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:layout_marginTop="@dimen/list_cell_secondary_text_top_margin"
+            android:ellipsize="end"
+            android:gravity="top|left"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:text="@string/expenseit_expense_processing_time"
+            android:textAppearance="@style/ListCellSubHeaderText"
+            android:textColor="@color/ConcurBlue"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView android:id="@+id/expense_expenseit_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_processing" />
+
+        <ImageView
+            android:id="@+id/expense_expenseit_arrows"
+            android:layout_width="@dimen/status_icon_rotating_wheel_size"
+            android:layout_height="@dimen/status_icon_rotating_wheel_size"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/icon_processing_arrow" />
+
+    </FrameLayout>
+
+</LinearLayout>
+

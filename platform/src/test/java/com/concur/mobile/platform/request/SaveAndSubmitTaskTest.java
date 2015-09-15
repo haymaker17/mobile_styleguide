@@ -28,6 +28,10 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
     protected static final String REQUEST_POLICY_ID_STRING = "gWohOcl7WcxM34o3LnfEe$s2lWjryBP$s5zWQ";
     protected static final String REQUEST_PURPOSE_STRING = "March trip test";
 
+    public SaveAndSubmitTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     private void initCreate(boolean applyPurpose) {
         tr = null;
         // --- TR initialization
@@ -50,7 +54,7 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
      */
     private void doSaveTest() throws Exception {
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "request/SaveNoSubmitResponse.json");
         }
@@ -107,7 +111,7 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
             forceIfRequired = false;
         }
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             if (blockingException) {
                 setMockResponse(mockServer, HttpStatus.SC_OK, "request/SaveAndSubmitBExceptionResponse.json");
@@ -183,4 +187,5 @@ public class SaveAndSubmitTaskTest extends AsyncRequestTest {
         // NOTE: This works the same as if we had no exception
         doSaveAndSubmitWithExceptionTest(false, true);
     }
+
 }

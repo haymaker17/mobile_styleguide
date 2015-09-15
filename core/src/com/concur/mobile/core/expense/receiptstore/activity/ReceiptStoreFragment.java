@@ -109,19 +109,23 @@ public class ReceiptStoreFragment extends BaseFragment {
      */
     public interface ReceiptStoreFragmentCallback {
 
-        public void doGetReceiptList();
+        void doGetReceiptList();
 
-        public void onStartOcrSuccess();
+        void onStartOcrSuccess();
 
-        public void onStartOcrFailed();
+        void onStartOcrFailed();
 
-        public void onGetReceiptListSuccess();
+        void onGetReceiptListSuccess();
 
-        public void onGetReceiptListFailed();
+        void onGetReceiptListFailed();
+
+        void uploadReceiptToExpenseIt(String filePath);
 
     }
 
     public static final String EXTRA_START_OCR_ON_UPLOAD = "extra.start.ocr.on.upload";
+
+    public static final String EXTRA_USE_EXPENSEIT = "extra.use.expenseit";
 
     // Contains the key used to store/retrieve the delete receipt receiver.
     private static final String DELETE_RECEIPT_RECEIVER_KEY = "delete.receipt.receiver";
@@ -412,6 +416,10 @@ public class ReceiptStoreFragment extends BaseFragment {
     protected boolean startOcrOnUpload;
 
     /**
+     * Flag indicating whether to use expenseIt services when uploading image
+     */
+    protected boolean useExpenseIt;
+    /**
      * 
      */
     private ReceiptStoreFragmentCallback receiptStoreCallback;
@@ -441,7 +449,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                 }
 
                 // Add an entry to the database so we can display it immediately in the
-                // ExpenseListwithout waiting for R.S. refresh.
+                // ExpenseList without waiting for R.S. refresh.
                 Receipt ocrReceipt = new Receipt(ConcurCore.getContext(),
                         ReceiptStoreFragment.this.activity.getUserId());
                 ocrReceipt.setId(startOcr.receiptImageId);
@@ -518,6 +526,7 @@ public class ReceiptStoreFragment extends BaseFragment {
         public void cleanup() {
             startOcrReceiver = null;
             startOcrOnUpload = false;
+            useExpenseIt = false;
 
             // Refresh the list of Receipts.
             // OCR: Do we really want to call this? Or just call it when user manually refreshes?
@@ -725,9 +734,11 @@ public class ReceiptStoreFragment extends BaseFragment {
         if (savedInstanceState != null) {
             // Rotated or paused fragment.
             startOcrOnUpload = savedInstanceState.getBoolean(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, false);
+            useExpenseIt = savedInstanceState.getBoolean(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, false);
         } else if (intent != null) {
             // Initially started fragment.
             startOcrOnUpload = intent.getBooleanExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, false);
+            useExpenseIt = intent.getBooleanExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, false);
         }
 
         // Construct and populate map from view state to child index.
@@ -1084,7 +1095,7 @@ public class ReceiptStoreFragment extends BaseFragment {
             }
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".setUploadTextMessage: unable to locate 'upload_receipt_message' text view!");
+                + ".setUploadTextMessage: unable to locate 'upload_receipt_message' text view!");
         }
     }
 
@@ -1729,36 +1740,6 @@ public class ReceiptStoreFragment extends BaseFragment {
     }
 
     /**
-     * Invokes the MWS request to start OCR on the receipt with the given image ID.
-     * 
-     * @param receiptImageId
-     */
-    protected void sendStartOcr(String receiptImageId) {
-
-        // If this is an OCR user, then start OCR!!!
-        if (startOcrOnUpload && Preferences.isOCRUser()) {
-
-            if (!TextUtils.isEmpty(receiptImageId)) {
-
-                if (startOcrReceiver == null) {
-                    startOcrReceiver = new BaseAsyncResultReceiver(new Handler());
-                    startOcrReceiver.setListener(startOcrReplyListener);
-                }
-
-                if (startOcrAsyncTask != null && startOcrAsyncTask.getStatus() != AsyncTask.Status.FINISHED) {
-                    startOcrReceiver.setListener(startOcrReplyListener);
-                } else {
-                    StartOCRRequestTask startOcrTask = new StartOCRRequestTask(ConcurCore.getContext(),
-                            REQUEST_START_OCR, startOcrReceiver, receiptImageId);
-                    startOcrAsyncTask = startOcrTask.execute();
-                }
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".sendStartOcr - receiptImageId is null!!!");
-            }
-        }
-    }
-
-    /**
      * Will send a request off to delete the currently selected receipt.
      */
     protected void sendDeleteReceiptRequest() {
@@ -1794,7 +1775,7 @@ public class ReceiptStoreFragment extends BaseFragment {
             if (getView() != null) {
                 // Set the view state to indicate data being loaded.
                 ViewUtil.setTextViewText(getView(), R.id.loading_data, R.id.data_loading_text,
-                        getText(getDataLoadingTextResourceId()).toString(), true);
+                    getText(getDataLoadingTextResourceId()).toString(), true);
             }
 
             flipViewForViewState();
@@ -1821,7 +1802,10 @@ public class ReceiptStoreFragment extends BaseFragment {
             ConcurCore ConcurCore = getConcurCore();
             ConcurService concurService = ConcurCore.getService();
             String accessToken = Preferences.getAccessToken();
-            if (accessToken == null || bForceMWS || startOcrOnUpload) {
+            if (startOcrOnUpload && useExpenseIt) {
+                receiptStoreCallback.uploadReceiptToExpenseIt(receiptImageDataLocalFilePath);
+            }
+            else if (accessToken == null || bForceMWS || startOcrOnUpload) {
                 // Temporary Fix for MOB-21386
                 saveReceiptRequest = concurService.sendSaveReceiptRequest(activity.getUserId(),
                         receiptImageDataLocalFilePath, deleteReceiptImageDataLocalFilePath, null, true, false);
@@ -1846,7 +1830,7 @@ public class ReceiptStoreFragment extends BaseFragment {
                 saveReceiptReceiver.setServiceRequest(saveReceiptRequest);
                 SaveReceiptProgressDialogHandler.show(this);
             } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
+                Log.w(Const.LOG_TAG, CLS_TAG + ".onActivityResult(TakePicture): unable to create 'SaveReceiptRequest'!");
                 unregisterSaveReceiptReceiver();
             }
         } else {
@@ -1992,6 +1976,8 @@ public class ReceiptStoreFragment extends BaseFragment {
         outState.putString(LAST_RECEIPT_ACTION_KEY, lastReceiptAction.name());
         // Save whether or not to start OCR.
         outState.putBoolean(EXTRA_START_OCR_ON_UPLOAD, startOcrOnUpload);
+        // Save whether or not to use ExpenseIt.
+        outState.putBoolean(EXTRA_USE_EXPENSEIT, useExpenseIt);
         // Save out the receipt image id of the currently selected receipt info.
         if (selectedReceiptInfo != null) {
             outState.putString(SELECTED_RECEIPT_INFO_KEY, selectedReceiptInfo.getReceiptImageId());
@@ -2304,7 +2290,7 @@ public class ReceiptStoreFragment extends BaseFragment {
     /**
      * An extension of <code>DialogFragmentHandler</code> to handle showing/dismissing the save receipt dialog fragment.
      */
-    static class SaveReceiptProgressDialogHandler extends DialogFragmentHandler {
+     static class SaveReceiptProgressDialogHandler extends DialogFragmentHandler {
 
         private static final String DIALOG_FRAGMENT_ID = "SaveReceiptProgress";
 
@@ -3004,20 +2990,9 @@ public class ReceiptStoreFragment extends BaseFragment {
                     // then refresh the display.
                     fragment.isPathAvailable = false;
                     if (ConcurCore.isConnected()) {
-                        if (fragment.startOcrOnUpload && Preferences.isOCRUser()) {
-
-                            // OCR: Set the view state to indicate data being loaded.
-                            // ViewUtil.setTextViewText(fragment.getView(), R.id.loading_data, R.id.data_loading_text,
-                            // fragment.getText(fragment.getDataLoadingTextResourceId()).toString(), true);
-                            // fragment.viewState = ViewState.LOCAL_DATA_REFRESH;
-                            // fragment.flipViewForViewState();
-
-                            // If user is OCR, then we need to call StartOCR endpoint.
-                            // The listener after calling StartOCR will invoke the list of new Receipts.
-                            fragment.sendStartOcr(receiptImageId);
-                        } else {
-                            fragment.receiptStoreCallback.doGetReceiptList();
-                        }
+                        //Since we don't use OCR anymore directly through our MWS. Anytime we upload receipts we
+                        //refresh the list only.
+                        fragment.receiptStoreCallback.doGetReceiptList();
                     } else {
                         // OCR: If OCR but no connection, what to do?
                     }

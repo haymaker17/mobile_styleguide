@@ -29,7 +29,7 @@ public class HotelBenchmarksFragment extends DialogFragment {
 
         // set the price to beat range
         ((TextView) mainView.findViewById(R.id.priceToBeatText))
-                .setText(getText(R.string.price_to_beat_label) + " : " + priceToBeatRangeText);
+                .setText(getString(R.string.price_to_beat_label).toUpperCase() + " : " + priceToBeatRangeText);
 
         // set the list item adapter
         ListView benchmarksList = (ListView) mainView.findViewById(R.id.price_to_beat_list_view);

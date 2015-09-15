@@ -36,6 +36,10 @@ public class RequestPasswordResetRequestTaskTest extends AsyncRequestTest {
 
     protected Locale locale;
 
+    public RequestPasswordResetRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /**
      * Sets the password reset credentials.
      * 
@@ -55,12 +59,13 @@ public class RequestPasswordResetRequestTaskTest extends AsyncRequestTest {
      * @throws Exception
      *             throws an exception if the test fails.
      */
+    @Override
     public void doTest() throws Exception {
 
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "authentication/RequestPasswordResetResponse.xml");
         }
