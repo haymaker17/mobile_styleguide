@@ -1,8 +1,13 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.*;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.LoaderManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
@@ -12,21 +17,42 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.*;
+import android.view.ViewStub;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.concur.core.R;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.platform.common.SpinnerItem;
 import com.concur.mobile.platform.common.formfield.FormField;
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.travel.booking.CreditCard;
-import com.concur.mobile.platform.travel.search.hotel.*;
+import com.concur.mobile.platform.travel.search.hotel.HotelBookingLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelBookingRESTResult;
+import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOption;
+import com.concur.mobile.platform.travel.search.hotel.HotelPreSellOptionLoader;
+import com.concur.mobile.platform.travel.search.hotel.HotelRate;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
+import com.concur.mobile.platform.travel.search.hotel.HotelViolationComparator;
+import com.concur.mobile.platform.travel.search.hotel.ViolationReason;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragmentV1;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactoryV1;
 import com.concur.mobile.platform.ui.common.fragment.RetainerFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
 import com.concur.mobile.platform.ui.common.util.ImageCache;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.activity.TravelBaseActivity;
 import com.concur.mobile.platform.ui.travel.fragment.TravelCustomFieldsFragment;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.SpinnerDialogFragment;
@@ -48,6 +74,7 @@ import java.util.List;
 /**
  * @author RatanK
  */
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_RESERVE)
 public class HotelBookingActivity extends TravelBaseActivity implements SpinnerDialogFragmentCallbackListener,
         TravelCustomFieldsFragment.TravelCustomFieldsFragmentCallBackListener {
 
@@ -58,7 +85,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         PlatformAsyncTaskLoader<TravelCustomFieldsConfig> asyncLoader = null;
 
-        @Override public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
+        @Override
+        public Loader<TravelCustomFieldsConfig> onCreateLoader(int id, Bundle bundle) {
 
             if (update) {
                 showProgressBar(R.string.dlg_travel_retrieve_custom_fields_update_progress_message);
@@ -70,8 +98,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return asyncLoader;
         }
 
-        @Override public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
-                TravelCustomFieldsConfig travelCustomFieldsConfig) {
+        @Override
+        public void onLoadFinished(Loader<TravelCustomFieldsConfig> loader,
+                                   TravelCustomFieldsConfig travelCustomFieldsConfig) {
 
             hideProgressBar();
             if (asyncLoader.result == asyncLoader.SESSION_EXPIRED
@@ -90,7 +119,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                         final int WHAT = 1;
                         Handler handler = new Handler() {
 
-                            @Override public void handleMessage(Message msg) {
+                            @Override
+                            public void handleMessage(Message msg) {
                                 if (msg.what == WHAT) {
                                     initTravelCustomFieldsView();
                                 }
@@ -111,7 +141,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         }
 
-        @Override public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
+        @Override
+        public void onLoaderReset(Loader<TravelCustomFieldsConfig> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
@@ -142,7 +173,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         PlatformAsyncTaskLoader<HotelPreSellOption> hotelPreSellOptionAsyncTaskLoader;
 
-        @Override public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
+        @Override
+        public Loader<HotelPreSellOption> onCreateLoader(int id, Bundle bundle) {
 
             // request initial search
             Log.d(Const.LOG_TAG, " ***** creating preSellOption loader *****  ");
@@ -152,7 +184,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             return hotelPreSellOptionAsyncTaskLoader;
         }
 
-        @Override public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
+        @Override
+        public void onLoadFinished(Loader<HotelPreSellOption> loader, HotelPreSellOption hotelPreSellOption) {
             hideProgressBar();
             if (hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.SESSION_EXPIRED
                     || hotelPreSellOptionAsyncTaskLoader.result == hotelPreSellOptionAsyncTaskLoader.RE_AUTHENTICATED) {
@@ -163,7 +196,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         }
 
-        @Override public void onLoaderReset(Loader<HotelPreSellOption> loader) {
+        @Override
+        public void onLoaderReset(Loader<HotelPreSellOption> loader) {
             // nothing to handle here
         }
     };
@@ -191,12 +225,19 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private TextView roomDescView;
     private boolean isBookingInProgress;
     private LinearLayout reserveLayout;
+
+    // for GA tracking
+    private boolean suggestedAvailable;
+    private boolean suggestedHotel;
+
+
     // HotelBooking loader callback implementation
     private LoaderManager.LoaderCallbacks<HotelBookingRESTResult> bookingLoaderListener = new LoaderManager.LoaderCallbacks<HotelBookingRESTResult>() {
 
         PlatformAsyncTaskLoader<HotelBookingRESTResult> hotelBookingAsyncRequestTask = null;
 
-        @Override public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
+        @Override
+        public Loader<HotelBookingRESTResult> onCreateLoader(int id, Bundle bundle) {
             showProgressBar(R.string.hotel_booking_retrieving);
             // populate custField objects from formFields
             List<FormField> custFields = null;
@@ -254,7 +295,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                     new Handler().post(new Runnable() {
 
-                        @Override public void run() {
+                        @Override
+                        public void run() {
                             showFailurePopUp();
                         }
                     });
@@ -265,13 +307,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
             isBookingInProgress = false;
         }
 
-        @Override public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
+        @Override
+        public void onLoaderReset(Loader<HotelBookingRESTResult> data) {
             Log.d(Const.LOG_TAG, " ***** loader reset *****  ");
         }
     };
     private String customTravelText;
 
-    @Override public void onWindowFocusChanged(boolean hasFocus) {
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus && mListView != null) {
@@ -279,7 +323,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         }
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initRetainerFragment();
         setContentView(R.layout.hotel_booking);
@@ -330,6 +375,10 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         // initialize the view
         initView();
 
+        // for GA tracking
+        suggestedAvailable = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL_AVAILABLE, false);
+        suggestedHotel = intent.getBooleanExtra(Const.EXTRA_TRAVEL_SUGGESTED_HOTEL, false);
+
     }
 
     protected void initRetainerFragment() {
@@ -349,17 +398,20 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.app.Activity#onPause()
      */
-    @Override public void onPause() {
+    @Override
+    public void onPause() {
         super.onPause();
 
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
 
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
 
     }
@@ -369,7 +421,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
      *
      * @see android.support.v4.app.Fragment#onResume()
      */
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
 
     }
@@ -396,7 +449,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 mListView.addHeaderView(header);
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                        android.R.layout.simple_expandable_list_item_1, new String[] {});
+                        android.R.layout.simple_expandable_list_item_1, new String[]{});
                 mListView.setAdapter(adapter);
                 mListView.requestFocus();
             }
@@ -410,7 +463,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         // number of nights
         txtView = (TextView) findViewById(R.id.hotel_room_night);
-        if(numOfNights == 1) {
+        if (numOfNights == 1) {
             txtView.setText(
                     Format.localizeText(this.getApplicationContext(), R.string.hotel_reserve_num_of_night, numOfNights));
         } else {
@@ -422,9 +475,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         if (hotelRate.travelPoints != null && hotelRate.travelPoints > 0) {
             findViewById(R.id.travel_points_earned_layout).setVisibility(View.VISIBLE);
             txtView = (TextView) findViewById(R.id.points_earned);
-            txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[] {
+            txtView.setText(Format.localizeText(this, R.string.travel_points_can_be_earned_points, new Object[]{
                     FormatUtil.formatAmountWithNoDecimals(hotelRate.travelPoints * numOfNights,
-                            this.getResources().getConfiguration().locale, currCode, false, true) }));
+                            this.getResources().getConfiguration().locale, currCode, false, true)}));
         }
 
         // amount
@@ -433,7 +486,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         // cancellation policy on click event
         findViewById(R.id.hotel_policy).setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 showCancellationPolicy();
             }
         });
@@ -452,7 +506,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         enableReserveLayout(false);
         reserveLayout.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!progressbarVisible) {
                     doBooking();
                 }
@@ -466,7 +521,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
         roomDescView.post(new Runnable() {
 
-            @Override public void run() {
+            @Override
+            public void run() {
                 int lineCount = roomDescView.getLineCount();
                 // animate txtView more than 3 lines
                 if (lineCount > 3) {
@@ -478,7 +534,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                         ObjectAnimator animation = null;
 
-                        @Override public void onClick(View v) {
+                        @Override
+                        public void onClick(View v) {
                             if (isExpanded) {
                                 animation = ObjectAnimator.ofInt(v, "maxLines", 3);
                                 roomDescView
@@ -566,7 +623,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                             imgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
                             // the comment image needs to be pushed down a bit
-                            imgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
+                            imgView.setPadding(0, imgViewPaddingTop + 1, 0, 0);
                             imgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
                         currViolationId = hotelViolation.violationValueId;
@@ -592,7 +649,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                             newImgView.setImageResource(R.drawable.icon_warning_yellow);
                         } else {
                             // the comment image needs to be pushed down a bit
-                            newImgView.setPadding(0, imgViewPaddingTop+1, 0, 0);
+                            newImgView.setPadding(0, imgViewPaddingTop + 1, 0, 0);
 
                             newImgView.setImageResource(R.drawable.icon_comment_sm_grey);
                         }
@@ -767,6 +824,9 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         DialogFragmentFactoryV1
                 .getAlertOkayInstance(getText(R.string.hotel_reserve_cancel_policy).toString(), statement.toString())
                 .show(getFragmentManager(), "");
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_CANCELLATION_POLICY_VIEWED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_CANCELLATION_POLICY_VIEWED);
     }
 
     private void setPreSellOptions(HotelPreSellOption preSellOption) {
@@ -882,8 +942,11 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         }
     }
 
-    @SuppressLint("ShowToast") private void doBooking() {
+    @SuppressLint("ShowToast")
+    private void doBooking() {
         if (!isOffline) {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_RESERVE_CLICKED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_RESERVE_CLICKED);
 
             enableReserveLayout(false);
             boolean hasAllRequiredFields = true;
@@ -973,12 +1036,15 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 AlertDialogFragmentV1.OnClickListener okayListener = new AlertDialogFragmentV1.OnClickListener() {
 
-                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(Activity activity, DialogInterface dialog, int which) {
                         lm.initLoader(HOTEL_BOOKING_LOADER_ID, null, bookingLoaderListener);
                         isBookingInProgress = true;
+                        trackReserveConfirmed();
                     }
 
-                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                    @Override
+                    public void onCancel(Activity activity, DialogInterface dialog) {
                         enableReserveLayout(true);
                         dialog.dismiss();
                     }
@@ -986,12 +1052,14 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
                 AlertDialogFragmentV1.OnClickListener cancelListener = new AlertDialogFragmentV1.OnClickListener() {
 
-                    @Override public void onClick(Activity activity, DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(Activity activity, DialogInterface dialog, int which) {
                         enableReserveLayout(true);
                         dialog.dismiss();
                     }
 
-                    @Override public void onCancel(Activity activity, DialogInterface dialog) {
+                    @Override
+                    public void onCancel(Activity activity, DialogInterface dialog) {
                         enableReserveLayout(true);
                         dialog.dismiss();
                     }
@@ -1000,8 +1068,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 AlertDialogFragmentV1 dialog = new AlertDialogFragmentV1();
                 dialog.setTitle(R.string.hotel_confirm_reserve_title);
                 dialog.setMessage(msgResourse);
-                dialog.setPositiveButtonText(R.string.hotel_confirm_reserve_ok);
-                dialog.setNegativeButtonText(R.string.hotel_confirm_reserve_cancel);
+                dialog.setPositiveButtonText(getString(R.string.hotel_confirm_reserve_ok).toUpperCase());
+                dialog.setNegativeButtonText(getString(R.string.hotel_confirm_reserve_cancel).toUpperCase());
                 dialog.setPositiveButtonListener(okayListener);
                 dialog.setNegativeButtonListener(cancelListener);
                 dialog.setCancelListener(cancelListener);
@@ -1016,7 +1084,7 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
                 enableReserveLayout(true);
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Service Unavailable", Toast.LENGTH_LONG).show();
+            showOfflineDialog(R.string.reserve_dlg_no_connectivity_message);
         }
 
         // TODO - travel program Id
@@ -1024,17 +1092,23 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
     }
 
-    @Override public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
+    @Override
+    public void onSpinnerItemSelected(SpinnerItem selectedSpinnerItem, String fragmentTagName) {
         if (fragmentTagName.equals(VIOLATION_REASONS_SPINNER_FRAGMENT)) {
             curViolationReason = selectedSpinnerItem;
             updateViolationReasonsView();
         } else if (fragmentTagName.equals(CREDIT_CARDS_SPINNER_FRAGMENT)) {
+            if(curCardChoice != null && curCardChoice.id != selectedSpinnerItem.id) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_CHANGE_CARDS);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_CHANGE_CARDS);
+            }
             curCardChoice = selectedSpinnerItem;
             updateCardView();
         }
     }
 
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         // Check if the key event was the Back button and stop any outstanding
         // request of async task
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -1060,7 +1134,8 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
+    @Override
+    public void sendTravelCustomFieldsUpdateRequest(List<TravelCustomField> fields) {
         update = true;
         formFields = fields;
         travelCustomFieldsConfig.formFields = formFields;
@@ -1122,4 +1197,42 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
         txtView.setText(formattedAmount);
     }
 
+    // for GA tracking
+    private void trackReserveConfirmed() {
+        String eventLabel = null;
+        if(suggestedHotel) {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_BOOKED;
+        } else if(suggestedAvailable) {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_AVAILABLE;
+        } else {
+            eventLabel = Flurry.EVENT_LABEL_HOTEL_SUGGESTED_UNAVAILABLE;
+        }
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_RESERVE_CONFIRMED + " - " + eventLabel);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_RESERVE_CONFIRMED, eventLabel);
+
+
+        // Violation Reason selected
+        if(violations != null && selectedViolationReasons != null) {
+            String violationReasonEventLabel = null;
+            boolean justificationTextFilled = false;
+            for(ViolationReason selectedViolationReason : selectedViolationReasons) {
+                for(String[] violation: violationReasons) {
+                    if(selectedViolationReason.violationReasonCode.equalsIgnoreCase(violation[0])) {
+                        violationReasonEventLabel = violation[1];
+                        break;
+                    }
+                }
+                justificationTextFilled = (selectedViolationReason.justification == null ? false : true);
+            }
+            if(violationReasonEventLabel != null) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_REASON + " - " + violationReasonEventLabel);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_REASON, violationReasonEventLabel);
+            }
+            if(justificationTextFilled) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_JUSTIFICATION);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_JUSTIFICATION);
+            }
+        }
+    }
 }

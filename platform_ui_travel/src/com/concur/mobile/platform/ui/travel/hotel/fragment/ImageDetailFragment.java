@@ -1,26 +1,27 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.concur.mobile.platform.ui.travel.R;
-import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 import com.concur.mobile.platform.ui.travel.util.ImageFetcher;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
- * This fragment will populate the children of the ViewPager from {@link ImageDetailActivity}.
+ * This fragment will populate the children of the ViewPager from {@link }.
  */
 public class ImageDetailFragment extends Fragment {
 
     private static final String IMAGE_DATA_EXTRA = "extra_image_data";
     private String mImageUrl;
     private ImageView mImageView;
-
     private ImageFetcher mImageFetcher;
+    private ImagesFragmentListener callBackListener;
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
@@ -34,7 +35,6 @@ public class ImageDetailFragment extends Fragment {
         final Bundle args = new Bundle();
         args.putString(IMAGE_DATA_EXTRA, imageUrl);
         f.setArguments(args);
-
         return f;
     }
 
@@ -42,10 +42,11 @@ public class ImageDetailFragment extends Fragment {
      * Empty constructor as per the Fragment documentation
      */
     public ImageDetailFragment() {
+        setRetainInstance(true);
     }
 
     /**
-     * Populate image using a url from extras, use the convenience factory method {@link ImageDetailFragment#newInstance(String)}
+     * Populate image using a url from extras, use the convenience factory method {@link ImageDetailFragment #newInstance(String)}
      * to create this fragment.
      */
     @Override
@@ -72,12 +73,25 @@ public class ImageDetailFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            callBackListener = (ImagesFragmentListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
+        }
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Use the parent activity to load the image asynchronously into the ImageView (so a single
         // cache can be used over all pages in the ViewPager
-        if (ImageDetailActivity.class.isInstance(getActivity())) {
-            mImageFetcher = ((ImageDetailActivity) getActivity()).getImageFetcher();
+        // if (ImageDetailActivity.class.isInstance(getActivity())) { //((ImageDetailActivity)
+        mImageFetcher = callBackListener.getImageFethchert();
+        if (mImageFetcher != null) {
             mImageFetcher.loadImage(mImageUrl, mImageView);
         }
 
@@ -95,5 +109,15 @@ public class ImageDetailFragment extends Fragment {
             // Cancel any pending image work
             mImageView.setImageDrawable(null);
         }
+        if (mImageFetcher != null) {
+            mImageFetcher = null;
+        }
+    }
+
+    // Container Activity must implement this call back interface
+    public interface ImagesFragmentListener {
+
+        public ImageFetcher getImageFethchert();
+
     }
 }

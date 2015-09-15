@@ -74,7 +74,6 @@ import com.concur.mobile.core.travel.car.activity.CarSearchNoResults;
 import com.concur.mobile.core.travel.car.activity.CarSearchProgress;
 import com.concur.mobile.core.travel.car.activity.CarSearchResults;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearchDetail;
@@ -104,7 +103,6 @@ import com.concur.mobile.corp.activity.Startup;
 import com.concur.mobile.corp.activity.TestDriveRegistration;
 import com.concur.mobile.corp.activity.TestDriveTour;
 import com.concur.mobile.corp.activity.UniversalTour;
-import com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity;
 
 import org.junit.Test;
 
@@ -181,7 +179,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
 //            , HotelSearchRooms.class
 //            , HotelVoiceSearchActivity.class
                 , ImageActivity.class
-                , ImageDetailActivity.class
+                //, ImageDetailActivity.class
                 , InvoicesWebView.class
                 , ListSearch.class
                 , LocationCheckIn.class
@@ -215,7 +213,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
                 , Register.class
                 , RequestEditActivity.class
                 , RequestListActivity.class
-                , RestHotelSearch.class
+                // , RestHotelSearch.class
                 , RuleViolationSummary.class
                 , SegmentDetail.class
                 , SegmentList.class

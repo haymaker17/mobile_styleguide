@@ -1,6 +1,8 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.text.util.Linkify;
@@ -42,10 +44,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
     private LatLng post;
     private Button findRooms;
     private View mapView;
-
-    // private int paramsHeight;
-    // private MapFragment mapFragment;
-    // private LatLng post;
+    private HotelDetailsFragmentListener detailsFragCallbackListener;
 
     public HotelDetailsFragment(Hotel hotel) {
         this.hotel = hotel;
@@ -123,14 +122,23 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
 
         String s = contact.phone.trim();
         if (!s.isEmpty()) {
-            String formattedNumber = PhoneNumberUtils.formatNumber(s);
+            final String formattedNumber = PhoneNumberUtils.formatNumber(s);
             // String formattedNumber = String.format("(%s) %s %s", s.subSequence(0, 3), s.subSequence(3, 6),
             // s.subSequence(6, 10));
             TextView tv = ((TextView) mainView.findViewById(R.id.hotel_phone));
             tv.setText(formattedNumber);
 
-            Linkify.addLinks(tv, Linkify.PHONE_NUMBERS);
-            com.concur.mobile.platform.ui.travel.util.ViewUtil.stripUnderlines(tv);
+            tv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    detailsFragCallbackListener.callHotel(formattedNumber);
+                }
+            });
+
+            //Linkify.addLinks(tv, Linkify.PHONE_NUMBERS);
+            //com.concur.mobile.platform.ui.travel.util.ViewUtil.stripUnderlines(tv);
+
+
         } else {
             ViewUtil.setVisibility(mainView, R.id.hotel_phone, View.GONE);
         }
@@ -153,6 +161,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         // the callback interface. If not, it throws an exception
         try {
             callBackListener = (HotelChoiceDetailsFragmentListener) activity;
+            detailsFragCallbackListener = (HotelDetailsFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement HotelSearchResultsFragmentListener");
         }
@@ -187,7 +196,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         if (v == findRooms) {
             callBackListener.onFindRoomsClicked();
         } else if (v == mapView) {
-            callBackListener.onMapsClicked();
+            callBackListener.onMapsClicked(false);
         }
 
     }
@@ -201,7 +210,7 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override public boolean onMarkerClick(Marker marker) {
-                callBackListener.onMapsClicked();
+                callBackListener.onMapsClicked(true);
                 return true;
             }
         });
@@ -209,10 +218,15 @@ public class HotelDetailsFragment extends PlatformFragmentV1 implements OnClickL
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
             @Override public void onMapClick(LatLng latLng) {
-                callBackListener.onMapsClicked();
+                callBackListener.onMapsClicked(true);
             }
 
         });
+    }
+
+    // Container Activity must implement this call back interface
+    public interface HotelDetailsFragmentListener {
+        public void callHotel(String phoneNumberCleaned);
     }
 
 }

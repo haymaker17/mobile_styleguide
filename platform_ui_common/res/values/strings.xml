@@ -53,6 +53,8 @@
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
     <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
+    <string name="reserve_dlg_no_connectivity_message">Reservations cannot be completed while your device is offline. Please reconnect to the internet and try again.</string>
+    <string name="hotel_dlg_no_connectivity_message">Unable to perform request. Please check your internet connection.</string>
     <string name="offline_header_text">Offline</string>
 
     <!-- Login UI Strings -->
