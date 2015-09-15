@@ -388,4 +388,9 @@
         <item name="android:textColor">@color/MaterialWhite</item>
         <item name="android:height">@dimen/standard_material_button_height</item>
     </style>
+
+    <style name="ConcurBaseTheme.NoActionBar.TADefault">
+        <item name="android:colorPrimaryDark">@android:color/black</item>
+    </style>
+
 </resources>

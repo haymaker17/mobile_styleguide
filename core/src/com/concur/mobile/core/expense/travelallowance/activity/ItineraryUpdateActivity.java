@@ -49,15 +49,16 @@ import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
+@EventTracker.EventTrackerClassName(getClassName = ItineraryUpdateActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
 public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener {
+
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -736,6 +737,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
+                    showProgressBar(false);
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
                 refreshAdapter();

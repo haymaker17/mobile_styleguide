@@ -67,6 +67,8 @@ public class ExpenseItDetailActivity extends BaseActivity
 
     public static final String EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY = "EXTRA_PREFERENCE_CONFIRM_USER_CHOICE";
 
+    public static final String EXTRA_EXPENSEIT_COMMENT_KEY = "EXTRA_EXPENSEIT_COMMENT_KEY";
+
     private static final String FRAGMENT_EXPENSEIT_DETAIL = "FRAGMENT_EXPENSEIT_DETAIL";
 
     public static final String EXPENSEIT_RECEIPT_ID_KEY = "EXPENSEIT_RECEIPT_ID_KEY";
@@ -894,9 +896,16 @@ public class ExpenseItDetailActivity extends BaseActivity
     private void initializeExpenseFromExpenseIt() {
         IExpenseEntryCache expEntCache = ExpenseItDetailActivity.this.getConcurCore().getExpenseEntryCache();
         Intent newExpenseIntent = new Intent(this, QuickExpense.class);
+        String comment = "";
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_RECEIPT_IMAGE_ID_KEY, receiptImageId);
         newExpenseIntent.putExtra(Const.EXTRA_EXPENSE_TRANSACTION_DATE_KEY, item.getCreatedAt().getTimeInMillis());
+        if (newComment != null) {
+            comment = newComment.getNote().getNote();
+        } else if (item.getNote() != null) {
+            comment = item.getNote();
+        }
+        newExpenseIntent.putExtra(EXTRA_EXPENSEIT_COMMENT_KEY, comment);
         newExpenseIntent.putExtra(EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY, true);
         startActivity(newExpenseIntent);
         expEntCache.setShouldFetchExpenseList();

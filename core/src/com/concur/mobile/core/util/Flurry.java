@@ -508,10 +508,6 @@ public class Flurry {
 
     //////////////////////////// end of Jarvis Hotel events
 
-    // Screen name for Travel Allowance
-    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
-    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL = "Allowance Details: Expense-Report-TravelAllowances-DailyAllowance";
-    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
 
     /**
      * Formats a Flurry event name based on a category and name.
