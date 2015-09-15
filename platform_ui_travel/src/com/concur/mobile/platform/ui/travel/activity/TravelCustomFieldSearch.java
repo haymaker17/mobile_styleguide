@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.ui.travel.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.loader.SearchTravelCustomFieldValues;
 import com.concur.mobile.platform.ui.travel.loader.TravelCustomField;
 import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.view.TravelCustomFieldListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -336,7 +338,7 @@ public class TravelCustomFieldSearch extends TravelBaseActivity {
                     if (listItem != null && listItem.getSelectedItem() != null) {
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra(Const.EXTRA_SEARCH_SELECTED_ITEM, listItem.getSelectedItem());
-                        setResult(RESULT_OK, resultIntent);
+                        setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     } else {
                         Log.e(Const.LOG_TAG, CLS_TAG + ".onItemClick: selectedItem is null!");

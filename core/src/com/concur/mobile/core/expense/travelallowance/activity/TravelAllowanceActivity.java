@@ -37,7 +37,6 @@ import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +44,11 @@ import java.util.List;
 /**
  * Created by D049515 on 15.06.2015.
  */
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
+@EventTracker.EventTrackerClassName(getClassName = TravelAllowanceActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
 public class TravelAllowanceActivity extends BaseActivity
         implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback, PopupMenu.OnMenuItemClickListener {
+
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 

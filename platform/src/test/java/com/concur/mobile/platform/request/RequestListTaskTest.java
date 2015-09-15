@@ -24,6 +24,10 @@ public class RequestListTaskTest extends AsyncRequestTest {
 
     private RequestListCache requestListCache;
 
+    public RequestListTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /**
      * Execute a Request List retrieving test
      *
@@ -37,7 +41,7 @@ public class RequestListTaskTest extends AsyncRequestTest {
         }
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "request/ListResponse.json");
         }

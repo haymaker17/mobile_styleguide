@@ -473,6 +473,13 @@ public interface SmartExpenseDAO {
     public Double getAverageDailyRate();
 
     /**
+     * Gets the last time this DAO was synced with the server.
+     *
+     * @return the last time this DAO was synced with the server.
+     */
+    public Calendar getLastSyncTime();
+
+    /**
      * Gets the content uri associated with this DAO object.
      * 
      * @param context

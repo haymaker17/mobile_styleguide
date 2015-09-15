@@ -5,18 +5,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.BuildConfig;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.HotelChoiceDetailsFragment.HotelChoiceDetailsFragmentListener;
-import com.concur.mobile.platform.ui.travel.util.*;
+import com.concur.mobile.platform.ui.travel.util.Const;
+import com.concur.mobile.platform.ui.travel.util.ImageFetcher;
+import com.concur.mobile.platform.ui.travel.util.RecyclingImageView;
+import com.concur.mobile.platform.ui.travel.util.TravelImageCache;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 import com.concur.mobile.platform.ui.travel.view.CustomGridView;
 
 import java.net.URI;
@@ -47,9 +58,18 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+        // Fetch screen height and width, to use as our max size when loading images as this
+        // activity runs full screen
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int width = displayMetrics.widthPixels;
+
+
+        // mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
         mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
+        mImageThumbSize = (width / 2) - mImageThumbSpacing;
+        Log.d("mImageThumbSize value : ", String.valueOf(mImageThumbSize));
         imgAdapter = new ImageAdapter(getActivity());
 
         TravelImageCache.ImageCacheParams cacheParams = new TravelImageCache.ImageCacheParams(getActivity(),
@@ -95,7 +115,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount,
-                    int totalItemCount) {
+                                 int totalItemCount) {
             }
         });
 
@@ -105,7 +125,8 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         // of each view so we get nice square thumbnails.
         mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN) @Override
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+            @Override
             public void onGlobalLayout() {
                 if (imgAdapter.getNumColumns() == 0) {
                     final int numColumns = 2;

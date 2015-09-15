@@ -49,15 +49,16 @@ import com.concur.mobile.core.expense.travelallowance.util.Message;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
+@EventTracker.EventTrackerClassName(getClassName = ItineraryUpdateActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
 public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener {
+
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -260,7 +261,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         onDateSetListener = new DatePickerFragment.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int requestCode, int year, int month, int day) {
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 if (currentPosition != null) {
                     Date date;
                     Calendar cal;
@@ -392,6 +393,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     cal.add(Calendar.MINUTE, 1);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
+                if (itinerary.getSegmentList().size() == 1) {
+                    emptySegment.setArrivalLocation(lastSegment.getDepartureLocation());
+                }
             } else {
                 if(defaultDate != null) {
                     cal.setTime(this.defaultDate);
@@ -503,7 +507,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             date.setTime(itinerary.getSegmentList().get(currentPosition.getPosition()).getArrivalDateTime());
         }
 
-        bundle.putSerializable(DatePickerFragment.BUNDLE_ID_DATE, date.getTime());
+        bundle.putSerializable(BundleId.DATE, date.getTime());
+        bundle.putInt(BundleId.INTERVAL, 5);
 
         timeDialog = new TimePickerFragment();
         timeDialog.setArguments(bundle);
@@ -523,7 +528,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             date.setTime(itinerary.getSegmentList().get(currentPosition.getPosition()).getArrivalDateTime());
         }
 
-        bundle.putSerializable(DatePickerFragment.BUNDLE_ID_DATE, date.getTime());
+        bundle.putSerializable(BundleId.DATE, date.getTime());
 
         calendarDialog = new DatePickerFragment();
 
@@ -736,6 +741,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     }
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
+                    showProgressBar(false);
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
                 refreshAdapter();

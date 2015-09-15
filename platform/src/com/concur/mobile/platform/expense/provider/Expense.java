@@ -689,6 +689,97 @@ public class Expense {
     }
 
     /**
+     * ExpenseIt Receipt information.
+     */
+    public static final class ExpenseItReceiptColumns implements BaseColumns {
+
+        // Prevent instantiation.
+        private ExpenseItReceiptColumns() {
+        }
+
+        /**
+         * Contains the expenseIt receipts table name.
+         */
+        public static final String TABLE_NAME = "EXPENSEIT_RECEIPT";
+
+        // URI definitions
+
+        /**
+         * The scheme part for this provider's URI
+         */
+        private static final String SCHEME = "content://";
+
+        // Path parts for the URIs
+
+        /**
+         * Path part for the ExpenseIt Receipt URI
+         */
+        private static final String PATH_EXPENSEIT_RECEIPTS = "/expenseit_receipts";
+
+        /**
+         * Path part for the ExpenseIt Receipt ID URI
+         */
+        private static final String PATH_EXPENSEIT_RECEIPTS_ID = "/expenseit_receipts/";
+
+        /**
+         * 0-relative position of a expenseIt receipt ID segment in the path part of a expenseIt receipt ID URI
+         */
+        public static final int EXPENSEIT_RECEIPT_ID_PATH_POSITION = 1;
+
+        /**
+         * The content:// style URL for this table
+         */
+        public static final Uri CONTENT_URI = Uri.parse(SCHEME + AUTHORITY + PATH_EXPENSEIT_RECEIPTS);
+
+        /**
+         * The content URI base for a single personal card. Callers must append a numeric ExpenseIt receipt id to this Uri to retrieve
+         * a ExpenseIt receipt.
+         */
+        public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_EXPENSEIT_RECEIPTS_ID);
+
+        /**
+         * The content URI match pattern for a single personal card, specified by its ID. Use this to match incoming URIs or to
+         * construct an Intent.
+         */
+        public static final Uri CONTENT_ID_URI_PATTERN = Uri.parse(SCHEME + AUTHORITY + PATH_EXPENSEIT_RECEIPTS_ID + "/#");
+
+        // MIME type definitions
+
+        /**
+         * The MIME type of {@link #CONTENT_URI} providing a directory of ExpenseIt Receipt.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.concur.mobile.platform.expense.expenseit_receipt";
+
+        /**
+         * The MIME type of a {@link #CONTENT_URI} subdirectory of a single ExpenseIt Receipt.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.concur.mobile.platform.expense.expenseit_receipt";
+        /**
+         * Contains the default sort order.
+         */
+        public static final String DEFAULT_SORT_ORDER = BaseColumns._ID + " ASC";
+
+
+        // Column definitions
+        public static final String ID = "ID";
+        public static final String USER_ID = UserColumns.USER_ID;
+        public static final String REPORT_ID = "REPORT_ID";
+        public static final String NOTE = "NOTE";
+        public static final String CCTYPE = "CCTYPE";
+        public static final String CREATED_AT = "CREATED_AT";
+        public static final String SEND_TO_CTE_AT = "SEND_TO_CTE_AT";
+        public static final String IMAGE_DATA = "IMAGE_DATA";
+        public static final String TOTAL_IMAGE_COUNT = "TOTAL_IMAGE_COUNT";
+        public static final String TOTAL_IMAGES_UPLOADED = "TOTAL_IMAGES_UPLOADED";
+        public static final String PARSING_STATUS_CODE = "PARSING_STATUS_CODE";
+        public static final String PROCESSING_ENGINE = "PROCESSING_ENGINE";
+        public static final String ERROR_CODE = "ERROR_CODE";
+        public static final String ERROR_MESSAGE = "ERROR_MESSAGE";
+        public static final String ETA = "ETA";
+        // End Column Definitions
+    }
+
+    /**
      * Models personal card transaction information.
      */
     public static final class PersonalCardTransactionColumns implements BaseColumns {

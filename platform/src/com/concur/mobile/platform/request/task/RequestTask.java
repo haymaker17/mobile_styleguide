@@ -33,7 +33,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     public static final String P_REQUESTS_STATUS = "status";
     public static final String P_REQUESTS_WITH_USER_PERMISSIONS = "withUserPermissions";
     // --- Request creation
-    public static final String P_REQUEST_ID = "RequestID";
+    public static final String P_REQUEST_ID = "id";
     public static final String P_REQUEST_DO_SUBMIT = "doSubmit";
     public static final String P_REQUEST_FORCE_SUBMIT = "forceSubmit";
 
@@ -133,7 +133,7 @@ public class RequestTask extends AbstractRequestWSCallTask {
     }
 
     public RequestTask setPostBody(String postBody) {
-        if (requestType != HttpRequestType.POST) {
+        if (requestType != HttpRequestType.POST && requestType != HttpRequestType.PUT) {
             requestType = HttpRequestType.POST;
         }
         // --- null won't work as a value if it really is a POST, things are made to work with "" in this case.
@@ -151,17 +151,17 @@ public class RequestTask extends AbstractRequestWSCallTask {
                 requestType = HttpRequestType.GET;
                 break;
 
-        case UPDATE_AND_SUBMIT:
-            postBody = "";
-            requestType = HttpRequestType.PUT;
-            break;
+            case UPDATE_AND_SUBMIT:
+                postBody = "";
+                requestType = HttpRequestType.PUT;
+                break;
 
-        case CREATE_AND_SUBMIT:
-        default:
-            // --- any custom action not specifically defined will be considered as a POST action
-            postBody = "";
-            requestType = HttpRequestType.POST;
-            break;
+            case CREATE_AND_SUBMIT:
+            default:
+                // --- any custom action not specifically defined will be considered as a POST action
+                postBody = "";
+                requestType = HttpRequestType.POST;
+                break;
         }
         return this;
     }

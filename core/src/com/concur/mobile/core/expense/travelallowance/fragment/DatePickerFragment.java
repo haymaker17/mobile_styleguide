@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
 
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,15 +18,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public interface OnDateSetListener {
 
-        void onDateSet(DatePicker datePicker, int requestCode, int year, int month, int day);
+        void onDateSet(DatePicker datePicker, int year, int month, int day);
     }
 
-    public static final String BUNDLE_ID_DATE = "date";
-    public static final String BUNDLE_ID_REQUEST_CODE = "requestCode";
-
     private Date date;
-    private int requestCode;
-
     private OnDateSetListener listener;
 
     @Override
@@ -33,11 +30,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         Bundle args = getArguments();
         if (args != null) {
-            Object obj = args.getSerializable(BUNDLE_ID_DATE);
+            Object obj = args.getSerializable(BundleId.DATE);
             if (obj instanceof Date) {
                 date = (Date) obj;
             }
-            requestCode = args.getInt(BUNDLE_ID_REQUEST_CODE);
         }
     }
 
@@ -61,7 +57,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         if (listener != null){
-            listener.onDateSet(datePicker, requestCode, year, month, day);
+            listener.onDateSet(datePicker, year, month, day);
         }
     }
 }

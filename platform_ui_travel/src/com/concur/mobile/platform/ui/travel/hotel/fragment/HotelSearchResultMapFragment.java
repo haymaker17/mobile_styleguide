@@ -2,12 +2,14 @@ package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.Const;
@@ -15,7 +17,12 @@ import com.google.android.m4b.maps.CameraUpdateFactory;
 import com.google.android.m4b.maps.GoogleMap;
 import com.google.android.m4b.maps.MapFragment;
 import com.google.android.m4b.maps.OnMapReadyCallback;
-import com.google.android.m4b.maps.model.*;
+import com.google.android.m4b.maps.model.BitmapDescriptorFactory;
+import com.google.android.m4b.maps.model.CameraPosition;
+import com.google.android.m4b.maps.model.LatLng;
+import com.google.android.m4b.maps.model.LatLngBounds;
+import com.google.android.m4b.maps.model.Marker;
+import com.google.android.m4b.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +60,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         setRetainInstance(true);
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         args = getArguments();
         progressbarVisible = false;
@@ -69,7 +77,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         progressBar = mainView.findViewById(R.id.map_progressView);
         hotelInfoView.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 if (!progressbarVisible) {
                     showProgressBar();
                     callBackListener.hotelListItemClicked(itemClicked);
@@ -79,7 +88,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         return mainView;
     }
 
-    @Override public void onAttach(Activity activity) {
+    @Override
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
@@ -91,14 +101,16 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         }
     }
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
 
         Log.d(Const.LOG_TAG, " ***** HotelSearchResultMapFragment, in onSaveInstanceState *****  ");
     }
 
-    @Override public void onPause() {
+    @Override
+    public void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
 
@@ -106,27 +118,27 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
 
     }
 
-    @Override public void onResume() {
+    @Override
+    public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
 
     }
 
-    @Override public void onDestroyView() {
-
-//        if (mapFragment != null) {
-        //            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        //            ft.remove(mapFragment);
-        //            ft.commit();
-        //            //AllowingStateLoss();
-        //
-        //        }
+    @Override
+    public void onDestroyView() {
         super.onDestroyView();
+        if (mapFragment != null) {
+            FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+            ft.remove(mapFragment);
+            ft.commit();
+            //AllowingStateLoss();
+        }
         googleMap = null;
     }
 
-    @Override public void onBackPressed() {
-
+    @Override
+    public void onBackPressed() {
         hideProgressBar();
         super.onBackPressed();
     }
@@ -171,7 +183,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         }
         googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
 
-            @Override public void onCameraChange(CameraPosition arg0) {
+            @Override
+            public void onCameraChange(CameraPosition arg0) {
                 // Move camera.
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 100));
                 // Remove listener to prevent position reset on camera move.
@@ -180,7 +193,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         });
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
-            @Override public boolean onMarkerClick(Marker marker) {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
                 if (!progressbarVisible) {
                     itemClicked = markerMap.get(marker);
 
@@ -225,14 +239,16 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
         }
     }
 
-    @Override public void onMapReady(GoogleMap map) {
+    @Override
+    public void onMapReady(GoogleMap map) {
         googleMap = map;
         googleMap.setInfoWindowAdapter(this);
         addMarkers();
 
     }
 
-    @Override public View getInfoWindow(Marker marker) {
+    @Override
+    public View getInfoWindow(Marker marker) {
         LayoutInflater inflater = null;
         inflater = LayoutInflater.from(getActivity());
         View v = inflater.inflate(R.layout.empty_info_window, null);
@@ -240,7 +256,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
 
     }
 
-    @Override public View getInfoContents(Marker marker) {
+    @Override
+    public View getInfoContents(Marker marker) {
         return null;
     }
 

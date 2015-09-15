@@ -82,7 +82,7 @@
         -->
 
     <LinearLayout
-        android:id="@+id/ta_return_to_home"
+        android:id="@+id/vg_return_to_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -103,7 +103,7 @@
             android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/ta_only_one_itinerary_plus4"
+            android:id="@+id/iv_return_to_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
@@ -112,12 +112,12 @@
             android:visibility="visible" />
 
         <TextView
-            android:id="@+id/ta_only_one_itinerary_text4"
+            android:id="@+id/tv_return_to_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="16dp"
-            android:text="@string/itin_add_stop"
+            android:text="@string/itin_add_return_trip"
             android:visibility="visible"
             android:textColor="#2f6996"
             android:textSize="16sp"/>

@@ -1,0 +1,22 @@
+{
+  "account": {
+    "id": "952245",
+    "title": null,
+    "givenName": "William",
+    "middleName": null,
+    "surname": "ROLES",
+    "createdAt": "2015-06-09 10:05:16",
+    "isAutoCTE": false,
+    "isEmailNotificationEnabled": true,
+    "isNewsAndUpdatesEnabled": true,
+    "notificationMode": "0",
+    "emailNotificationMode": "0",
+    "pushNotificationMode": "0",
+    "amexPushSetting": "y",
+    "receiptStatusPushSetting": "y",
+    "canSignin": false,
+    "hasConcurLinkage": true,
+    "hasConcurExpense": true,
+    "apiVersion": "v1"
+  }
+}

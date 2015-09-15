@@ -23,16 +23,25 @@ import com.concur.mobile.platform.authentication.SiteSettingInfo;
 public final class SiteSettings {
 
     public enum SiteSetting {
-
         // Add more <SiteSetting> here:
-        IS_DATE_EDITABLE("IS_DATE_EDITABLE"), ALLOW_TRANS_DELETE("ALLOW_TRANS_DELETE"), PERSONAL_CAR_MILEAGE_ON_HOME(
-                "PersonalCarMileageOnHome"), HIDE_RECEIPT_STORE("HIDE_RECEIPT_STORE"), LOCATE_AND_ALERT(
-                "LocateAndAlert"), SHOW_NONREFUNDABLE_MESSAGE("ShowNonrefundableMessage"), VIEW_PICKLIST_CODES(
-                "MobileViewPicklistCodes"), ALLOW_APPROVALS("AllowApprovals"), ALLOW_REPORTS("AllowReports"), ALLOW_TRAVEL_BOOKING(
-                "AllowTravelBooking"), ENABLE_VOICE_BOOKING("VoiceBookingEnabled"), ENABLE_HOTEL_SEARCH_STREAM(
-                "StreamHotelSearchResults"), HAS_FIXED_TA("HasFixedTA"),HAS_TRAVEL_ALLOWANCE_FIXED("HasTravelAllowanceFixed"),
-                 ENABLE_CONDITIONAL_FIELD_EVALUATION(
-                "ENABLE_DYNAMIC_FIELD_EVALUATION"), ENABLE_SPDY("EnableSpdy"), SHOW_JARVIS_HOTEL_UI("ShowJarvisHotelUIOnAndroid");
+        IS_DATE_EDITABLE("IS_DATE_EDITABLE"),
+        ALLOW_TRANS_DELETE("ALLOW_TRANS_DELETE"),
+        PERSONAL_CAR_MILEAGE_ON_HOME("PersonalCarMileageOnHome"),
+        HIDE_RECEIPT_STORE("HIDE_RECEIPT_STORE"),
+        LOCATE_AND_ALERT("LocateAndAlert"),
+        SHOW_NONREFUNDABLE_MESSAGE("ShowNonrefundableMessage"),
+        VIEW_PICKLIST_CODES("MobileViewPicklistCodes"),
+        ALLOW_APPROVALS("AllowApprovals"),
+        ALLOW_REPORTS("AllowReports"),
+        ALLOW_TRAVEL_BOOKING("AllowTravelBooking"),
+        ENABLE_VOICE_BOOKING("VoiceBookingEnabled"),
+        ENABLE_HOTEL_SEARCH_STREAM("StreamHotelSearchResults"),
+        HAS_FIXED_TA("HasFixedTA"),
+        HAS_TRAVEL_ALLOWANCE_FIXED("HasTravelAllowanceFixed"),
+        ENABLE_CONDITIONAL_FIELD_EVALUATION("ENABLE_DYNAMIC_FIELD_EVALUATION"),
+        ENABLE_SPDY("EnableSpdy"),
+        SHOW_JARVIS_HOTEL_UI("ShowJarvisHotelUIOnAndroid"),
+        ENABLE_EXPENSE_IT_EXPERIENCE("EnableExpenseIt");
 
         // ****** enum fields and methods ****** //
 
@@ -326,4 +335,12 @@ public final class SiteSettings {
         return checkSiteSetting(SiteSetting.SHOW_JARVIS_HOTEL_UI, "otmodule", "y");
     }
 
+    /**
+     * Gets ExpenseIt experience flag.
+     *
+     * @return <code>true</code> to allow make conditional fields calls
+     */
+    public boolean isExpenseItExperienceEnabled() {
+        return checkSiteSetting(SiteSetting.ENABLE_EXPENSE_IT_EXPERIENCE, "otmodule", "y");
+    }
 }

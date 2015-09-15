@@ -43,7 +43,7 @@ android {
     // Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-    //publishNonDefault true
+    publishNonDefault true
 
     /*##############   #####################     ##########################     ###################*/
 
@@ -84,19 +84,19 @@ android {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-//    productFlavors {
-//        production{
-//
-//        }
-//
-//        ocr{
-//            prefix = "com.concur.breeze.ocr"
-//            resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
-//            resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
-//            resValue "string", "sync_adapter_travel_authority", prefix+".platform.travel"
-//            resValue "string", "sync_adapter_acc_type", prefix+".platform.common.account"
-//        }
-//    }
+    productFlavors {
+        production{
+
+        }
+
+        developerReleaseTest{
+            prefix = "com.concur.breeze.developer.release.test"
+            resValue "string", "sync_adapter_expense_authority", prefix+".platform.expense"
+            resValue "string", "sync_adapter_config_authority", prefix+".platform.config"
+            resValue "string", "sync_adapter_travel_authority", prefix+".platform.travel"
+            resValue "string", "sync_adapter_acc_type", prefix+".platform.common.account"
+        }
+    }
 
     /*##############   #####################     ##########################     ###################*/
 }
@@ -113,7 +113,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
         xml.enabled = true
         html.enabled = true
     }
-    classDirectories = fileTree(dir: './build/intermediates/classes/debug')
+    classDirectories = fileTree(dir: './build/intermediates/classes/production/debug')
     sourceDirectories = files('src/com/concur')
     executionData = files("$buildDir/jacoco/testDebug.exec")
 }

@@ -41,7 +41,7 @@ public class OcrListItem extends ExpenseListItem {
     private boolean ocrFailed;
 
     /**
-     * Constructs an instance of <code>EREceipotListItem</code>.
+     * Constructs an instance of <code>OcrListItem</code>.
      * 
      * @param expense
      *            the expense.
@@ -250,12 +250,14 @@ public class OcrListItem extends ExpenseListItem {
             final CheckBox ckBox = (CheckBox) expenseView.findViewById(R.id.expense_check);
             if (ckBox != null) {
                 ckBox.setVisibility(View.INVISIBLE);
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: unable to locate checkbox!");
             }
 
             // OCR: Handle row clicking.
 
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: unable to locate checkbox!");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".buildView: unable to locate expenseView!");
         }
 
         return expenseView;

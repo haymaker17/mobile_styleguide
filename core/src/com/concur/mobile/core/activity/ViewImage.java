@@ -801,6 +801,7 @@ public class ViewImage extends BaseActivity implements ContentFetcherListener, I
         String path = null;
         boolean recOnlyFrag = false;
         boolean startOcr = false;
+        boolean useExpenseIt = false;
         String flurryParam = null;
         if (intent != null && intent.getExtras() != null) {
             if (intent.hasExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT)) {
@@ -818,6 +819,9 @@ public class ViewImage extends BaseActivity implements ContentFetcherListener, I
             if (intent.hasExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD)) {
                 startOcr = intent.getBooleanExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, false);
             }
+            if (intent.hasExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT)) {
+                useExpenseIt = intent.getBooleanExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, false);
+            }
         }
         int key = item.getItemId();
         if (key == R.id.menuCamera) {
@@ -834,6 +838,7 @@ public class ViewImage extends BaseActivity implements ContentFetcherListener, I
                 newIt = new Intent(ViewImage.this, ExpensesAndReceipts.class);
                 newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, recOnlyFrag);
                 newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, startOcr);
+                newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, useExpenseIt);
                 newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, path);
                 newIt.putExtra(Flurry.PARAM_NAME_FROM, flurryParam);
                 newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
