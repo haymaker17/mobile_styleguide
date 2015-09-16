@@ -558,7 +558,7 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
 
                 } else {
                     StringBuilder msgBuilder = new StringBuilder();
-                    msgBuilder.append(getText(R.string.login_password_or_pin_invalid));
+                    msgBuilder.append(getText(R.string.email_lookup_unable_to_login_msg));
                     showInvalidPasswordError(msgBuilder);
                 }
 
@@ -582,7 +582,7 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
     public void showInvalidPasswordError(StringBuilder msgBuilder) {
 
         DialogFragmentFactory.getAlertOkayInstance(
-                getActivity().getText(R.string.login_invalid_concur_credentials).toString(),
+                getActivity().getText(R.string.email_lookup_unable_to_login_title).toString(),
                 msgBuilder.toString()).show(getFragmentManager(), null);
 
         // MOB-20038 prevent repeated clicking on login button by disabling it when authenticating, and re-enabling it
@@ -591,36 +591,6 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
         passwordView.setText("");
     }
 
-    /**
-     * Convenience method for displaying an error dialog about invalid username/password (with http error status code 500) using
-     * the given message and title.
-     *
-     * @param title   the error title to display in the error dialog.
-     * @param message the error message (reason) to display in the error dialog.
-     */
-    public void show500PasswordError(StringBuilder title, StringBuilder message) {
-        DialogFragmentFactory.getAlertOkayInstance(title.toString(), message.toString());
-        loginButton.setEnabled(true);
-        passwordView.setText("");
-    }
-
-    /**
-     * Convenience method for displaying an error dialog about invalid username/password (with http error status code 403) using
-     * the given message and title.
-     *
-     * @param title   the error title to display in the error dialog.
-     * @param message the error message (reason) to display in the error dialog.
-     */
-    public void show403PasswordError(StringBuilder title, StringBuilder message) {
-
-        DialogFragmentFactory.getAlertDialog(title.toString(), message.toString(), R.string.cancel, -1,
-                R.string.login_403_error_reset, cancelListener, null, loginHelpListener, null).show(
-                getFragmentManager(), null);
-        // MOB-20038 prevent repeated clicking on login button by disabling it when authenticating, and re-enabling it
-        // when auth cancels
-        loginButton.setEnabled(true);
-        passwordView.setText("");
-    }
 
     public void removeFragment(){
         getActivity().getSupportFragmentManager().popBackStack();
