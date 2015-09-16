@@ -89,38 +89,18 @@ public class TravelAllowanceItineraryController extends BaseController {
         final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiverList.add(receiver);
 
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
-                receiverList.remove(receiver);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestSuccess", "Request success"));
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                if (requestor != null) {
-                    requestor.onRequestFailed();
-                }
-                receiverList.remove(receiver);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestFail", "Failed!"));
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                receiverList.remove(receiver);
-                return;
-            }
-
-            @Override
-            public void cleanup() {
-                // Not needed yet.
-                return;
+                super.onRequestFail(resultData);
             }
         });
 
@@ -250,7 +230,8 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Itinerary = " + updItinerary.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
@@ -258,23 +239,16 @@ public class TravelAllowanceItineraryController extends BaseController {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestSuccess",
                         "isSuccess = " + isSuccess + ", Resulting Itinerary = " + resultItinerary.toString()));
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.UPDATE, false, resultData);
+                super.onRequestFail(resultData);
             }
 
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-            }
-
-            @Override
-            public void cleanup() {
-
-            }
         });
 
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, updItinerary);
@@ -528,7 +502,9 @@ public class TravelAllowanceItineraryController extends BaseController {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                 "executeDeleteSegment", "Itinerary Id = " + itineraryId + ", Segment = " + segment.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
+
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
@@ -541,22 +517,14 @@ public class TravelAllowanceItineraryController extends BaseController {
                     resultData.putSerializable(BundleId.SEGMENT, segment);
                     notifyListener(ControllerAction.DELETE, false, resultData);
                 }
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.DELETE, false, resultData);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-            }
-
-            @Override
-            public void cleanup() {
-
+                super.onRequestFail(resultData);
             }
         });
 
@@ -812,38 +780,15 @@ public class TravelAllowanceItineraryController extends BaseController {
         final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         this.receiverList.add(receiver);
 
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAssignableItineraries", "onRequestSuccess"));
                 assignableItineraryList.put(expenseReportKey, (List<AssignableItinerary>) resultData
                         .getSerializable(BundleId.ASSIGNABLE_ITINERARIES));
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestFail(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAssignableItineraries", "onRequestFailed"));
-                if (requestor != null) {
-                    requestor.onRequestFailed();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAssignableItineraries", "onRequestCancel"));
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void cleanup() {
-
+                super.onRequestSuccess(resultData);
             }
         });
+
         GetAssignableItinerariesRequest request = new GetAssignableItinerariesRequest(context, receiver ,expenseReportKey);
         request.execute();
     }
@@ -851,37 +796,7 @@ public class TravelAllowanceItineraryController extends BaseController {
     public void assignItinerary(String rptKey, String itinKey, final IRequestListener requestor) {
         final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         this.receiverList.add(receiver);
-
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
-            @Override
-            public void onRequestSuccess(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "assignItinerary", "onRequestSuccess"));
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestFail(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "assignItinerary", "onRequestFailed"));
-                if (requestor != null) {
-                    requestor.onRequestFailed();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "assignItinerary", "onRequestCanceled"));
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void cleanup() {
-
-            }
-        });
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor));
 
         AssignItineraryRequest request = new AssignItineraryRequest(context, receiver, rptKey, itinKey);
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "assignItinerary", "Start Task."));
@@ -891,37 +806,7 @@ public class TravelAllowanceItineraryController extends BaseController {
     public void unassignItinerary(String rptKey, String itinKey, final IRequestListener requestor) {
         final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         this.receiverList.add(receiver);
-
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
-            @Override
-            public void onRequestSuccess(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "unassignItinerary", "onRequestSuccess"));
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestFail(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "unassignItinerary", "onRequestFailed"));
-                if (requestor != null) {
-                    requestor.onRequestFailed();
-                }
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "unassignItinerary", "onRequestCanceled"));
-                receiverList.remove(receiver);
-            }
-
-            @Override
-            public void cleanup() {
-
-            }
-        });
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor));
 
         UnassignItineraryRequest request = new UnassignItineraryRequest(context, receiver, rptKey, itinKey);
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "unassignItinerary", "Start Task."));
@@ -936,6 +821,5 @@ public class TravelAllowanceItineraryController extends BaseController {
 
         return list;
     }
-
 
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
@@ -49,7 +48,7 @@ public class FixedTravelAllowanceController extends BaseController {
         }
     }
 
-    private BaseAsyncResultReceiver receiver;
+    private List<BaseAsyncResultReceiver> receiverList;
 
     /**
      * The list of registered listeners being notified from this controller as soon as data
@@ -85,6 +84,7 @@ public class FixedTravelAllowanceController extends BaseController {
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
         this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
         this.context = context;
+        this.receiverList = new ArrayList<BaseAsyncResultReceiver>();
 //        this.listeners = new ArrayList<IServiceRequestListener>();
     }
 
@@ -114,48 +114,31 @@ public class FixedTravelAllowanceController extends BaseController {
             return false;
         }
 
-        receiver = new BaseAsyncResultReceiver(new Handler());
+        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor) {
 
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 fixedTravelAllowances = getFixedAllowancesRequest2.getFixedTravelAllowances();
                 //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
                 fillTAMap();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
-
                 int size = 0;
                 if (fixedTravelAllowances != null) {
                     size = fixedTravelAllowances.size();
                 }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                         "refreshFixedTravelAllowances->onRequestSuccess", "Reading fixed TAs, Size = " + size));
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
-                notifyListener(ControllerAction.REFRESH, false, resultData);
-                if (requestor != null) {
-                    requestor.onRequestSuccess();
-                }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                         "refreshFixedTravelAllowances->onRequestFail", "Reading fixed TAs failed"));
-
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                // Not needed yet.
-                return;
-            }
-
-            @Override
-            public void cleanup() {
-                // Not needed yet.
-                return;
+                notifyListener(ControllerAction.REFRESH, false, resultData);
+                super.onRequestFail(resultData);
             }
         });
 
@@ -451,29 +434,21 @@ public class FixedTravelAllowanceController extends BaseController {
             return false;
         }
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
-                resultData.getClass();
                 boolean isSuccess = resultData.getBoolean(BundleId.IS_SUCCESS);
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate->onRequestSuccess", "isSuccess = " + isSuccess));
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.UPDATE, false, resultData);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                resultData.getClass();
-            }
-
-            @Override
-            public void cleanup() {
-
+                super.onRequestFail(resultData);
             }
         });
 
