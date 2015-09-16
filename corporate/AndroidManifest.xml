@@ -332,7 +332,7 @@
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryListSearch"
             android:theme="@style/ConcurTheme"/>
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar"/>
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch"/>

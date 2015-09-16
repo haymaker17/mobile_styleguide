@@ -33,10 +33,6 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
     <TextView
         android:id="@+id/tv_list_title"
         android:layout_width="wrap_content"
@@ -46,6 +42,10 @@
         android:textColor="#2f6996"
         android:textSize="18sp"
         android:text="@string/ta_available_itineraries"/>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/listView"

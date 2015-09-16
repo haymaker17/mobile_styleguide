@@ -136,9 +136,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
         } else if (view.getId() == R.id.iv_row_action_icon) {
             int pos = this.recyclerView.getChildAdapterPosition((View) view.getParent());
             Itinerary itinerary = itineraryList.get(pos);
-            if (this.menu == null) {
-                this.menu = new PopupMenu(getActivity(), view);
-            }
+            this.menu = new PopupMenu(getActivity(), view);
             menu.inflate(R.menu.ta_itin_list_row_menu);
             Intent intent = new Intent();
             intent.putExtra(BundleId.ITINERARY, itinerary);
