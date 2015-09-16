@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.core.travel.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.concur.core.R;
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.eva.activity.VoiceSearchActivity;
 import com.concur.mobile.core.travel.air.activity.AirSearch;
@@ -28,18 +27,21 @@ import com.concur.mobile.core.travel.air.activity.VoiceAirSearchActivity;
 import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.car.activity.VoiceCarSearchActivity;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.hotel.activity.VoiceHotelSearchActivity;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.HotelVoiceSearchActivity;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.TravelUtil;
 import com.concur.mobile.core.util.ViewUtil;
+
+import java.util.ArrayList;
 
 /**
  * <code>DialogFragment</code> to prompt user to book something, i.e. a Hotel, Flight, Car, Train, etc.
- * 
+ *
  * @author Chris N. Diaz
- * 
  */
 public class BookTravelDialogFragment extends DialogFragment {
 
@@ -47,7 +49,7 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * An enumeration describing an booking action.
-     * 
+     *
      * @author Chris N. Diaz
      */
     public enum BookTravelAction {
@@ -71,9 +73,8 @@ public class BookTravelDialogFragment extends DialogFragment {
     /**
      * Creates a new instance of this DialogFragment and hiding or showing the "Book Rail" option based on the
      * <code>isRailUser</code> parameter.
-     * 
-     * @param isRailUser
-     *            if <code>true</code> show the "Book Rail" option, otherwise, <code>false</code> will hide the option.
+     *
+     * @param isRailUser if <code>true</code> show the "Book Rail" option, otherwise, <code>false</code> will hide the option.
      */
 
     /*
@@ -104,7 +105,7 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * An extension of <code>BaseAdapter</code> for selecting a receipt image option.
-     * 
+     *
      * @author Chris N. Diaz
      */
     class BookTravelOptionListAdapter extends BaseAdapter {
@@ -162,42 +163,44 @@ public class BookTravelDialogFragment extends DialogFragment {
             final BookTravelAction bookingAction = options.get(position);
             final boolean allowVoiceBooking = Preferences.shouldAllowVoiceBooking(); // MOB-11596 MOB-13636
             switch (bookingAction) {
-            case BOOK_AIR:
-                textResId = R.string.home_action_book_air;
+                case BOOK_AIR:
+                    textResId = R.string.home_action_book_air;
 
-                // Add mic to launch Air Voice Search
-                if (allowVoiceBooking) {
-                    addMicButton(VoiceAirSearchActivity.class, view, dialogFragment);
-                }
+                    // Add mic to launch Air Voice Search
+                    if (allowVoiceBooking) {
+                        addMicButton(VoiceAirSearchActivity.class, view, dialogFragment);
+                    }
 
-                break;
-            case BOOK_HOTEL:
-                textResId = R.string.home_action_book_hotel;
+                    break;
+                case BOOK_HOTEL:
+                    textResId = R.string.home_action_book_hotel;
 
-                // Add mic to launch Hotel Voice Search
-                if (allowVoiceBooking) {
-                    addMicButton(VoiceHotelSearchActivity.class, view, dialogFragment);
-                }
+                    // Add mic to launch Hotel Voice Search
+                    if (allowVoiceBooking) {
+                        addMicButton(VoiceHotelSearchActivity.class, view, dialogFragment);
+                    }
 
-                break;
-            case BOOK_CAR:
-                textResId = R.string.home_action_book_car;
+                    break;
+                case BOOK_CAR:
+                    textResId = R.string.home_action_book_car;
 
-                // Add mic to launch Car Voice Search
-                if (allowVoiceBooking) {
-                    addMicButton(VoiceCarSearchActivity.class, view, dialogFragment);
-                }
+                    // Add mic to launch Car Voice Search
+                    if (allowVoiceBooking) {
+                        addMicButton(VoiceCarSearchActivity.class, view, dialogFragment);
+                    }
 
-                break;
-            case BOOK_RAIL:
-                textResId = R.string.home_action_book_rail;
-                break;
-            default:
-                break;
+                    break;
+                case BOOK_RAIL:
+                    textResId = R.string.home_action_book_rail;
+                    break;
+                default:
+                    break;
             }
 
             // Set the text.
-            if (textResId != 0) {
+            if (textResId != 0)
+
+            {
                 TextView txtView = (TextView) view.findViewById(R.id.text);
                 if (txtView != null) {
                     txtView.setPadding(10, 8, 0, 8);
@@ -215,15 +218,13 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * Adds the mic icon and click listener for the given <code>VoiceSearchActivity</code>
-     * 
-     * @param voiceActivity
-     *            the activity to launch when the mic button is selected.
-     * @param view
-     *            the view to search for the mic icon.
+     *
+     * @param voiceActivity  the activity to launch when the mic button is selected.
+     * @param view           the view to search for the mic icon.
      * @param dialogFragment
      */
     protected void addMicButton(final Class<? extends VoiceSearchActivity> voiceActivity, View view,
-            final BookTravelDialogFragment dialogFragment) {
+                                final BookTravelDialogFragment dialogFragment) {
 
         ImageView imgView = (ImageView) view.findViewById(R.id.icon);
         if (imgView != null) {
@@ -255,8 +256,18 @@ public class BookTravelDialogFragment extends DialogFragment {
                         } else {
                             a.showDialog(Const.DIALOG_TRAVEL_NO_AIR_PERMISSION);
                         }
-                    } else {
+                    } else if (voiceActivity == VoiceHotelSearchActivity.class && Preferences.shouldShowHotelJarvisUI()) {
+                        // Jarvis New voice search UI
 
+                        ConcurCore core = (ConcurCore) ConcurCore.getContext();
+                        Intent i = new Intent(getActivity(), HotelVoiceSearchActivity.class);
+                        TravelUtil.addSearchIntent(i);
+
+                        startActivity(i);
+
+                    } else
+
+                    {
                         Intent i = new Intent(getActivity(), voiceActivity);
                         if (isFromMoreMenu) {
                             i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
@@ -274,7 +285,7 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * An implementation of <code>DialogInterface.OnClickListener</code> for handling user selection receipt option.
-     * 
+     *
      * @author Chris N. Diaz
      */
     class BookTravelDialogListener implements DialogInterface.OnClickListener {
@@ -288,7 +299,7 @@ public class BookTravelDialogFragment extends DialogFragment {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
          */
         public void onClick(DialogInterface dialog, int which) {
@@ -298,52 +309,52 @@ public class BookTravelDialogFragment extends DialogFragment {
             BookTravelAction bookingAction = (BookTravelAction) adapter.getItem(which);
 
             switch (bookingAction) {
-            case BOOK_AIR:
-                // Check whether user has permission to book air via mobile.
-                if (ViewUtil.isAirUser(a)) {
-                    // Check for a complete travel profile.
-                    if (ViewUtil.isTravelProfileComplete(a) || ViewUtil.isTravelProfileCompleteMissingTSA(a)) {
-                        i = getAirSearchIntent(a);
-                        if (isFromMoreMenu) {
-                            i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                case BOOK_AIR:
+                    // Check whether user has permission to book air via mobile.
+                    if (ViewUtil.isAirUser(a)) {
+                        // Check for a complete travel profile.
+                        if (ViewUtil.isTravelProfileComplete(a) || ViewUtil.isTravelProfileCompleteMissingTSA(a)) {
+                            i = getAirSearchIntent(a);
+                            if (isFromMoreMenu) {
+                                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                            } else {
+                                i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                            }
+                            startActivity(i);
                         } else {
-                            i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                            a.showDialog(Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE);
                         }
-                        startActivity(i);
                     } else {
-                        a.showDialog(Const.DIALOG_TRAVEL_PROFILE_INCOMPLETE);
+                        a.showDialog(Const.DIALOG_TRAVEL_NO_AIR_PERMISSION);
                     }
-                } else {
-                    a.showDialog(Const.DIALOG_TRAVEL_NO_AIR_PERMISSION);
-                }
-                break;
-            case BOOK_CAR:
-                i = getCarSearchIntent(a);
-                if (isFromMoreMenu) {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                } else {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-                }
-                startActivity(i);
-                break;
-            case BOOK_HOTEL:
-                i = getHotelSearchIntent(a);
-                if (isFromMoreMenu) {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                } else {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-                }
-                startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
-                break;
-            case BOOK_RAIL:
-                i = getRailSearchIntent(a);
-                if (isFromMoreMenu) {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
-                } else {
-                    i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
-                }
-                startActivity(i);
-                break;
+                    break;
+                case BOOK_CAR:
+                    i = getCarSearchIntent(a);
+                    if (isFromMoreMenu) {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    } else {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                    }
+                    startActivity(i);
+                    break;
+                case BOOK_HOTEL:
+                    i = getHotelSearchIntent(a);
+                    if (isFromMoreMenu) {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    } else {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                    }
+                    startActivityForResult(i, Const.REQUEST_CODE_BOOK_HOTEL);
+                    break;
+                case BOOK_RAIL:
+                    i = getRailSearchIntent(a);
+                    if (isFromMoreMenu) {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME_MORE);
+                    } else {
+                        i.putExtra(Flurry.PARAM_NAME_BOOKED_FROM, Flurry.PARAM_VALUE_HOME);
+                    }
+                    startActivity(i);
+                    break;
 
             } // switch-case
 
@@ -355,21 +366,21 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * returns air search intent
-     * */
+     */
     public Intent getAirSearchIntent(Activity act) {
         return new Intent(act, AirSearch.class);
     }
 
     /**
      * returns car search intent
-     * */
+     */
     public Intent getCarSearchIntent(Activity act) {
         return new Intent(act, CarSearch.class);
     }
 
     /**
      * returns hotel search intent
-     * */
+     */
     public Intent getHotelSearchIntent(Activity act) {
         if (Preferences.shouldShowHotelJarvisUI())
             return new Intent(act, RestHotelSearch.class);
@@ -379,7 +390,7 @@ public class BookTravelDialogFragment extends DialogFragment {
 
     /**
      * returns rail search intent
-     * */
+     */
     public Intent getRailSearchIntent(Activity act) {
         return new Intent(act, RailSearch.class);
     }

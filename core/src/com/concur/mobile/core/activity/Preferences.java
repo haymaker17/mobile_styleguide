@@ -45,7 +45,6 @@ import com.concur.mobile.platform.authentication.Session;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
-import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.Calendar;
@@ -1040,15 +1039,15 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         return prefs.getBoolean(Const.PREF_SHOW_TRIPIT_AD, true);
     }
 
+    public static boolean shouldShowExpenseItAd() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, true);
+    }
+
     public static boolean isExpenseItUser() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-
-        //TODO: REMOVE THIS CHECK ONLY WHEN MODULE IS WORKING ON PROD SERVER
-        boolean isExpenseItExperienceEnabled = ExpenseItProperties.getServerAddress().equals("https://api.expenseit.com") ?
-            true : isExpenseItExperienceEnabled();
-
-        //To show Expenseit features. We look for both the role and site settings
-        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled;
+        //To show ExpenseIt features. We look for both the role and site settings
+        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled();
     }
 
     public static boolean isCardAgreementAccepted() {
@@ -1548,15 +1547,66 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         // return prefs.getBoolean(PREF_OCR_FLAG, false);
         return false;
     }
-    
-    /*
-    public static void setShouldUseNewOcrFeatures(boolean ocrPref) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+
+    /* Determine whether first run experience has been shown to expense it user.
+    *
+    * @param prefs
+    */
+    public static boolean isFirstRunExpUpgradeExpenseIt(SharedPreferences prefs) {
+        return prefs.contains(Const.PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT);
+    }
+
+    /**
+     * Store a preference indicating that the expense it user has seen first run experience.
+     *
+     * @param prefs
+     */
+    public static void setFirstRunExpUpgradeExpenseIt(SharedPreferences prefs) {
         Editor e = prefs.edit();
-        e.putBoolean(PREF_OCR_FLAG, ocrPref);
+        e.putBoolean(Const.PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT, true);
         e.commit();
     }
-	*/
+
+
+    /* Determine whether first run experience has been shown to travel user.
+    *
+    * @param prefs
+    */
+    public static boolean isFirstRunExpUpgradeTravel(SharedPreferences prefs) {
+        return prefs.contains(Const.PREF_FIRST_RUN_EXP_UPGRADE_TRAVEL);
+    }
+
+    /**
+     * Store a preference indicating that the travel user has seen first run experience.
+     *
+     * @param prefs
+     */
+    public static void setFirstRunExpUpgradeTravel(SharedPreferences prefs) {
+        Editor e = prefs.edit();
+        e.putBoolean(Const.PREF_FIRST_RUN_EXP_UPGRADE_TRAVEL, true);
+        e.commit();
+    }
+
+
+    /* Determine whether first run experience has been shown to expense it and travel user.
+    *
+    * @param prefs
+    */
+    public static boolean isFirstRunExpUpgradeExpenseItTravel(SharedPreferences prefs) {
+        return prefs.contains(Const.PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT_TRAVEL);
+    }
+
+    /**
+     * Store a preference indicating that the expense it and travel user has seen first run experience.
+     *
+     * @param prefs
+     */
+    public static void setFirstRunExpUpgradeExpenseItTravel(SharedPreferences prefs) {
+        Editor e = prefs.edit();
+        e.putBoolean(Const.PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT_TRAVEL, true);
+        e.commit();
+    }
+
 
     public static void setUserLoggedOnToExpenseIt(boolean isLoggedIn) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());

@@ -119,7 +119,7 @@ import com.concur.mobile.core.travel.car.activity.CarSearch;
 import com.concur.mobile.core.travel.data.IItineraryCache;
 import com.concur.mobile.core.travel.data.Trip;
 import com.concur.mobile.core.travel.hotel.activity.HotelSearch;
-import com.concur.mobile.core.travel.hotel.activity.RestHotelSearch;
+import com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch;
 import com.concur.mobile.core.travel.rail.activity.RailSearch;
 import com.concur.mobile.core.travel.service.ItineraryRequest;
 import com.concur.mobile.core.travel.service.ItinerarySummaryListRequest;
@@ -1101,8 +1101,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             clearSessionData();
             showExpiredDialog();
         } else {
-
-            String sessionId = PlatformProperties.getSessionId();
+            ConcurMobile concurMobile = (ConcurMobile) getApplication();
+            SessionInfo sessionInfo = ConfigUtil.getSessionInfo(concurMobile.getApplicationContext());
+            String sessionId = sessionInfo.getSessionId();
             if (sessionId == null || sessionId.length() == 0) {
 
                 if (getIntent().hasExtra(REMOTE_WIPE)) {
@@ -3282,7 +3283,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
 
         // Add ExpenseIt item.
-        if (Preferences.isExpenseItUser()) {
+        if (Preferences.shouldShowExpenseItAd()) {
             navItem = new HomeScreenSimpleNavigationItem(NAVIGATION_APP_EXPENSE_IT, -1,
                     R.string.home_navigation_expenseit, R.drawable.icon_menu_expenseit, View.VISIBLE, View.VISIBLE,
                     new Runnable() {

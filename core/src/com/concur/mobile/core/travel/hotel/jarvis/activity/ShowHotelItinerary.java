@@ -1,4 +1,4 @@
-package com.concur.mobile.core.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

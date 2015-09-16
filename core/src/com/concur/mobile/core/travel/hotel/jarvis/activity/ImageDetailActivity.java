@@ -1,9 +1,10 @@
-package com.concur.mobile.platform.ui.travel.hotel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -11,17 +12,19 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
+
+import com.concur.core.R;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
-import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.hotel.fragment.ImageDetailFragment;
 import com.concur.mobile.platform.ui.travel.util.Const;
 import com.concur.mobile.platform.ui.travel.util.ImageFetcher;
 import com.concur.mobile.platform.ui.travel.util.TravelImageCache;
+import com.concur.mobile.platform.ui.travel.view.ImageFragmentPageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageDetailActivity extends Activity implements OnClickListener {
+public class ImageDetailActivity extends Activity implements OnClickListener, ImageDetailFragment.ImagesFragmentListener {
 
     private static final String IMAGE_CACHE_DIR = "images";
     public static final String EXTRA_IMAGE = "extra_image";
@@ -31,7 +34,8 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
     private ViewPager mPager;
     private List<HotelImagePair> images;
 
-    @TargetApi(VERSION_CODES.HONEYCOMB) @Override
+    @TargetApi(VERSION_CODES.HONEYCOMB)
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_detail_pager);
@@ -48,13 +52,13 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
         // resolution that is appropriate for both portrait and landscape. For best image quality
         // we shouldn't divide by 2, but this will use more memory and require a larger memory
         // cache.
-        final int longest = (height > width ? height : width);  // / 4;
+        final int longest = (height > width ? width : height) / 2;
 
         TravelImageCache.ImageCacheParams cacheParams = new TravelImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
 
         //        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
-        mImageFetcher = new ImageFetcher(this, longest);
+        mImageFetcher = new ImageFetcher(this, width, longest);
         mImageFetcher.addImageCache(getFragmentManager(), cacheParams);
         mImageFetcher.setImageFadeIn(false);
 
@@ -70,7 +74,11 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
         mPager.setOffscreenPageLimit(2);
 
         // Set up activity to go full screen
-        getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            getWindow().addFlags(LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        }
 
         // Set the current item based on the extra passed in to this activity
         final int extraCurrentItem = getIntent().getIntExtra(EXTRA_IMAGE, -1);
@@ -107,6 +115,11 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
         return mImageFetcher;
     }
 
+    @Override
+    public ImageFetcher getImageFethchert() {
+        return getImageFetcher();
+    }
+
     /**
      * The main adapter that backs the ViewPager. A subclass of FragmentStatePagerAdapter as there could be a large number of
      * items in the ViewPager and we don't want to retain them all in memory at once but create/destroy them on the fly.
@@ -135,7 +148,8 @@ public class ImageDetailActivity extends Activity implements OnClickListener {
     /**
      * Set on the ImageView in the ViewPager children fragments, to enable/disable low profile mode when the ImageView is touched.
      */
-    @TargetApi(VERSION_CODES.HONEYCOMB) @Override
+    @TargetApi(VERSION_CODES.HONEYCOMB)
+    @Override
     public void onClick(View v) {
         final int vis = mPager.getSystemUiVisibility();
         if ((vis & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {

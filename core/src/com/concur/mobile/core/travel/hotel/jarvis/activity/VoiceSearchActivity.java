@@ -1,4 +1,4 @@
-package com.concur.mobile.platform.ui.travel.activity;
+package com.concur.mobile.core.travel.hotel.jarvis.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -23,18 +23,29 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.*;
+import android.widget.ImageButton;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
+
+import com.concur.core.R;
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiReply;
 import com.concur.mobile.eva.service.EvaApiRequest;
 import com.concur.mobile.eva.service.EvaApiRequest.BookingSelection;
 import com.concur.mobile.eva.service.EvaApiRequestListener;
 import com.concur.mobile.eva.service.EvaHotelReply;
-import com.concur.mobile.platform.ui.travel.R;
+import com.concur.mobile.platform.ui.travel.activity.AbstractTravelSearchProgress;
 import com.concur.mobile.platform.ui.travel.util.Const;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Main activity for searching Air, Hotel, Rail, etc. via Voice and Evature API. A copy of
@@ -50,7 +61,7 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress
     private static final int RESULT_SPEECH = 1;
 
     // List of languages the Eva API currently supports.
-    private static final List<String> SUPPORTED_LANGUAGES = Arrays.asList(new String[] { "en", "es" });
+    private static final List<String> SUPPORTED_LANGUAGES = Arrays.asList(new String[]{"en", "es"});
 
     protected Intent resultsIntent;
     protected Intent noResultsIntent;
@@ -341,54 +352,54 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-        case RESULT_SPEECH: {
+            case RESULT_SPEECH: {
 
-            // If we get results back from the Android STT,
-            // get the first result and invoke the Eva API.
-            if (resultCode == RESULT_OK && data != null) {
+                // If we get results back from the Android STT,
+                // get the first result and invoke the Eva API.
+                if (resultCode == RESULT_OK && data != null) {
 
-                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (!text.isEmpty()) {
+                    ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    if (!text.isEmpty()) {
 
-                    // Change the text view arrow to the right,
-                    // indicating what the user just said.
-                    switchTextViewArrow(true);
+                        // Change the text view arrow to the right,
+                        // indicating what the user just said.
+                        switchTextViewArrow(true);
 
-                    String firstUtterance = text.get(0);
-                    setText(firstUtterance, true);
+                        String firstUtterance = text.get(0);
+                        setText(firstUtterance, true);
 
-                    // TODO - after the other jira regarding the off line is done for travel project
-                    // Check for connectivity, if none, then display dialog and return.
-                    // if (!ConcurCore.isConnected()) {
-                    // showDialog(Const.DIALOG_NO_CONNECTIVITY);
-                    // return;
-                    // }
+                        // TODO - after the other jira regarding the off line is done for travel project
+                        // Check for connectivity, if none, then display dialog and return.
+                        // if (!ConcurCore.isConnected()) {
+                        // showDialog(Const.DIALOG_NO_CONNECTIVITY);
+                        // return;
+                        // }
 
-                    // Hide the SpeakButton and show the animated progress button.
-                    switchSpeakButton(true);
+                        // Hide the SpeakButton and show the animated progress button.
+                        switchSpeakButton(true);
 
-                    // Also hide the button hint text.
-                    View buttonHint = findViewById(R.id.voiceBookHintText);
-                    if (buttonHint != null && buttonHint.getVisibility() == View.VISIBLE) {
-                        buttonHint.setVisibility(View.INVISIBLE);
+                        // Also hide the button hint text.
+                        View buttonHint = findViewById(R.id.voiceBookHintText);
+                        if (buttonHint != null && buttonHint.getVisibility() == View.VISIBLE) {
+                            buttonHint.setVisibility(View.INVISIBLE);
+                        }
+
+                        // Send text to Eva WebService.
+                        Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: Calling Eva!");
+                        BookingSelection bookType = getBookType();
+                        currentEvaRequest = new EvaApiRequest(this, currentLocation, this, bookType, text);
+                        currentEvaRequest.execute(recognizerLanguage);
+
+                    } else {
+                        showErrorMessage();
                     }
 
-                    // Send text to Eva WebService.
-                    Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: Calling Eva!");
-                    BookingSelection bookType = getBookType();
-                    currentEvaRequest = new EvaApiRequest(this, currentLocation, this, bookType, text);
-                    currentEvaRequest.execute(recognizerLanguage);
-
-                } else {
+                } else if (resultCode != RESULT_CANCELED) {
                     showErrorMessage();
                 }
 
-            } else if (resultCode != RESULT_CANCELED) {
-                showErrorMessage();
+                break;
             }
-
-            break;
-        }
 
         } // switch-case
 
@@ -587,7 +598,8 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress
                 }
             }
 
-            @Override @Deprecated
+            @Override
+            @Deprecated
             public void onError(String utteranceId) {
             }
         });

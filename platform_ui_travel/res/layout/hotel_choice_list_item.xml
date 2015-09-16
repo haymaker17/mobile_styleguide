@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/hotel_detail"
-                style="@style/ConcurRestTheme.White.ActionBarTabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:id="@+id/hotel_detail"
+    style="@style/ConcurRestTheme.White.ActionBarTabs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <ScrollView
@@ -23,7 +23,7 @@
                 android:cacheColorHint="@null"
                 android:duplicateParentState="true"
                 android:footerDividersEnabled="false"
-                android:headerDividersEnabled="false"/>
+                android:headerDividersEnabled="false" />
 
 
             <TabHost
@@ -44,13 +44,12 @@
                         android:layout_height="match_parent"
                         android:fitsSystemWindows="true"
                         android:gravity="fill"
-                        android:showDividers="middle">
-                    </TabWidget>
+                        android:showDividers="middle"></TabWidget>
 
                     <include
+                        layout="@layout/group_separator_v1"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        layout="@layout/group_separator_v1"/>
+                        android:layout_height="1dp" />
 
                     <FrameLayout
                         android:id="@android:id/tabcontent"
@@ -60,17 +59,17 @@
                         <FrameLayout
                             android:id="@+id/tab_details"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent" />
 
                         <FrameLayout
                             android:id="@+id/tab_rooms"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent" />
 
                         <FrameLayout
                             android:id="@+id/tab_images"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent" />
                     </FrameLayout>
                 </LinearLayout>
             </TabHost>

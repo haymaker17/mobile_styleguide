@@ -52,7 +52,7 @@
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_horizontal"
-                android:text="@string/sso_sign_in_title"/>
+                android:text="@string/login_company_sign_in_link"/>
 
             <View
                 android:layout_width="fill_parent"
@@ -96,7 +96,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:onClick="onClick"
-            android:text="@string/email_lookup_continue"/>
+            android:text="@string/sso_signin"/>
 
         <TextView
             android:id="@+id/login_company_code"
