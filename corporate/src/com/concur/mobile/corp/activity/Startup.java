@@ -41,6 +41,8 @@ import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.PlatformProperties;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -78,6 +80,7 @@ public class Startup extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
 
         Product p = ((ConcurMobile) getApplication()).getProduct();
         switch (p) {

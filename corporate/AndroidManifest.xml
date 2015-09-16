@@ -594,6 +594,9 @@
         <!-- End Google DFP -->
         <!-- ================== -->
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e256a9e4715018881b35f334cc3b7578ca7b67cc" />
     </application>
 
 </manifest>
