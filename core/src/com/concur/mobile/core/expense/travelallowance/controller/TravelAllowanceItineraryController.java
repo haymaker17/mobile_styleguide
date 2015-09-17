@@ -66,8 +66,6 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     private List<Itinerary> itineraryList;
 
-    private Itinerary itineraryStage;
-
     private Map<String, List<AssignableItinerary>> assignableItineraryList;
 
     private List<BaseAsyncResultReceiver> receiverList;
@@ -135,10 +133,6 @@ public class TravelAllowanceItineraryController extends BaseController {
             itineraryList = new ArrayList<Itinerary>();
         }
         return itineraryList;
-    }
-
-    public Itinerary getItineraryStage () {
-        return this.itineraryStage;
     }
 
     public CompactItinerary getCompactItinerary(String compactItineraryId) {
@@ -280,10 +274,6 @@ public class TravelAllowanceItineraryController extends BaseController {
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, updItinerary);
         request.execute();
         return true;
-    }
-
-    public synchronized void setItineraryStage(Itinerary itinerary) {
-        this.itineraryStage = itinerary;
     }
 
     /**

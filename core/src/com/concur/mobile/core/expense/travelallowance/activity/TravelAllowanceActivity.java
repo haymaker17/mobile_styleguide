@@ -1,6 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -31,7 +30,6 @@ import com.concur.mobile.core.expense.travelallowance.fragment.ProgressDialogFra
 import com.concur.mobile.core.expense.travelallowance.fragment.ServiceRequestListenerFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
-import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -55,12 +53,18 @@ public class TravelAllowanceActivity extends BaseActivity
     private static final int REQUEST_CODE_UPDATE_ITINERARY = 0x01;
     private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x02;
 
-    private static final String TAG_DELETE_DIALOG_FRAGMENT = ".message.dialog.fragment";
+    private static final String TAG_DELETE_DIALOG_FRAGMENT = "delete.dialog.fragment";
+    private static final String TAG_UNASSIGN_DIALOG_FRAGMENT = "unassign.dialog.fragment";
     private static final String TAG_PROGRESS_DIALOG = "progress.dialog";
     private static final String TAG_UNASSIGN_REQUEST_LISTENER = "unassign.request";
     private static final String TAG_REFRESH_ITIN_LISTENER = "refresh.itinerary.request";
     private static final String TAG_REFRESH_FIXED_TA_LISTENER = "refresh.fixed.ta.request";
     private static final String TAG_DELETE_ITIN_LISTENER = "delete.itin.request";
+
+    private static final String MSG_DIALOG_REMOVE_POSITIVE = "dialog.remove.positive";
+    private static final String MSG_DIALOG_REMOVE_NEUTRAL = "dialog.remove.neutral";
+    private static final String MSG_DIALOG_DELETE_POSITIVE = "dialog.delete.positive";
+    private static final String MSG_DIALOG_DELETE_NEUTRAL = "dialog.delete.neutral";
 
     private static final String UNASSIGN_ITIN_SUCCESS_MSG = "unassignItinSuccessMsg";
     private static final String UNASSIGN_ITIN_FAILED_MSG = "unassignItinFailedMsg";
@@ -285,50 +289,72 @@ public class TravelAllowanceActivity extends BaseActivity
     }
 
     @Override
-    public void sendMessage(String message) {
-        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", "message = " + message));
-        if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
+    public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
+        if (TravelAllowanceItineraryListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
             this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
-        if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
+        if (FixedTravelAllowanceListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey, null);
         }
-        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN)) {
+        if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN.equals(fragmentMessage)) {
             this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
-        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA)) {
+        if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA.equals(fragmentMessage)) {
             this.allowanceController.refreshFixedTravelAllowances(expenseReportKey, null);
         }
-
-        if (DELETE_ITIN_SUCCESS_MSG.equals(message)) {
+        if (DELETE_ITIN_SUCCESS_MSG.equals(fragmentMessage)) {
             refreshFixedTravelAllowances();
             refreshItineraries();
             Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
         }
-
-        if (DELETE_ITIN_FAILED_MSG.equals(message)) {
+        if (DELETE_ITIN_FAILED_MSG.equals(fragmentMessage)) {
             dismissProgressDialog();
             Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
         }
-
-        if (UNASSIGN_ITIN_FAILED_MSG.equals(message)) {
+        if (UNASSIGN_ITIN_FAILED_MSG.equals(fragmentMessage)) {
             dismissProgressDialog();
         }
-
-        if (UNASSIGN_ITIN_SUCCESS_MSG.equals(message)) {
+        if (UNASSIGN_ITIN_SUCCESS_MSG.equals(fragmentMessage)) {
             refreshAssignableItineraries();
             refreshFixedTravelAllowances();
             refreshItineraries();
         }
-
-        if (REFRESH_ITIN_FINISHED_MSG.equals(message)) {
+        if (REFRESH_ITIN_FINISHED_MSG.equals(fragmentMessage)) {
             itinRefreshDone = true;
             onRefreshFixedTAandItin();
         }
-
-        if (REFRESH_TA_FINISHED_MSG.equals(message)) {
+        if (REFRESH_TA_FINISHED_MSG.equals(fragmentMessage)) {
             fixedTaRefreshDone = true;
             onRefreshFixedTAandItin();
+        }
+        if (MSG_DIALOG_DELETE_POSITIVE.equals(fragmentMessage) && extras != null) {
+            Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
+            if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
+                SimpleTAItineraryListFragment listFrag = getSimpleTAItineraryListFragment();
+                if (listFrag != null) {
+                    listFrag.deleteItinerary(itinerary);
+                }
+            } else {
+                ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_DELETE_ITIN_LISTENER,
+                        DELETE_ITIN_SUCCESS_MSG, DELETE_ITIN_FAILED_MSG);
+                showProgressDialog();
+                itineraryController.executeDeleteItinerary(itinerary, f);
+            }
+        }
+        if (MSG_DIALOG_REMOVE_POSITIVE.equals(fragmentMessage) && extras != null) {
+            Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
+            if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
+                SimpleTAItineraryListFragment listFrag = getSimpleTAItineraryListFragment();
+                if (listFrag != null) {
+                    listFrag.deleteItinerary(itinerary);
+                }
+            } else {
+                ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_UNASSIGN_REQUEST_LISTENER,
+                        UNASSIGN_ITIN_SUCCESS_MSG, UNASSIGN_ITIN_FAILED_MSG);
+                showProgressDialog();
+                itineraryController.unassignItinerary(expenseReportKey, itinerary.getItineraryID(), f);
+            }
         }
     }
 
@@ -410,10 +436,7 @@ public class TravelAllowanceActivity extends BaseActivity
         if (R.id.remove == item.getItemId()) {
             Intent intent = item.getIntent();
             Itinerary itinerary = (Itinerary) intent.getSerializableExtra(BundleId.ITINERARY);
-            IRequestListener listener = getServiceRequestListenerFragment(TAG_UNASSIGN_REQUEST_LISTENER,
-                    UNASSIGN_ITIN_SUCCESS_MSG, UNASSIGN_ITIN_FAILED_MSG);
-            itineraryController.unassignItinerary(expenseReportKey, itinerary.getItineraryID(), listener);
-            showProgressDialog();
+            showRemoveItineraryDialog(itinerary);
 
             // needs to be always true because the intent is used for passing additional similar to menuInfo.
             return true;
@@ -423,29 +446,31 @@ public class TravelAllowanceActivity extends BaseActivity
     }
 
     private void showDeleteItineraryDialog(final Itinerary itinerary) {
-
-        Bundle bundle = new Bundle();
-//        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
-        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getString(R.string.dlg_expense_confirm_report_delete_title));
+        Bundle arguments = new Bundle();
+        Bundle extras = new Bundle();
+        String msgText = getResources().getString(R.string.ta_confirm_delete_itinerary, itinerary.getName());
+        extras.putSerializable(BundleId.ITINERARY, itinerary);
+        arguments.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        arguments.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DELETE_POSITIVE);
+        arguments.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DELETE_NEUTRAL);
+        arguments.putBundle(BundleId.FRAGMENT_MESSAGE_EXTRAS, extras);
         MessageDialogFragment messageDialog = new MessageDialogFragment();
-        messageDialog.setArguments(bundle);
-        messageDialog.setOnOkListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
-                    SimpleTAItineraryListFragment listFrag = getSimpleTAItineraryListFragment();
-                    if (listFrag != null) {
-                        listFrag.deleteItinerary(itinerary);
-                    }
-                } else {
-                    ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_DELETE_ITIN_LISTENER,
-                            DELETE_ITIN_SUCCESS_MSG, DELETE_ITIN_FAILED_MSG);
-                    showProgressDialog();
-                    itineraryController.executeDeleteItinerary(itinerary, f);
-                }
-            }
-        });
+        messageDialog.setArguments(arguments);
         messageDialog.show(getSupportFragmentManager(), TAG_DELETE_DIALOG_FRAGMENT);
+    }
+
+    private void showRemoveItineraryDialog(final Itinerary itinerary) {//unassign
+        Bundle arguments = new Bundle();
+        Bundle extras = new Bundle();
+        String msgText = getResources().getString(R.string.ta_confirm_remove, itinerary.getName());
+        extras.putSerializable(BundleId.ITINERARY, itinerary);
+        arguments.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        arguments.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_REMOVE_POSITIVE);
+        arguments.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_REMOVE_NEUTRAL);
+        arguments.putBundle(BundleId.FRAGMENT_MESSAGE_EXTRAS, extras);
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(arguments);
+        messageDialog.show(getSupportFragmentManager(), TAG_UNASSIGN_DIALOG_FRAGMENT);
     }
 
     private ServiceRequestListenerFragment getServiceRequestListenerFragment(String tag, String successMessage, String failedMessage) {

@@ -244,26 +244,26 @@ public class AssignableItineraryListActivity extends BaseActivity implements IFr
     }
 
     @Override
-    public synchronized void sendMessage(String message) {
-        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", message));
+    public synchronized void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", fragmentMessage));
 
-        if (REFRESH_ASSIN_ITIN_SUCCESS_MSG.equals(message)) {
+        if (REFRESH_ASSIN_ITIN_SUCCESS_MSG.equals(fragmentMessage)) {
             refreshListAdapter();
             dismissDialog();
         }
 
-        if (ASSIGN_ITIN_SUCCESS_MSG.equals(message)) {
+        if (ASSIGN_ITIN_SUCCESS_MSG.equals(fragmentMessage)) {
             refreshAssignableItineraries(false);
             refreshItineraries();
             refreshFixedTravelAllowances();
         }
 
-        if (REFRESH_ITIN_SUCCESS_MSG.equals(message)) {
+        if (REFRESH_ITIN_SUCCESS_MSG.equals(fragmentMessage)) {
             itinRefreshDone = true;
             onTaDataRefreshDone();
         }
 
-        if (REFRESH_TA_SUCCESS_MSG.equals(message)) {
+        if (REFRESH_TA_SUCCESS_MSG.equals(fragmentMessage)) {
             taRefreshDone = true;
             onTaDataRefreshDone();
         }

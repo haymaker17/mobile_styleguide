@@ -172,7 +172,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     public void onRefresh() {
         getListView().setEnabled(false);
         if (this.callback != null) {
-            this.callback.sendMessage(ON_REFRESH_MSG);
+            this.callback.handleFragmentMessage(ON_REFRESH_MSG, null);
         } else {
             onRefreshFinished();
         }
@@ -267,7 +267,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         if (allowanceController == null) {
             return;
         }
-        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
+        Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
         this.adapter.clear();
         this.adapter.addAll(this.allowanceController.getLocationsAndAllowances());
         adapter.notifyDataSetChanged();
