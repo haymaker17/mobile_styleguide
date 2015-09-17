@@ -14,7 +14,7 @@ public class LodgingType implements Comparable<LodgingType>, Serializable, ICode
     private static final long serialVersionUID = 4213447001177852573L;
 
     /**
-     * The coded representation of a ldoging type e.g. "HOTEL"
+     * The coded representation of a lodging type e.g. "HOTEL"
      */
     private String code;
 
