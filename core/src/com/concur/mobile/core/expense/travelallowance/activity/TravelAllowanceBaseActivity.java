@@ -1,11 +1,11 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -90,6 +90,11 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(titleResId);
+        }
+
+        TextView toolBarText = (TextView) findViewById(R.id.tv_toolbar_text);
+        if (toolBarText != null && toolbar != null) {
+            toolBarText.setPadding(toolbar.getContentInsetStart(), 0, 0, 0);
         }
     }
 

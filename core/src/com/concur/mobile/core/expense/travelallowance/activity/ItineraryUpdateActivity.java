@@ -173,9 +173,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
             if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID())) {
                 actionBar.setTitle(R.string.ta_new_itinerary);
-                if (tvToolbarText != null && (itinController.getItineraryList() == null
-                        || itinController.getItineraryList().size() == 0)) {
-                        tvToolbarText.setVisibility(View.VISIBLE);
+                if (tvToolbarText != null) {
+                    // To show only if no itin created yet ad this:
+                    // (itinController.getItineraryList() == null  || itinController.getItineraryList().size() == 0)
+                    tvToolbarText.setVisibility(View.VISIBLE);
+                    tvToolbarText.setPadding(toolbar.getContentInsetStart(), 0, 0, 0);
                 }
             } else {
                 actionBar.setTitle(R.string.ta_edit_itinerary);
