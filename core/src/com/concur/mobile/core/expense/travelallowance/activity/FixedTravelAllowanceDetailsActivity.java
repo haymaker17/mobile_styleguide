@@ -173,6 +173,17 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        FixedTravelAllowance originAllowance = null;
+//        if (this.allowance != null) {
+//            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
+//        }
+//        if (this.allowance == null || !this.allowance.equals(originAllowance)) {
+//            //TODO: show is Dirty
+//        }
+//        super.onBackPressed();
+//    }
 
     /**
      * Render breakfast section

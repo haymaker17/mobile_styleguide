@@ -162,7 +162,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
     @Override
     public void onRefresh() {
         if (this.callback != null) {
-            this.callback.sendMessage(ON_REFRESH_MSG_ITIN);
+            this.callback.handleFragmentMessage(ON_REFRESH_MSG_ITIN, null);
         } else {
             onRefreshFinished(null);
         }

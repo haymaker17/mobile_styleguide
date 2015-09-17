@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -98,7 +97,7 @@ public class TravelAllowanceItineraryListFragment extends ListFragment implement
 	@Override
     public void onRefresh() {
 		if (callback != null) {
-			callback.sendMessage(ON_REFRESH_MSG);
+			callback.handleFragmentMessage(ON_REFRESH_MSG, null);
 		} else {
 			onRefreshFinished();
 		}

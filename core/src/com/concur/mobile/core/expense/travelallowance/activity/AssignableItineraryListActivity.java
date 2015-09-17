@@ -183,8 +183,8 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
     }
 
     @Override
-    public synchronized void sendMessage(String message) {
-        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", message));
+    public synchronized void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", fragmentMessage));
 
         if (MSG_REFRESH_ASSIN_ITIN_SUCCESS.equals(message) || MSG_REFRESH_ASSIN_ITIN_FAILED.equals(message)) {
             refreshListAdapter();

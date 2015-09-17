@@ -47,13 +47,13 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
             Log.d(DebugUtils.LOG_TAG_TA,
                     DebugUtils.buildLogText(CLASS_TAG, "onAttach", "notify success after attach."));
             notifySuccessAfterAttach = false;
-            callback.sendMessage(requestSuccessMsg);
+            callback.handleFragmentMessage(requestSuccessMsg, null);
         }
 
         if (notifyFailedAfterAttach) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onAttach", "notify failed after attach."));
             notifyFailedAfterAttach = false;
-            callback.sendMessage(requestFailedMsg);
+            callback.handleFragmentMessage(requestFailedMsg, null);
         }
     }
 
@@ -72,7 +72,7 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         }
 
         if (callback != null) {
-            callback.sendMessage(requestSuccessMsg);
+            callback.handleFragmentMessage(requestSuccessMsg, null);
         } else {
             Log.d(DebugUtils.LOG_TAG_TA,
                     DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "callback null. notify after attach."));
@@ -87,7 +87,7 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         }
 
         if (callback != null) {
-            callback.sendMessage(requestFailedMsg);
+            callback.handleFragmentMessage(requestFailedMsg, null);
         } else {
             Log.d(DebugUtils.LOG_TAG_TA,
                     DebugUtils.buildLogText(CLASS_TAG, "onRequestFailed", "callback null. notify after attach."));

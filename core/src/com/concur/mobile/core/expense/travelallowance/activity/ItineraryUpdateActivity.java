@@ -1,7 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -39,6 +38,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.fragment.DatePickerFragment;
+import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
 import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TimePickerFragment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
@@ -56,7 +56,7 @@ import java.util.List;
 import java.util.Locale;
 
 @EventTracker.EventTrackerClassName(getClassName = ItineraryUpdateActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE)
-public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener {
+public class ItineraryUpdateActivity extends BaseActivity implements IControllerListener, IFragmentCallback {
 
     public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_ITIN_UPDATE = "Itin-View (Create/Edit) Expense-Report-TravelAllowances-Itinerary";
 
@@ -72,12 +72,26 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private static final String TAG_TIME_DIALOG_FRAGMENT =
             CLASS_TAG + ".time.dialog.fragment";
 
-    private static final String TAG_MESSAGE_DIALOG_FRAGMENT =
-            CLASS_TAG + ".message.dialog.fragment";
-
     private static final String TAG_DELETE_DIALOG_FRAGMENT =
             CLASS_TAG + ".delete.dialog.fragment";
 
+    private static final String TAG_CONFIRM_DIALOG_FRAGMENT =
+            CLASS_TAG + ".confirm.dialog.fragment";
+
+    private static final String MSG_DIALOG_DELETE_POSITIVE =
+            CLASS_TAG + ".message.dialog.delete.positive";
+
+    private static final String MSG_DIALOG_DELETE_NEUTRAL =
+            CLASS_TAG + ".message.dialog.delete.neutral";
+
+    private static final String MSG_DIALOG_DIRTY_POSITIVE =
+            CLASS_TAG + ".message.dialog.dirty.positive";
+
+    private static final String MSG_DIALOG_DIRTY_NEUTRAL =
+            CLASS_TAG + ".message.dialog.dirty.neutral";
+
+    private static final String MSG_DIALOG_DIRTY_NEGATIVE =
+            CLASS_TAG + ".message.dialog.dirty.negative";
 
     private Itinerary itinerary;
     private int taskChain;
@@ -87,7 +101,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private ItineraryUpdateListAdapter adapter;
     private PositionInfoTag currentPosition;
 
-    private DialogInterface.OnClickListener onDeleteOkClickListener;
     private DatePickerFragment.OnDateSetListener onDateSetListener;
     private TimePickerFragment.OnTimeSetListener onTimeSetListener;
 
@@ -108,7 +121,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         ConcurCore app = (ConcurCore) getApplication();
         this.itinController = app.getTaController().getTaItineraryController();
         this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
-        app.getTaController().getTAConfigController().refreshConfiguration();
+        //app.getTaController().getTAConfigController().refreshConfiguration();
 
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
@@ -121,10 +134,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_DATE)) {
                 this.defaultDate = (Date) getIntent().getExtras().getSerializable(BundleId.EXPENSE_REPORT_DATE);
             }
-            this.itinController.setItineraryStage(itinerary);
-        } else {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary Stage from itinController"));
-            this.itinerary = this.itinController.getItineraryStage();
+        } else {//TODO TA: Move to restore instance state
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary from instance state"));
+            //Get itinerary from instance state
+            this.itinerary = (Itinerary) savedInstanceState.getSerializable(BundleId.ITINERARY);
             this.taskChain = savedInstanceState.getInt(BundleId.TASK_CHAIN, 0);
         }
 
@@ -132,10 +145,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             this.itinerary = new Itinerary();
             itinerary.setExpenseReportID(this.expenseReportKey);
             itinerary.setName(expenseReportName);
-//            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Mandatory itinerary not found in intent!"));
-//            throw new IllegalArgumentException(
-//                    "onCreate Activity: Expected and Itinerary in the intent extras with bundle id: "
-//                            + BundleId.ITINERARY + " but nothing found.");
         }
 
         /* To hide the keyboard after the custom spinner selection was done. */
@@ -188,12 +197,15 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (itinerary != null && itinerary.getMessage() != null) {
-                        Message msg = itinerary.getMessage();
-                        if (Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
-                            itinController.resetMessages(itinerary, msg.getCode());
-                            renderNameLabel();
-                            adapter.notifyDataSetChanged();
+                    if (itinerary != null) {
+                        itinerary.setName(s.toString());
+                        if (itinerary.getMessage() != null) {
+                            Message msg = itinerary.getMessage();
+                            if (Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
+                                itinController.resetMessages(itinerary, msg.getCode());
+                                renderNameLabel();
+                                adapter.notifyDataSetChanged();
+                            }
                         }
                     }
                 }
@@ -208,14 +220,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     ItineraryUpdateActivity.this.currentPosition = tagValue;
                 }
                 showDeleteDialog();
-            }
-        };
-
-        onDeleteOkClickListener = new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-                deleteSegment(segment);
             }
         };
 
@@ -468,7 +472,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //outState.putSerializable(BundleId.ITINERARY, this.itinerary);
+        outState.putSerializable(BundleId.ITINERARY, this.itinerary);
         outState.putInt(BundleId.TASK_CHAIN, this.taskChain);
     }
 
@@ -540,23 +544,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void showDeleteDialog() {
         Bundle bundle = new Bundle();
-//        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getQuantityString(R.plurals.dlg_offline_remove_confirm_message, 1));
-        bundle.putString(BundleId.MESSAGE_TEXT, getResources().getString(R.string.itin_delete_stop));
+        bundle.putString(MessageDialogFragment.MESSAGE_TEXT, getResources().getString(R.string.itin_delete_stop));
+        bundle.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DELETE_POSITIVE);
+        bundle.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DELETE_NEUTRAL);
         MessageDialogFragment messageDialog = new MessageDialogFragment();
         messageDialog.setArguments(bundle);
-        messageDialog.setOnOkListener(onDeleteOkClickListener);
         messageDialog.show(getSupportFragmentManager(), TAG_DELETE_DIALOG_FRAGMENT);
-    }
-
-    private void showErrorDialog(Message msg) {//Use Toast instead
-        if (msg == null) {
-            return;
-        }
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BundleId.MESSAGE, msg);
-        MessageDialogFragment messageDialog = new MessageDialogFragment();
-        messageDialog.setArguments(bundle);
-        messageDialog.show(getSupportFragmentManager(), TAG_MESSAGE_DIALOG_FRAGMENT);
     }
 
     @Override
@@ -584,17 +577,36 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     @Override
     public void onBackPressed() {
+        Itinerary originItinerary = null;
+        if (this.itinerary != null) {
+            originItinerary = itinController.getItinerary(this.itinerary.getItineraryID());
+        }
+        if (this.itinerary == null || !this.itinerary.equals(originItinerary)) {//is dirty
+            showIsDirtyDialog();
+            return;
+        }
         itinController.resetMessages(itinerary);
         if (itinController != null) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at TravelAllowanceItineraryController."));
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at TravelAllowanceItineraryController."));
             itinController.unregisterListener(this);
         }
-
         if (allowanceController != null) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at FixedTravelAllowanceController."));
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onBackPressed", "Unregister myself as listener at FixedTravelAllowanceController."));
             allowanceController.unregisterListener(this);
         }
         super.onBackPressed();
+    }
+
+    private void showIsDirtyDialog() {
+        Bundle bundle = new Bundle();
+        String msgText = getResources().getString(R.string.confirm_save_message);
+        bundle.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        bundle.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DIRTY_POSITIVE);
+        bundle.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DIRTY_NEUTRAL);
+        bundle.putString(MessageDialogFragment.NEGATIVE_BUTTON, MSG_DIALOG_DIRTY_NEGATIVE);
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(bundle);
+        messageDialog.show(getSupportFragmentManager(), TAG_CONFIRM_DIALOG_FRAGMENT);
     }
 
     @Override
@@ -605,20 +617,25 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (item.getItemId() == R.id.menuSave && this.itinerary != null) {
-            if (isDataInconsistent()) {
-                return true;
-            }
-            itinController.resetMessages(this.itinerary);
-            EditText etItinerary = (EditText) findViewById(R.id.et_itinerary);
-            if (etItinerary != null) {
-                this.itinerary.setName(etItinerary.getText().toString());
-            }
-            showProgressBar(true);
-            itinController.executeUpdate(this.itinerary);
-            taskChain = 1;
+            onSave();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onSave() {
+        if (itinController == null) {
+            return;
+        }
+        if (isDataInconsistent()) {
+            return;
+        }
+        itinController.resetMessages(this.itinerary);
+        showProgressBar(true);
+
+        itinController.executeUpdate(this.itinerary);
+        taskChain = 1;
+
     }
 
     private boolean isDataInconsistent() {
@@ -628,9 +645,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             return true;
         }
         if (!itinController.areAllMandatoryFieldsFilled(itinerary)) {
-//            Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
-//                    getString(R.string.general_fill_required_fields));
-//            showErrorDialog(msg);
             Toast.makeText(this, R.string.general_fill_required_fields, Toast.LENGTH_SHORT).show();
             adapter.notifyDataSetChanged();
             renderNameLabel();
@@ -751,7 +765,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (isSuccess) {
                     Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                             "Allowances have been saved successfully in order to generate expenses"));
-                    this.onBackPressed(); //Leave the screen on successfully process chain.
+                    super.onBackPressed(); //Leave the screen on successfully process chain.
                 }
             }
         }
@@ -789,5 +803,29 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             findViewById(R.id.list_view).setEnabled(true);
         }
 
+    }
+
+    @Override
+    public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
+        if (MSG_DIALOG_DELETE_POSITIVE.equals(fragmentMessage)) {
+            ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+            deleteSegment(segment);
+        }
+        if (MSG_DIALOG_DIRTY_NEGATIVE.equals(fragmentMessage)) {
+            if (itinController != null) {
+                itinController.resetMessages(itinerary);
+                Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "Unregister myself as listener at TravelAllowanceItineraryController."));
+                itinController.unregisterListener(ItineraryUpdateActivity.this);
+            }
+            if (allowanceController != null) {
+                Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "Unregister myself as listener at FixedTravelAllowanceController."));
+                allowanceController.unregisterListener(ItineraryUpdateActivity.this);
+            }
+            ItineraryUpdateActivity.super.onBackPressed();
+        }
+        if (MSG_DIALOG_DIRTY_POSITIVE.equals(fragmentMessage)) {
+            onSave();
+        }
     }
 }
