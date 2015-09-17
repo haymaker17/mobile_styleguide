@@ -23,7 +23,10 @@ public class MealProvisionTest extends TestCase {
      */
     @Test
     public void mealProvision() {
-        MealProvision mealProvision = new MealProvision("XLV", "value");
+        MealProvision mealProvision = new MealProvision();
+        assertNotNull(mealProvision);
+
+        mealProvision = new MealProvision("XLV", "value");
         assertNotNull(mealProvision);
         assertEquals("XLV", mealProvision.getCode());
         assertEquals("value", mealProvision.getDescription());
