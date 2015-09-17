@@ -67,13 +67,7 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
 
         expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-        }
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.ta_travel_allowances);
+        initializeToolbar(R.string.ta_travel_allowances);
 
         TextView tv = (TextView) findViewById(R.id.tv_list_title);
         String s = tv.getText().toString();
@@ -186,23 +180,23 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
     public synchronized void handleFragmentMessage(String fragmentMessage, Bundle extras) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", fragmentMessage));
 
-        if (MSG_REFRESH_ASSIN_ITIN_SUCCESS.equals(message) || MSG_REFRESH_ASSIN_ITIN_FAILED.equals(message)) {
+        if (MSG_REFRESH_ASSIN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_REFRESH_ASSIN_ITIN_FAILED.equals(fragmentMessage)) {
             refreshListAdapter();
             dismissProgressDialog();
         }
 
-        if (MSG_ASSIGN_ITIN_SUCCESS.equals(message) || MSG_ASSIGN_ITIN_FAILED.equals(message)) {
+        if (MSG_ASSIGN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
             refreshAssignableItineraries(false);
             refreshItineraries(expenseReportKey, false);
             refreshFixedTravelAllowances(expenseReportKey);
         }
 
-        if (MSG_REFRESH_ITIN_FINISHED.equals(message)) {
+        if (MSG_REFRESH_ITIN_FINISHED.equals(fragmentMessage)) {
             itinRefreshDone = true;
             onTaDataRefreshDone();
         }
 
-        if (MSG_REFRESH_TA_FINISHED.equals(message)) {
+        if (MSG_REFRESH_TA_FINISHED.equals(fragmentMessage)) {
             taRefreshDone = true;
             onTaDataRefreshDone();
         }

@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -61,12 +62,26 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
     protected TravelAllowanceItineraryController itineraryController;
     protected FixedTravelAllowanceController fixedTaController;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         ConcurCore app = (ConcurCore) getApplication();
         this.itineraryController = app.getTaController().getTaItineraryController();
         this.fixedTaController = app.getTaController().getFixedTravelAllowanceController();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     protected void initializeToolbar(int titleResId) {
@@ -93,10 +108,10 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
         }
     }
 
-    protected Fragment getFragmentByClass(Class fragmentClass) {
+    protected synchronized Fragment getFragmentByClass(Class fragmentClass) {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for (Fragment fragment : fragments) {
-            if (fragment.getClass().equals(fragmentClass)) {
+            if (fragment != null && fragment.getClass().equals(fragmentClass)) {
                 return fragment;
             }
         }

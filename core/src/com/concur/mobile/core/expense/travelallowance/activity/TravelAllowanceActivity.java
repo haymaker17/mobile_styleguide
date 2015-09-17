@@ -45,6 +45,9 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 
+    private static final String TAG_DELETE_DIALOG_FRAGMENT = "delete.dialog.fragment";
+    private static final String TAG_UNASSIGN_DIALOG_FRAGMENT = "unassign.dialog.fragment";
+
     private static final String MSG_DIALOG_REMOVE_POSITIVE = "dialog.remove.positive";
     private static final String MSG_DIALOG_REMOVE_NEUTRAL = "dialog.remove.neutral";
     private static final String MSG_DIALOG_DELETE_POSITIVE = "dialog.delete.positive";
@@ -105,12 +108,9 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
 
-
         initializeToolbar(R.string.ta_travel_allowances);
 
-
         isInApproval = getIntent().getBooleanExtra(BundleId.IS_IN_APPROVAL, false);
-
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         List<ViewPagerAdapter.ViewPagerItem> pagerItemList = new ArrayList<ViewPagerAdapter.ViewPagerItem>();
@@ -189,17 +189,6 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         return list;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -261,13 +250,13 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
         if (FixedTravelAllowanceListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
-            this.allowanceController.refreshFixedTravelAllowances(expenseReportKey, null);
+            fixedTaController.refreshFixedTravelAllowances(expenseReportKey, null);
         }
         if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN.equals(fragmentMessage)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
+            itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
         if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA.equals(fragmentMessage)) {
-            this.allowanceController.refreshFixedTravelAllowances(expenseReportKey, null);
+            fixedTaController.refreshFixedTravelAllowances(expenseReportKey, null);
         }
 
         if (MSG_DELETE_ITIN_SUCCESS.equals(fragmentMessage)) {
@@ -303,13 +292,14 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         if (MSG_DIALOG_DELETE_POSITIVE.equals(fragmentMessage) && extras != null) {
             Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
             if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
-                SimpleTAItineraryListFragment listFrag = getSimpleTAItineraryListFragment();
+                SimpleTAItineraryListFragment listFrag = (SimpleTAItineraryListFragment) getFragmentByClass(
+                        SimpleTAItineraryListFragment.class);
                 if (listFrag != null) {
                     listFrag.deleteItinerary(itinerary);
                 }
             } else {
                 ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_DELETE_ITIN_LISTENER,
-                        DELETE_ITIN_SUCCESS_MSG, DELETE_ITIN_FAILED_MSG);
+                        MSG_DELETE_ITIN_SUCCESS, MSG_DELETE_ITIN_FAILED);
                 showProgressDialog();
                 itineraryController.executeDeleteItinerary(itinerary, f);
             }
@@ -317,13 +307,14 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         if (MSG_DIALOG_REMOVE_POSITIVE.equals(fragmentMessage) && extras != null) {
             Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
             if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
-                SimpleTAItineraryListFragment listFrag = getSimpleTAItineraryListFragment();
+                SimpleTAItineraryListFragment listFrag = (SimpleTAItineraryListFragment) getFragmentByClass(
+                        SimpleTAItineraryListFragment.class);
                 if (listFrag != null) {
                     listFrag.deleteItinerary(itinerary);
                 }
             } else {
                 ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_UNASSIGN_REQUEST_LISTENER,
-                        UNASSIGN_ITIN_SUCCESS_MSG, UNASSIGN_ITIN_FAILED_MSG);
+                        MSG_UNASSIGN_ITIN_SUCCESS, MSG_UNASSIGN_ITIN_FAILED);
                 showProgressDialog();
                 itineraryController.unassignItinerary(expenseReportKey, itinerary.getItineraryID(), f);
             }

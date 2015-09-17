@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.datamodel.AssignableItinerary;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class AssignableItineraryListAdapter extends ArrayAdapter<AssignableItine
 
         AssignableItinerary itin = getItem(position);
 
-        holder.tvTitle.setText(createLocationString(itin));
+        holder.tvTitle.setText(ItineraryUtils.createLocationString(itin));
         DefaultDateFormat ddf = new DefaultDateFormat(getContext());
         holder.tvSubtitle1.setText(ddf.format(itin.getStartDateTime(), false, false, true) + " - "
                 + ddf.format(itin.getEndDateTime(), false, false, true));
@@ -59,19 +60,5 @@ public class AssignableItineraryListAdapter extends ArrayAdapter<AssignableItine
         holder.tvValue.setVisibility(View.GONE);
 
         return view;
-    }
-
-    private String createLocationString(AssignableItinerary itin) {
-        StringBuffer sb = new StringBuffer();
-        boolean firstRun = true;
-        for (String s: itin.getArrivalLocations()) {
-            if (!firstRun) {
-                sb.append(", ");
-            }
-            int posCountrySep = s.indexOf(",");
-            sb.append(s.substring(0, posCountrySep));
-            firstRun = false;
-        }
-        return sb.toString();
     }
 }

@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.Date;
@@ -90,7 +91,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setVisibility(View.VISIBLE);
-            holder.tvTitle.setText(itinerary.getName());
+            holder.tvTitle.setText(ItineraryUtils.createLocationString(itinerary));
         }
         if (holder.ivRowAction != null) {
             holder.ivRowAction.setVisibility(View.VISIBLE);
@@ -103,7 +104,12 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         }
 
         renderSubtitle1(holder, itinerary);
-        renderSubtitle2(holder, itinerary);
+
+        if (holder.tvSubtitle2 != null) {
+            holder.tvSubtitle2.setVisibility(View.VISIBLE);
+            holder.tvSubtitle2.setText(itinerary.getName());
+        }
+        //renderSubtitle2(holder, itinerary);
     }
 
     private void renderSubtitle1(ViewHolder holder, Itinerary itinerary) {
@@ -140,25 +146,8 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         if (segments == null || segments.size() <= 0) {
             return;
         }
-        String locationString = StringUtilities.EMPTY_STRING;
+        String locationString = ItineraryUtils.createLocationString(itinerary);
 
-        boolean first = true;
-        int pos = 1;
-        for (ItinerarySegment segment : segments) {
-            if (segment.getArrivalLocation() != null
-                    && !StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getName())) {
-                if (first) {
-                    locationString = segment.getArrivalLocation().getName();
-                    first = false;
-                } else {
-                    locationString = locationString + "; " + segment.getArrivalLocation().getName();
-                }
-            }
-            if (pos + 1 >= segments.size()) {
-                break;
-            }
-            pos++;
-        }
         if (!StringUtilities.isNullOrEmpty(locationString)) {
             holder.tvSubtitle2.setVisibility(View.VISIBLE);
             holder.tvSubtitle2.setText(locationString);
