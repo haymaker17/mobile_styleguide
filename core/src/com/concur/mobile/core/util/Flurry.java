@@ -502,6 +502,7 @@ public class Flurry {
     public static final String EVENT_LABEL_RATING = "Rating";
     public static final String EVENT_LABEL_SUGGESTED = "Suggested";
     public static final String EVENT_LABEL_STAR_RATING = "Star Rating";
+    public static final String EVENT_LABEL_DEFAULT = "Default";
     public static final String EVENT_LABEL_WITH_NAMES_CONTAINING = "With Names Containing";
     public static final String EVENT_LABEL_HOTEL_SUGGESTED_BOOKED = "Suggested Booked";
     public static final String EVENT_LABEL_HOTEL_SUGGESTED_AVAILABLE = "Suggested Available";

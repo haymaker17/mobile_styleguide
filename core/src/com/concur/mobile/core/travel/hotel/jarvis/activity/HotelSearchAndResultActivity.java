@@ -550,6 +550,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotelListItemsTemp.size());
         }
         hotelListItemsToSort.addAll(hotelListItemsTemp);
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SORT + " - " + Flurry.EVENT_LABEL_DEFAULT);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SORT, Flurry.EVENT_LABEL_DEFAULT);
     }
 
     /**
@@ -700,6 +703,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 HotelComparator.CompareOrder.DESCENDING);
         // Perform the actual sort.
         sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SORT + " - " + Flurry.EVENT_LABEL_SUGGESTED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SORT, Flurry.EVENT_LABEL_SUGGESTED);
+
     }
 
     @Override
