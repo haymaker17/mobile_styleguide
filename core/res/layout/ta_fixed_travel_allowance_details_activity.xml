@@ -198,7 +198,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_lodging"
                     android:textAppearance="@style/TALabel" />
 
                 <TextView
@@ -237,7 +236,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_overnight"
                     android:textAppearance="@style/TALabel" />
 
                 <Switch

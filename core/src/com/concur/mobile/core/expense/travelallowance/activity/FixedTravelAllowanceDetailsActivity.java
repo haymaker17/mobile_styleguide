@@ -393,6 +393,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 tvValue.setText(allowance.getLodgingType().toString());
             }
 
+        TextView tvLabel = (TextView) this.findViewById(R.id.tv_lodging_label);
+        if (tvLabel != null){
+            tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.LODGING_TYPE_LABEL));
+        }
+
     }
 
     private void renderOvernight(FixedTravelAllowance allowance) {
@@ -423,6 +428,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 svSwitch.setVisibility(View.VISIBLE);
                 svSwitch.setTextOn(getResources().getString(R.string.general_yes));
                 svSwitch.setTextOff(getResources().getString(R.string.general_no));
+                svSwitch.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL));
                 svSwitch.setChecked(allowance.getOvernightIndicator());
 
             }
@@ -446,6 +452,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 } else {
                     textView.setText(R.string.general_no);
                 }
+            }
+            TextView tvLabel = (TextView) this.findViewById(R.id.tv_overnight_label);
+            if (tvLabel != null){
+                tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL));
             }
 
         }
