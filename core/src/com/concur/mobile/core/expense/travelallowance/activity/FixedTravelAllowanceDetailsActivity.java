@@ -234,7 +234,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
@@ -276,7 +276,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false      )){
             rlLayout.setVisibility(View.GONE);
@@ -319,7 +319,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
