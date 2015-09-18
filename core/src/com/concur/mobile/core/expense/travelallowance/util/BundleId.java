@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.util;
 
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 
 /**
  * Created by D049515 on 21.07.2015.
@@ -9,6 +10,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 public final class BundleId {
 
     public static final String ITINERARY = Itinerary.class.getName();
+    public static final String POSITION_INFO_TAG = PositionInfoTag.class.getName();
     public static final String TASK_CHAIN = "taskchain";
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
     public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";

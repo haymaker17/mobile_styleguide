@@ -196,15 +196,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        FixedTravelAllowance originAllowance = null;
-        if (this.allowance != null) {
-            updateAllowanceFromUI();
-            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
-        }
-        if (this.allowance == null || !this.allowance.equals(originAllowance)) {//is dirty
-            showIsDirtyDialog();
-            return;
-        }
+//        FixedTravelAllowance originAllowance = null;
+//        if (this.allowance != null) {
+//            updateAllowanceFromUI();
+//            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
+//        }
+//        if (this.allowance == null || !this.allowance.equals(originAllowance)) {//is dirty
+//            showIsDirtyDialog();
+//            return;
+//        }
         super.onBackPressed();
     }
 

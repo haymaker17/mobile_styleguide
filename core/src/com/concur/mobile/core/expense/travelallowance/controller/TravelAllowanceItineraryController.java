@@ -599,22 +599,22 @@ public class TravelAllowanceItineraryController extends BaseController {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleAfterUpdateResponse",
                 "Received Itinerary Id = " + resultItin.getItineraryID()));
         boolean isSuccess = true;
-            String itinId = resultItin.getItineraryID();
-            if (itinId != null && getItinerary(itinId) == null) {
-                // Create entire itinerary case
-                return handleItineraryCreate(updItin, resultItin);
-            } else if (itinId != null && getItinerary(itinId) != null) {
-                // Create segment or Update segment case
-                for (ItinerarySegment segment : resultItin.getSegmentList()) {
-                    if (getItinerary(itinId).getSegment(segment.getId()) == null) {
-                        isSuccess = handleSegmentCreate(updItin, segment);
-                    } else if (getItinerary(itinId).getSegment(segment.getId()) != null) {
-                        // Update segment case
-                       isSuccess = handleSegmentUpdate(updItin, segment);
-                    }
+        String itinId = resultItin.getItineraryID();
+        if (itinId != null && getItinerary(itinId) == null) {
+            // Create entire itinerary case
+            return handleItineraryCreate(updItin, resultItin);
+        } else if (itinId != null && getItinerary(itinId) != null) {
+            // Create segment or Update segment case
+            for (ItinerarySegment segment : resultItin.getSegmentList()) {
+                if (getItinerary(itinId).getSegment(segment.getId()) == null) {
+                    isSuccess = isSuccess && handleSegmentCreate(updItin, segment);
+                } else if (getItinerary(itinId).getSegment(segment.getId()) != null) {
+                    // Update segment case
+                    isSuccess = isSuccess && handleSegmentUpdate(updItin, segment);
                 }
-                getItinerary(itinId).setName(resultItin.getName()); //Should not change in updItin
             }
+            getItinerary(itinId).setName(resultItin.getName()); //Should not change in updItin
+        }
         return isSuccess;
     }
 

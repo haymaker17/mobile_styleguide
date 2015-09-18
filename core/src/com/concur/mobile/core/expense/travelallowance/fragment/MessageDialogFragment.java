@@ -16,12 +16,12 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
  * Handles message dialog called by an activity. The dialog is parametrized via the arguments
  * bundle given to an object of this class.
  * Notifies the caller using callback interface {@link IFragmentCallback}, which should be
- * implemented by the caller. The fragment message itself is denoted by one of the following
- * constants:
+ * implemented by the caller. The fragment messages passed to the caller are given by the following
+ * arguments:
  * {@link MessageDialogFragment#POSITIVE_BUTTON},
  * {@link MessageDialogFragment#NEUTRAL_BUTTON},
- * {@link MessageDialogFragment#POSITIVE_BUTTON}.
- * Thereby passes a {@link Bundle} to the caller, which was given
+ * {@link MessageDialogFragment#NEGATIVE_BUTTON}.
+ * Thereby this fragment passes a {@link Bundle} to the caller (extras), which was given
  * through the arguments bundle with key {@link BundleId#FRAGMENT_MESSAGE_EXTRAS} or null.
  *
  * Created by Michael Becherer on 29-Jul-15.
