@@ -7,6 +7,8 @@ import android.text.Spanned;
 import android.util.Log;
 
 import com.concur.core.R;
+import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiRequest.BookingSelection;
 import com.concur.mobile.eva.service.EvaHotelReply;
@@ -21,6 +23,7 @@ import java.util.Calendar;
  *
  * @author ratank
  */
+@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_HOTEL_VOICE_SEARCH)
 public class HotelVoiceSearchActivity extends VoiceSearchActivity {
 
     public final static String CLS_TAG = HotelVoiceSearchActivity.class.getSimpleName();

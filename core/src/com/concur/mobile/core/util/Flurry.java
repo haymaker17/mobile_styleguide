@@ -451,12 +451,10 @@ public class Flurry {
     // screen names
     public static final String SCREEN_NAME_TRAVEL_TRIPS = "Travel-Trips";
     public static final String SCREEN_NAME_TRAVEL_TRIP_DETAILS = "Travel-TripDetails";
+    public static final String SCREEN_NAME_TRAVEL_HOTEL_VOICE_SEARCH = "Travel-Hotel-VoiceSearch";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_SEARCH_CRITERIA = "Travel-Hotel-Search-Criteria";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_SEARCH_RESULTS = "Travel-Hotel-Search-Results";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW = "Travel-Hotel-HotelOverview";
-    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_ROOMS = "Travel-Hotel-HotelOverview-Rooms";
-    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_DETAILS = "Travel-Hotel-Overview-Details";
-    public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_PHOTOS = "Travel-Hotel-Overview-Photos";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_RESERVE = "Travel-Hotel-Reserve";
 
     // event actions
@@ -485,6 +483,9 @@ public class Flurry {
     public static final String EVENT_ACTION_CHANGE_CARDS = "Change Cards";
     public static final String EVENT_ACTION_REASON = "Reason";
     public static final String EVENT_ACTION_JUSTIFICATION = "Justification";
+    public static final String EVENT_ACTION_HOTEL_DETAILS_VIEWED = "Hotel Details Viewed";
+    public static final String EVENT_ACTION_HOTEL_ROOMS_VIEWED = "Hotel Rooms Viewed";
+    public static final String EVENT_ACTION_HOTEL_PHOTOS_VIEWED = "Hotel Photos Viewed";
 
 
     // event labels
@@ -501,6 +502,7 @@ public class Flurry {
     public static final String EVENT_LABEL_RATING = "Rating";
     public static final String EVENT_LABEL_SUGGESTED = "Suggested";
     public static final String EVENT_LABEL_STAR_RATING = "Star Rating";
+    public static final String EVENT_LABEL_DEFAULT = "Default";
     public static final String EVENT_LABEL_WITH_NAMES_CONTAINING = "With Names Containing";
     public static final String EVENT_LABEL_HOTEL_SUGGESTED_BOOKED = "Suggested Booked";
     public static final String EVENT_LABEL_HOTEL_SUGGESTED_AVAILABLE = "Suggested Available";

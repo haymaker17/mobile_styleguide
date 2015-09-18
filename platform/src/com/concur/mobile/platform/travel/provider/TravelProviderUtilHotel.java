@@ -78,6 +78,9 @@ public class TravelProviderUtilHotel {
         retVal.put(Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE);
         retVal.put(Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID);
 
+        // hotel property ids
+        retVal.put(Travel.HotelDetailColumns.PROPERTY_IDS, Travel.HotelDetailColumns.PROPERTY_IDS);
+
         return retVal;
     }
 

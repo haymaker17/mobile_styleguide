@@ -10,6 +10,7 @@ import android.util.Log;
 import com.concur.mobile.platform.travel.search.hotel.*;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -162,6 +163,12 @@ public class TravelUtilHotel {
                     // Set the Rates URL.
                     if (hotel.ratesURL != null) {
                         ContentUtils.putValue(values, Travel.HotelDetailColumns.RATES_URL, hotel.ratesURL.href);
+                    }
+
+                    // Insert the Property Ids
+                    if(hotel.propertyIds != null && hotel.propertyIds.size() > 0) {
+                        Gson gson = new Gson();
+                        ContentUtils.putValue(values, Travel.HotelDetailColumns.PROPERTY_IDS, gson.toJson(hotel.propertyIds).getBytes());
                     }
 
                     // now, insert the values
@@ -841,6 +848,11 @@ public class TravelUtilHotel {
             ContentUtils.putValue(values, Travel.HotelDetailColumns.SUGESTED_CATEGORY,
                     hotel.recommended.getSuggestedCategory());
             ContentUtils.putValue(values, Travel.HotelDetailColumns.SUGESTED_SCORE, hotel.recommended.totalScore);
+        }
+
+        if(hotel.propertyIds != null && hotel.propertyIds.size() > 0) {
+            Gson gson = new Gson();
+            ContentUtils.putValue(values, Travel.HotelDetailColumns.PROPERTY_IDS, gson.toJson(hotel.propertyIds).getBytes());
         }
 
         return resolver.update(Travel.HotelDetailColumns.CONTENT_URI, values, where, whereArgs);
