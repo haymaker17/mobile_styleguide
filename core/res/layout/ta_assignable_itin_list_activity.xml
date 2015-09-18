@@ -19,17 +19,17 @@
             android:titleTextAppearance="@style/TAToolbarTitle"
             android:background="@android:color/transparent"
             android:elevation="3dp"
+            app:contentInsetStart="72dp"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <TextView
-            android:id="@+id/tv_toolbar_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="72dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:text="@string/itin_stops_infotext_with_available_itineraries"
-            android:textAppearance="@style/TASubTitle.White" />
+        android:id="@+id/tv_toolbar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/itin_stops_infotext_with_available_itineraries"
+        android:textAppearance="@style/TASubTitle.White" />
 
     </LinearLayout>
 

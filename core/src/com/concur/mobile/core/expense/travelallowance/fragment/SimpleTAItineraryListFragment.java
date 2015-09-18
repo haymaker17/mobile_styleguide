@@ -143,7 +143,11 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             // Since menuInfo can't be set to a menuItem the Intent is used to pass extra info to the menu item. According to the
             // doc this is OK as long as the menuItem is handled after click. See also onMenuItemClick method.
             menu.getMenu().findItem(R.id.remove).setIntent(intent);
-            menu.getMenu().findItem(R.id.delete).setIntent(intent);
+            if (itinerary.isLocked()) {
+                menu.getMenu().findItem(R.id.delete).setEnabled(false);
+            } else {
+                menu.getMenu().findItem(R.id.delete).setIntent(intent);
+            }
             menu.setOnMenuItemClickListener((PopupMenu.OnMenuItemClickListener) getActivity());
             menu.show();
         } else {

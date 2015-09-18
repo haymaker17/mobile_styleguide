@@ -95,7 +95,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         }
         if (holder.ivRowAction != null) {
             holder.ivRowAction.setVisibility(View.VISIBLE);
-            if (!deleteEnabled || itinerary.isLocked()) {
+            if (!deleteEnabled) {
                 holder.ivRowAction.setVisibility(View.GONE);
             }
         }
