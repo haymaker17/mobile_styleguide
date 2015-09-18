@@ -105,7 +105,11 @@ public class ItineraryUtils {
                 sb.append(", ");
             }
             int posCountrySep = s.indexOf(",");
-            sb.append(s.substring(0, posCountrySep));
+            if (posCountrySep > 0) {
+                sb.append(s.substring(0, posCountrySep));
+            } else {
+                sb.append(s);
+            }
             firstRun = false;
         }
         return sb.toString();
@@ -123,7 +127,12 @@ public class ItineraryUtils {
                     sb.append(", ");
                 }
                 int posCountrySep = s.indexOf(",");
-                sb.append(s.substring(0, posCountrySep));
+                if (posCountrySep > 0) {
+                    sb.append(s.substring(0, posCountrySep));
+                } else {
+                    sb.append(s);
+                }
+
                 firstRun = false;
             }
         }

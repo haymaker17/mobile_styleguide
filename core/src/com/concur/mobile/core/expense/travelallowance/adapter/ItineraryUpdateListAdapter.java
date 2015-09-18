@@ -206,6 +206,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
+        View v = resultView.findViewById(R.id.v_arrival_separator_short);
+        if (i == 0 && v != null) {
+            v.setVisibility(View.GONE);
+        } else if (v != null) {
+            v.setVisibility(View.VISIBLE);
+        }
+        
         setPositionInfoTag(holder.ivDelete, i, PositionInfoTag.INFO_NONE);
 
         setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
@@ -281,7 +288,17 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             if (holder.tvReturnToHome != null) {
                 String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
                 if (segments.get(0).getDepartureLocation() != null) {
-                    returnText = context.getString(R.string.itin_add_return_trip, segments.get(0).getDepartureLocation().getName());
+                    String cityCountryName = segments.get(0).getDepartureLocation().getName();
+                    int sepPos = cityCountryName.indexOf(",");
+                    String cityName = "";
+                    if (sepPos > 0) {
+                        cityName = cityCountryName.substring(0, sepPos);
+                    } else {
+                        cityName = cityCountryName;
+                    }
+                    returnText = context.getString(R.string.itin_add_return_trip, cityName);
+                } else {
+                    returnText = context.getString(R.string.itin_add_return_trip, "...");
                 }
                 holder.tvReturnToHome.setText(returnText);
             }

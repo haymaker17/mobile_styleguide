@@ -13,6 +13,7 @@
         android:background="@drawable/gradient_title_bar"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:titleTextAppearance="@style/TAToolbarTitle"
+        app:contentInsetStart="72dp"
         app:titleTextAppearance="@style/TAToolbarTitle" />
 
     <LinearLayout
