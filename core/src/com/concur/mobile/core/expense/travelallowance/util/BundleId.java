@@ -11,7 +11,6 @@ public final class BundleId {
 
     public static final String ITINERARY = Itinerary.class.getName();
     public static final String POSITION_INFO_TAG = PositionInfoTag.class.getName();
-    public static final String TASK_CHAIN = "taskchain";
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
     public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";
     public static final String SEGMENT = ItinerarySegment.class.getName();
@@ -25,9 +24,6 @@ public final class BundleId {
     public static final String REFRESH_FIXED_TA = "travelallowance.refresh.fixed.ta";
     public static final String IS_IN_APPROVAL = "isInApproval";
     public static final String FRAGMENT_MESSAGE_EXTRAS = "fragment.message.extras";
-
     public static final String ASSIGNABLE_ITINERARIES = "travelallowance.assignable.itineraries";
-    public static final String DATE = "date";
-    public static final String INTERVAL = "interval";
 
 }

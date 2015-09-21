@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -11,7 +12,7 @@ import android.text.format.DateFormat;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -20,9 +21,58 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Handles time picker dialog called by an activity. The dialog is parametrized via the arguments
+ * bundle given to an object of this class.
+ * Notifies the caller using callback interface {@link IFragmentCallback}, which should be
+ * implemented by the caller. The fragment message is given as bundle value for the following
+ * argument keys:
+ * {@link TimePickerFragment#ARG_SET_BUTTON}.
+ * Using the extras bundle the selected values are transferred to the caller. The following
+ * keys are used:
+ * {@link TimePickerFragment#EXTRA_HOUR},
+ * {@link TimePickerFragment#EXTRA_MINUTE}.
+ *
  * Created by Michael Becherer on 10-Jul-15.
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+
+    private static final String CLASS_NAME = TimePickerFragment.class.getName();
+    private static final String CLASS_TAG = TimePickerFragment.class.getSimpleName();
+
+    /**
+     * Used as key of an argument. The associated value is supposed to be of type {@link String}.
+     * This value denotes the fragment message sent to callback object when set button was pressed
+     * by the user.
+     */
+    public static final String ARG_SET_BUTTON = CLASS_NAME + ".set.button";
+
+    /**
+     * Used as key of an argument. The associated value is supposed to be of type {@link Date}.
+     * This value is taken as initial time to be displayed.
+     */
+    public static final String ARG_DATE = CLASS_NAME + ".date";
+
+    /**
+     * Used as key of an argument. The associated value is supposed to be of type {@link int}.
+     * This value is taken as minute's interval and is supposed to be between 0 and 60.
+     */
+    public static final String ARG_INTERVAL = CLASS_NAME + ".interval";
+
+    /**
+     * Used as key of an extra information. The associated value is of type {@code int}.
+     * This value is passed via the extras bundle to the callback object and contains the
+     * user's selected hour.
+     */
+    public static final String EXTRA_HOUR = CLASS_NAME + ".hour";
+
+    /**
+     * Used as key of an extra information. The associated value is of type {@code int}.
+     * This value is passed via the extras bundle to the callback object and contains the
+     * user's selected minute.
+     */
+    public static final String EXTRA_MINUTE = CLASS_NAME + ".minute";
+
+    private IFragmentCallback callback;
 
     private class SpinnerTimePickerDialog extends TimePickerDialog {
 
@@ -52,11 +102,11 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         public void onAttachedToWindow() {
             super.onAttachedToWindow();
             try {
-                Class<?> classForid = Class.forName("com.android.internal.R$id");
-                Field timePickerField = classForid.getField("timePicker");
+                Class<?> classForId = Class.forName("com.android.internal.R$id");
+                Field timePickerField = classForId.getField("timePicker");
                 this.timePicker = (TimePicker) findViewById(timePickerField
                         .getInt(null));
-                Field field = classForid.getField("minute");
+                Field field = classForId.getField("minute");
 
                 NumberPicker numberPicker = (NumberPicker) timePicker
                         .findViewById(field.getInt(null));
@@ -74,26 +124,20 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         }
     }
 
-    public interface OnTimeSetListener {
-        void onTimeSet(TimePicker view, int hourOfDay, int minute);
-    }
-
     private Date date;
     private int interval;
-
-    private OnTimeSetListener onTimeSetListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            Object obj = args.getSerializable(BundleId.DATE);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            Object obj = arguments.getSerializable(ARG_DATE);
             if (obj instanceof Date) {
                 date = (Date) obj;
             }
-            this.interval = args.getInt(BundleId.INTERVAL);
+            this.interval = arguments.getInt(ARG_INTERVAL, 1);
             if (interval <= 0 || interval > 60) {
                 this.interval = 1;
             }
@@ -102,13 +146,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        Calendar cal = Calendar.getInstance();
-
+        final Calendar cal = Calendar.getInstance();
         if (date != null) {
             cal.setTime(date);
         }
-
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         int minute = cal.get(Calendar.MINUTE);
 
@@ -121,13 +162,36 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         }
     }
 
-    public void setOnTimeSetListener (OnTimeSetListener onTimeSetListener) {
-        this.onTimeSetListener = onTimeSetListener;
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        final Bundle arguments = getArguments();
+        if (arguments != null) {
+            if (arguments.containsKey(ARG_SET_BUTTON)) {
+                final String callBackMsg = arguments.getString(ARG_SET_BUTTON);
+                if (callback != null && !StringUtilities.isNullOrEmpty(callBackMsg)) {
+                    Bundle extras = new Bundle();
+                    extras.putInt(EXTRA_HOUR, hourOfDay);
+                    extras.putInt(EXTRA_MINUTE, minute);
+                    callback.handleFragmentMessage(callBackMsg, extras);
+                }
+            }
+        }
     }
 
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        if (this.onTimeSetListener != null) {
-            onTimeSetListener.onTimeSet(view, hourOfDay, minute);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            callback = (IFragmentCallback) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement IFragmentCallback") ;
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        callback = null;
     }
 }

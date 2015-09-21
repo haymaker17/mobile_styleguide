@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.concur.core.R;
@@ -95,6 +94,13 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private static final String MSG_DATE_PICKER_SET =
             CLASS_TAG + ".message.date.picker.set";
 
+    private static final String MSG_TIME_PICKER_SET =
+            CLASS_TAG + ".message.time.picker.set";
+
+    public static final String TASK_CHAIN = "taskchain";
+
+    private static final int TIME_INTERVAL = 5;
+
     private Itinerary itinerary;
     private int taskChain;
     private String expenseReportKey;
@@ -102,12 +108,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private FixedTravelAllowanceController allowanceController;
     private ItineraryUpdateListAdapter adapter;
     private PositionInfoTag currentPosition;
-
-    private TimePickerFragment.OnTimeSetListener onTimeSetListener;
-
     private DatePickerFragment calendarDialog;
     private TimePickerFragment timeDialog;
-
     private Date defaultDate;
 
     /**
@@ -122,7 +124,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         ConcurCore app = (ConcurCore) getApplication();
         this.itinController = app.getTaController().getTaItineraryController();
         this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
-        //app.getTaController().getTAConfigController().refreshConfiguration();
 
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             this.expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
@@ -130,12 +131,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         String expenseReportName = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME);
 
-
         this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_DATE)) {
             this.defaultDate = (Date) getIntent().getExtras().getSerializable(BundleId.EXPENSE_REPORT_DATE);
         }
-
 
         if (this.itinerary == null) {
             this.itinerary = new Itinerary();
@@ -170,8 +169,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID())) {
                 actionBar.setTitle(R.string.ta_new_itinerary);
                 if (tvToolbarText != null) {
-                    // To show only if no itin created yet ad this:
-                    // (itinController.getItineraryList() == null  || itinController.getItineraryList().size() == 0)
                     tvToolbarText.setVisibility(View.VISIBLE);
                     tvToolbarText.setPadding(toolbar.getContentInsetStart(), 0, 0, 0);
                 }
@@ -261,39 +258,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
         };
 
-        onTimeSetListener = new TimePickerFragment.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                if (currentPosition != null) {
-                    Date date;
-                    Calendar cal;
-                    int datePosition = 0;
-                    ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-                    segment.setMessage(null);
-                    itinController.resetMessages(itinerary, Message.MSG_UI_MISSING_DATES);
-                    if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
-                        date = segment.getDepartureDateTime();
-                    } else {
-                        date = segment.getArrivalDateTime();
-                    }
-                    if (date != null) {
-                        cal = DateUtils.getCalendarKeepingDate(date, hourOfDay, minute, 0, 0);
-                        date = cal.getTime();
-                        if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
-                            segment.setDepartureDateTime(date);
-                            datePosition = -1;
-                        } else {
-                            segment.setArrivalDateTime(date);
-                            datePosition = 1;
-                        }
-                        itinController.checkOverlapping(itinerary, currentPosition.getPosition(), datePosition);
-                        adapter.notifyDataSetChanged();
-                        timeDialog.dismiss();
-                    }
-                }
-            }
-        };
-
         onReturnToHomeListener = new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -348,7 +312,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         this.itinerary = (Itinerary) savedInstanceState.getSerializable(BundleId.ITINERARY);
-        this.taskChain = savedInstanceState.getInt(BundleId.TASK_CHAIN, 0);
+        this.taskChain = savedInstanceState.getInt(TASK_CHAIN, 0);
         this.currentPosition = (PositionInfoTag) savedInstanceState.getSerializable(BundleId.POSITION_INFO_TAG);
     }
 
@@ -373,19 +337,20 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     emptySegment.setArrivalLocation(lastSegment.getDepartureLocation());
                 }
             } else {
-                if(defaultDate != null) {
+                if (defaultDate != null) {
                     cal.setTime(this.defaultDate);
+                    cal.set(Calendar.HOUR, 0);
+                    cal.set(Calendar.MINUTE, 0);
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
-                    cal.set(Calendar.HOUR, 0);
                     emptySegment.setDepartureDateTime(cal.getTime());
-                    cal.add(Calendar.MINUTE, 1);
+                    cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 } else {
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
                     emptySegment.setDepartureDateTime(cal.getTime());
-                    cal.add(Calendar.MINUTE, 1);
+                    cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
             }
@@ -445,7 +410,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(BundleId.ITINERARY, this.itinerary);
-        outState.putInt(BundleId.TASK_CHAIN, this.taskChain);
+        outState.putInt(TASK_CHAIN, this.taskChain);
         outState.putSerializable(BundleId.POSITION_INFO_TAG, this.currentPosition);
     }
 
@@ -473,7 +438,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     }
 
     private void showTimePickerDialog() {
-        Bundle bundle = new Bundle();
+        Bundle arguments = new Bundle();
 
         Calendar date = Calendar.getInstance();
         if (this.currentPosition != null && this.currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
@@ -484,12 +449,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             date.setTime(itinerary.getSegmentList().get(currentPosition.getPosition()).getArrivalDateTime());
         }
 
-        bundle.putSerializable(BundleId.DATE, date.getTime());
-        bundle.putInt(BundleId.INTERVAL, 5);
+        arguments.putSerializable(TimePickerFragment.ARG_DATE, date.getTime());
+        arguments.putInt(TimePickerFragment.ARG_INTERVAL, TIME_INTERVAL);
+        arguments.putString(TimePickerFragment.ARG_SET_BUTTON, MSG_TIME_PICKER_SET);
 
         timeDialog = new TimePickerFragment();
-        timeDialog.setArguments(bundle);
-        timeDialog.setOnTimeSetListener(onTimeSetListener);
+        timeDialog.setArguments(arguments);
         timeDialog.show(getSupportFragmentManager(), TAG_TIME_DIALOG_FRAGMENT);
     }
 
@@ -606,7 +571,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         itinController.executeUpdate(this.itinerary);
         taskChain = 1;
-
     }
 
     private boolean isDataInconsistent() {
@@ -773,7 +737,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             findViewById(R.id.et_itinerary).setEnabled(true);
             findViewById(R.id.list_view).setEnabled(true);
         }
-
     }
 
     @Override
@@ -828,7 +791,37 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 }
                 itinController.checkOverlapping(itinerary, currentPosition.getPosition(), datePosition);
                 adapter.notifyDataSetChanged();
-                //calendarDialog.dismiss();
+            }
+        }
+        if (MSG_TIME_PICKER_SET.equals(fragmentMessage) && extras != null) {
+            if (currentPosition == null) {
+                return;
+            }
+            Date date;
+            Calendar cal;
+            int datePosition = 0;
+            ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+            segment.setMessage(null);
+            itinController.resetMessages(itinerary, Message.MSG_UI_MISSING_DATES);
+            if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                date = segment.getDepartureDateTime();
+            } else {
+                date = segment.getArrivalDateTime();
+            }
+            if (date != null) {
+                int hourOfDay = extras.getInt(TimePickerFragment.EXTRA_HOUR);
+                int minute = extras.getInt(TimePickerFragment.EXTRA_MINUTE);
+                cal = DateUtils.getCalendarKeepingDate(date, hourOfDay, minute, 0, 0);
+                date = cal.getTime();
+                if (currentPosition.getInfo() == PositionInfoTag.INFO_OUTBOUND) {
+                    segment.setDepartureDateTime(date);
+                    datePosition = -1;
+                } else {
+                    segment.setArrivalDateTime(date);
+                    datePosition = 1;
+                }
+                itinController.checkOverlapping(itinerary, currentPosition.getPosition(), datePosition);
+                adapter.notifyDataSetChanged();
             }
         }
     }

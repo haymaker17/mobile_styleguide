@@ -32,10 +32,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     private static final String CLASS_NAME = DatePickerFragment.class.getName();
     private static final String CLASS_TAG = DatePickerFragment.class.getSimpleName();
 
-    public interface OnDateSetListener {
-        void onDateSet(DatePicker datePicker, int year, int month, int day);
-    }
-
     /**
      * Used as key of an argument. The associated value is supposed to be of type {@link String}.
      * This value denotes the fragment message sent to callback object when set button was pressed
@@ -71,9 +67,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public static final String EXTRA_DAY = CLASS_NAME + ".day";
 
     private IFragmentCallback callback;
-
     private Date date;
-    private OnDateSetListener listener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
