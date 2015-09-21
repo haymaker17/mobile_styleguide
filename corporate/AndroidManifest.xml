@@ -468,6 +468,15 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="com.concur.mobile.core.service.NiftyPushNotificationService"
+            android:label="NiftyPushNotificationService">
+            <intent-filter>
+                <action android:name="com.concur.mobile.core.receiver.AWSPushNotificationReceiver"/>
+
+                <category android:name="${applicationId}"/>
+            </intent-filter>
+        </service>
         <!-- ============ -->
         <!-- End AWS Push -->
         <!-- ============ -->

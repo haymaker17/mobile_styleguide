@@ -81,7 +81,6 @@ public class PushNotificationRegService extends Service {
         if (pushNotificationReceiver != null) {
             ctx.unregisterReceiver(pushNotificationReceiver);
             pushNotificationReceiver = null;
-
         }
         super.onDestroy();
     }

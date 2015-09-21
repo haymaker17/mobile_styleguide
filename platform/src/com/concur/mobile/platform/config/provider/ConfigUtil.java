@@ -1653,8 +1653,43 @@ public class ConfigUtil {
     }
 
     /**
-     * Will update client data table with information from login response.
+     * Will update client data table with Nifty information from login response.
      * 
+     * @param context
+     *            contains an application context.
+     * @param loginResult
+     *            contains the login response.
+     * @throws IllegalArgumentException
+     *             if <code>loginResponse</code> is null.
+     */
+    public static void updateNiftyInClientData(Context context, LoginResult loginResult) {
+        ClientData clientData = new ClientData(context);
+        clientData.userId = loginResult.userId;
+        clientData.key = LoginResult.TAG_NIFTY_API_KEY;
+        clientData.text = loginResult.niftyApiKey;
+        clientData.blob = null;
+        clientData.update();
+
+        clientData = null;
+        clientData = new ClientData (context);
+        clientData.userId = loginResult.userId;
+        clientData.key = LoginResult.TAG_NIFTY_APP_ID;
+        clientData.text = loginResult.niftyAppId;
+        clientData.blob = null;
+        clientData.update();
+
+        clientData = null;
+        clientData = new ClientData (context);
+        clientData.userId = loginResult.userId;
+        clientData.key = LoginResult.TAG_NIFTY_SERVER;
+        clientData.text = loginResult.niftyServer;
+        clientData.blob = null;
+        clientData.update();
+    }
+
+    /**
+     * Will update client data table with information from login response.
+     *
      * @param context
      *            contains an application context.
      * @param loginResult
@@ -1669,7 +1704,6 @@ public class ConfigUtil {
         clientData.text = loginResult.analyticsId;
         clientData.blob = null;
         clientData.update();
-
     }
 
     /**

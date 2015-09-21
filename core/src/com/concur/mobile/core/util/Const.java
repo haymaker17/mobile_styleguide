@@ -223,6 +223,10 @@ public final class Const {
     public static final String PREF_PUSH_ALLOW = "pref_push_allow";
     public static final String PREF_PUSH_VIBRATE = "pref_push_vibrate";
     public static final long[] NOTIFICATION_VIBRATION_PATTERN = { 0, 100, 200, 300 };
+    public static final String NIFTY_CONCUR_TEST_ID = "90496737911";
+    public static final String NIFTY_CONCUR_PROD_ID = "543258813985";
+    public static final String PREF_DEVICE_ID = "pref_nifty_device_id";
+
 
     public static final String PREF_PIN_RESET_KEY_PART = "pref_pin_reset_key_part";
     public static final String PREF_PIN_RESET_EMAIL = "pref_pin_reset_email";
