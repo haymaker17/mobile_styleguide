@@ -1,6 +1,7 @@
 package com.concur.mobile.platform.travel.provider;
 
 import android.util.Log;
+
 import com.concur.mobile.platform.provider.PlatformSQLiteDatabase;
 import com.concur.mobile.platform.util.Const;
 
@@ -806,6 +807,7 @@ public class TravelDBSchema {
                     + Travel.HotelDetailColumns.SUGESTED_SCORE + " REAL, " + Travel.HotelDetailColumns.THUMBNAIL_URL
                     + " TEXT, " + Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE + " TEXT, "
                     + Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE + " INTEGER, "
+                    + Travel.HotelDetailColumns.PROPERTY_IDS + " BLOB, "
                     + Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID + " INTEGER REFERENCES "
                     + Travel.HotelSearchResultColumns.TABLE_NAME + " ON DELETE CASCADE )";
     // Drop the Hotel Detail table.
@@ -963,7 +965,7 @@ public class TravelDBSchema {
     protected static final String DROP_HOTEL_VIOLATION_TABLE =
             "DROP TABLE IF EXISTS " + Travel.HotelViolationColumns.TABLE_NAME + ";";
     // Contains the config schema deletion SQL. Must be in execution order
-    protected static final String[] SCHEMA_DELETE_SQL = { DROP_TRIP_SUMMARY_TABLE, //
+    protected static final String[] SCHEMA_DELETE_SQL = {DROP_TRIP_SUMMARY_TABLE, //
             DROP_TRIP_SUMMARY_MESSAGE_TABLE, //
             DROP_TRIP_TABLE, //
             DROP_ENHANCEMENT_DAY_TABLE, //
@@ -1012,7 +1014,8 @@ public class TravelDBSchema {
     // DB History
     // Contains the current database version.
     // static final int DATABASE_VERSION = 1; // Initial version.
-    static final int DATABASE_VERSION = 2; // added Jarvis Hotel tables.
+    // static final int DATABASE_VERSION = 2; // added Jarvis Hotel tables.
+    static final int DATABASE_VERSION = 3; // added new column PROPERTY_IDS in Jarvis Travel.HotelDetailColumns.TABLE_NAME table.
     private static final String CLS_TAG = "TravelDBSchema";
 
     /*
@@ -1052,19 +1055,20 @@ public class TravelDBSchema {
         }
 
         switch (newVersion) {
-        case 2: {
-            // Drop all the tables that do not need to be migrated. These are tables that are easily reloadable from the server.
-            for (int i = 0; i < SCHEMA_DELETE_SQL.length; i++) {
-                db.execSQL(SCHEMA_DELETE_SQL[i]);
+            case 3:
+            case 2: {
+                // Drop all the tables that do not need to be migrated. These are tables that are easily reloadable from the server.
+                for (int i = 0; i < SCHEMA_DELETE_SQL.length; i++) {
+                    db.execSQL(SCHEMA_DELETE_SQL[i]);
+                }
+                // Recreate all tables while ignoring any tables that were not dropped.
+                onCreate(db);
+                break;
             }
-            // Recreate all tables while ignoring any tables that were not dropped.
-            onCreate(db);
-            break;
-        }
-        default: {
-            Log.v(Const.LOG_TAG, "DB version provided no upgrade path: " + newVersion);
-            break;
-        }
+            default: {
+                Log.v(Const.LOG_TAG, "DB version provided no upgrade path: " + newVersion);
+                break;
+            }
         }
 
         // Enable foreign key support.
