@@ -7,10 +7,17 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.concur.mobile.platform.ui.travel.BuildConfig;
 import com.concur.mobile.platform.ui.travel.R;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -185,6 +192,7 @@ public class ImageFetcher extends ImageResizer {
                         if (editor != null) {
                             if (downloadUrlToStream(data, editor.newOutputStream(DISK_CACHE_INDEX))) {
                                 editor.commit();
+
                             } else {
                                 editor.abort();
                             }
@@ -250,8 +258,10 @@ public class ImageFetcher extends ImageResizer {
             while ((b = in.read()) != -1) {
                 out.write(b);
             }
+
             return true;
         } catch (final IOException e) {
+            //TODO show error msg
             Log.e(TAG, "Error in downloadBitmap - " + e);
         } finally {
             if (urlConnection != null) {

@@ -334,7 +334,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
             // Finally load the image asynchronously into the ImageView, this also takes care of
             // setting a placeholder image while the background thread runs
             URI uri = URI.create(images.get(position).image);
-            mImageFetcher.loadImage(uri, imageView);
+            mImageFetcher.loadImage(uri, imageView, ImageView.ScaleType.CENTER_CROP);
 
             return imageView;
             //END_INCLUDE(load_gridview_item)
