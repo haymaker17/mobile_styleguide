@@ -202,14 +202,13 @@
 		<div class="responsivetable">
 			<table class="changelist">
 			</table>
-			<div class="table_nav"></div>
 		</div>
 	</p>
 </section>
 
 <script>
 $(document).ready(function(){
-	 createChangeListScript('https://api.github.com/repos/haymaker17/mobile_styleguide/commits?callback=doChangelist');
+	getGithubCommits();
 });
 
 /*
