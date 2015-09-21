@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.util;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.AssignableItinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
@@ -94,5 +95,47 @@ public class ItineraryUtils {
         }
 
         return null;
+    }
+
+    public static String createLocationString(AssignableItinerary itin) {
+        StringBuffer sb = new StringBuffer();
+        boolean firstRun = true;
+        for (String s: itin.getArrivalLocations()) {
+            if (!firstRun) {
+                sb.append(", ");
+            }
+            int posCountrySep = s.indexOf(",");
+            if (posCountrySep > 0) {
+                sb.append(s.substring(0, posCountrySep));
+            } else {
+                sb.append(s);
+            }
+            firstRun = false;
+        }
+        return sb.toString();
+    }
+
+    public static String createLocationString(Itinerary itin) {
+        StringBuffer sb = new StringBuffer();
+        boolean firstRun = true;
+
+        for (ItinerarySegment segment : itin.getSegmentList()) {
+            if (segment.getArrivalLocation() != null
+                    && !StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getName())) {
+                String s = segment.getArrivalLocation().getName();
+                if (!firstRun) {
+                    sb.append(", ");
+                }
+                int posCountrySep = s.indexOf(",");
+                if (posCountrySep > 0) {
+                    sb.append(s.substring(0, posCountrySep));
+                } else {
+                    sb.append(s);
+                }
+
+                firstRun = false;
+            }
+        }
+        return sb.toString();
     }
 }

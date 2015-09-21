@@ -2,6 +2,9 @@ package test.java.com.concur.mobile.core.expense.travelallowance.util.test;
 
 import com.concur.mobile.core.expense.travelallowance.datamodel.IDatePeriodUTC;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import junit.framework.TestCase;
 
@@ -130,10 +133,71 @@ public class DateUtilsTest extends TestCase {
         assertFalse(DateUtils.hasSubsequentDates(true, false, 2, periods));
     }
 
+    @Test
+    public void startEndDateToString(){
+        Date startDate = getDate(2015,Calendar.AUGUST, 31, 9, 21);
+        Date endDate = getDate(2015,Calendar.SEPTEMBER, 17, 11, 42);
+        IDateFormat dateFormatter = null;
+//      Enhance method as soon as the mocking of the context is possible
+//      IDateFormat dateFormatter = new DefaultDateFormat(context);
+
+        assertEquals(StringUtilities.EMPTY_STRING, DateUtils.startEndDateToString(null, null, dateFormatter, false, false, false));
+        assertEquals(StringUtilities.EMPTY_STRING, DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, false, false));
+    }
+
+    @Test
+    public void getDateIgnoringTime(){
+        assertNull(DateUtils.getDateIgnoringTime(null));
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2015, Calendar.SEPTEMBER, 17);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+
+        assertEquals(cal.getTime(),  DateUtils.getDateIgnoringTime(getDate(2015, Calendar.SEPTEMBER, 17, 11, 42)));
+
+    }
+
+    @Test
+    public void getCalendarKeepingDate(){
+        assertNull(DateUtils.getCalendarKeepingDate(null, 0, 0, 0, 0));
+
+        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(getReferenceDate());
+        calendar.set(2015, Calendar.SEPTEMBER, 17, 16, 42);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        assertEquals(calendar, DateUtils.getCalendarKeepingDate(getReferenceDate(), 16, 42, 0, 0));
+
+    }
+
+    @Test
+    public void getCalendarKeepingTime(){
+        assertNull(DateUtils.getCalendarKeepingTime(null,2014,Calendar.MARCH,22));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2014, Calendar.MARCH, 22, 16, 42);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        assertEquals(calendar, DateUtils.getCalendarKeepingTime(getReferenceDate(),2014,Calendar.MARCH,22));
+    }
+
     private Date getDate(int year, int month, int day, int hourOfDay,
                          int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, hourOfDay, minute);
         return calendar.getTime();
     }
+
+    private Date getReferenceDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015, Calendar.SEPTEMBER, 17, 16, 42);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        return calendar.getTime();
+    }
+
 }
