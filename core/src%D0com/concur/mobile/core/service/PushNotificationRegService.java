@@ -57,20 +57,16 @@ public class PushNotificationRegService extends Service {
 
             protected void onPostExecute(Object result) {
                 if (pushNotificationReceiver == null) {
-                    pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
-
-                    if (!AWSPushNotificationReceiver.isRegistered()) {
-                        if (pushNotificationFilter == null) {
-                            pushNotificationFilter = new IntentFilter();
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
-                            pushNotificationFilter.addCategory("com.concur.breeze");
-                        }
-                        ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
-                                "com.google.android.c2dm.permission.SEND", null);
-                        AWSPushNotificationReceiver.setRegistered(true);
+                    pushNotificationReceiver = new AWSPushNotificationReceiver();
+                    if (pushNotificationFilter == null) {
+                        pushNotificationFilter = new IntentFilter();
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
+                        pushNotificationFilter.addCategory("com.concur.breeze");
                     }
+                    ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
+                            "com.google.android.c2dm.permission.SEND", null);
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onPostExecute: pushNotificationReceiver is *not* null!");
                 }
@@ -83,10 +79,7 @@ public class PushNotificationRegService extends Service {
     @Override
     public void onDestroy() {
         if (pushNotificationReceiver != null) {
-            if(AWSPushNotificationReceiver.isRegistered()) {
-                AWSPushNotificationReceiver.setRegistered(false);
-                ctx.unregisterReceiver(pushNotificationReceiver);
-            }
+            ctx.unregisterReceiver(pushNotificationReceiver);
             pushNotificationReceiver = null;
         }
         super.onDestroy();
