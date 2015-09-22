@@ -188,7 +188,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
         List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
         allowances.add(this.allowance);
-        allowanceController.executeUpdate(allowances, expenseReportKey);
+        allowanceController.executeUpdate(allowances, expenseReportKey, null);
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
         bar.setVisibility(View.VISIBLE);
         disableAllFields();

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAConfigurationRequest;
+import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class TravelAllowanceConfigurationController extends BaseController {
         this.receiverList = new ArrayList<BaseAsyncResultReceiver>();
     }
 
-    public void refreshConfiguration() {
+    public void refreshConfiguration(final IRequestListener listener) {
 
         if (getConfigurationRequest != null && getConfigurationRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
@@ -44,7 +45,7 @@ public class TravelAllowanceConfigurationController extends BaseController {
 
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiverList.add(receiver);
-        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, listener) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 travelAllowanceConfig = getConfigurationRequest.getTravelAllowanceConfiguration();

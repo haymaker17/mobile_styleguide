@@ -80,8 +80,7 @@ import java.util.Map;
  * @author AndrewK
  */
 public class
-        ExpenseEntries extends AbstractExpenseActivity
-                             {
+        ExpenseEntries extends AbstractExpenseActivity implements TravelAllowanceFacade.ExpenseEntriesTACallback {
 
     private static final String CLS_TAG = ExpenseEntries.class.getSimpleName();
 
@@ -101,16 +100,11 @@ public class
 
     private static final String SELECTED_EXPENSE_TYPE = "selected.expense.type";
 
-   // private TravelAllowanceItineraryController itineraryController;
+                               
 
 
-//    @Override
-//    public void actionFinished(IController controller, ControllerAction action, boolean isSuccess, Bundle result) {
-//        ConcurCore app = (ConcurCore) getApplication();
-//        if (app.getTaItineraryController() != null && app.getTaItineraryController().getItineraryList().size() > 0){
-//            showTravelAllowanceButton();
-//        }
-//    }
+
+
 
     private enum ExpenseEntryOption {
         ViewDetails, ViewReceipt, RemoveFromReport, AttachSelectedGalleryReceipt, AttachSelectedCloudReceipt, AttachCapturedReceipt
@@ -216,8 +210,6 @@ public class
     protected long upTime = 0L;
 
 
-    private TravelAllowanceFacade taFacade;
-
     /*
      * (non-Javadoc)
      * 
@@ -259,75 +251,31 @@ public class
             selectedExpenseType = (ExpenseType) retainer.get(SELECTED_EXPENSE_TYPE);
         }
 
-        if (ViewUtil.hasTravelAllowanceFixed(this) && !(this instanceof ExpenseEntryItemization)) {
-            ConcurCore app = (ConcurCore) getApplication();
+        if (getSupportFragmentManager().findFragmentByTag(TravelAllowanceFacade.FRAGMENT_TAG) == null
+                && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback && this.getClass().equals(ExpenseEntries.class)) {
+            // Create the TA facade as a headless fragment
+            TravelAllowanceFacade facade = new TravelAllowanceFacade();
+            Bundle args = new Bundle();
+            args.putSerializable(TravelAllowanceFacade.ARG_EXPENSE_REPORT, expRep);
+            args.putBoolean(TravelAllowanceFacade.ARG_IS_MANAGER, reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL);
+            facade.setArguments(args);
+            getSupportFragmentManager().beginTransaction().add(facade, TravelAllowanceFacade.FRAGMENT_TAG).commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
 
-            final boolean isInApproval = reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL;
-
-            this.taFacade = new TravelAllowanceFacade(expRep, isInApproval, app.getTaController(),
-                    new TravelAllowanceFacade.ExpenseEntriesTACallback() {
-
-                        @Override
-                        public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode, final boolean isInApproval) {
-                            View button = findViewById(R.id.header_itinerary);
-                            if (button == null) {
-                                return;
-                            }
-                            button.setVisibility(View.VISIBLE);
-                            button.setFocusable(true);
-                            button.setClickable(true);
-
-                            // Add a view click listener to start TA flow
-                            button.setOnClickListener(new View.OnClickListener() {
-
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(ExpenseEntries.this, taStartActivity);
-                                    intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                                    intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
-                                    intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
-                                    intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
-                                    intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
-                                    intent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
-                                    ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void taDateRefreshFinished() {
-                            dismissDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
-                        }
-                    });
-
-            if (savedInstanceState == null) {
+        if (ViewUtil.hasTravelAllowanceFixed(this) && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback
+                && this.getClass().equals(ExpenseEntries.class)) {
+            TravelAllowanceFacade facade = getTaFacade();
+            if (savedInstanceState == null && facade != null) {
                 showDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
-                taFacade.refreshTaData();
-            } else {
-                taFacade.refreshVisibility();
+                facade.refreshTaData();
+            } else if (facade != null) {
+                facade.refreshVisibility();
             }
         }
 
-
-
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        if (this.itineraryController != null) {
-//            this.itineraryController.unregisterListener(this);
-//        }
-    }
-
-//    private void showTravelAllowanceButton(){
-//        View vHeaderItinerary = this.findViewById(R.id.header_itinerary);
-//        if (vHeaderItinerary != null){
-//            if (ViewUtil.hasTravelAllowanceFixed(this)) {
-//                vHeaderItinerary.setVisibility(View.VISIBLE);
-//            }
-//        }
-//    }
 
     @Override
     protected void onPause() {
@@ -397,6 +345,38 @@ public class
         if (isTipsOverlayVisible) {
             startTime = System.nanoTime();
         }
+    }
+
+    @Override
+    public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode, final boolean isInApproval) {
+        View button = findViewById(R.id.header_itinerary);
+        if (button == null) {
+            return;
+        }
+        button.setVisibility(View.VISIBLE);
+        button.setFocusable(true);
+        button.setClickable(true);
+
+        // Add a view click listener to start TA flow
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ExpenseEntries.this, taStartActivity);
+                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+                intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
+                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
+                intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
+                intent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
+                ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+            }
+        });
+    }
+
+    @Override
+    public void taDateRefreshFinished() {
+        dismissDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
     }
 
     @Override
@@ -609,11 +589,11 @@ public class
         }
 
         // Handle the Itinerary Button logic which is switched on by Travel Allowance Fixed site setting.
-        if (ViewUtil.hasTravelAllowanceFixed(this) && taFacade != null) {
-            taFacade.refreshVisibility();
-//            TravelAllowanceFacade travelAllowanceFacade = new TravelAllowanceFacade(this);
-//            travelAllowanceFacade.initializeItineraryButton(expRep,
-//                    reportKeySource == Const.EXTRA_EXPENSE_REPORT_SOURCE_APPROVAL, REQUEST_VIEW_TA_ITINERARY);
+        if (ViewUtil.hasTravelAllowanceFixed(this)) {
+            TravelAllowanceFacade facade = getTaFacade();
+            if (facade != null) {
+                facade.refreshVisibility();
+            }
         }
     }
 
@@ -1813,6 +1793,12 @@ public class
                 }
             }
         }
+    }
+
+
+    private TravelAllowanceFacade getTaFacade() {
+        TravelAllowanceFacade facade = (TravelAllowanceFacade) getSupportFragmentManager().findFragmentByTag(TravelAllowanceFacade.FRAGMENT_TAG);
+        return facade;
     }
 
     /*
