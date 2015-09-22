@@ -196,15 +196,15 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-//        FixedTravelAllowance originAllowance = null;
-//        if (this.allowance != null) {
-//            updateAllowanceFromUI();
-//            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
-//        }
-//        if (this.allowance == null || !this.allowance.equals(originAllowance)) {//is dirty
-//            showIsDirtyDialog();
-//            return;
-//        }
+        FixedTravelAllowance originAllowance = null;
+        if (this.allowance != null) {
+            updateAllowanceFromUI();
+            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
+        }
+        if (this.allowance == null || !this.allowance.equals(originAllowance)) {//is dirty
+            showIsDirtyDialog();
+            return;
+        }
         super.onBackPressed();
     }
 
@@ -668,9 +668,9 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     private MealProvision deriveMealProvisionFromSwitch(Switch svSwitch ){
         if (svSwitch != null){
             if (svSwitch.isChecked()){
-                return new MealProvision(MealProvision.PROVIDED_CODE, "");
+                return MealProvisionEnum.fromCode(MealProvision.PROVIDED_CODE, this);
             }else {
-                return new MealProvision(MealProvision.NOT_PROVIDED_CODE, "");
+                return MealProvisionEnum.fromCode(MealProvision.NOT_PROVIDED_CODE, this);
             }
         }
         return null;
@@ -686,7 +686,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
             for (Map.Entry<String,ICode> entry : map.entrySet()){
                 if (i == index){
-                    return new MealProvision(entry.getKey(), "");
+                    return new MealProvision(entry.getKey(), entry.getValue().getDescription());
                 }
                 index++;
             }
@@ -704,7 +704,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
             for (Map.Entry<String,ICode> entry : map.entrySet()){
                 if (i == index){
-                    return new LodgingType(entry.getKey(), "");
+                    return new LodgingType(entry.getKey(), entry.getValue().getDescription());
                 }
                 index++;
             }
