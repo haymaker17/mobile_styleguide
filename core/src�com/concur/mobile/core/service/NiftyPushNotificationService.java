@@ -13,13 +13,10 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.receiver.AWSPushNotificationReceiver;
-import com.concur.mobile.core.receiver.NiftyPushNotificationReceiver;
 import com.concur.mobile.core.util.Const;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import com.concur.mobile.niftyservice.*;
-
-import junit.framework.Test;
 
 import org.apache.http.HttpStatus;
 
@@ -30,11 +27,6 @@ import org.apache.http.HttpStatus;
 public class NiftyPushNotificationService extends Service implements BaseAsyncRequestTask.AsyncReplyListener {
 
     private final String CLS_TAG = NiftyPushNotificationService.class.getSimpleName();
-
-    private final int REGISTER = 0;
-    private final int DEREGISTER = 1;
-    private final int GET_NOTIF = 2;
-    private final int DEREGISTER_OLD_ID = 3;
 
     /**
      * Contains the instance of GoogleCloudMessaging used to register with google for push notifications
@@ -83,9 +75,9 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
     private boolean shouldCancelService;
 
     /**
-     * Indicates what Nifty task is being preformed
+     * True if current service call is to register with Nifty, false otherwise
      */
-    public int taskType;
+    private boolean wasRegister;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -93,36 +85,12 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
         return null;
     }
 
-    /**
-     * Create the service and register for Nifty push notifications
-     */
     public void onCreate() {
         super.onCreate();
         ctx = (ConcurCore) ConcurCore.getContext();
         gcm = GoogleCloudMessaging.getInstance(ctx);
         niftyService = new NiftyService(this);
         register();
-    }
-
-    /**
-     * Send read receipt if started with an intent containing a notificationId
-     */
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Bundle extras = intent.getExtras();
-
-        if (extras != null) {
-            if (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY)) {
-                String notificationId = extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY);
-                sendReadReciept(notificationId);
-            }
-        } else {
-            Log.v(Const.LOG_TAG, CLS_TAG + " bundle is null, cannot send read receipt");
-        }
-
-        // We want this service to continue running until it is explicitly
-        // stopped, so return sticky.
-        return START_STICKY;
     }
 
     /**
@@ -165,7 +133,7 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
 
                 // Proceed with register if properties are found
                 if (!shouldCancelService) {
-                    taskType = REGISTER;
+                    wasRegister = true;
                     String token;
 
                     try {
@@ -196,7 +164,7 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
             // Register pushNotificationReceiver if registration for Nifty push notifications was not cancelled
             protected void onPostExecute(Object result) {
                 if (pushNotificationReceiver == null && !shouldCancelService) {
-                    pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
+                    pushNotificationReceiver = new AWSPushNotificationReceiver();
                     if (pushNotificationFilter == null) {
                         pushNotificationFilter = new IntentFilter();
                         pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
@@ -214,32 +182,11 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
     }
 
     /**
-     * Lets Nifty know that a message has been received
-     */
-    public void sendReadReciept(final String notificationId) {
-        new AsyncTask<Object, Void, Object>() {
-            @Override
-            protected Object doInBackground(Object... params) {
-                // Get the user from prefs if has not been stored
-                if (user == null)  user = prefs.getString(Const.PREF_USER_ID, null);
-
-                // Send read receipt
-                if (!TextUtils.isEmpty(notificationId)) {
-                    taskType = GET_NOTIF;
-                    result = new AsyncRequestResult();
-                    niftyService.getNotification(user, notificationId);
-                }
-                return true;
-            }
-        }.execute(null, null, null);
-    }
-
-    /**
      * Deregister from Nifty push notifications before destroying service
      */
     @Override
     public void onDestroy() {
-        taskType = DEREGISTER;
+        wasRegister = false;
 
         new AsyncTask<Object, Void, Object>() {
             @Override
@@ -266,76 +213,63 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
     public void onRequestSuccess(Bundle resultData) {
         storeResult(resultData, BaseAsyncRequestTask.RESULT_OK);
 
-        switch (taskType) {
-            case REGISTER:  {
-                // If register was successful
-                if (result.resultCode == BaseAsyncRequestTask.RESULT_OK) {
-                    int httpCode = result.resultData.getInt(BaseAsyncRequestTask.HTTP_STATUS_CODE);
-                    if (httpCode == HttpStatus.SC_CREATED) {
+        if (wasRegister) {
+            // If register was successful
+            if (result.resultCode == BaseAsyncRequestTask.RESULT_OK) {
+                int httpCode = result.resultData.getInt(BaseAsyncRequestTask.HTTP_STATUS_CODE);
+                if (httpCode == HttpStatus.SC_CREATED) {
 
-                        // See if there is a deviceId already in storage
-                        String oldDeviceId = prefs.getString(Const.PREF_DEVICE_ID, null);
-                        String newDeviceId = result.resultData.getString(NiftyAsyncRequestTask.DEVICE_ID_KEY);
-                        boolean oldIsEmpty = TextUtils.isEmpty(oldDeviceId);
+                    // See if there is a deviceId already in storage
+                    String oldDeviceId = prefs.getString(Const.PREF_DEVICE_ID, null);
+                    String newDeviceId = result.resultData.getString(NiftyAsyncRequestTask.DEVICE_ID_KEY);
+                    boolean oldIsEmpty = TextUtils.isEmpty(oldDeviceId);
 
-                        // If oldDeviceId is null or different from newDeviceID, save newDeviceId to prefs
-                        if (oldIsEmpty || !oldDeviceId.equals(newDeviceId)) {
-                            SharedPreferences.Editor e = prefs.edit();
-                            e.putString(Const.PREF_DEVICE_ID, newDeviceId);
-                            e.commit();
-                        }
-
-                        // If oldDeviceId is not null and is different from newDeviceId, deregister oldDeviceId
-                        if (!oldIsEmpty && !oldDeviceId.equals(newDeviceId)) {
-                            taskType = DEREGISTER_OLD_ID;
-                            result = new AsyncRequestResult();
-                            niftyService.deregisterDevice(user, oldDeviceId);
-                        }
-
-                    } else {
-                        String httpStatusMessage = result.resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".register(): HTTP status("
-                                + httpCode + ") - " + httpStatusMessage + ".");
-                    }
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".register(): BaseAsyncRequestTask Result Code("
-                            + result.resultCode + ").");
-                }
-
-                break;
-            }
-            case DEREGISTER:  {
-                // If deregister was successful
-                if (result.resultCode == BaseAsyncRequestTask.RESULT_OK) {
-                    int httpCode = result.resultData.getInt(BaseAsyncRequestTask.HTTP_STATUS_CODE);
-                    if (httpCode == HttpStatus.SC_OK) {
-                        // Remove deviceId from storage
+                    // If oldDeviceId is null or different from newDeviceID, save newDeviceId to prefs
+                    if (oldIsEmpty || !oldDeviceId.equals(newDeviceId)) {
                         SharedPreferences.Editor e = prefs.edit();
-                        e.remove(Const.PREF_DEVICE_ID);
+                        e.putString(Const.PREF_DEVICE_ID, newDeviceId);
                         e.commit();
-
-                        // Remove push notification receiver
-                        if(AWSPushNotificationReceiver.isRegistered()) {
-                            ctx.unregisterReceiver(pushNotificationReceiver);
-                        }
-                        pushNotificationReceiver = null;
-                        niftyService = null;
-
-                    } else {
-                        String httpStatusMessage = result.resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
-                        Log.e(Const.LOG_TAG, CLS_TAG + ".onDestroy(): HTTP status("
-                                + httpCode + ") - " + httpStatusMessage + ".");
                     }
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onDestroy(): BaseAsyncRequestTask Result Code("
-                            + result.resultCode + ").");
-                }
 
-                break;
+                    // If oldDeviceId is not null and is different from newDeviceId, deregister oldDeviceId
+                    if (!oldIsEmpty && !oldDeviceId.equals(newDeviceId)) {
+                        if(user == null) user = prefs.getString(Const.PREF_USER_ID, null);
+                        result = new AsyncRequestResult();
+                        niftyService.deregisterDevice(user, oldDeviceId);
+                    }
+
+                } else {
+                    String httpStatusMessage = result.resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".register(): HTTP status("
+                            + httpCode + ") - " + httpStatusMessage + ".");
+                }
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".register(): BaseAsyncRequestTask Result Code("
+                        + result.resultCode + ").");
             }
-            case GET_NOTIF: case DEREGISTER_OLD_ID: {
-                // Do nothing
-                break;
+        } else {
+            // If deregister was successful
+            if (result.resultCode == BaseAsyncRequestTask.RESULT_OK) {
+                int httpCode = result.resultData.getInt(BaseAsyncRequestTask.HTTP_STATUS_CODE);
+                if (httpCode == HttpStatus.SC_OK) {
+                    // Remove deviceId from storage
+                    SharedPreferences.Editor e = prefs.edit();
+                    e.remove(Const.PREF_DEVICE_ID);
+                    e.commit();
+
+                    // Remove push notification receiver
+                    ctx.unregisterReceiver(pushNotificationReceiver);
+                    pushNotificationReceiver = null;
+                    niftyService = null;
+
+                } else {
+                    String httpStatusMessage = result.resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onDestroy(): HTTP status("
+                            + httpCode + ") - " + httpStatusMessage + ".");
+                }
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".onDestroy(): BaseAsyncRequestTask Result Code("
+                        + result.resultCode + ").");
             }
         }
     }
