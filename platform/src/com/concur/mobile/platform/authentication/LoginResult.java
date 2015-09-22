@@ -39,6 +39,9 @@ public class LoginResult extends BaseParser {
     private static final String TAG_DISABLE_AUTOLOGIN = "DisableAutoLogin";
     public static final String TAG_ANALYTICS_ID = "AnalyticsId";
     public static final String TAG_SERVER_URL = "ServerUrl";
+    public static final String TAG_NIFTY_API_KEY = "concurMobileNotifyAPIKey";
+    public static final String TAG_NIFTY_APP_ID = "concurMobileNotifyAppId";
+    public static final String TAG_NIFTY_SERVER = "concurMobileNotifyHost";
 
     // Tag codes.
     private static final int TAG_AUTHENTICATION_TYPE_CODE = 0;
@@ -55,6 +58,9 @@ public class LoginResult extends BaseParser {
     private static final int TAG_USER_ID_CODE = 11;
     private static final int TAG_DISABLE_AUTOLOGIN_CODE = 12;
     private static final int TAG_ANALYTICS_ID_CODE = 13;
+    public static final int TAG_NIFTY_API_KEY_CODE = 14;
+    public static final int TAG_NIFTY_APP_ID_CODE = 15;
+    public static final int TAG_NIFTY_SERVER_CODE = 16;
 
     private static final Map<String, Integer> tagMap;
 
@@ -75,6 +81,9 @@ public class LoginResult extends BaseParser {
         tagMap.put(TAG_USER_ID, TAG_USER_ID_CODE);
         tagMap.put(TAG_DISABLE_AUTOLOGIN, TAG_DISABLE_AUTOLOGIN_CODE);
         tagMap.put(TAG_ANALYTICS_ID, TAG_ANALYTICS_ID_CODE);
+        tagMap.put(TAG_NIFTY_API_KEY, TAG_NIFTY_API_KEY_CODE);
+        tagMap.put(TAG_NIFTY_APP_ID, TAG_NIFTY_APP_ID_CODE);
+        tagMap.put(TAG_NIFTY_SERVER, TAG_NIFTY_SERVER_CODE);
     }
 
     /**
@@ -203,6 +212,21 @@ public class LoginResult extends BaseParser {
     public String serverUrl;
 
     /**
+     * Contains the API key for Nifty push notifications.
+     */
+    public String niftyApiKey;
+
+    /**
+     * Contains the application ID for Nifty push notifications.
+     */
+    public String niftyAppId;
+
+    /**
+     * Contains the server URL for Nifty push notifications.
+     */
+    public String niftyServer;
+
+    /**
      * Constructs an instance of <code>LoginResult</code> with a parser and start tag.
      * 
      * @param parser
@@ -267,91 +291,108 @@ public class LoginResult extends BaseParser {
         Integer tagCode = tagMap.get(tag);
         if (tagCode != null) {
             switch (tagCode) {
-            case TAG_AUTHENTICATION_TYPE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    authenticationType = text.trim();
+                case TAG_AUTHENTICATION_TYPE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        authenticationType = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_ENTITY_TYPE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    entityType = text.trim();
+                case TAG_ENTITY_TYPE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        entityType = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_EXPENSE_COUNTRY_CODE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    expenseCountryCode = text.trim();
+                case TAG_EXPENSE_COUNTRY_CODE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        expenseCountryCode = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_HAS_REQUIRED_CUSTOM_FIELDS_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    hasRequiredCustomFields = Parse.safeParseBoolean(text.trim());
+                case TAG_HAS_REQUIRED_CUSTOM_FIELDS_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        hasRequiredCustomFields = Parse.safeParseBoolean(text.trim());
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_PIN_EXPIRATION_DATE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    pinExpirationDate = Parse.parseXMLTimestamp(text.trim());
+                case TAG_PIN_EXPIRATION_DATE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        pinExpirationDate = Parse.parseXMLTimestamp(text.trim());
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_PRODUCT_OFFERING_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    productOffering = text.trim();
+                case TAG_PRODUCT_OFFERING_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        productOffering = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_PROFILE_STATUS_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    profileStatus = Parse.safeParseInteger(text.trim());
+                case TAG_PROFILE_STATUS_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        profileStatus = Parse.safeParseInteger(text.trim());
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_REMOTE_WIPE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    remoteWipe = Parse.safeParseBoolean(text.trim());
+                case TAG_REMOTE_WIPE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        remoteWipe = Parse.safeParseBoolean(text.trim());
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_ROLES_MOBILE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    rolesMobile = text.trim();
+                case TAG_ROLES_MOBILE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        rolesMobile = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_USER_CURRENCY_CODE_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    userCurrencyCode = text.trim();
+                case TAG_USER_CURRENCY_CODE_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        userCurrencyCode = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_USER_ID_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    userId = text.trim();
+                case TAG_USER_ID_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        userId = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_DISABLE_AUTOLOGIN_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    disableAutoLogin = Parse.safeParseBoolean(text.trim());
+                case TAG_DISABLE_AUTOLOGIN_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        disableAutoLogin = Parse.safeParseBoolean(text.trim());
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_ANALYTICS_ID_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    analyticsId = text.trim();
+                case TAG_ANALYTICS_ID_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        analyticsId = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TAG_SERVER_URL_CODE: {
-                if (!TextUtils.isEmpty(text)) {
-                    serverUrl = text.trim();
+                case TAG_SERVER_URL_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        serverUrl = text.trim();
+                    }
+                    break;
                 }
-                break;
-            }
-
+                case TAG_NIFTY_API_KEY_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        niftyApiKey = text.trim();
+                    }
+                    break;
+                }
+                case TAG_NIFTY_APP_ID_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        niftyAppId = text.trim();
+                    }
+                        break;
+                }
+                case TAG_NIFTY_SERVER_CODE: {
+                    if (!TextUtils.isEmpty(text)) {
+                        niftyServer = text.trim();
+                    }
+                    break;
+                }
             }
         } else {
             if (Const.DEBUG_PARSING) {

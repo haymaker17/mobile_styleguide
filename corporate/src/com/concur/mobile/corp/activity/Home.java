@@ -106,6 +106,7 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
+import com.concur.mobile.core.util.Notifications;
 import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
@@ -494,6 +495,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     showTour();
                 } else {
                     Preferences.setNotFirstTimeRunning(prefs);
+                }
+            } else {
+                // Login is completed, make sure Nifty push service is started
+                if (Preferences.allowNotifications()) {
+                    Notifications notifications = new Notifications(ConcurCore.getContext());
+                    notifications.initAWSPushService();
                 }
             }
 
@@ -1450,6 +1457,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private void logout() {
 
         if (ConcurMobile.isConnected()) {
+            // Deregister from push notifications if they are enabled and there is a network connection
+            if (Preferences.allowNotifications()) {
+                Notifications notifications = new Notifications(ConcurCore.getContext());
+                notifications.stopAWSPushService();
+            }
 
             // When logging out, we clear the Session Id, but if we're updating
             // home (IE clearing offline data, refreshing, etc.)

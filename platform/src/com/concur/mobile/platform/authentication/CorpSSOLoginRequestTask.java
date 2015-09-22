@@ -168,6 +168,8 @@ public class CorpSSOLoginRequestTask extends PlatformAsyncRequestTask {
                 ConfigUtil.updateLoginInfo(getContext(), loginResult);
                 // update client data
                 ConfigUtil.updateAnalyticsIdInClientData(getContext(), loginResult);
+                // Update Nifty values
+                ConfigUtil.updateNiftyInClientData(getContext(), loginResult);
                 // Update Platform properties.
                 if (loginResult.accessToken != null) {
                     PlatformProperties.setAccessToken(loginResult.accessToken.key);
