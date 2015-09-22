@@ -1151,7 +1151,8 @@
     <string name="dlg_expense_camera_image_import_failed_title">Picture Import Error</string>
     <string name="dlg_expense_camera_image_import_failed_message">The picture was not able to be imported.  Please ensure sufficient space (minimum 4MB) is available on the SD card.</string>
     <string name="dlg_expense_save_failed_title">Expense Save Failed</string>
-    <string name="dlg_expense_save_cancel_confirmation_message">You will lose any changes you made to the expense, but your receipt will be saved in the Receipt Store.</string>
+    <string name="dlg_expense_receipt_capture_save_cancel_confirmation_message">You will lose any changes you made to the expense, but your receipt will be saved in the Receipt Store.</string>
+    <string name="dlg_expense_general_save_cancel_confirmation_message">You will lose any changes you made to the expense.</string>
     <string name="dlg_expense_no_external_storage_available_title">No External Storage Available</string>
     <string name="dlg_expense_no_external_storage_available_message">There is no external storage (SD card) available.  Please ensure an SD card is inserted and that your phone is not connected via USB to a computer with the SD card available as a directory on your computer.</string>
     <string name="expense_comment_optional">Comment (optional)</string>

@@ -113,7 +113,7 @@ public abstract class ExpenseListItem extends ListItem {
             if (txtView != null) {
                 Calendar transDate = getTransactionDate();
                 if (transDate != null) {
-                    txtView.setText(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(transDate.getTime()));
+                    txtView.setText(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(transDate.getTime()));
                 } else {
                     txtView.setText("");
                 }

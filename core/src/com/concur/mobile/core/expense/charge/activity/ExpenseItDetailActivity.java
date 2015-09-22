@@ -153,14 +153,15 @@ public class ExpenseItDetailActivity extends BaseActivity
 
         @Override
         public void onRequestFail(Bundle resultData) {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFail was called. Call failed to get ExpenseItReceiptImage");
+            Log.e(Const.LOG_TAG, CLS_TAG + ".onRequestFail was called. Call failed to get ExpenseItReceiptImageURL.");
             showUnexpectedErrorDialog();
         }
 
         @Override
         public void onRequestCancel(Bundle resultData) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel was called.");
+            Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestCancel was called get ExpenseItReceiptImageURL.");
             mGetExpenseItImageUrlAsyncTask.cancel(true);
+            showUnexpectedErrorDialog();
         }
 
         @Override
@@ -205,11 +206,11 @@ public class ExpenseItDetailActivity extends BaseActivity
         @Override
         public void onRequestSuccess(Bundle resultData) {
             // Track count.
-            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Save Comment");
+            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Add Comment");
 
             // Track timing.
             EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
-                    System.currentTimeMillis() - metricsTiming, "Save Comment", "");
+                    System.currentTimeMillis() - metricsTiming, "Add Comment", "");
 
             Log.d(Const.LOG_TAG, CLS_TAG + ".onRequestSuccess for PutCommentAsyncReplyListener called.");
         }
@@ -499,22 +500,26 @@ public class ExpenseItDetailActivity extends BaseActivity
         super.onOptionsItemSelected(item);
         int id = item.getItemId();
 
-        if (id == R.id.cancel_expenseit_receipt) {
-            menuAction = MENU_ACTION_CANCEL;
-            showExpenseItCancelConfirmationPrompt();
-        } else if (id == R.id.replace_expenseit_receipt) {
-            menuAction = MENU_ACTION_REPLACE;
+        if (ConcurCore.isConnected()) {
+            if (id == R.id.cancel_expenseit_receipt) {
+                menuAction = MENU_ACTION_CANCEL;
+                showExpenseItCancelConfirmationPrompt();
+            } else if (id == R.id.replace_expenseit_receipt) {
+                menuAction = MENU_ACTION_REPLACE;
 
-            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Replace Receipt");
+                EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Replace Receipt");
 
-            DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
-            receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
-        } else if (id == R.id.edit_expenseit_receipt) {
-            menuAction = MENU_ACTION_EDIT;
+                DialogFragment receiptChoiceDialog = new ReceiptChoiceDialogFragment();
+                receiptChoiceDialog.show(this.getSupportFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+            } else if (id == R.id.edit_expenseit_receipt) {
+                menuAction = MENU_ACTION_EDIT;
 
-            EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt");
-            showProgressDialog(R.string.expenseit_converting_dialog_message);
-            doManualExpenseTransitionOperations();
+                EventTracker.INSTANCE.eventTrack("Expense-ExpenseIt", "Edit Receipt");
+                showProgressDialog(R.string.expenseit_converting_dialog_message);
+                doManualExpenseTransitionOperations();
+            }
+        } else {
+            showUnexpectedErrorDialog();
         }
 
         return true;
