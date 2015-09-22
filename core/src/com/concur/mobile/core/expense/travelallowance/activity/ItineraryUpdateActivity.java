@@ -665,7 +665,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                             "Allowances need to be updated in order to generate expenses"));
                     if (result != null) {
                         List<FixedTravelAllowance> allowances = (List<FixedTravelAllowance>) result.getSerializable(BundleId.ALLOWANCE_LIST);
-                        if (allowanceController.executeUpdate(allowances, this.expenseReportKey)) {
+                        if (allowanceController.executeUpdate(allowances, this.expenseReportKey, null)) {
                            showProgressBar(true);
                         }
                     }

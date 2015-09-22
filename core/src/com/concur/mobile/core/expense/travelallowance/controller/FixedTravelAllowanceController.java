@@ -424,7 +424,7 @@ public class FixedTravelAllowanceController extends BaseController {
      * @param expenseReportKey The expense report the allowances are associated with
      * @return true, if the request has been sent
      */
-    public boolean executeUpdate(List<FixedTravelAllowance> allowances, String expenseReportKey) {
+    public boolean executeUpdate(List<FixedTravelAllowance> allowances, String expenseReportKey, final IRequestListener listener) {
         if (StringUtilities.isNullOrEmpty(expenseReportKey)) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Report Key is null! Refused." ));
             return false;
@@ -435,7 +435,7 @@ public class FixedTravelAllowanceController extends BaseController {
         }
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
         receiverList.add(receiver);
-        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, listener) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(BundleId.IS_SUCCESS);
