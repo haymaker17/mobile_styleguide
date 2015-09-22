@@ -91,7 +91,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setVisibility(View.VISIBLE);
-            holder.tvTitle.setText(ItineraryUtils.createLocationString(itinerary));
+            holder.tvTitle.setText(itinerary.getName());
         }
         if (holder.ivRowAction != null) {
             holder.ivRowAction.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
 
         if (holder.tvSubtitle2 != null) {
             holder.tvSubtitle2.setVisibility(View.VISIBLE);
-            holder.tvSubtitle2.setText(itinerary.getName());
+            holder.tvSubtitle2.setText(ItineraryUtils.createLocationString(itinerary));
         }
         //renderSubtitle2(holder, itinerary);
     }

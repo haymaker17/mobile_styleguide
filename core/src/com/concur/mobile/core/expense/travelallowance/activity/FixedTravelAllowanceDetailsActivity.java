@@ -401,7 +401,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     }
 
     private void renderOvernight(FixedTravelAllowance allowance) {
-        if (allowance == null) {
+        if (allowance == null || allowance.isLastDay()) {
+            // This section should not be rendered if the ta is for the last day of an itinerary.
             return;
         }
         //Section should not be rendered for approver if no relevant data is available

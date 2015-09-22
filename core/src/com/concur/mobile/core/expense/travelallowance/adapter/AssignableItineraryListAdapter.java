@@ -52,11 +52,11 @@ public class AssignableItineraryListAdapter extends ArrayAdapter<AssignableItine
 
         AssignableItinerary itin = getItem(position);
 
-        holder.tvTitle.setText(ItineraryUtils.createLocationString(itin));
+        holder.tvTitle.setText(itin.getName());
         DefaultDateFormat ddf = new DefaultDateFormat(getContext());
         holder.tvSubtitle1.setText(ddf.format(itin.getStartDateTime(), false, false, true) + " - "
                 + ddf.format(itin.getEndDateTime(), false, false, true));
-        holder.tvSubtitle2.setText(itin.getName());
+        holder.tvSubtitle2.setText(ItineraryUtils.createLocationString(itin));
         holder.tvValue.setVisibility(View.GONE);
 
         return view;

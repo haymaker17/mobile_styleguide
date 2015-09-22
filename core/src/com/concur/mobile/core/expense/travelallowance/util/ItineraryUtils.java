@@ -102,14 +102,15 @@ public class ItineraryUtils {
         boolean firstRun = true;
         for (String s: itin.getArrivalLocations()) {
             if (!firstRun) {
-                sb.append(", ");
+                sb.append("; ");
             }
-            int posCountrySep = s.indexOf(",");
-            if (posCountrySep > 0) {
-                sb.append(s.substring(0, posCountrySep));
-            } else {
-                sb.append(s);
-            }
+            sb.append(s);
+//            int posCountrySep = s.indexOf(",");
+//            if (posCountrySep > 0) {
+//                sb.append(s.substring(0, posCountrySep));
+//            } else {
+//                sb.append(s);
+//            }
             firstRun = false;
         }
         return sb.toString();
@@ -124,14 +125,15 @@ public class ItineraryUtils {
                     && !StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getName())) {
                 String s = segment.getArrivalLocation().getName();
                 if (!firstRun) {
-                    sb.append(", ");
+                    sb.append("; ");
                 }
-                int posCountrySep = s.indexOf(",");
-                if (posCountrySep > 0) {
-                    sb.append(s.substring(0, posCountrySep));
-                } else {
-                    sb.append(s);
-                }
+                sb.append(s);
+//                int posCountrySep = s.indexOf(",");
+//                if (posCountrySep > 0) {
+//                    sb.append(s.substring(0, posCountrySep));
+//                } else {
+//                    sb.append(s);
+//                }
 
                 firstRun = false;
             }

@@ -100,6 +100,9 @@ public class GetTAFixedAllowancesResponseDOMParser {
                 if (tag.equals("IsLocked")){
                     currentAllowance.setLocked(StringUtilities.toBoolean(text));
                 }
+                if (tag.equals("IsLastDay")){
+                    currentAllowance.setIsLastDay(StringUtilities.toBoolean(text));
+                }
                 if (tag.equals("AllowanceDate")) {
                     try {
                         currentAllowance.setDate(dateFormat.parse(text));
