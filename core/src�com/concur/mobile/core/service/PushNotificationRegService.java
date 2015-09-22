@@ -57,7 +57,7 @@ public class PushNotificationRegService extends Service {
 
             protected void onPostExecute(Object result) {
                 if (pushNotificationReceiver == null) {
-                    pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
+                    pushNotificationReceiver = new AWSPushNotificationReceiver();
                     if (pushNotificationFilter == null) {
                         pushNotificationFilter = new IntentFilter();
                         pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
@@ -79,9 +79,7 @@ public class PushNotificationRegService extends Service {
     @Override
     public void onDestroy() {
         if (pushNotificationReceiver != null) {
-            if(AWSPushNotificationReceiver.isRegistered()) {
-                ctx.unregisterReceiver(pushNotificationReceiver);
-            }
+            ctx.unregisterReceiver(pushNotificationReceiver);
             pushNotificationReceiver = null;
         }
         super.onDestroy();

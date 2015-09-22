@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.concur.core.R;
@@ -16,12 +17,33 @@ import com.concur.mobile.core.activity.Preferences;
 import com.concur.mobile.core.expense.report.approval.activity.Approval;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.niftyservice.NiftyAsyncRequestTask;
 
 public class AWSPushNotificationReceiver extends BroadcastReceiver {
 
     public static final String CLS_TAG = AWSPushNotificationReceiver.class.getSimpleName();
 
-    public AWSPushNotificationReceiver() {
+    protected static AWSPushNotificationReceiver instance;
+
+    private static boolean registered;
+
+    protected AWSPushNotificationReceiver() { }
+
+    static {
+        instance = new AWSPushNotificationReceiver();
+        registered = false;
+    }
+
+    public static AWSPushNotificationReceiver getInstance() {
+        return instance;
+    }
+
+    public static Boolean isRegistered() {
+        return registered;
+    }
+
+    public static void setRegistered(Boolean isRegistered) {
+        registered = isRegistered;
     }
 
     @Override
@@ -32,12 +54,16 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
         }
     }
 
-    private void buildNotificationBadge(Context context, Bundle extras) {
+    protected void buildNotificationBadge(Context context, Bundle extras) {
         if (extras != null) {
 
             String title = extras.getString(Const.PUSH_CONCUR_NOTIF_SUBJECT_FIELD);
             String message = extras.getString(Const.PUSH_CONCUR_NOTIF_MESSAGE_FIELD);
             String type = extras.getString(Const.PUSH_CONCUR_NOTIF_TYPE_FIELD);
+
+            Boolean containsId = (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY));
+            String notificationId = (containsId) ? extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY) : null;
+
 
             Log.v(Const.LOG_TAG, CLS_TAG + " AWSpush : title " + title + " message: " + message + " type: " + type);
 
@@ -52,10 +78,16 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
                 if (Preferences.shouldVibrateNotifications()) {
                     nb.setVibrate(Const.NOTIFICATION_VIBRATION_PATTERN);
                 }
+
                 Intent nfyIntent = new Intent(context, Approval.class);
                 nfyIntent.putExtra(ConcurCore.FROM_NOTIFICATION, true);
                 nfyIntent.putExtra(Flurry.EXTRA_FLURRY_CATEGORY, Flurry.CATEGORY_PUSH_NOTIFICATION);
                 nfyIntent.putExtra(Flurry.EXTRA_FLURRY_ACTION_PARAM_VALUE, type);
+
+                if (!TextUtils.isEmpty(notificationId)) {
+                    nfyIntent.putExtra(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY, notificationId);
+                }
+
                 TaskStackBuilder sb = TaskStackBuilder.create(context);
                 sb.addParentStack(Approval.class);
                 sb.addNextIntent(nfyIntent);
