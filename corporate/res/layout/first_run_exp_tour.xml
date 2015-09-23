@@ -36,7 +36,7 @@
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
                 android:visibility="gone"
-                android:background="@color/MaterialGreen"/>
+                android:background="@color/MaterialConcurBlue"/>
 
             <View
                 android:id="@+id/tourPage2Marker"
