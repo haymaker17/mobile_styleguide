@@ -913,6 +913,55 @@ ul.nav {
 
 
 
+/* Concur Colors */ 
+
+.dark_cerulean {
+	background: #004A7D;
+}
+
+.lochmara {
+	background: #0078C9;
+}
+
+.dodger_blue {
+    background: #00A9F2;
+}
+
+.sap_green {
+	background: #548D3D;
+}
+
+.vida_loca {
+	background: #89BF42;
+}
+
+.flame_pea {
+    background: #D25533;
+}
+
+.yellow_sea {
+	background: #F4A900;
+}
+
+.black {
+	background: #000000;
+}
+
+.mountain_mist {
+	background: #898D8D;
+}
+
+.pastel_grey {
+	background: #CBCBC4;
+}
+
+.white {
+	background: #FFFFFF;
+/* 	border: 1px solid #DBE1E6;		 */
+}
+
+
+
 
 
 
