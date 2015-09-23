@@ -61,10 +61,15 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
             String message = extras.getString(Const.PUSH_CONCUR_NOTIF_MESSAGE_FIELD);
             String type = extras.getString(Const.PUSH_CONCUR_NOTIF_TYPE_FIELD);
 
+            String notificationSource = "AWSpush";
+            String notificationId = null;
             Boolean containsId = (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY));
-            String notificationId = (containsId) ? extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY) : null;
+            if (containsId) {
+                notificationId = extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY);
+                notificationSource = "Nifty Push Notification";
+            }
 
-            Log.v(Const.LOG_TAG, CLS_TAG + " AWSpush : title " + title + " message: " + message + " type: " + type);
+            Log.v(Const.LOG_TAG, CLS_TAG + " " + notificationSource + " title: " + title + " message: " + message + " type: " + type);
 
             if (Const.PUSH_CONCUR_NOTIF_TYPE_REPORT_APPR.equalsIgnoreCase(type)
                     || Const.PUSH_CONCUR_NOTIF_TYPE_TRIP_APPR.equalsIgnoreCase(type)) {
@@ -79,7 +84,7 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
                 notificationIntent_forclear.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 notificationIntent_forclear.putExtra("pushBundle", extras);
 
-                // just so we can cancel the intent
+                // Clear pending Intents
                 PendingIntent contentIntent_forclear = PendingIntent.getActivity(context, 0, notificationIntent_forclear, PendingIntent.FLAG_UPDATE_CURRENT);
                 contentIntent_forclear.cancel();
                 /*
