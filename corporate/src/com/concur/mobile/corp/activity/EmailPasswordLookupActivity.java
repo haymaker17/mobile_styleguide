@@ -754,7 +754,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // Grab our default preferences and get the server address configured
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         ConcurMobile app = (ConcurMobile)getApplication();
-        Intent intent = new Intent(this,FirstRunExpItTravelTour.class);
+        Intent intent = new Intent(this,Home.class);
         if(prefs.contains(Preferences.PREF_APP_UPGRADE)){
             boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE,false);
             if (isUpgrade) {
