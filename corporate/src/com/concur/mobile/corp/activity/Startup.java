@@ -1,6 +1,8 @@
 package com.concur.mobile.corp.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +33,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.Notifications;
+import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.corp.ConcurMobile;
@@ -312,68 +315,64 @@ public class Startup extends BaseActivity {
     }
 
     private void startHomeScreen() {
-        startIntent = new Intent(this, Home.class);
+        Activity act = Startup.this;
+        startIntent = getStartIntent(act);
         boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
         startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-
-        //TODO re-enable after new login. This is first run experience.
-//        boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
-//        Context ctx = ConcurCore.getContext();
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-//        //check roles
-//        if (!(RolesUtil.isTestDriveUser()) && Preferences.shouldShowExpenseItAd()) {
-//            if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
-//                shownExpenseIt = true;
-//                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-//            } else {
-//                shownExpenseIt = false;
-//            }
-//        }
-//        if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
-//            if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
-//                shownTravel = true;
-//                Preferences.setFirstRunExpUpgradeTravel(prefs);
-//            } else {
-//                shownTravel = false;
-//            }
-//        }
-//
-//        if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
-//            shownBoth = true;
-//            shownExpenseIt = true;
-//            shownTravel = true;
-//            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-//            Preferences.setFirstRunExpUpgradeTravel(prefs);
-//            Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-//        } else if (shownExpenseIt && shownTravel) {
-//            shownBoth = true;
-//            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-//        } else {
-//            shownBoth = false;
-//        }
-//
-//        if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
-//            Toast.makeText(ctx, "This is ExpenseIT and Travel User", Toast.LENGTH_LONG).show();
-//            startIntent = new Intent(this, FirstRunExpItTravelTour.class);
-//            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//        } else if (!shownExpenseIt && Preferences.shouldShowExpenseItAd()) {
-//            Toast.makeText(ctx, "This is ExpenseIT Only User", Toast.LENGTH_LONG).show();
-//            startIntent = new Intent(this, FirstRunExpItTour.class);
-//            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//        } else if (!shownTravel && RolesUtil.isTraveler(ctx)) {
-//            Toast.makeText(ctx, "This is Travel Only User", Toast.LENGTH_LONG).show();
-//            startIntent = new Intent(this, FirstRunTravelTour.class);
-//            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//        } else {
-//            startIntent = new Intent(this, Home.class);
-//            boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//            startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//        }
     }
 
+    public static Intent getStartIntent(Activity activity){
+        Intent startIntent = null;
+        boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        //check roles
+        if (!(RolesUtil.isTestDriveUser()) && Preferences.isExpenseItUser()) {
+            if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
+                shownExpenseIt = true;
+                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+            } else {
+                shownExpenseIt = false;
+            }
+        }
+        if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
+            if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
+                shownTravel = true;
+                Preferences.setFirstRunExpUpgradeTravel(prefs);
+            } else {
+                shownTravel = false;
+            }
+        }
+
+        if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
+            shownBoth = true;
+            shownExpenseIt = true;
+            shownTravel = true;
+            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+            Preferences.setFirstRunExpUpgradeTravel(prefs);
+            Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+        } else if (shownExpenseIt && shownTravel) {
+            shownBoth = true;
+            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+        } else {
+            shownBoth = false;
+        }
+
+        if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
+            Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
+            startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
+        } else if (!shownExpenseIt && Preferences.isExpenseItUser()) {
+            Log.d(CLS_TAG, "This is ExpenseIT Only User");
+            startIntent = new Intent(activity, FirstRunExpItTour.class);
+        } else if (!shownTravel && RolesUtil.isTraveler(ctx)) {
+            Log.d(CLS_TAG, "This is Travel Only User");
+            startIntent = new Intent(activity, FirstRunTravelTour.class);
+        } else {
+            startIntent = new Intent(activity, Home.class);
+        }
+
+        return startIntent;
+    }
     private void startCompanySignOn() {
         // NOTE: This intent actually starts the Login activity, but passing a boolean value
         // indicating the Login activity should immediately start the company sign-on process.

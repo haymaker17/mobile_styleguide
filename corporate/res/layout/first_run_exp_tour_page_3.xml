@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
             android:scaleType="fitXY"
-            android:src="@drawable/test_drive_tour_image2"/>
+            android:src="@drawable/first_run_eu_tour3"/>
     </TableRow>
 
     <TableRow
@@ -45,7 +45,7 @@
                 android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
                 android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_title"
+                android:text="@string/expit_tried_hotel_suggestions"
                 android:textAppearance="@style/TourText_Material"/>
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_msg"
+                android:text="@string/expit_choose_previous_hotels"
                 android:textAppearance="@style/TourSmallSecondaryText_Material"/>
 
 

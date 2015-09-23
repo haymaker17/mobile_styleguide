@@ -70,6 +70,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static final String PREF_SESSION_OBSOLETE = "pref_session_key";
     public static final String PREF_SESSION_ENC = "pref_session_key_enc";
     public static final String PREF_PLATFORM_DATA_MIGRATION = "pref_platform_data_migration";
+    public static final String PREF_APP_UPGRADE = "pref_app_upgrade";
 
     public static final Crypt PREF_CRYPT;
     private static boolean hideAutoLogin = false;
@@ -324,6 +325,11 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
         doAutoLogin(prefs, app);
+
+        // commit chnages in preferences.
+        Editor e = prefs.edit();
+        e.putBoolean(PREF_APP_UPGRADE, true);
+        e.commit();
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {

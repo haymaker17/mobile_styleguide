@@ -17,10 +17,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
-            android:layout_gravity="center"
+            android:layout_gravity="left|center_vertical"
             android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/test_drive_tour_image2"/>
+            android:src="@drawable/first_run_eu_tour1"/>
     </TableRow>
 
     <TableRow
@@ -45,7 +47,7 @@
                 android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
                 android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_title"
+                android:text="@string/expit_receipt_to_expense"
                 android:textAppearance="@style/TourText_Material"/>
 
             <TextView
@@ -55,7 +57,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_msg"
+                android:text="@string/expit_available_desc_long"
                 android:textAppearance="@style/TourSmallSecondaryText_Material"/>
 
 

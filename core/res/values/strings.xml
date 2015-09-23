@@ -2081,8 +2081,7 @@
     <string name="sort_expenses_by_vendor">Vendor</string>
 
     <!-- New First Run Experinece -->
-    <string name="first_run_exp_it_page_1_title">Turn receipt into expense, as you go</string>
-    <string name="first_run_exp_it_page_1_msg">Expense it now available in concur app. Take photos of your receipts and ExpenseIt will turn the images into expenses for you.</string>
+    <string name="get_started">Get Started</string>
 
 
 </resources>
