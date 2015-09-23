@@ -6,6 +6,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
+    compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
 }
 
 
@@ -15,7 +16,7 @@ android {
         minSdkVersion lowestSdkSupportVersion
         targetSdkVersion latestSdkVersion
         versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-        versionName "9.26.0"
+        versionName "9.26.0.FRU.test"
         multiDexEnabled true
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
 

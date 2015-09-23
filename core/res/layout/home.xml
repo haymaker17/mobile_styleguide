@@ -849,30 +849,6 @@
                     </LinearLayout>
                 </ScrollView>
 
-                <FrameLayout
-                    android:id="@+id/exp_it_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight=".18"
-                    android:clickable="true"
-                    android:onClick="onClick"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/round_border_request"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:text="@string/expit_desc_short"
-                        android:gravity="center"
-                        android:textAppearance="@style/TestDriveOverlayText"
-                        />
-                </FrameLayout>
-
                 <LinearLayout
                     android:id="@+id/homeFooter"
                     android:layout_width="match_parent"

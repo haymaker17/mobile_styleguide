@@ -106,7 +106,6 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;
@@ -134,6 +133,7 @@ import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.ExpenseItProperties;
@@ -152,8 +152,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME)
-public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
+public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener, IShowcaseListener {
 
     public static boolean forceExpirationHome;
 
@@ -269,6 +272,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     protected ActionBarDrawerToggle mDrawerToggle;
 
     private AlertDialogFragment confirmationDialog;
+
+    private static final String SHOWCASE_EXP_IT_ID = "showcase_for_expense_it_button";
 
     private List<NavigationItem> navItems = new ArrayList<NavigationItem>();
 
@@ -2510,7 +2515,47 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private void showExpenseItFooterButton() {
         showFooter();
+        View view = findViewById(R.id.homeExpenseIt);
         setViewVisible(R.id.homeExpenseIt);
+
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE,false);
+        if(isUpgrade){
+            presentShowcaseView(0, view);
+            // commit changes in preferences.
+            SharedPreferences.Editor e = prefs.edit();
+            e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+            e.commit();
+        }
+    }
+
+    /**
+     * Show expense it coach mark
+     *
+     * @param withDelay : time delay
+     * @param view : view on which we need to show coach mark
+     * */
+    private void presentShowcaseView(int withDelay, View view) {
+        MaterialShowcaseView.Builder showcaseView = new MaterialShowcaseView.Builder(this);
+        showcaseView.setTarget(view);
+        showcaseView.setContentText(R.string.expit_desc_short);
+        showcaseView.setContentTextColor(getResources().getColor(R.color.MaterialWhite));
+        showcaseView.setMaskColour(getResources().getColor(R.color.MaterialTransparent));
+        showcaseView.setDelay(withDelay);
+        showcaseView.setUseAutoRadius(true);
+        showcaseView.setDismissOnTouch(true);
+        showcaseView.singleUse(SHOWCASE_EXP_IT_ID);
+        showcaseView.setListener(this);
+        showcaseView.show();
+    }
+
+    @Override
+    public void onShowcaseDisplayed(MaterialShowcaseView var1){
+    }
+
+    @Override
+    public void onShowcaseDismissed(MaterialShowcaseView var1){
     }
 
     private void hideExpenseItFooterButton() {

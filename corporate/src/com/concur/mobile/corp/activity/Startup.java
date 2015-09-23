@@ -358,7 +358,7 @@ public class Startup extends BaseActivity {
             shownBoth = false;
         }
 
-        if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
+        if (!shownBoth && Preferences.isExpenseItUser() && RolesUtil.isTraveler(ctx)) {
             Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
             startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
         } else if (!shownExpenseIt && Preferences.isExpenseItUser()) {
