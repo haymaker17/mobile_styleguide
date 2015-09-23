@@ -335,8 +335,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
-                if (itinerary.getSegmentList().size() == 1) {
+                if (itinerary.getSegmentList().size() == 1 && lastSegment.getDepartureLocation() != null) {//Return to Home
                     emptySegment.setArrivalLocation(lastSegment.getDepartureLocation());
+                    cal.add(Calendar.MINUTE, lastSegment.getDepartureLocation().getTimeZoneOffset().intValue());
+                    emptySegment.setArrivalDateTime(cal.getTime());
                 }
             } else {
                 if (defaultDate != null) {
@@ -376,6 +378,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (resultCode == Activity.RESULT_OK) {
                     String selectedListItemKey = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_KEY);
                     String selectedListItemText = data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT);
+                    Long selectedTimeZoneOffset = null;
+                    try {
+                        selectedTimeZoneOffset = Long.parseLong(data.getStringExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TIME_ZONE_OFFSET), 10);
+                    } catch (NumberFormatException nfe) {
+                        Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onActivityResult", "Time Zone Offset is not a number!"));
+                    }
                     int datePosition = 0;
                     if (this.currentPosition != null) {
                         ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
@@ -384,6 +392,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         ItineraryLocation itinLocation = new ItineraryLocation();
                         itinLocation.setName(selectedListItemText);
                         itinLocation.setCode(selectedListItemKey);
+                        itinLocation.setTimeZoneOffset(selectedTimeZoneOffset);
                         if (segment.getArrivalLocation() != null) {
                             itinLocation.setRateLocationKey(segment.getArrivalLocation().getRateLocationKey());
                         }

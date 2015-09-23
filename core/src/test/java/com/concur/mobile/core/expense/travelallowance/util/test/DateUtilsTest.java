@@ -176,13 +176,19 @@ public class DateUtilsTest extends TestCase {
 
     @Test
     public void getCalendarKeepingTime(){
-        assertNull(DateUtils.getCalendarKeepingTime(null,2014,Calendar.MARCH,22));
+        assertNull(DateUtils.getCalendarKeepingTime(null, 2014, Calendar.MARCH, 22));
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2014, Calendar.MARCH, 22, 16, 42);
         calendar.set(Calendar.SECOND,0);
         calendar.set(Calendar.MILLISECOND, 0);
-        assertEquals(calendar, DateUtils.getCalendarKeepingTime(getReferenceDate(),2014,Calendar.MARCH,22));
+        assertEquals(calendar, DateUtils.getCalendarKeepingTime(getReferenceDate(), 2014, Calendar.MARCH, 22));
+    }
+
+    @Test
+    public void convertMinutesToMilliseconds() {
+        assertEquals(0, DateUtils.convertMinutesToMilliseconds(0));
+        assertEquals(60000, DateUtils.convertMinutesToMilliseconds(1));
     }
 
     private Date getDate(int year, int month, int day, int hourOfDay,

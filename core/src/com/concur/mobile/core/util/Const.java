@@ -1071,6 +1071,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT = "expense.list.search.selected.list.item.text";
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_CODE = "expense.list.search.selected.list.item.crn.code";
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_KEY = "expense.list.search.selected.list.item.crn.key";
+    public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TIME_ZONE_OFFSET = "expense.list.search.selected.list.item.time.zone.offset";
     public static final String EXTRA_EXPENSE_LIST_SEARCH_TITLE = "expense.list.search.title";
     public static final String EXTRA_EXPENSE_LIST_SEARCH_EXCLUDE_KEYS = "expense.list.search.exclude.keys";
     public static final String EXTRA_EXPENSE_LIST_SHOW_CODES = "expense.list.search.show.codes";

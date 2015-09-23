@@ -80,15 +80,15 @@ public final class DateUtils {
 //        return convertDateToSeconds(date, false);
 //    }
 
-//    /**
-//     * Converts the given minutes into milliseconds
-//     *
-//     * @param minutes The minutes
-//     * @return The milliseconds
-//     */
-//    public static long convertMinutesToMilliseconds(long minutes) {
-//        return minutes * SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
-//    }
+    /**
+     * Converts the given minutes into milliseconds
+     *
+     * @param minutes The minutes
+     * @return The milliseconds
+     */
+    public static long convertMinutesToMilliseconds(long minutes) {
+        return minutes * SECONDS_IN_ONE_MINUTE * MILLISECONDS_IN_ONE_SECOND;
+    }
 
 //    /**
 //     * Converts the given <code>date</code> to seconds. The time part (hours,
