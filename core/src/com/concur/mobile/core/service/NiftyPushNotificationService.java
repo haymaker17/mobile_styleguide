@@ -106,15 +106,13 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Bundle extras = intent.getExtras();
-
-        if (extras != null) {
-            if (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY)) {
-                String notificationId = extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY);
+        if (intent != null) {
+            if (intent.hasExtra(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY)) {
+                String notificationId = intent.getStringExtra(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY);
                 sendReadReciept(notificationId);
+            } else {
+                Log.v(Const.LOG_TAG, CLS_TAG + " bundle is null, cannot send read receipt");
             }
-        } else {
-            Log.v(Const.LOG_TAG, CLS_TAG + " bundle is null, cannot send read receipt");
         }
 
         // We want this service to continue running until it is explicitly
@@ -126,9 +124,9 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
      * Fill the NiftyProperties object with settings required for Nifty calls
      */
     private boolean fillNiftyProperties() {
+        String server = ConcurCore.getNiftyServer();
         String apiKey = ConcurCore.getNiftyApiKey();
         String appId = ConcurCore.getNiftyAppId();
-        String server = ConcurCore.getNiftyServer();
         boolean allPresent = (!TextUtils.isEmpty(apiKey) &&
                 !TextUtils.isEmpty(appId) && !TextUtils.isEmpty(server));
 
@@ -146,6 +144,19 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
     }
 
     /**
+     * Fill the NiftyProperties object with settings required for Nifty calls
+     */
+    private void emptyNiftyProperties() {
+        NiftyProperties.setContext(null);
+        NiftyProperties.setApiKey("");
+        NiftyProperties.setAppID("");
+        NiftyProperties.setServerAddress("");
+        NiftyProperties.setUseSSL(null);
+        NiftyProperties.setPort(0);
+        NiftyProperties.setVersionNumber("");
+    }
+
+    /**
      * Register for Nifty push notifications if information from login has been stored
      */
     private void register() {
@@ -155,10 +166,8 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
             protected Object doInBackground(Object... params) {
                 prefs = ctx.getService().prefs;
 
-                // If NiftyProperties are not filled, try retrieving from storage
-                if (!NiftyProperties.allPropertiesFilled()) {
-                    shouldCancelService = !fillNiftyProperties();
-                }
+                // Try retrieving NiftyProperties from storage
+                shouldCancelService = !fillNiftyProperties();
 
                 // Proceed with register if properties are found
                 if (!shouldCancelService) {
@@ -195,20 +204,17 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
                 if (pushNotificationReceiver == null && !shouldCancelService) {
                     pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
 
-                    // If the receiver is not already registered, register it
-                    if (!AWSPushNotificationReceiver.isRegistered()) {
-                        if (pushNotificationFilter == null) {
-                            pushNotificationFilter = new IntentFilter();
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
-                            pushNotificationFilter.addCategory("com.concur.breeze");
-                        }
-
-                        ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
-                                "com.google.android.c2dm.permission.SEND", null);
-                        AWSPushNotificationReceiver.setRegistered(true);
+                    if (pushNotificationFilter == null) {
+                        pushNotificationFilter = new IntentFilter();
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
+                        pushNotificationFilter.addCategory("com.concur.breeze");
                     }
+
+                    ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
+                            "com.google.android.c2dm.permission.SEND", null);
+                    if (!AWSPushNotificationReceiver.isRegistered()) AWSPushNotificationReceiver.setRegistered(true);
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onPostExecute: pushNotificationReceiver is *not* null!");
                 }
@@ -260,7 +266,8 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
             }
         }.execute(null, null, null);
 
-        super.onDestroy();
+        // Call super.onDestroy(); from onRequestSuccess
+        // so receiver is not destroyed before Nifty call finishes
     }
 
     // Start implementation of BaseAsyncRequestTask.AsyncReplyListener interface methods
@@ -317,13 +324,18 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
                         e.remove(Const.PREF_DEVICE_ID);
                         e.apply();
 
-                        // Remove push notification receiver
-                        if(AWSPushNotificationReceiver.isRegistered()) {
+                        // Remove all NiftyProperties
+                        emptyNiftyProperties();
+
+                        if (AWSPushNotificationReceiver.isRegistered()) {
                             AWSPushNotificationReceiver.setRegistered(false);
                             ctx.unregisterReceiver(pushNotificationReceiver);
                         }
                         pushNotificationReceiver = null;
                         niftyService = null;
+
+                        // Destroy service here so that deregister can finish before receiver is gone
+                        super.onDestroy();
 
                     } else {
                         String httpStatusMessage = result.resultData.getString(BaseAsyncRequestTask.HTTP_STATUS_MESSAGE);
@@ -367,6 +379,8 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
         niftyService.closeHandlerThread();
         result.countDown();
     }
+
+
 
     @Override
     public void cleanup() { }
