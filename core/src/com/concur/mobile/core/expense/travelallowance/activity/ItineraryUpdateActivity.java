@@ -111,6 +111,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     private DatePickerFragment calendarDialog;
     private TimePickerFragment timeDialog;
     private Date defaultDate;
+    private boolean expenseReportIsSubmitted;
 
     /**
      * {@inheritDoc}
@@ -129,6 +130,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             this.expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
 
+        this.expenseReportIsSubmitted = getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false);
         String expenseReportName = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME);
 
         this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
@@ -258,14 +260,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
             }
         };
 
-        onReturnToHomeListener = new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (!isDataInconsistent()) {
-                    addNewRow();
+        onReturnToHomeListener = null;
+        if (!this.expenseReportIsSubmitted) {
+            onReturnToHomeListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isDataInconsistent()) {
+                        addNewRow();
+                    }
                 }
-            }
-        };
+            };
+        }
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         if (listView != null && this.itinerary != null) {
@@ -285,13 +290,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         renderDefaultValues();
 
-        // Disable long press on the rows
-        //registerForContextMenu(listView);
-
         View fab = findViewById(R.id.fab);
         if (fab != null) {
             if (itinerary != null) {
-                if (itinerary.isLocked()) {
+                if (this.expenseReportIsSubmitted) {
                     fab.setVisibility(View.GONE);
                 } else {
                     fab.setVisibility(View.VISIBLE);
@@ -500,7 +502,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
      */
     @Override
     public boolean onPrepareOptionsMenu (Menu menu) {
-        if (this.itinerary.isLocked()) {
+        if (this.expenseReportIsSubmitted) {
             for (int i = 0; i < menu.size(); i++){
                 MenuItem item = menu.getItem(i);
                 if (item.getItemId() == R.id.menuSave) {

@@ -283,7 +283,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vgReturnToHome == null) {
             return;
         }
-        if (segments != null && segments.size() == 1) {
+        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null) {
             holder.vgReturnToHome.setVisibility(View.VISIBLE);
             if (holder.tvReturnToHome != null) {
                 String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);

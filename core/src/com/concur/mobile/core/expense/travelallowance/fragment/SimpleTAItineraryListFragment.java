@@ -156,6 +156,7 @@ public class SimpleTAItineraryListFragment extends Fragment implements SwipeRefr
             Intent intent = new Intent(getActivity(), ItineraryUpdateActivity.class);
             intent.putExtra(BundleId.ITINERARY, itinerary);
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
+            intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expenseReportIsSubmitted);
             getActivity().startActivityForResult(intent, REQUEST_CODE_UPDATE_ITINERARY);
         }
     }
