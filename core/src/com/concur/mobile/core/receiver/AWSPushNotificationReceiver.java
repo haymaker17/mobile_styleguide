@@ -64,11 +64,28 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
             Boolean containsId = (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY));
             String notificationId = (containsId) ? extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY) : null;
 
-
             Log.v(Const.LOG_TAG, CLS_TAG + " AWSpush : title " + title + " message: " + message + " type: " + type);
 
             if (Const.PUSH_CONCUR_NOTIF_TYPE_REPORT_APPR.equalsIgnoreCase(type)
                     || Const.PUSH_CONCUR_NOTIF_TYPE_TRIP_APPR.equalsIgnoreCase(type)) {
+
+                /*
+                * Work around android 4.4 bug in launching intent from push notification.
+                * Issue report: https://code.google.com/p/android/issues/detail?id=61850
+                * Fix used: https://github.com/phonegap-build/PushPlugin/issues/192
+                * */
+                // we do this once...
+                Intent notificationIntent_forclear = new Intent(context, Approval.class);
+                notificationIntent_forclear.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                notificationIntent_forclear.putExtra("pushBundle", extras);
+
+                // just so we can cancel the intent
+                PendingIntent contentIntent_forclear = PendingIntent.getActivity(context, 0, notificationIntent_forclear, PendingIntent.FLAG_UPDATE_CURRENT);
+                contentIntent_forclear.cancel();
+                /*
+                * End work around
+                * */
+
                 NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
                 nb.setSmallIcon(R.drawable.icon_notify);
                 nb.setContentTitle(title);

@@ -59,18 +59,17 @@ public class PushNotificationRegService extends Service {
                 if (pushNotificationReceiver == null) {
                     pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
 
-                    if (!AWSPushNotificationReceiver.isRegistered()) {
-                        if (pushNotificationFilter == null) {
-                            pushNotificationFilter = new IntentFilter();
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
-                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
-                            pushNotificationFilter.addCategory("com.concur.breeze");
-                        }
-                        ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
-                                "com.google.android.c2dm.permission.SEND", null);
-                        AWSPushNotificationReceiver.setRegistered(true);
+                    if (pushNotificationFilter == null) {
+                        pushNotificationFilter = new IntentFilter();
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
+                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
+                        pushNotificationFilter.addCategory("com.concur.breeze");
                     }
+                    ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
+                            "com.google.android.c2dm.permission.SEND", null);
+                    if (!AWSPushNotificationReceiver.isRegistered()) AWSPushNotificationReceiver.setRegistered(true);
+
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onPostExecute: pushNotificationReceiver is *not* null!");
                 }

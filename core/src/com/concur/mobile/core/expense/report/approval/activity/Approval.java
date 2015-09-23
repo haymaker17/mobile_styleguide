@@ -376,7 +376,7 @@ public class Approval extends BaseActivity {
             dataReceiverRegistered = true;
         }
 
-        // Set up the broadcast receiver if needbe.
+        // Set up the broadcast receiver if need be.
         if (!broadcastReceiverRegistered) {
             registerReceiver(broadcastReceiver, filter);
             broadcastReceiverRegistered = true;
@@ -388,7 +388,7 @@ public class Approval extends BaseActivity {
         // 'checkForRefreshData'.
         if (this.getClass().equals(Approval.class)) {
             if (isServiceAvailable() && dataUpdateRequest == null) {
-                // Check and request new data, if needbe.
+                // Check and request new data, if need be.
                 checkForRefreshData(false);
             }
         }
