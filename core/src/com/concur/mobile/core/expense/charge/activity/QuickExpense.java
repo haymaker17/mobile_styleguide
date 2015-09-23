@@ -1575,16 +1575,20 @@ public class QuickExpense extends BaseActivity {
                     View topView = findViewById(R.id.expense_amount);
                     TextView view = (TextView) topView.findViewById(R.id.field_note);
                     if (s != null && view != null) {
+
+                        Double finalAmount = null;
                         String curValue = s.toString().trim();
-                        // Check the amount and make sure it is less than 1
-                        // quadrillion
-                        Double finalAmount = FormatUtil.parseAmount(curValue, ConcurCore.getContext().getResources()
+
+                        if (!TextUtils.isEmpty(curValue)) {
+                            // Check the amount and make sure it is less than 1
+                            // quadrillion
+                            finalAmount = FormatUtil.parseAmount(curValue, ConcurCore.getContext().getResources()
                                 .getConfiguration().locale);
 
-                        if (!finalAmount.toString().equals(mobileEntry.getTransactionAmount().toString())) {
-                            changesHaveBeenMade = true;
+                            if (finalAmount != null && !finalAmount.toString().equals(mobileEntry.getTransactionAmount().toString())) {
+                                changesHaveBeenMade = true;
+                            }
                         }
-
                         // MOB-10928 - negative amounts are okay.
                         if (finalAmount == null) {
                             // Show notification.
