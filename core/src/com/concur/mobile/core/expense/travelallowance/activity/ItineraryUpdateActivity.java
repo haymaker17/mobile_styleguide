@@ -133,9 +133,17 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         this.expenseReportIsSubmitted = getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false);
         String expenseReportName = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_NAME);
 
-        this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
-        if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_DATE)) {
-            this.defaultDate = (Date) getIntent().getExtras().getSerializable(BundleId.EXPENSE_REPORT_DATE);
+        if (savedInstanceState == null) {//very first create
+            this.itinerary = (Itinerary) getIntent().getExtras().getSerializable(BundleId.ITINERARY);
+            if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_DATE)) {
+                this.defaultDate = (Date) getIntent().getExtras().getSerializable(BundleId.EXPENSE_REPORT_DATE);
+            }
+        } else {
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onCreate", "Restoring itinerary from instance state"));
+            //Get itinerary from instance state
+            this.itinerary = (Itinerary) savedInstanceState.getSerializable(BundleId.ITINERARY);
+            this.taskChain = savedInstanceState.getInt(TASK_CHAIN, 0);
+            this.currentPosition = (PositionInfoTag) savedInstanceState.getSerializable(BundleId.POSITION_INFO_TAG);
         }
 
         if (this.itinerary == null) {
@@ -310,14 +318,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        this.itinerary = (Itinerary) savedInstanceState.getSerializable(BundleId.ITINERARY);
-        this.taskChain = savedInstanceState.getInt(TASK_CHAIN, 0);
-        this.currentPosition = (PositionInfoTag) savedInstanceState.getSerializable(BundleId.POSITION_INFO_TAG);
-    }
-
     private void addNewRow() {
         ItinerarySegment emptySegment = new ItinerarySegment();
         //Get current date/time
@@ -328,11 +328,11 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 emptySegment.setDepartureLocation(lastSegment.getArrivalLocation());
                 if (lastSegment.getArrivalDateTime() != null) {
                     cal.setTime(lastSegment.getArrivalDateTime());
-                    cal.add(Calendar.MINUTE, 1);
+                    cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     cal.set(Calendar.SECOND, 0);
                     cal.set(Calendar.MILLISECOND, 0);
                     emptySegment.setDepartureDateTime(cal.getTime());
-                    cal.add(Calendar.MINUTE, 1);
+                    cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
                 if (itinerary.getSegmentList().size() == 1) {

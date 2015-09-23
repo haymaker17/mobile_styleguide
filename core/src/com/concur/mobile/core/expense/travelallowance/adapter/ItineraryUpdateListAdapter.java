@@ -259,16 +259,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEnabled(int position) {
-        // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
-        // in the context menu.
-        return true;
-    }
-
     private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
