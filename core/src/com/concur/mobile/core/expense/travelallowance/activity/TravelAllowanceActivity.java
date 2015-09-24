@@ -6,7 +6,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.concur.core.R;
@@ -27,12 +29,15 @@ import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItinerary
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by D049515 on 15.06.2015.
@@ -121,6 +126,8 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
+        renderSummary();
+
     }
 
     @Override
@@ -199,11 +206,6 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             ArrayList<Itinerary> arrayList = new ArrayList<Itinerary>(itineraryController.getItineraryList());
             bundle.putSerializable(BundleId.ITINERARY_LIST, arrayList);
             simpleTaListFrag.onRefreshFinished(bundle);
-        }
-        FixedTravelAllowanceListFragment fixedTaListFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
-                FixedTravelAllowanceListFragment.class);
-        if (fixedTaListFrag != null) {
-            // fixedTaListFrag.onRefreshFinished();
         }
     }
 
@@ -349,6 +351,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             }
 
             if (controller instanceof FixedTravelAllowanceController) {
+                renderSummary();
                 FixedTravelAllowanceListFragment allowanceFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
                         FixedTravelAllowanceListFragment.class);
                 if (allowanceFrag != null) {
@@ -413,4 +416,66 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         messageDialog.show(getSupportFragmentManager(), TAG_UNASSIGN_DIALOG_FRAGMENT);
     }
 
+    /**
+     * Renders the summary w.r.t fixed travel allowances
+     */
+    private void renderSummary() {
+
+        DefaultDateFormat dateFormatter = new DefaultDateFormat(this);
+        List<FixedTravelAllowance> allowances = fixedTaController.getFixedTravelAllowances();
+        if (allowances == null || allowances.size() == 0) {
+            findViewById(R.id.ta_summary).setVisibility(View.GONE);
+            return;
+        } else {
+            findViewById(R.id.ta_summary).setVisibility(View.VISIBLE);
+        }
+
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        TextView tvValue = (TextView) findViewById(R.id.tv_value);
+        TextView tvSubtitle1 = (TextView) findViewById(R.id.tv_subtitle_1);
+        TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
+
+        if (tvTitle != null) {
+            tvTitle.setText(R.string.ta_total_allowance);
+        }
+
+        Double sum = fixedTaController.getSum();
+        boolean multiLocations = fixedTaController.hasMultipleGroups();
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
+
+        if (tvSubtitle2 != null) {
+            if (multiLocations) {
+                tvSubtitle2.setVisibility(View.GONE);
+            } else {
+                tvSubtitle2.setText(allowances.get(0).getLocationName());
+            }
+        }
+
+        if (tvSubtitle1 != null) {
+            tvSubtitle1.setText(fixedTaController.getPeriod(dateFormatter));
+        }
+
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
+    }
+
+    /**
+     * Renders the amount text view
+     * @param tvAmount The reference to the text view
+     * @param amount The amount to be rendered
+     * @param crnCode The currency code associated with the amount
+     */
+    private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
+
+        Locale locale = getResources().getConfiguration().locale;
+
+        if (tvAmount == null){
+            Log.e(Const.LOG_TAG, CLASS_TAG + ".renderAmount: TextView null reference!");
+            return;
+        }
+        if (amount != null) {
+            tvAmount.setText(FormatUtil.formatAmount(amount, locale, crnCode, true, true));
+        } else {
+            tvAmount.setText(StringUtilities.EMPTY_STRING);
+        }
+    }
 }

@@ -1,38 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@drawable/gradient_background"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <RelativeLayout
-        android:orientation="vertical"
-        android:background="@drawable/subheader_gradient_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/ta_generic_table_row_layout"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
-            android:id="@+id/ta_summary" />
-    </RelativeLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ListView
+        <ListView
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.03"
-            android:id="@android:id/list"
-            android:divider="@null"/>
+            android:divider="@null" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
