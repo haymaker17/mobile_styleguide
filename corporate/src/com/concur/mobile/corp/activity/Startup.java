@@ -326,6 +326,7 @@ public class Startup extends BaseActivity {
         boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
         //check roles
         if (!(RolesUtil.isTestDriveUser()) && Preferences.isExpenseItUser()) {
             if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
@@ -335,7 +336,7 @@ public class Startup extends BaseActivity {
                 shownExpenseIt = false;
             }
         }
-        if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
+        if (!(RolesUtil.isTestDriveUser()) && isTravelOnly) {
             if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
                 shownTravel = true;
                 Preferences.setFirstRunExpUpgradeTravel(prefs);
@@ -358,7 +359,7 @@ public class Startup extends BaseActivity {
             shownBoth = false;
         }
 
-        if (!shownBoth && Preferences.isExpenseItUser() && RolesUtil.isTraveler(ctx)) {
+        if (!shownBoth && Preferences.isExpenseItUser() && isTravelOnly) {
             Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
             startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
         } else if (!shownExpenseIt && Preferences.isExpenseItUser()) {
