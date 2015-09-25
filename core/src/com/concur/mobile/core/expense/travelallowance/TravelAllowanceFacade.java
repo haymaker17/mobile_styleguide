@@ -79,7 +79,7 @@ public class TravelAllowanceFacade extends Fragment {
 
     private IRequestListener itinRefreshListener = new IRequestListener() {
         @Override
-        public void onRequestSuccess() {
+        public void onRequestSuccess(Bundle resultData) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess",
                     "Itinerary refresh finished. Is config already done?" + configRefreshDone));
             itineraryRefreshDone();
@@ -96,7 +96,7 @@ public class TravelAllowanceFacade extends Fragment {
 
     private IRequestListener assignableItinRefreshListener = new IRequestListener() {
         @Override
-        public void onRequestSuccess() {
+        public void onRequestSuccess(Bundle resultData) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess",
                     "Assignable Itinerary refresh finished."));
             assignableItineraryRefreshDone();
@@ -112,7 +112,7 @@ public class TravelAllowanceFacade extends Fragment {
 
     private IRequestListener configRefreshListener = new IRequestListener() {
         @Override
-        public void onRequestSuccess() {
+        public void onRequestSuccess(Bundle resultData) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess",
                     "Config Controller refresh finished. Is itinerary refresh already done?" + itineraryRefreshDone));
             configRefreshDone();
@@ -128,7 +128,7 @@ public class TravelAllowanceFacade extends Fragment {
 
     private IRequestListener updateTaListener = new IRequestListener() {
         @Override
-        public void onRequestSuccess() {
+        public void onRequestSuccess(Bundle resultData) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onRequestFailed",
                     "Update fixed TA finished."));
             updateFixedTaDone(true);

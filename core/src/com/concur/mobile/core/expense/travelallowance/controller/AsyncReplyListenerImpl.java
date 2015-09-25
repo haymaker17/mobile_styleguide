@@ -27,7 +27,7 @@ public class AsyncReplyListenerImpl implements BaseAsyncRequestTask.AsyncReplyLi
     @Override
     public void onRequestSuccess(Bundle resultData) {
         if (listener != null) {
-            listener.onRequestSuccess();
+            listener.onRequestSuccess(resultData);
         }
         if (receiverList != null) {
             receiverList.remove(receiver);

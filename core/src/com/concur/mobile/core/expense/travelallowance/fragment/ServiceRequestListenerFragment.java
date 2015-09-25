@@ -9,12 +9,34 @@ import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 
 /**
+ * Handles service requests of an {@link Activity}. This {@link Fragment} is parametrized via the
+ * arguments bundle given to an object of this class. The following arguments are evaluated:
+ *
+ * {@link ServiceRequestListenerFragment#BUNDLE_ID_REQUEST_SUCCESS_MSG},
+ * {@link ServiceRequestListenerFragment#BUNDLE_ID_REQUEST_FAILED_MSG}
+ *
+ * When receiving a request response, this object notifies the attached {@link Activity} using
+ * callback interface {@link IFragmentCallback}, which should be implemented by the attached
+ * {@link Activity}. Thereby the fragment messages associated with the corresponding argument key
+ * is used for notification.
+ *
  * Created by D049515 on 09.09.2015.
  */
 public class ServiceRequestListenerFragment extends Fragment implements IRequestListener {
     public static final String CLASS_TAG = ServiceRequestListenerFragment.class.getSimpleName();
 
+    /**
+     * Used as key of an argument. The associated value is supposed to be of type {@link String}.
+     * This value denotes the fragment message sent to callback object (the {@link Activity} attached)
+     * when request was successful.
+     */
     public static final String BUNDLE_ID_REQUEST_SUCCESS_MSG = "success.message";
+
+    /**
+     * Used as key of an argument. The associated value is supposed to be of type {@link String}.
+     * This value denotes the fragment message sent to callback object (the {@link Activity} attached)
+     * when request failed.
+     */
     public static final String BUNDLE_ID_REQUEST_FAILED_MSG = "failed.message";
 
     private IFragmentCallback callback;
@@ -26,6 +48,9 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
 
     private String requestSuccessMsg;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +63,9 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -57,6 +85,9 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -64,15 +95,17 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         callback = null;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onRequestSuccess() {
+    public void onRequestSuccess(Bundle resultData) {
         if (requestSuccessMsg == null) {
             requestSuccessMsg = "";
         }
 
         if (callback != null) {
-            callback.handleFragmentMessage(requestSuccessMsg, null);
+            callback.handleFragmentMessage(requestSuccessMsg, resultData);
         } else {
             Log.d(DebugUtils.LOG_TAG_TA,
                     DebugUtils.buildLogText(CLASS_TAG, "onRequestSuccess", "callback null. notify after attach."));
@@ -80,6 +113,9 @@ public class ServiceRequestListenerFragment extends Fragment implements IRequest
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onRequestFailed() {
         if (requestFailedMsg == null) {

@@ -3,12 +3,12 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
@@ -180,16 +180,27 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
     public synchronized void handleFragmentMessage(String fragmentMessage, Bundle extras) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", fragmentMessage));
 
+        boolean isSuccess = true;
+        if (extras != null) {
+            isSuccess = extras.getBoolean(BundleId.IS_SUCCESS, true);
+        }
+
         if (MSG_REFRESH_ASSIN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_REFRESH_ASSIN_ITIN_FAILED.equals(fragmentMessage)) {
             refreshListAdapter();
             dismissProgressDialog();
         }
 
         if (MSG_ASSIGN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
+            if (!isSuccess ||  MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
+                dismissProgressDialog();
+                Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+                return;
+            }
             refreshAssignableItineraries(false);
             refreshItineraries(expenseReportKey, false);
             refreshFixedTravelAllowances(expenseReportKey);
         }
+
 
         if (MSG_REFRESH_ITIN_FINISHED.equals(fragmentMessage)) {
             itinRefreshDone = true;

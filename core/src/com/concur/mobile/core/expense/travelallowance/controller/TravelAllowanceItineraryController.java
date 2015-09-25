@@ -439,7 +439,7 @@ public class TravelAllowanceItineraryController extends BaseController {
                     itineraryList.remove(itinerary);
                     notifyListener(ControllerAction.DELETE, true, null);
                     if (listener != null) {
-                        listener.onRequestSuccess();
+                        listener.onRequestSuccess(resultData);
                     }
                 } else {
                     Message msg = (Message) resultData

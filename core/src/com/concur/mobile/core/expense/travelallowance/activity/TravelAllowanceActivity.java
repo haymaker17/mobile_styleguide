@@ -248,6 +248,12 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
     @Override
     public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
+
+        boolean isSuccess = true;
+        if (extras != null) {
+            isSuccess = extras.getBoolean(BundleId.IS_SUCCESS, true);
+        }
+
         if (TravelAllowanceItineraryListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
             this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
@@ -273,10 +279,16 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         }
 
         if (MSG_UNASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
+            Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
             dismissProgressDialog();
         }
 
         if (MSG_UNASSIGN_ITIN_SUCCESS.equals(fragmentMessage)) {
+            if (!isSuccess) {
+                dismissProgressDialog();
+                Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+                return;
+            }
             refreshAssignableItineraries(expenseReportKey);
             refreshFixedTravelAllowances(expenseReportKey);
             refreshItineraries(expenseReportKey, isInApproval);

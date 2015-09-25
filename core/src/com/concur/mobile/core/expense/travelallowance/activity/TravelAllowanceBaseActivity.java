@@ -123,6 +123,20 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
         return null;
     }
 
+    /**
+     * Returns the {@link ServiceRequestListenerFragment} specified by the given {@code tag}, if
+     * the {@link Fragment} is already registered at the {@link FragmentManager}. If not, a new
+     * instance of a {@link ServiceRequestListenerFragment} is created and returned with the given
+     * {@code tag} and parametrized with the given parameters.
+     *
+     * @param tag The {@code tag} in order to administer the {@link Fragment} within the {@link FragmentManager}
+     * @param successMessage This parameter is to parametrize the {@link ServiceRequestListenerFragment}.
+     * Refer to {@link ServiceRequestListenerFragment#BUNDLE_ID_REQUEST_SUCCESS_MSG}.
+     * @param failedMessage This parameter is to parametrize the {@link ServiceRequestListenerFragment}.
+     * Refer to {@link ServiceRequestListenerFragment#BUNDLE_ID_REQUEST_FAILED_MSG}.
+     *
+     * @return The {@link ServiceRequestListenerFragment}
+     */
     protected ServiceRequestListenerFragment getServiceRequestListenerFragment(String tag, String successMessage, String failedMessage) {
         FragmentManager fm = getSupportFragmentManager();
         ServiceRequestListenerFragment f = (ServiceRequestListenerFragment) fm.findFragmentByTag(tag);
