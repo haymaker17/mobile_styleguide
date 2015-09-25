@@ -458,6 +458,10 @@ public class Flurry {
     public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_DETAILS = "Travel-Hotel-Overview-Details";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW_PHOTOS = "Travel-Hotel-Overview-Photos";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_RESERVE = "Travel-Hotel-Reserve";
+    public static final String SCREEN_NAME_NEW_FEATURE_EXPENSE_IT = "First Run New Feature ExpenseIt ";
+    public static final String SCREEN_NAME_NEW_FEATURE_EXPENSE_IT_TRAVEL = "First Run New Feature ExpenseIt Travel";
+    public static final String SCREEN_NAME_NEW_FEATURE_TRAVEL = "First Run New Feature Travel";
+
 
     // event actions
     public static final String EVENT_ACTION_PLUS = "Plus";
