@@ -342,6 +342,8 @@ public class Startup extends BaseActivity {
                 Preferences.setFirstRunExpUpgradeTravel(prefs);
             } else {
                 shownTravel = false;
+                //if it is travel only user do not show expense it screen
+                shownExpenseIt=true;
             }
         }
 
