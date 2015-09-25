@@ -74,14 +74,7 @@ public class AbsExpTour extends BaseActivity {
 
         // on-click listener of launch button
         launch = (Button) findViewById(R.id.exp_it_travel_continue);
-        launch.setText(getString(R.string.next));
-        launch.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                flipper.showNext();
-                showContinue(0,false);
-            }
-        });
+        setButtonListner();
     }
 
     protected void setPageMaker(){
@@ -91,6 +84,16 @@ public class AbsExpTour extends BaseActivity {
         }
     }
 
+    protected void setButtonListner(){
+        launch.setText(getString(R.string.next));
+        launch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                flipper.showNext();
+                showContinue(0,false);
+            }
+        });
+    }
     /*Override this method in each class*/
     protected ViewFlipper setPages(){
         return flipper;
@@ -182,25 +185,32 @@ public class AbsExpTour extends BaseActivity {
                 return false;
             if (velocityX < -threshold) {
                 if (currentChild < flipper.getChildCount() - 1) {
-
-                    flipper.setInAnimation(AbsExpTour.this, R.anim.slide_in_right);
-                    flipper.setOutAnimation(AbsExpTour.this, R.anim.slide_out_left);
-                    showContinue(currentChild,false);
-                    flipper.showNext();
+                    setFlipForShowNext(currentChild,AbsExpTour.this);
                 }
 
             } else if (velocityX > threshold) {
                 if (currentChild > 0) {
-                    flipper.setInAnimation(AbsExpTour.this, R.anim.slide_in_left);
-                    flipper.setOutAnimation(AbsExpTour.this, R.anim.slide_out_right);
-                    showNext(currentChild);
-                    flipper.showPrevious();
+                    setFlipForShowPrevious(currentChild,AbsExpTour.this);
                 }
 
             }
             return true;
         }
 
+    }
+
+    protected void setFlipForShowNext(int currentChild, Context ctx){
+        flipper.setInAnimation(ctx, R.anim.slide_in_right);
+        flipper.setOutAnimation(ctx, R.anim.slide_out_left);
+        showContinue(currentChild,false);
+        flipper.showNext();
+    }
+
+    protected void setFlipForShowPrevious(int currentChild,Context ctx){
+        flipper.setInAnimation(ctx, R.anim.slide_in_left);
+        flipper.setOutAnimation(ctx, R.anim.slide_out_right);
+        showNext(currentChild);
+        flipper.showPrevious();
     }
 
     /**

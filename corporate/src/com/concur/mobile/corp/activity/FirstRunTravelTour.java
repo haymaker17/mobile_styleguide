@@ -47,4 +47,33 @@ public class FirstRunTravelTour extends AbsExpTour {
         e.commit();
 
     }
+
+    @Override
+    protected void setButtonListner(){
+        launch.setText(getString(R.string.get_started));
+        launch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                gotoHome(false);
+            }
+        });
+    }
+
+    @Override
+    protected void setFlipForShowNext(int currentChild, Context ctx){
+        flipper.setInAnimation(ctx, R.anim.slide_in_right);
+        flipper.setOutAnimation(ctx, R.anim.slide_out_left);
+        pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
+        pageMarkers.getChildAt(currentChild + 1).setBackgroundColor(activeColor);
+        flipper.showNext();
+    }
+
+    @Override
+    protected void setFlipForShowPrevious(int currentChild, Context ctx){
+        flipper.setInAnimation(ctx, R.anim.slide_in_left);
+        flipper.setOutAnimation(ctx, R.anim.slide_out_right);
+        pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
+        pageMarkers.getChildAt(currentChild - 1).setBackgroundColor(activeColor);
+        flipper.showPrevious();
+    }
 }
