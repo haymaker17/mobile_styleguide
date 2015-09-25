@@ -45,6 +45,8 @@ public class FirstRunExpItTravelTour extends AbsExpTour {
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+        Preferences.setFirstRunExpUpgradeTravel(prefs);
+        Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
         //we need to show coach mark update PREF_APP_UPGRADE when you dismiss coach mark.
     }
 }

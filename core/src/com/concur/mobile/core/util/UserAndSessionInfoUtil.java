@@ -87,8 +87,9 @@ public class UserAndSessionInfoUtil {
         parseMap.put(Const.LR_ROLES, userInfo.getRolesMobile());
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_CONDITIONAL_FIELD_EVALUATION,
                 ssInstance.isConditionalFieldEvaluationEnabled());
+        boolean val = ssInstance.isExpenseItExperienceEnabled();
         parseMap.put(Const.LR_SITE_SETTINGS_ENABLE_EXPENSE_IT_EXPERIENCE,
-            ssInstance.isExpenseItExperienceEnabled());
+            val);
 
         String userCrnCode = userInfo.getUserCurrencyCode();
         if (userCrnCode != null) {
