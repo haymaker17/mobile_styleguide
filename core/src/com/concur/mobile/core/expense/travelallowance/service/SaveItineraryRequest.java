@@ -54,7 +54,9 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         //FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
         FormatUtil.addXMLElementEscaped(sb, "Name", itinerary.getName());
         FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
-        FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+        if (taConfig != null && taConfig.getTravelAllowanceConfigurationList() !=null) {
+            FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+        }
         FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getExpenseReportID());
 
        // FormatUtil.addXMLElementEscaped(sb, "ShortDistanceTrip", "N");
