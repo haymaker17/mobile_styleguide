@@ -128,7 +128,8 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mapFragment != null) {
+
+        if (mapFragment != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
             ft.remove(mapFragment);
             ft.commit();
@@ -146,6 +147,7 @@ public class HotelSearchResultMapFragment extends PlatformFragmentV1
     /**
      * Google map setUp from MapFragment
      */
+
     private void setUpMap() {
         if (googleMap == null) {
             mapFragment = null;
