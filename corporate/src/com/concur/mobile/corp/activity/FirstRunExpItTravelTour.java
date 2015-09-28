@@ -12,10 +12,7 @@ import android.widget.ViewFlipper;
 import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_NEW_FEATURE_EXPENSE_IT_TRAVEL)
 public class FirstRunExpItTravelTour extends AbsExpTour {
 
     @Override

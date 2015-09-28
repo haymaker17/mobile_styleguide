@@ -43,9 +43,6 @@
     <string name="com.concur.mobile.corp.activity.Startup">Startup</string>
     <string name="com.concur.mobile.corp.activity.TestDriveRegistration">Test Drive Registration</string>
     <string name="com.concur.mobile.corp.activity.UniversalTour">Learn More</string>
-    <string name="com.concur.mobile.corp.activity.FirstRunTravelTour">First Run New Feature Travel</string>
-    <string name="com.concur.mobile.corp.activity.FirstRunExpItTour">First Run New Feature ExpenseIt</string>
-    <string name="com.concur.mobile.corp.activity.FirstRunExpItTravelTour">First Run New Feature ExpenseIt Travel</string>
     <!-- Enable automatic exception tracking -->
     <bool name="ga_reportUncaughtExceptions">true</bool>
 

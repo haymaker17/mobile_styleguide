@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.LocationListener;
@@ -152,11 +153,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
-import uk.co.deanwild.materialshowcaseview.IShowcaseListener;
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView;
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME)
-public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener, IShowcaseListener {
+public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
 
     public static boolean forceExpirationHome;
 
@@ -276,6 +278,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private static final String SHOWCASE_EXP_IT_ID = "showcase_for_expense_it_button";
 
     private List<NavigationItem> navItems = new ArrayList<NavigationItem>();
+
+    private TourGuide mTutorialHandler;
+    private static boolean isTooltipShown = false;
+    private ToolTip toolTip;
+    private Overlay overlay;
 
     /**
      * A custom handler to catch a message about the login session expiring.
@@ -450,6 +457,9 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         setContentView(R.layout.home);
 
+        //tool-tip
+        mTutorialHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
+
         if (forceExpirationHome) {
             //forceExpirationHome = false;
             cancelAllDataRequests();
@@ -542,15 +552,15 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
 
-        hideFooter();
-        hideBookFooterButton();
-        hideMileageFooterButton();
-        // OCR: Disable backdoor Easter egg.
-        if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
-            hideQuickExpenseFooterButton();
-        }
-        hideReceiptFooterButton();
-        hideTravelRequestRow();
+            hideFooter();
+            hideBookFooterButton();
+            hideMileageFooterButton();
+            // OCR: Disable backdoor Easter egg.
+            if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+                hideQuickExpenseFooterButton();
+            }
+            hideReceiptFooterButton();
+            hideTravelRequestRow();
 
             // Hide the travel UI elements, if need be.
             boolean isTraveler = RolesUtil.isTraveler(Home.this);
@@ -603,6 +613,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (!Preferences.isExpenseItUser()) {
                     showQuickExpenseFooterButton();
                     showReceiptFooterButton();
+                    hideExpenseItFooterButton();
                 } else {
                     /* MOB-24972 - Disable to show QE at bottom of screen again.
                     hideQuickExpenseFooterButton();
@@ -1092,7 +1103,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.concur.mobile.corp.activity.BaseActivity#onResume()
      */
     @Override
@@ -1253,7 +1264,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.concur.mobile.corp.activity.BaseActivity#onPause()
      */
     @Override
@@ -1307,7 +1318,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onDestroy()
      */
     @Override
@@ -1891,7 +1902,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
      */
     @Override
@@ -2005,7 +2016,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /**
      * Will copy the image data captured by the camera.
-     *
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2267,54 +2277,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    /**
-     * Determines whether personal car mileage should be displayed on action menu. Requires car configs to have been loaded.
-     */
-    private boolean showPersonalCarMileage() {
-
-        // Test Drive users never show Personal Car Mileage in the footer.
-        if (Preferences.isTestDriveUser()) {
-            return false;
-        }
-        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
-        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
-            return true;
-        }
-
-        ConcurMobile concurMobile = (ConcurMobile) getApplication();
-        ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
-            carConfigList = concurMobile.getService().getCarConfigs();
-        }
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
-
-        if (carConfigList != null && carConfigList.size() > 0) {
-            if (RolesUtil.isExpenser(Home.this)) {
-                for (int i = 0; i < carConfigList.size(); i++) {
-                    // Check rates availability under PER_ONE (fixed) or cars
-                    // availability under PER_VARIABLE
-                    CarConfig carConfig = carConfigList.get(i);
-                    if (carConfig != null) {
-                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode) && ((
-                                carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE)
-                                        && carConfig.rates.size() > 0))
-                                // TODO this line of code is not required.
-                                // Double check with Walt
-                                // ||
-                                // ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_COM_FIX)
-                                // && carConfig.rates.size()>0))
-                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR)
-                                && carConfig.details.size() > 0))) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Will update the trip-related information displayed on the screen.
@@ -2520,42 +2482,49 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE,false);
-        if(isUpgrade){
-            presentShowcaseView(0, view);
-            // commit changes in preferences.
-            SharedPreferences.Editor e = prefs.edit();
-            e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
-            e.commit();
+        boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+        if (isUpgrade) {
+            presentShowcaseView(view, prefs);
         }
     }
 
     /**
      * Show expense it coach mark
      *
-     * @param withDelay : time delay
-     * @param view : view on which we need to show coach mark
-     * */
-    private void presentShowcaseView(int withDelay, View view) {
-        MaterialShowcaseView.Builder showcaseView = new MaterialShowcaseView.Builder(this);
-        showcaseView.setTarget(view);
-        showcaseView.setContentText(R.string.expit_desc_short);
-        showcaseView.setContentTextColor(getResources().getColor(R.color.MaterialWhite));
-        showcaseView.setMaskColour(getResources().getColor(R.color.MaterialTransparent));
-        showcaseView.setDelay(withDelay);
-        showcaseView.setUseAutoRadius(true);
-        showcaseView.setDismissOnTouch(true);
-        showcaseView.singleUse(SHOWCASE_EXP_IT_ID);
-        showcaseView.setListener(this);
-        showcaseView.show();
-    }
+     * @param view  : view on which we need to show coach mark
+     * @param prefs : reference of shared preferences
+     */
+    private void presentShowcaseView(View view, final SharedPreferences prefs) {
+        toolTip = new ToolTip().
+                setTitle(null)
+                .setDescription(getString(R.string.expit_desc_short))
+                .setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                .setGravity(Gravity.TOP)
+                .setShadow(false);
 
-    @Override
-    public void onShowcaseDisplayed(MaterialShowcaseView var1){
-    }
 
-    @Override
-    public void onShowcaseDismissed(MaterialShowcaseView var1){
+        overlay = new Overlay()
+                .setBackgroundColor(Color.parseColor("#00FFFFFF"))
+                        // Note: disable click has no effect when setOnClickListener is used, this is here for demo purpose
+                        // if setOnClickListener is not used, disableClick() will take effect
+                .disableClick(false)
+                .setStyle(Overlay.Style.Rectangle)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mTutorialHandler.cleanUp();
+                        // commit changes in preferences.
+                        SharedPreferences.Editor e = prefs.edit();
+                        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+                        e.commit();
+                        isTooltipShown = false;
+                    }
+                });
+        mTutorialHandler.setPointer(null)
+                .setToolTip(toolTip)
+                .setOverlay(overlay)
+                .playOn(view);
+        isTooltipShown = true;
     }
 
     private void hideExpenseItFooterButton() {
@@ -2587,6 +2556,55 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             }
         }
+    }
+
+    /**
+     * Determines whether personal car mileage should be displayed on action menu. Requires car configs to have been loaded.
+     */
+    private boolean showPersonalCarMileage() {
+
+        // Test Drive users never show Personal Car Mileage in the footer.
+        if (Preferences.isTestDriveUser()) {
+            return false;
+        }
+        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
+        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
+            return true;
+        }
+
+        ConcurMobile concurMobile = (ConcurMobile) getApplication();
+        ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
+        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
+            carConfigList = concurMobile.getService().getCarConfigs();
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
+
+        if (carConfigList != null && carConfigList.size() > 0) {
+            if (RolesUtil.isExpenser(Home.this)) {
+                for (int i = 0; i < carConfigList.size(); i++) {
+                    // Check rates availability under PER_ONE (fixed) or cars
+                    // availability under PER_VARIABLE
+                    CarConfig carConfig = carConfigList.get(i);
+                    if (carConfig != null) {
+                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode) && ((
+                                carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE)
+                                        && carConfig.rates.size() > 0))
+                                // TODO this line of code is not required.
+                                // Double check with Walt
+                                // ||
+                                // ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_COM_FIX)
+                                // && carConfig.rates.size()>0))
+                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR)
+                                && carConfig.details.size() > 0))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private void hideMileageFooterButton() {
