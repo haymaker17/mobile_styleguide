@@ -274,7 +274,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 @Override
                 public void onClick(View v) {
                     if (!isDataInconsistent()) {
-                        addNewRow();
+                        addNewRow(true);
                     }
                 }
             };
@@ -289,7 +289,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         // In case of Create also create the first segment
         if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID() ) && this.itinerary.getSegmentList().size() == 0){
-            addNewRow();
+            addNewRow(false);
         }
 
         //Register Controller Backend Communication Listeners
@@ -311,14 +311,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 @Override
                 public void onClick(View view) {
                     if (!isDataInconsistent()) {
-                        addNewRow();
+                        addNewRow(false);
                     }
                 }
             });
         }
     }
 
-    private void addNewRow() {
+    private void addNewRow(boolean returnToHome) {
         ItinerarySegment emptySegment = new ItinerarySegment();
         //Get current date/time
         Calendar cal = Calendar.getInstance(Locale.getDefault());
@@ -335,9 +335,12 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     cal.add(Calendar.MINUTE, TIME_INTERVAL);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
-                if (itinerary.getSegmentList().size() == 1 && lastSegment.getDepartureLocation() != null) {//Return to Home
+                if (returnToHome && itinerary.getSegmentList().size() == 1 &&
+                    lastSegment.getDepartureLocation() != null && lastSegment.getArrivalLocation() != null) {//Return to Home
                     emptySegment.setArrivalLocation(lastSegment.getDepartureLocation());
-                    cal.add(Calendar.MINUTE, lastSegment.getDepartureLocation().getTimeZoneOffset().intValue());
+                    int timeZoneOffsetDifference = lastSegment.getDepartureLocation().getTimeZoneOffset().intValue() -
+                                                   lastSegment.getArrivalLocation().getTimeZoneOffset().intValue();
+                    cal.add(Calendar.MINUTE, timeZoneOffsetDifference);
                     emptySegment.setArrivalDateTime(cal.getTime());
                 }
             } else {
