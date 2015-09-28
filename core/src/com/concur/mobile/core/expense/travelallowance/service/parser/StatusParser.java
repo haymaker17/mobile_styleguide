@@ -17,7 +17,7 @@ public class StatusParser extends BaseParser {
     private static final String STATUS_TEXT_TAG = "StatusText";
     private static final String STATUS_TEXT_LOCALIZED_TAG = "StatusTextLocalized";
 
-    private static final String failure = "FAILURE";
+    private static final String FAILURE = "FAILURE";
 
     private String status;
     private String statusText;
@@ -71,7 +71,7 @@ public class StatusParser extends BaseParser {
     public void endTag(String tag) {
         if (BODY_TAG.equalsIgnoreCase(tag)) {
             resultData = new Bundle();
-            if (!StringUtilities.isNullOrEmpty(status) && status.equalsIgnoreCase(failure)) {
+            if (!StringUtilities.isNullOrEmpty(status) && status.equalsIgnoreCase(FAILURE)) {
                 Message msg = new Message(Message.Severity.ERROR, statusText, statusTextLocalized);
                 resultData.putSerializable(BundleId.MESSAGE_OBJECT, msg);
                 resultData.putBoolean(BundleId.IS_SUCCESS, false);

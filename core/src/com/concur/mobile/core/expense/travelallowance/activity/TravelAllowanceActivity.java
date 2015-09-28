@@ -448,6 +448,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
 
         if (tvTitle != null) {
+            tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText(R.string.ta_total_allowance);
         }
 
@@ -459,11 +460,13 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             if (multiLocations) {
                 tvSubtitle2.setVisibility(View.GONE);
             } else {
+                tvSubtitle2.setVisibility(View.VISIBLE);
                 tvSubtitle2.setText(allowances.get(0).getLocationName());
             }
         }
 
         if (tvSubtitle1 != null) {
+            tvSubtitle1.setVisibility(View.VISIBLE);
             tvSubtitle1.setText(fixedTaController.getPeriod(dateFormatter));
         }
 
@@ -485,9 +488,10 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
             return;
         }
         if (amount != null) {
+            tvAmount.setVisibility(View.VISIBLE);
             tvAmount.setText(FormatUtil.formatAmount(amount, locale, crnCode, true, true));
         } else {
-            tvAmount.setText(StringUtilities.EMPTY_STRING);
+            tvAmount.setVisibility(View.GONE);
         }
     }
 }

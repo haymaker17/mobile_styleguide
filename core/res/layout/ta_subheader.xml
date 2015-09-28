@@ -12,18 +12,26 @@
         android:ellipsize="end"
         android:lines="1"
         android:text="Large Text"
+        android:paddingRight="5dp"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TATitle.Big.White" />
+        android:visibility="gone"
+        android:textAppearance="@style/TATitle.Big.White"/>
 
     <TextView
         android:id="@+id/tv_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
         android:text="Large Text"
         android:textAppearance="@style/TASummaryValue.White"
         android:layout_alignBaseline="@+id/tv_title"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:gravity="right"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/tv_title"
+        android:layout_toEndOf="@+id/tv_title" />
 
     <TextView
         android:id="@+id/tv_subtitle_1"
@@ -33,6 +41,7 @@
         android:layout_below="@+id/tv_title"
         android:ellipsize="end"
         android:singleLine="true"
+        android:visibility="gone"
         android:text="Small Text"
         android:textAppearance="@style/TASubTitle.White" />
 
@@ -44,6 +53,7 @@
         android:layout_below="@+id/tv_subtitle_1"
         android:ellipsize="end"
         android:singleLine="true"
+        android:visibility="gone"
         android:text="Small Text"
         android:textAppearance="@style/TASubTitle.White" />
 

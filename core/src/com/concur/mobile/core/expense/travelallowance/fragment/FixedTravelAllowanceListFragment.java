@@ -1,7 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -60,7 +59,7 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fixed_travel_allowance_list, container, false);
+        View view = inflater.inflate(R.layout.ta_fixed_travel_allowance_list, container, false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
