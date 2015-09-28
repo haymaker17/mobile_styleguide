@@ -199,7 +199,7 @@
                                     <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
 
@@ -292,7 +292,7 @@
                                 	<View
                                 	    android:id="@+id/separator"
                                 	    android:layout_width="fill_parent"
-                                	    android:layout_height="1px"
+                                	    android:layout_height="1dp"
                                 	    android:layout_marginTop="10dp"
                                 	    android:background="#cccccc" />
 
@@ -376,7 +376,7 @@
 	                                <View
 	                                    android:id="@+id/separator"
 	                                    android:layout_width="fill_parent"
-	                                    android:layout_height="1px"
+	                                    android:layout_height="1dp"
 	                                    android:layout_marginTop="10dp"
 	                                    android:background="#cccccc" />
 
@@ -460,7 +460,7 @@
 	                                <View
 	                                    android:id="@+id/View02"
 	                                    android:layout_width="fill_parent"
-	                                    android:layout_height="1px"
+	                                    android:layout_height="1dp"
 	                                    android:layout_marginTop="10dp"
 	                                    android:background="#cccccc" />
 
@@ -540,7 +540,7 @@
                                     <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
 
@@ -607,7 +607,7 @@
                                     <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
                                     
@@ -674,7 +674,7 @@
                                     <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
                                     
@@ -743,7 +743,7 @@
                                 <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
                                     
@@ -836,7 +836,7 @@
                                     <View
                                         android:id="@+id/separator"
                                         android:layout_width="fill_parent"
-                                        android:layout_height="1px"
+                                        android:layout_height="1dp"
                                         android:layout_marginTop="10dp"
                                         android:background="#cccccc" />
 
@@ -861,7 +861,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_marginRight="1px"
+                        android:layout_marginRight="1dp"
                         android:layout_weight="1"
                         android:background="@color/HomeButtonBackground"
                         android:clickable="true"
@@ -887,17 +887,12 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/StrokeHomeFooter" />
-
                     <RelativeLayout
                         android:id="@+id/homeCamera"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_gravity="center"
-                        android:layout_marginRight="1px"
+                        android:layout_marginRight="1dp"
                         android:layout_weight="1"
                         android:background="@color/HomeButtonBackground"
                         android:clickable="true"
@@ -923,17 +918,43 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="1px"
-                        android:layout_height="match_parent"
-                        android:background="@color/StrokeHomeFooter" />
+                    <RelativeLayout
+                        android:id="@+id/homeExpenseIt"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/HomeButtonBackground"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="onClick"
+                        android:visibility="gone" >
+
+                        <ImageView
+                            android:id="@+id/homeExpenseItIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/icon_camera" />
+
+                        <TextView
+                            android:id="@+id/homeExpenseItText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/homeExpenseItIcon"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/home_footer_button_expenseit"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/HomeFooterButtonText" />
+
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/homeQuickExpense"
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_gravity="center"
-                        android:layout_marginRight="1px"
                         android:layout_weight="1"
                         android:background="@color/HomeButtonBackground"
                         android:clickable="true"
@@ -967,7 +988,8 @@
                         android:background="@color/HomeButtonBackground"
                         android:clickable="true"
                         android:gravity="center"
-                        android:onClick="onClick" >
+                        android:onClick="onClick"
+                        android:layout_marginLeft="1dp">
 
                         <ImageView
                             android:id="@+id/homeMileageIcon"
@@ -986,6 +1008,12 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/HomeFooterButtonText" />
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/StrokeHomeFooter"
+                        android:visibility="visible"/>
 
                 </LinearLayout>
             </LinearLayout>

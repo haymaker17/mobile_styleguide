@@ -23,7 +23,7 @@ public class TravelAllowanceController {
 
     private void initializeTaConfig() {
         if (getTAConfigController().getTravelAllowanceConfigurationList() == null) {
-            getTAConfigController().refreshConfiguration();
+            getTAConfigController().refreshConfiguration(null);
         }
     }
 

@@ -10,8 +10,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -27,9 +29,12 @@ import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
+import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
+import com.concur.mobile.platform.authentication.LoginExpenseItTask;
 import com.concur.mobile.platform.authentication.LoginResponseKeys;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.expense.provider.ExpenseUtil;
+import com.concur.mobile.platform.service.ExpenseItAsyncRequestTask;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment.OnClickListener;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
@@ -37,7 +42,9 @@ import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment.OnCancelListener;
 import com.concur.mobile.platform.ui.common.login.LoginPasswordFragment;
 import com.concur.mobile.platform.ui.common.login.LoginPasswordFragment.LoginPasswordCallbacks;
+import com.concur.mobile.platform.ui.common.util.Const;
 import com.concur.mobile.platform.ui.common.util.ViewUtil;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import org.apache.http.HttpStatus;
@@ -47,17 +54,23 @@ import java.util.Locale;
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_LOGIN_PASSWORD)
 public class LoginPasswordActivity extends BaseActivity implements LoginPasswordCallbacks {
 
+    private final static String CLS_TAG =  LoginPasswordActivity.class.getSimpleName();
+
     public final static String TAG_LOGIN_WAIT_DIALOG = "tag.login.wait.dialog";
 
     protected final static String TAG_LOGIN_REMOTE_WIPE_DIALOG = "tag.login.remote.wipe.dialog";
 
     private boolean fromNotification;
 
+    private BaseAsyncResultReceiver expenseItLoginReceiver;
+
+    private ExpenseItAsyncRequestTask expenseItAsyncRequestTask;
+
     private BaseAsyncResultReceiver autoLoginReceiver;
 
-    private LoginPasswordFragment loginPasswordFragment;
-
     private AutoLoginRequestTask autoLoginRequestTask;
+
+    private LoginPasswordFragment loginPasswordFragment;
 
     private ProgressDialogFragment progressDialog;
 
@@ -157,6 +170,48 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
                 // if the user goes back to try and register. We only
                 // want to record if the user failed to sign in.
                 Preferences.setTestDriveSigninTryAgainCount(0);
+
+                //Do ExpenseIt login in the background
+                if (Preferences.isExpenseItUser()
+                    && signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD)) {
+
+                    expenseItLoginReceiver = new BaseAsyncResultReceiver(new Handler());
+                    expenseItLoginReceiver.setListener(new AsyncReplyListener() {
+
+                        @Override
+                        public void onRequestSuccess(Bundle resultData) {
+                            Log.d(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestSuccess is called");
+                            Preferences.setUserLoggedOnToExpenseIt(true);
+                            ConcurCore concurCore = (ConcurCore) getApplication();
+                            concurCore.ensureAutoCTETurnedOn();
+                        }
+
+                        @Override
+                        public void onRequestFail(Bundle resultData) {
+                            Log.e(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestFail is called");
+                            Preferences.setUserLoggedOnToExpenseIt(false);
+                            Toast.makeText(getApplicationContext(), R.string.login_expense_it_failure, Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onRequestCancel(Bundle resultData) {
+                            Log.d(Const.LOG_TAG, CLS_TAG + ".expenseItLoginReceiver.onRequestCancel is called");
+                            Preferences.setUserLoggedOnToExpenseIt(false);
+                        }
+
+                        @Override
+                        public void cleanup() {
+                        }
+                    });
+                    // Authentication was successful. Now perform ExpenseIt Login
+                    expenseItAsyncRequestTask = new LoginExpenseItTask(ConcurCore.getContext(), 0, expenseItLoginReceiver, userId, pinOrPassword);
+                    expenseItAsyncRequestTask.execute();
+                } else {
+                    //Destroy any ExpenseIt session properties
+                    ConfigUtil.updateExpenseItLoginInfo(ConcurCore.getContext(), new ExpenseItLoginResult());
+                    ExpenseItProperties.setAccessToken(null);
+                    Preferences.setUserLoggedOnToExpenseIt(false);
+                }
             }
 
             /*

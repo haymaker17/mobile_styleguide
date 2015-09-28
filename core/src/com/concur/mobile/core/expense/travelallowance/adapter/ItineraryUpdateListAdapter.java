@@ -206,6 +206,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
+        View v = resultView.findViewById(R.id.v_arrival_separator_short);
+        if (i == 0 && v != null) {
+            v.setVisibility(View.GONE);
+        } else if (v != null) {
+            v.setVisibility(View.VISIBLE);
+        }
+        
         setPositionInfoTag(holder.ivDelete, i, PositionInfoTag.INFO_NONE);
 
         setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
@@ -252,16 +259,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEnabled(int position) {
-        // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
-        // in the context menu.
-        return true;
-    }
-
     private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
@@ -276,12 +273,22 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vgReturnToHome == null) {
             return;
         }
-        if (segments != null && segments.size() == 1) {
+        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null) {
             holder.vgReturnToHome.setVisibility(View.VISIBLE);
             if (holder.tvReturnToHome != null) {
                 String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
                 if (segments.get(0).getDepartureLocation() != null) {
-                    returnText = context.getString(R.string.itin_add_return_trip, segments.get(0).getDepartureLocation().getName());
+                    String cityCountryName = segments.get(0).getDepartureLocation().getName();
+                    int sepPos = cityCountryName.indexOf(",");
+                    String cityName = "";
+                    if (sepPos > 0) {
+                        cityName = cityCountryName.substring(0, sepPos);
+                    } else {
+                        cityName = cityCountryName;
+                    }
+                    returnText = context.getString(R.string.itin_add_return_trip, cityName);
+                } else {
+                    returnText = context.getString(R.string.itin_add_return_trip, "...");
                 }
                 holder.tvReturnToHome.setText(returnText);
             }

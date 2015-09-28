@@ -22,9 +22,13 @@ public class RequestLocationTaskTest extends AsyncRequestTest {
 
     private static final String SEARCHED_TEXT = "ter";
 
+    public RequestLocationTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     public void doTest() throws Exception {
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "request/RequestLocationResponse.json");
         }

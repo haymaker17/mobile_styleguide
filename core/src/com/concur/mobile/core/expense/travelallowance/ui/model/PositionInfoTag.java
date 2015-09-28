@@ -1,5 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.ui.model;
 
+import java.io.Serializable;
+
 /**
  * Instances of this class can be used as tags to be assigned to views. Originally it was
  * built to add information to views used in list views, where the list view items contain
@@ -12,11 +14,13 @@ package com.concur.mobile.core.expense.travelallowance.ui.model;
  *
  * Created by Michael Becherer on 10-Jul-15.
  */
-public class PositionInfoTag {
+public class PositionInfoTag implements Serializable{
 
     public final static int INFO_NONE = 0;
     public final static int INFO_OUTBOUND = -1;
     public final static int INFO_INBOUND = 1;
+
+    private static final long serialVersionUID = -6769254539123249961L;
 
     /**
      * The position (respectively the list row index)

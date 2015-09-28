@@ -7,11 +7,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.concur.mobile.platform.travel.provider.Travel;
 import com.concur.mobile.platform.travel.search.hotel.dao.HotelDAO;
 import com.concur.mobile.platform.util.Const;
 import com.concur.mobile.platform.util.ContentUtils;
 import com.concur.mobile.platform.util.CursorUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -76,7 +79,7 @@ public class Hotel implements Serializable, HotelDAO {
     public transient long search_id;
 
     // full column list of hotel detail.
-    public static String[] fullColumnList = { Travel.HotelDetailColumns._ID, Travel.HotelDetailColumns.NAME,
+    public static String[] fullColumnList = {Travel.HotelDetailColumns._ID, Travel.HotelDetailColumns.NAME,
             Travel.HotelDetailColumns.CHAIN_NAME, Travel.HotelDetailColumns.CHAIN_CODE,
             Travel.HotelDetailColumns.STREET, Travel.HotelDetailColumns.ADDRESS_LINE_1, Travel.HotelDetailColumns.STATE,
             Travel.HotelDetailColumns.COUNTRY, Travel.HotelDetailColumns.CITY, Travel.HotelDetailColumns.DISTANCE,
@@ -87,7 +90,7 @@ public class Hotel implements Serializable, HotelDAO {
             Travel.HotelDetailColumns.SUGESTED_SCORE, Travel.HotelDetailColumns.STAR_RATING,
             Travel.HotelDetailColumns.THUMBNAIL_URL, Travel.HotelDetailColumns.AVAILABILITY_ERROR_CODE,
             Travel.HotelDetailColumns.LAT, Travel.HotelDetailColumns.LON, Travel.HotelDetailColumns.RATES_URL,
-            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, Travel.HotelDetailColumns.PRICE_TO_BEAT };
+            Travel.HotelDetailColumns.HOTEL_SEARCH_RESULT_ID, Travel.HotelDetailColumns.TRAVEL_POINTS_FOR_LOWEST_RATE, Travel.HotelDetailColumns.PRICE_TO_BEAT, Travel.HotelDetailColumns.PROPERTY_IDS};
 
     // ,
     // Travel.HotelImagePairColumns.THUMBNAIL_URL, Travel.HotelImagePairColumns.IMAGE_URL,
@@ -207,25 +210,22 @@ public class Hotel implements Serializable, HotelDAO {
         ratesURL = new URLInfo();
         ratesURL.href = CursorUtil.getStringValue(cursor, Travel.HotelDetailColumns.RATES_URL);
 
-    }
-
-    public ArrayList<String> getPropertyIds() {
-        if (propertyIds != null && propertyIds.size() > 0) {
-            ArrayList<String> propertyIdsList = new ArrayList<String>(this.propertyIds.size());
-            for (HotelPropertyId propertyId : this.propertyIds) {
-                propertyIdsList.add(propertyId.propertyId);
-            }
-            return propertyIdsList;
+        //initialize the propertyIds
+        byte[] blob = CursorUtil.getBlobValue(cursor, Travel.HotelDetailColumns.PROPERTY_IDS);
+        if (blob != null) {
+            String json = new String(blob);
+            Gson gson = new Gson();
+            propertyIds = gson.fromJson(json, new TypeToken<ArrayList<HotelPropertyId>>() {
+            }.getType());
         }
-        return null;
     }
 
     @Override
     public Uri getContentURI(Context context) {
         // get the associated hotel based on the rates url which will be unique
         if (ratesURL != null && (!TextUtils.isEmpty(ratesURL.href))) {
-            String[] columnNames = { Travel.HotelDetailColumns.RATES_URL };
-            String[] columnValues = { ratesURL.href };
+            String[] columnNames = {Travel.HotelDetailColumns.RATES_URL};
+            String[] columnValues = {ratesURL.href};
             contentUri = ContentUtils
                     .getContentUri(context, Travel.HotelDetailColumns.CONTENT_URI, columnNames, columnValues);
 

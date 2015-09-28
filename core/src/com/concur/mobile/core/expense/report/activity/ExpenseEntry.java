@@ -110,7 +110,7 @@ import com.concur.mobile.platform.util.Format;
  * @author sunill
  * 
  */
-public class ExpenseEntry extends AbstractExpenseActivity {
+public class ExpenseEntry extends AbstractExpenseActivity implements TravelAllowanceFacade.ExpenseEntryTACallback {
 
     private static final String CLS_TAG = ExpenseEntry.class.getSimpleName();
 
@@ -241,11 +241,6 @@ public class ExpenseEntry extends AbstractExpenseActivity {
 
     /** A flag indicating the key elements(location,exptype,date,country, country subcode) has been changed */
     protected boolean isKeyElementChangedForVAT = false;
-
-    /**
-     * The facade handles the entire travel allowance logic in this activity.
-     */
-    private TravelAllowanceFacade taFacade;
 
     /*
      * (non-Javadoc)
@@ -1408,7 +1403,14 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                 populateTaxFormFields();
 
                 // Handle fixed allowance fields
-                populateTaFields();
+                if (ViewUtil.hasTravelAllowanceFixed(this)
+                        && ("FXMLS".equals(expRepEntDet.expKey) || "FXLDG".equals(expRepEntDet.expKey))) {
+                    TravelAllowanceFacade facade = getTaFacade();
+                    if (facade != null) {
+                        facade.setupExpenseEntryTAFields();
+                        // After facade finished setup the {@see populateTAFields} is called.
+                    }
+                }
 
                 // Combine VendorName fields into one field if both present and
                 // editable.
@@ -1902,43 +1904,49 @@ public class ExpenseEntry extends AbstractExpenseActivity {
     }
 
     /**
-     * To populate the travel allownace related fields. Only relevant for meals and lodging.
+     * Callback method from {@link TravelAllowanceFacade}
+     * @param expenseReportFormFields
      */
-    protected void populateTaFields() {
-        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
-            this.taFacade = new TravelAllowanceFacade(new TravelAllowanceFacade.ExpenseEntryTACallback() {
+    @Override
+    public void populateTAFields(List<ExpenseReportFormField> expenseReportFormFields) {
+        View allowanceFields = findViewById(R.id.allowance_fields);
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
 
-                @Override
-                public void populateTravelAllowanceFields(
-                        List<ExpenseReportFormField> expenseReportFormFields) {
-                    View allowanceFields = findViewById(R.id.allowance_fields);
-                    ViewGroup viewGroup = (ViewGroup) findViewById(R.id.travel_allowance_field_list);
+        if (allowanceFields == null || viewGroup == null) {
+            return;
+        }
 
-                    if (allowanceFields == null || viewGroup == null) {
-                        return;
-                    }
+        TravelAllowanceFacade facade = getTaFacade();
+        if (expenseReportFormFields == null || expenseReportFormFields.size() == 0) {
+            // Nothing to do. There seems to be no fixed allowances available so keep the view GONE.
+            allowanceFields.setVisibility(View.GONE);
+            return;
+        } else if (facade != null) {
+            // Make the view group visible for fixed allowances.
+            allowanceFields.setVisibility(View.VISIBLE);
+            facade.setExpenseDetailsTAFormFields(expenseReportFormFields);
+        }
 
-                    if (expenseReportFormFields == null || expenseReportFormFields.size() == 0) {
-                        // Nothing to do. There seems to be no fixed allowances available so keep the view GONE.
-                        allowanceFields.setVisibility(View.GONE);
-                        return;
-                    } else {
-                        // Make the view group visible for fixed allowances.
-                        allowanceFields.setVisibility(View.VISIBLE);
-                        taFacade.setExpenseDetailsTAFormFields(expenseReportFormFields);
-                    }
+        List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
+                expenseReportFormFields, null);
 
-                    List<FormFieldView> frmFldViews = populateViewWithFormFields(viewGroup,
-                            expenseReportFormFields, null);
-
-                    if (frmFldViewListener != null) {
-                        frmFldViewListener.setTaFormFieldViews(frmFldViews);
-                    }
-                }
-            });
-            taFacade.setupExpenseEntryTAFields(this.getApplicationContext(), expRep, expRepEntDet);
+        if (frmFldViewListener != null) {
+            frmFldViewListener.setTaFormFieldViews(frmFldViews);
         }
     }
+
+    @Override
+    public void saveTA() {
+        showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+    }
+
+    @Override
+    public void saveTAFinished() {
+        dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
+        // Call the normal expense save after the TA save is done.
+        ExpenseEntry.super.save();
+    }
+
 
     /**
      * Will populate the view with comments.
@@ -2619,37 +2627,28 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         return retVal;
     }
 
+
     @Override
     protected void save() {
-        if (ViewUtil.hasTravelAllowanceFixed(this) && (expRepEntDet.expKey.equals("FXMLS") || expRepEntDet.expKey.equals("FXLDG"))) {
+        TravelAllowanceFacade facade = getTaFacade();
+        if (ViewUtil.hasTravelAllowanceFixed(this)
+                && ("FXMLS".equals(expRepEntDet.expKey) || "FXLDG".equals(expRepEntDet.expKey)) && facade != null) {
             /**
              * TA Case: If TA fields are available the TA save needs to be triggered first. As soons as the TA save is done the
              * normal save routine will be triggered.
              */
-            this.taFacade.setSaveExpenseEntryTACallback(new TravelAllowanceFacade.SaveExpenseEntryTACallback() {
-                @Override
-                public void saveTA() {
-                    showDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
-                }
-
-                @Override
-                public void saveTAFinished() {
-                    dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
-                    // Call the normal expense save after the TA save is done.
-                    ExpenseEntry.super.save();
-                }
-            });
             if (frmFldViewListener.getTaFormFieldViews() != null) {
                 for (FormFieldView field : frmFldViewListener.getTaFormFieldViews()) {
                     field.commit();
                 }
             }
-            this.taFacade.saveExpenseEntryTA(this.getApplicationContext(), expRep, expRepEntDet);
+            facade.saveExpenseEntryTA();
         } else {
             // If the current expens entry is not TA relevant the normal save will be triggered.
             super.save();
         }
     }
+
 
     /*
      * (non-Javadoc)
@@ -2785,6 +2784,7 @@ public class ExpenseEntry extends AbstractExpenseActivity {
         }
         return retVal;
     }
+
 
     /**
      * An extension of <code>BroadcastReceiver</code> for handling notification of the result of retrieving an exchange rate.
@@ -3476,14 +3476,15 @@ public class ExpenseEntry extends AbstractExpenseActivity {
                                         activity.finish();
                                     }
                                 } else {
-                                    if (ViewUtil.hasTravelAllowanceFixed(activity) && activity.taFacade != null
-                                            && activity.taFacade.isTaUpdateSucceeded()
-                                            && (activity.expRepEntDet.expKey.equals("FXMLS")
-                                                    || activity.expRepEntDet.expKey.equals("FXLDG"))) {
+                                    TravelAllowanceFacade facade = activity.getTaFacade();
+                                    if (ViewUtil.hasTravelAllowanceFixed(activity) && facade != null
+                                            && facade.isTaUpdateSucceeded()
+                                            && ("FXMLS".equals(activity.expRepEntDet.expKey)
+                                                    || "FXLDG".equals(activity.expRepEntDet.expKey))) {
                                         // In case the expense amount goes to zero after an TA update the expense update would
                                         // fail because the expense doesn't exist anymore. Handle this logic in case of TA as
                                         // normal and trigger an expense list refresh.
-                                        activity.taFacade.resetTaUpdateSucceeded();
+                                        facade.resetTaUpdateSucceeded();
                                         // Dismiss the dialog.
                                         activity.dismissDialog(Const.DIALOG_EXPENSE_SAVE_REPORT_ENTRY);
                                         IExpenseReportCache expRepCache = ((ConcurCore) activity.getApplication())
@@ -4638,5 +4639,19 @@ public class ExpenseEntry extends AbstractExpenseActivity {
             }
         }
 
+    }
+
+    private TravelAllowanceFacade getTaFacade() {
+        TravelAllowanceFacade facade = (TravelAllowanceFacade) getSupportFragmentManager().findFragmentByTag(TravelAllowanceFacade.FRAGMENT_TAG);
+        if (facade == null && expRep != null && expRepEntDet != null) {
+            facade = new TravelAllowanceFacade();
+            Bundle args = new Bundle();
+            args.putSerializable(TravelAllowanceFacade.ARG_EXPENSE_REPORT, expRep);
+            args.putSerializable(TravelAllowanceFacade.ARG_EXPENSE_REPORT_EXP_DETAIL, expRepEntDet);
+            facade.setArguments(args);
+            getSupportFragmentManager().beginTransaction().add(facade, TravelAllowanceFacade.FRAGMENT_TAG).commit();
+            getSupportFragmentManager().executePendingTransactions();
+        }
+        return facade;
     }
 }

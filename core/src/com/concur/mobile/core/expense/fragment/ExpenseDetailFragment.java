@@ -174,6 +174,8 @@ public class ExpenseDetailFragment extends PlatformFragment implements OnExpense
 
     private static final int DIALOG_SAVE_EXPENSE = 6;
 
+    private static final int DIALOG_SAVE_SMART_EXPENSE = 7;
+
     private static final int REQUEST_TAKE_PICTURE = 0;
 
     private static final int REQUEST_CHOOSE_IMAGE = 1;

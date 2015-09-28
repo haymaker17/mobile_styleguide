@@ -42,23 +42,19 @@ public class StopOCRRequestTaskTest extends AsyncRequestTest {
 
     private static final boolean DEBUG = false;
 
+    public StopOCRRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /**
      * Will perform the SUCCESS test throwing an exception if the test fails.
      * 
      * @throws Exception
      *             throws an exception if the test fails.
      */
-    public void doTestSuccess() throws Exception {
+    @Override
+    public void doTest() throws Exception {
         doTest(true);
-    }
-
-    /**
-     * Will perform the FAILURE test throwing an exception if the test fails.
-     * 
-     * @throws Exception
-     *             throws an exception if the test fails.
-     */
-    public void doTestFailure() throws Exception {
         doTest(false);
     }
 

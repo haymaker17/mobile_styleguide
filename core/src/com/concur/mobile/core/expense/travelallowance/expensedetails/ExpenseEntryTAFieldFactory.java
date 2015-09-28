@@ -193,6 +193,11 @@ public class ExpenseEntryTAFieldFactory {
     private void createOvernightField() {
         FixedTravelAllowance ta = controller.getFixedTA(expRepEntryDetail.taDayKey);
 
+        if (ta != null && ta.isLastDay()) {
+            // Overnight flag not needed for the last day
+            return;
+        }
+
         ExpenseReportFormField.AccessType accessType = isEditable ? ExpenseReportFormField.AccessType.RW : ExpenseReportFormField.AccessType.RO;
         ExpenseReportFormField.ControlType controlType = isEditable ? ExpenseReportFormField.ControlType.PICK_LIST : ExpenseReportFormField.ControlType.EDIT;
         ExpenseReportFormField.DataType dataType = isEditable ? ExpenseReportFormField.DataType.BOOLEAN : ExpenseReportFormField.DataType.VARCHAR;

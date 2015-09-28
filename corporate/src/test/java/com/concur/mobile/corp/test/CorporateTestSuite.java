@@ -2,6 +2,7 @@ package com.concur.mobile.corp.test;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.concur.mobile.base.util.Const;
@@ -28,12 +29,16 @@ public abstract class CorporateTestSuite {
     protected static <T extends Activity> void testActivity(Class<T> activityClass) {
         Log.v(Const.LOG_TAG, CLS_TAG + ".testActivity current Activity: ===" + activityClass.getSimpleName() + "===");
         Intent newIt = new Intent();
-
-        ActivityController<T> expenseController = Robolectric.buildActivity(activityClass)
+        Bundle bundle = new Bundle();
+        ActivityController<T> activityController = Robolectric.buildActivity(activityClass)
             .withIntent(newIt)
-            .create().start().resume().visible();
-
-        Activity runningActivity = expenseController.get();
-        expenseController.destroy();
+            .create(bundle)
+            .start()
+            .visible()
+            .restoreInstanceState(bundle)
+            .resume();
+        //Activity runningActivity = activityController.get();
+        //runningActivity.finish();
+        activityController.saveInstanceState(bundle).pause().stop().destroy();
     }
 }

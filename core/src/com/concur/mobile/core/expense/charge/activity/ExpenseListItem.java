@@ -3,10 +3,6 @@
  */
 package com.concur.mobile.core.expense.charge.activity;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
@@ -26,6 +22,10 @@ import com.concur.mobile.core.expense.charge.data.Expense;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.view.ListItem;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * An abstract extension of <code>ListItem</code> for the purposes of providing an expense list item view.
@@ -48,7 +48,7 @@ public abstract class ExpenseListItem extends ListItem {
      * @param expense
      * @param listItemViewType
      */
-    protected ExpenseListItem(Expense expense, int listItemViewType) {
+    protected ExpenseListItem(Expense expense,  int listItemViewType) {
         this(expense, null, null, null, listItemViewType);
     }
 
@@ -92,7 +92,7 @@ public abstract class ExpenseListItem extends ListItem {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         if (Preferences.shouldUseNewOcrFeatures()) {
-            expenseView = inflater.inflate(R.layout.expense_list_row_layout, null);
+            expenseView = inflater.inflate(R.layout.expense_expenseit_row, null);
         } else {
             expenseView = inflater.inflate(R.layout.expense_list_row, null);
         }
@@ -113,7 +113,7 @@ public abstract class ExpenseListItem extends ListItem {
             if (txtView != null) {
                 Calendar transDate = getTransactionDate();
                 if (transDate != null) {
-                    txtView.setText(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY_LOCAL.format(transDate.getTime()));
+                    txtView.setText(FormatUtil.SHORT_MONTH_DAY_FULL_YEAR_DISPLAY.format(transDate.getTime()));
                 } else {
                     txtView.setText("");
                 }

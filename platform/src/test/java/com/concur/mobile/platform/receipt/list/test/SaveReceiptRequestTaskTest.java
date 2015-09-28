@@ -45,11 +45,15 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
 
     private static final boolean DEBUG = false;
 
-    public static enum ReceiptSource {
+    public  enum ReceiptSource {
         SOURCE_URI, SOURCE_INPUT_STREAM, SOURCE_BYTE_ARRAY
     };
 
     private ReceiptSource source;
+
+    public SaveReceiptRequestTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
 
     /**
      * Will construct an instance of <code>SaveReceiptRequestTaskTest</code> with a test type.
@@ -57,7 +61,7 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
      * @param source
      *            contains the type of test to run.
      */
-    public SaveReceiptRequestTaskTest(ReceiptSource source) {
+    public void setReceiptSource(ReceiptSource source) {
         this.source = source;
     }
 
@@ -72,7 +76,7 @@ public class SaveReceiptRequestTaskTest extends AsyncRequestTest {
         Context context = PlatformTestApplication.getApplication();
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             Map<String, String> responseHeaders = new HashMap<String, String>();
             // Set the content-type.
             responseHeaders.put("Content-Type", "application/json");

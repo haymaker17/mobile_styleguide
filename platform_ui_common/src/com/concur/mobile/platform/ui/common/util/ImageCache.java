@@ -6,12 +6,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Log;
+
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.OkUrlFactory;
+
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -336,6 +344,8 @@ public class ImageCache {
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
+            } catch (IllegalArgumentException i) {
+                i.printStackTrace();
             } finally {
                 // No matter how control leaves the upper-block, ensure we remove
                 // this instance of RemoteImageRetriever from the map.

@@ -27,6 +27,10 @@ public class GroupConfigurationTaskTest extends AsyncRequestTest {
 
     private RequestGroupConfigurationCache groupConfigurationCache = null;
 
+    public GroupConfigurationTaskTest(boolean useMockServer) {
+        super(useMockServer);
+    }
+
     /*@Test */
     public void doTest() throws Exception {
 
@@ -36,7 +40,7 @@ public class GroupConfigurationTaskTest extends AsyncRequestTest {
         }
 
         // Set the mock response if the mock server is being used.
-        if (PlatformTestApplication.useMockServer()) {
+        if (useMockServer()) {
             // Set the mock response for the test.
             setMockResponse(mockServer, HttpStatus.SC_OK, "request/GroupConfigurationResponse.json");
         }

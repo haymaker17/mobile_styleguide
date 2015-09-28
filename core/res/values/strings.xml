@@ -92,7 +92,7 @@
     <string name="login_help_bad_email_dialog_title">Invalid Email</string>
     <string name="login_help_bad_email_dialog_message">Please input a valid email address to receive sign-in instructions.</string>
     <string name="login_help_topic_header">Or Select a Help Topic</string>
-    <string name="login_help_submit">Reset Password</string>
+    <string name="login_help_submit">Send my Sign In Details</string>
     <string name="pin_create_title">Mobile PIN</string>
     <string name="pin_create_prompt">Set your Mobile PIN to sign in to Concur.</string>
     <string name="pin_create_pin_hint">New PIN</string>
@@ -115,8 +115,8 @@
     <string name="account_locked">Account Locked</string>
     <string name="account_locked_message">We are unable to sign you in at this time.  Please contact your company\'s help desk or travel/expense department.</string>
     <string name="sso_sign_in_title">Sign in with SSO</string>
-    <string name="sso_sign_in_sub_title">Use SSO if your company has issued an SSO a company code.</string>
-    <string name="sso_sign_in_hint_text">Enter SSO Company Code</string>
+    <string name="sso_sign_in_sub_title">If your company has issued a company code, enter it here.</string>
+    <string name="sso_sign_in_hint_text">Company Code</string>
     <string name="sso_sign_in_footer_text">If you don\'t know if you need a company code, check with your company administrator.</string>
     <string name="sso_sign_in_company_code_error_message">Wrong company code: Please enter your company code.</string>
     <string name="sso_sign_in_company_code_error_title">Company Code</string>
@@ -215,6 +215,7 @@
     <string name="home_footer_button_receipt">Receipt</string>
     <string name="home_footer_button_expense">Expense</string>
     <string name="home_footer_button_mileage">Mileage</string>
+    <string name="home_footer_button_expenseit">ExpenseIt</string>
     <string name="prompt_notifications_allow_title">Notifications</string>
     <string name="prompt_notifications_allow_text">Concur Mobile can send notifications to your device when items such as approvals or card charges are ready for you.  Do you wish to allow these notifications?</string>
 
@@ -1150,6 +1151,8 @@
     <string name="dlg_expense_camera_image_import_failed_title">Picture Import Error</string>
     <string name="dlg_expense_camera_image_import_failed_message">The picture was not able to be imported.  Please ensure sufficient space (minimum 4MB) is available on the SD card.</string>
     <string name="dlg_expense_save_failed_title">Expense Save Failed</string>
+    <string name="dlg_expense_receipt_capture_save_cancel_confirmation_message">You will lose any changes you made to the expense, but your receipt will be saved in the Receipt Store.</string>
+    <string name="dlg_expense_general_save_cancel_confirmation_message">You will lose any changes you made to the expense.</string>
     <string name="dlg_expense_no_external_storage_available_title">No External Storage Available</string>
     <string name="dlg_expense_no_external_storage_available_message">There is no external storage (SD card) available.  Please ensure an SD card is inserted and that your phone is not connected via USB to a computer with the SD card available as a directory on your computer.</string>
     <string name="expense_comment_optional">Comment (optional)</string>
@@ -1287,6 +1290,9 @@
     <string name="dlg_system_unavailable_title">System Unavailable</string>
     <string name="dlg_system_unavailable_message">The service is unable to complete the operation at this time.  Please try again later, or contact your company administrator if this continues.</string>
     <string name="dlg_expenses_retrieve_failed_title">Expenses Retrieval Failed</string>
+    <string name="dlg_expenseit_retrieve_failed_title">Failed to retrieve ExpenseIt items.</string>
+    <string name="dlg_expenseit_delete_failed_title">Failed to delete ExpenseIt item(s).</string>
+    <string name="dlg_expenseit_add_to_report_failed_title">Adding failed ExpenseIt items to a Report is not allowed.</string>
     <string name="dlg_expense_approval_retrieve_failed_title">Expense Approvals Retrieve Failed</string>
     <string name="dlg_expense_active_report_retrieve_failed_title">Active Reports Retrieve Failed</string>
     <string name="dlg_expense_report_detail_retrieve_failed_title">Report Detail Retrieve Failed</string>
@@ -1310,7 +1316,7 @@
     <string name="dlg_expense_remove_card_charge_not_supported">Removal of this expense is not supported on mobile.</string>
 
     <plurals name="dlg_expense_remove_mixed_confirm">
-        <item quantity="one">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expense will be deleted.\n\nAre you sure?</item>
+        <item quantity="one">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expense and/or receipt capture will be deleted.\n\nAre you sure?</item>
         <item quantity="other">Removal of card charges is not supported on mobile.  Any selected card charges will not be deleted. \n\nThe selected cash expenses will be deleted.\n\nAre you sure?</item>
     </plurals>
 
@@ -1899,7 +1905,7 @@
 
 
     <!-- Start of test drive -->
-    <string name="next">Next ></string>
+    <string name="next">Next</string>
     <string name="universal_tour_welcome_text_concur_mobile">&lt;big>Concur Mobile&lt;/big></string>
     <string name="universal_tour_welcome_text">makes it easy to plan your business trips, capture expenses, and get reimbursed.</string>
     <string name="universal_tour_travel">Book your business trip</string>
@@ -2074,6 +2080,10 @@
     <string name="sort_expenses_by_amount_highest">Amount (highest)</string>
     <string name="sort_expenses_by_expense">Expense Type</string>
     <string name="sort_expenses_by_vendor">Vendor</string>
+
+    <!-- New First Run Experinece -->
+    <string name="first_run_exp_it_page_1_title">Turn receipt into expense, as you go</string>
+    <string name="first_run_exp_it_page_1_msg">Expense it now available in concur app. Take photos of your receipts and ExpenseIt will turn the images into expenses for you.</string>
 
 
 </resources>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.platform.travel.provider;
 
@@ -11,7 +11,7 @@ import com.concur.platform.PlatformProperties;
 
 /**
  * This class provide a contract between the travel content provider and calling application code.
- * 
+ *
  * @author andrewk
  */
 public final class Travel {
@@ -4829,6 +4829,11 @@ public final class Travel {
         public static final String LON = "LON";
 
         /**
+         * Contain the property ids (BLOB) column name.
+         */
+        public static final String PROPERTY_IDS = "PROPERTY_IDS";
+
+        /**
          * Contains the default sort order.
          */
         public static final String DEFAULT_SORT_ORDER = BaseColumns._ID + " ASC";
@@ -5219,7 +5224,6 @@ public final class Travel {
         /**
          * The content URI base for a Hotel Violation. Callers must append a numeric Hotel Violation id to this Uri to retrieve a
          * Hotel Violation
-         * 
          */
         public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_VIOLATION_ID);
 
@@ -5311,7 +5315,6 @@ public final class Travel {
         /**
          * The content URI base for a Hotel Benchmark. Callers must append a numeric Hotel Benchmark id to this Uri to retrieve a
          * Hotel Benchmark
-         *
          */
         public static final Uri CONTENT_ID_URI_BASE = Uri.parse(SCHEME + AUTHORITY + PATH_HOTEL_BENCHMARK_ID);
 

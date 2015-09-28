@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
@@ -6,6 +21,9 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+        transitive = true;
+    }
 }
 
 
@@ -70,24 +88,24 @@ android {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-//    productFlavors {
-//        production {
-//
-//        }
-//        ocr {
-//            applicationId "com.concur.breeze.ocr"
-//            resValue "string", "app_name", "ConcurOCR"
-//
-//            buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
-//            buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
-//
-//            resValue "string", "authority_expense", applicationId + ".platform.expense"
-//            resValue "string", "authority_config", applicationId + ".platform.config"
-//            resValue "string", "authority_travel", applicationId + ".platform.travel"
-//            resValue "string", "authenticator_acc_type", applicationId + ".platform.common.account"
-//
-//        }
-//    }
+    productFlavors {
+        production {
+
+        }
+        developerReleaseTest {
+            applicationId "com.concur.breeze.developer.release.test"
+            resValue "string", "app_name", "devRelease"
+
+            buildConfigField "String", "AUTHORITY", "\"${applicationId}\""
+            buildConfigField "String", "ACC_TYPE", "\"${applicationId}\""
+
+            resValue "string", "authority_expense", applicationId + ".platform.expense"
+            resValue "string", "authority_config", applicationId + ".platform.config"
+            resValue "string", "authority_travel", applicationId + ".platform.travel"
+            resValue "string", "authenticator_acc_type", applicationId + ".platform.common.account"
+
+        }
+    }
     /*##############   #####################     ##########################     ###################*/
 
 }

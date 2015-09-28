@@ -1,10 +1,10 @@
 package com.concur.mobile.core.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.Activity;
 import android.graphics.Bitmap.CompressFormat;
+
+import java.util.Arrays;
+import java.util.List;
 
 public final class Const {
 
@@ -216,6 +216,9 @@ public final class Const {
     // Allow ConditionalField Evaluation to show or hide visibility for fields on form
     public static final String PREF_ALLOW_CONDITIONAL_FIELD_EVALUATION = "pref_allow_conditional_field_evaluation";
 
+    // Allow ConditionalField Evaluation to show or hide visibility for fields on form
+    public static final String PREF_ENABLE_EXPENSE_IT_EXPERIENCE = "pref_enable_expense_it_experience";
+
     // Push notification settings
     public static final String PREF_PUSH_ALLOW = "pref_push_allow";
     public static final String PREF_PUSH_VIBRATE = "pref_push_vibrate";
@@ -325,6 +328,14 @@ public final class Const {
 
     // Show Jarvis Hotel UI
     public static final String SHOW_JARVIS_HOTEL_UI = "ShowJarvisHotelUIOnAndroid";
+
+    // User is loggedIn to ExpenseIt
+    public static final String PREF_USER_LOGGED_IN_EXPENSE_IT = "pref_user_logged_in_expense_it";
+
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT = "pref_first_run_experience_upgrade_expense_it";
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_TRAVEL = "pref_first_run_experience_upgrade_travel";
+    public static final String PREF_FIRST_RUN_EXP_UPGRADE_EXPENSE_IT_TRAVEL = "pref_first_run_experience_upgrade_expense_it_travel";
+
 
     // The default ip/port for the MWS.
     public static final String BREEZE_WEB_ADDRESS = "https://www.concurbreeze.com/login";
@@ -713,7 +724,7 @@ public final class Const {
     public static final String LR_PERMISSIONS_TR_USER = "permissions.tr.user";
     public static final String LR_PERMISSIONS_TR_APPROVER = "permissions.tr.approver";
     public static final String LR_SITE_SETTINGS_SHOW_JARVIS_HOTEL_UI = "site.settings.showhoteljarvisui";
-
+    public static final String LR_SITE_SETTINGS_ENABLE_EXPENSE_IT_EXPERIENCE = "site.settings.enable.expense.it.experience";
     // Register response map constants
     public static final String RR_STATUS = "status";
     public static final String RR_STATUS_MESSAGE = "status_message";
@@ -1060,6 +1071,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT = "expense.list.search.selected.list.item.text";
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_CODE = "expense.list.search.selected.list.item.crn.code";
     public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_KEY = "expense.list.search.selected.list.item.crn.key";
+    public static final String EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TIME_ZONE_OFFSET = "expense.list.search.selected.list.item.time.zone.offset";
     public static final String EXTRA_EXPENSE_LIST_SEARCH_TITLE = "expense.list.search.title";
     public static final String EXTRA_EXPENSE_LIST_SEARCH_EXCLUDE_KEYS = "expense.list.search.exclude.keys";
     public static final String EXTRA_EXPENSE_LIST_SHOW_CODES = "expense.list.search.show.codes";
@@ -1069,6 +1081,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_KEYS = "expense.attendee.search.exclude.keys";
     public static final String EXTRA_EXPENSE_ATTENDEE_SEARCH_EXCLUDE_EXTERNAL_IDS = "expense.attendee.search.exclude.external.ids";
     public static final String EXTRA_EXPENSE_IMAGE_FILE_PATH = "expense.image.file.path";
+    public static final String EXTRA_EXPENSE_IT_RECEIPT_ID = "expense.receipt.image.id";
 
     public static final String EXTRA_SEARCH_MODE = "search.mode";
     public static final String EXTRA_SEARCH_LOC_FROM = "search.loc.from";

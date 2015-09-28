@@ -100,9 +100,9 @@ public class DefaultDateFormat implements IDateFormat {
                 case 'y':
                     if (includeYear) {
                         if (i == 1) {
-                            pattern.append("yyyy, ");
+                            pattern.append("yyyy ");
                         } else if (i == order.length) {
-                            pattern.append(", yyyy");
+                            pattern.append(" yyyy");
                         }
                     }
                     break;

@@ -1,6 +1,6 @@
 package com.concur.mobile.core.util.test;
 
-import java.util.ArrayList;
+import com.concur.mobile.core.util.FormUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,12 +8,26 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import com.concur.mobile.core.util.FormUtil;
+import java.util.ArrayList;
 
 @Config(manifest = Config.NONE, sdk = 21)
 @RunWith(RobolectricTestRunner.class)
 public class FormUtilTest {
 
+    /*
+    @Test
+    public void decode() {
+        String decoded = null;
+        try {
+            String encoded = Base64.encodeToString("0238A6E1476FE06738050BC9668DD56C".getBytes(), Base64.DEFAULT);
+            Log.v(encoded, decoded);
+        } catch (Exception e) {
+            // don't know what i should do here
+            // UTF-8 is supported
+            e.printStackTrace();
+        }
+    }
+    */
     @Test
     public void testRegexFoundInString() {
         class RegexTestStruct {

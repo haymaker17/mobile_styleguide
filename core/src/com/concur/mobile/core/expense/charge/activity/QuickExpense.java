@@ -3,20 +3,6 @@
  */
 package com.concur.mobile.core.expense.charge.activity;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Currency;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
-
-import org.apache.http.HttpStatus;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,7 +16,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -56,6 +44,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.concur.core.R;
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
+import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
@@ -93,9 +83,27 @@ import com.concur.mobile.core.util.ViewUtil.LocationSelection;
 import com.concur.mobile.core.widget.CalendarPicker;
 import com.concur.mobile.core.widget.CalendarPickerDialog;
 import com.concur.mobile.core.widget.CalendarPickerDialog.OnDateSetListener;
+import com.concur.mobile.platform.expense.smartexpense.SaveSmartExpenseRequestTask;
+import com.concur.mobile.platform.expense.smartexpense.SmartExpense;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
+import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.util.Format;
 import com.concur.mobile.platform.util.Parse;
+
+import org.apache.http.HttpStatus;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Currency;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * An extension of <code>BaseActivity</code> for handling quick expenses. This is largely a re-factor of code from the
@@ -128,17 +136,23 @@ public class QuickExpense extends BaseActivity {
 
     private static final int DIALOG_SAVE_EXPENSE = 6;
 
+    private static final int DIALOG_SAVE_SMART_EXPENSE = 7;
+
     private static final int REQUEST_TAKE_PICTURE = 0;
 
     private static final int REQUEST_CHOOSE_IMAGE = 1;
 
     private static final int REQUEST_CHOOSE_CLOUD_IMAGE = 2;
 
+    private static final int REQUEST_SAVE_SMART_EXPENSE = 3;
+
     // Color definitions for required field labels
     private static final int COLOR_RED = 0xfff00000;
     private static final int COLOR_BLACK = 0xff000000;
 
     // Key for the date value.
+    private static final String VALUES_CHANGED_KEY = "VALUES_CHANGED_KEY";
+
     private static final String DATE_KEY = "expense.date";
 
     private static final String AMOUNT_KEY = "expense.amount";
@@ -167,6 +181,8 @@ public class QuickExpense extends BaseActivity {
 
     private static final String EXTRA_SAVE_RECEIPT_RECEIVER_KEY = "receipt.save.receiver";
 
+    private static final String EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY = "receipt.save.smart.expense.receiver";
+
     // Contains the key used to store/retrieve the append receipt receiver.
     private static final String APPEND_RECEIPT_RECEIVER_KEY = "append.receipt.receiver";
 
@@ -188,6 +204,11 @@ public class QuickExpense extends BaseActivity {
      * Contains whether a call to 'saveInstanceState' has been made on this instance of the activity.
      */
     private boolean savedInstanceState = false;
+
+    /**
+     * Contains whether any changes have been made to any expense fields.
+     */
+    private boolean changesHaveBeenMade = false;
 
     /**
      * Contains the receipt image id if a receipt picture was chosen from the Receipt Store.
@@ -403,6 +424,59 @@ public class QuickExpense extends BaseActivity {
     // MRU data collector
     protected MrudataCollector mrudataCollector;
 
+    protected SaveSmartExpenseRequestTask saveSmartExpenseRequest;
+
+    protected BaseAsyncResultReceiver saveSmartExpenseReceiver;
+
+    /**
+     * Listener used to handle the response for getting the list of SmartExpenses.
+     */
+    protected class SaveSmartExpenseListener implements BaseAsyncRequestTask.AsyncReplyListener {
+
+        @Override
+        public void onRequestSuccess(Bundle resultData) {
+            dismissProgressDialog();
+
+            Log.d(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - Successfully saved SmartExpenses!");
+
+            // Finish the activity.
+            saveSucceeded = true;
+
+            // Set the flag that the expense entry cache should be refetched.
+            ConcurCore ConcurCore = getConcurCore();
+
+            // Set the refresh list flag on the expense entry.
+            IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
+            expEntCache.setShouldFetchExpenseList();
+
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
+
+        @Override
+        public void onRequestFail(Bundle resultData) {
+            dismissProgressDialog();
+            Log.e(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - FAILED to save SmartExpenses!");
+        }
+
+        @Override
+        public void onRequestCancel(Bundle resultData) {
+            dismissProgressDialog();
+            Log.d(Const.LOG_TAG, CLS_TAG + ".SmartExpenseListReplyListener - Cancelled saving SmartExpenses!");
+        }
+
+        @Override
+        public void cleanup() {
+            saveSmartExpenseRequest = null;
+        }
+
+        protected void dismissProgressDialog() {
+            dismissDialog(DIALOG_SAVE_SMART_EXPENSE);
+        }
+
+    };
+
+
     /*
      * (non-Javadoc)
      * 
@@ -478,6 +552,14 @@ public class QuickExpense extends BaseActivity {
                 // Add it to the retainer
                 retainer.put(APPEND_RECEIPT_RECEIVER_KEY, appendReceiptReceiver);
             }
+
+            //Retain the SaveExpense receiver
+            if (saveSmartExpenseReceiver != null) {
+                saveSmartExpenseReceiver.setListener(null);
+                if (retainer != null) {
+                    retainer.put(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY, saveSmartExpenseReceiver);
+                }
+            }
         }
     }
 
@@ -485,6 +567,61 @@ public class QuickExpense extends BaseActivity {
     protected void onResume() {
         super.onResume();
         restoreReceivers();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getIntent().hasExtra(ExpenseItDetailActivity.EXTRA_PREFERENCE_CONFIRM_USER_CHOICE_KEY)) {
+            showReceiptCaptureChangeLossConfirmationPrompt();
+        } else if (isSaveActionEnabled() && changesHaveBeenMade) {
+            showGeneralChangeLossConfirmationPrompt();
+        } else {
+            close();
+        }
+    }
+
+    private void close() {
+        finish();
+    }
+
+    private void showReceiptCaptureChangeLossConfirmationPrompt() {
+        String title = getString(R.string.confirm);
+        String message = getString(R.string.dlg_expense_receipt_capture_save_cancel_confirmation_message);
+        int yes = R.string.okay;
+        int no = R.string.cancel;
+        AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+            @Override
+            public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                close();
+            }
+
+            @Override
+            public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                // non-op.
+            }
+        };
+        DialogFragmentFactory.getAlertDialog(title, message, yes, -1, no, yesListener, null, null, null)
+                .show(getSupportFragmentManager(), CLS_TAG);
+    }
+
+    private void showGeneralChangeLossConfirmationPrompt() {
+        String title = getString(R.string.confirm);
+        String message = getString(R.string.dlg_expense_general_save_cancel_confirmation_message);
+        int yes = R.string.okay;
+        int no = R.string.cancel;
+        AlertDialogFragment.OnClickListener yesListener = new AlertDialogFragment.OnClickListener() {
+            @Override
+            public void onClick(FragmentActivity activity, DialogInterface dialog, int which) {
+                close();
+            }
+
+            @Override
+            public void onCancel(FragmentActivity activity, DialogInterface dialog) {
+                // non-op.
+            }
+        };
+        DialogFragmentFactory.getAlertDialog(title, message, yes, -1, no, yesListener, null, null, null)
+                .show(getSupportFragmentManager(), CLS_TAG);
     }
 
     protected void restoreReceivers() {
@@ -515,6 +652,13 @@ public class QuickExpense extends BaseActivity {
                 appendReceiptReceiver = (AppendReceiptReceiver) retainer.get(APPEND_RECEIPT_RECEIVER_KEY);
                 // Reset the activity reference.
                 appendReceiptReceiver.setActivity(this);
+            }
+            //Restore saveSmartExpense Receiver
+            if (retainer.contains(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY)) {
+                saveSmartExpenseReceiver = (BaseAsyncResultReceiver) retainer.get(EXTRA_SAVE_SMART_EXPENSE_RECEIVER_KEY);
+                if (saveSmartExpenseReceiver != null) {
+                    saveSmartExpenseReceiver.setListener(new SaveSmartExpenseListener());
+                }
             }
         }
     }
@@ -764,10 +908,16 @@ public class QuickExpense extends BaseActivity {
                                 mobileEntry.getTransactionDateCalendar()));
                     }
                 }
+                if (intent.hasExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY)) {
+                    String comment = intent.getStringExtra(ExpenseItDetailActivity.EXTRA_EXPENSEIT_COMMENT_KEY);
+                    mobileEntry.setComment(comment);
+                }
 
                 mobileEntry.setReceiptImageId(ocrReceiptImageId);
                 receiptViewOnly = true;
-                showOCRConversionInstructions();
+
+                // Removed 'OCR failed' banner on manual expense conversion from ExpenseIt item.
+                // showOCRConversionInstructions();
             }
 
             expenseEntry = new Expense(mobileEntry);
@@ -870,9 +1020,40 @@ public class QuickExpense extends BaseActivity {
             }
         } else if (expEntType.equals(Expense.ExpenseEntryType.RECEIPT_CAPTURE)) {
             mobileEntry = new MobileEntry(expenseEntry.getReceiptCapture());
-            currencyReadOnly = amountReadOnly = locationReadOnly = vendorReadOnly = true;
-            expenseTypeReadOnly = transDateReadOnly = commentReadOnly = saveReadOnly = receiptViewOnly = true;
-            showViewSubHeader(null);
+            if (mobileEntry.getRcKey() != null) {
+
+                //ExpKey
+                expenseTypeReadOnly = false;
+                //Comment
+                commentReadOnly = false;
+                //LocName
+                locationReadOnly = false;
+                //Enable Save
+                saveReadOnly = false;
+                //cannot update receipt
+                receiptViewOnly = true;
+
+                // If this ReceiptCapture is smart matched, then we shouldn't enabled certain fields.
+                // MOB-25324: Allow editing for all fields in SmartExpense when it is a Mobile_entry
+                if(expenseEntry.isSmartMatched() &&
+                    (mobileEntry.getCctKey() != null || mobileEntry.getPctKey() != null || mobileEntry.getPcaKey() != null)) {
+                    //CrnCode
+                    currencyReadOnly = true;
+                    //VendorDescription
+                    vendorReadOnly = true;
+                    //TransactionDate
+                    transDateReadOnly = true;
+                    //TransactionAmount
+                    amountReadOnly = true;
+                }
+
+                String headerText = this.getResources().getString(R.string.quick_expenseit_title);
+                showViewSubHeader(headerText);
+            } else {
+                currencyReadOnly = amountReadOnly = locationReadOnly = vendorReadOnly = true;
+                expenseTypeReadOnly = transDateReadOnly = commentReadOnly = saveReadOnly = receiptViewOnly = true;
+                showViewSubHeader(null);
+            }
             receiptButton.setEnabled(true);
         } else if (expEntType.equals(Expense.ExpenseEntryType.E_RECEIPT)) {
             mobileEntry = new MobileEntry(expenseEntry.getEReceipt(), false);
@@ -1066,7 +1247,7 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will set the currently selected expense type and update the display.
      * 
-     * @param oldExpType
+     * @param selExpType
      *            the expense type.
      */
     protected void setSelectedExpenseType(ExpenseType selExpType) {
@@ -1103,7 +1284,7 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will set the currently selected currency type and update the display.
      * 
-     * @param curType
+     * @param selCurType
      *            the expense type.
      */
     protected void setSelectedCurrencyType(ListItem selCurType) {
@@ -1336,8 +1517,27 @@ public class QuickExpense extends BaseActivity {
         } else {
             ViewUtil.setTextViewText(this, R.id.expense_vendor, R.id.field_value, "", true);
         }
-        // Enabled/disable the control.
-        ViewUtil.setViewEnabled(this, R.id.expense_vendor, R.id.field_value, !vendorReadOnly);
+        final TextView vendorFieldValue = (TextView) ViewUtil.findSubView(this, R.id.expense_vendor, R.id.field_value);
+        if (vendorFieldValue != null) {
+            // Enabled/disable the control.
+            ViewUtil.setViewEnabled(this, R.id.expense_vendor, R.id.field_value, !vendorReadOnly);
+            vendorFieldValue.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String currentVendorText = ViewUtil.getTextViewText(QuickExpense.this, R.id.expense_vendor, R.id.field_value).trim();
+                    if (!vendorFieldValue.getText().equals(currentVendorText)) {
+                        changesHaveBeenMade = true;
+                    }
+                }
+            });
+        }
+
         // Set the amount.
         setRequiredTextView(R.id.expense_amount, R.id.field_name, getText(R.string.amount).toString());
         if (expenseEntry != null && expenseEntry.getExpenseEntryType() == ExpenseEntryType.CASH && mobileEntry != null
@@ -1380,6 +1580,11 @@ public class QuickExpense extends BaseActivity {
                         // quadrillion
                         Double finalAmount = FormatUtil.parseAmount(curValue, ConcurCore.getContext().getResources()
                                 .getConfiguration().locale);
+
+                        if (!finalAmount.toString().equals(mobileEntry.getTransactionAmount().toString())) {
+                            changesHaveBeenMade = true;
+                        }
+
                         // MOB-10928 - negative amounts are okay.
                         if (finalAmount == null) {
                             // Show notification.
@@ -1602,6 +1807,8 @@ public class QuickExpense extends BaseActivity {
             if (lastReceiptAction == ReceiptPictureSaveAction.CHOOSE_PICTURE
                     || lastReceiptAction == ReceiptPictureSaveAction.TAKE_PICTURE) {
                 sendSaveReceiptRequest(receiptImageDataLocalFilePath, deleteReceiptImageDataLocalFilePath);
+            } else if (mobileEntry.getRcKey()!= null) {
+                saveSmartExpense();
             } else {
                 sendSaveExpenseRequest();
             }
@@ -1660,6 +1867,7 @@ public class QuickExpense extends BaseActivity {
                     String comment = textEdit.getText().toString().trim();
                     ViewUtil.setTextViewText(QuickExpense.this, R.id.expense_comment, R.id.field_value, comment, true);
                     lastChangedText = null;
+                    changesHaveBeenMade = true;
                 }
             });
             dlgBldr.setNegativeButton(getText(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -1727,7 +1935,6 @@ public class QuickExpense extends BaseActivity {
                 public void afterTextChanged(Editable s) {
                     expTypeAdapter.clearSearchFilter();
                     expTypeAdapter.getFilter().filter(s);
-
                 }
 
                 @Override
@@ -1744,6 +1951,7 @@ public class QuickExpense extends BaseActivity {
                         Object selExpObj = expTypeAdapter.getItem(which);
                         if (selExpObj instanceof ExpenseType) {
                             setSelectedExpenseType((ExpenseType) selExpObj);
+                            changesHaveBeenMade = true;
                         }
                     }
                     if (selExpType == null) {
@@ -1778,6 +1986,7 @@ public class QuickExpense extends BaseActivity {
                         Object selCurObj = curTypeAdapter.getItem(which);
                         if (selCurObj instanceof ListItem) {
                             setSelectedCurrencyType((ListItem) selCurObj);
+                            changesHaveBeenMade = true;
                         }
                     }
                 }
@@ -1832,6 +2041,25 @@ public class QuickExpense extends BaseActivity {
             dialog = progDlg;
             break;
         }
+        case DIALOG_SAVE_SMART_EXPENSE: {
+            ProgressDialog progDlg = new ProgressDialog(this);
+            progDlg.setMessage(getText(R.string.dlg_expense_save));
+            progDlg.setIndeterminate(true);
+            progDlg.setCancelable(false);
+            progDlg.setOnCancelListener(new OnCancelListener() {
+
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    if (saveSmartExpenseRequest != null) {
+                        saveSmartExpenseRequest.cancel(true);
+                    } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onCancel(SaveExpenseDialog): saveExpenseRequest is null!");
+                }
+                }
+            });
+            dialog = progDlg;
+            break;
+        }
         case Const.DIALOG_EXPENSE_CONFIRM_RECEIPT_APPEND: {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getText(R.string.dlg_append_receipt_confirmation_title));
@@ -1842,6 +2070,7 @@ public class QuickExpense extends BaseActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     // Dismiss the dialog and start the save.
                     dialog.dismiss();
+                    changesHaveBeenMade = true;
 
                     // Check whether the previous receipt data is local
                     // only.
@@ -1877,6 +2106,7 @@ public class QuickExpense extends BaseActivity {
                     removePreviousCopiedPicture(previousReceiptImageDataLocalFilePath, true);
                     previousReceiptImageDataLocalFilePath = null;
                     previousReceiptImageId = null;
+                    changesHaveBeenMade = true;
                     if (lastReceiptAction == ReceiptPictureSaveAction.CHOOSE_PICTURE
                             || lastReceiptAction == ReceiptPictureSaveAction.TAKE_PICTURE) {
                         receiptImageId = null;
@@ -2065,6 +2295,7 @@ public class QuickExpense extends BaseActivity {
 
         // Configure the receipt label.
         configureReceiptLabel();
+        changesHaveBeenMade = true;
     }
 
     /**
@@ -2270,6 +2501,8 @@ public class QuickExpense extends BaseActivity {
             }
             // Restore the receipt camera image file path.
             receiptCameraImageDataLocalFilePath = inState.getString(RECEIPT_CAMERA_IMAGE_FILE_PATH_KEY);
+            // Restore whether changes have been made.
+            changesHaveBeenMade = inState.getBoolean(VALUES_CHANGED_KEY);
             // Restore the last receipt action.
             lastReceiptAction = ReceiptPictureSaveAction.valueOf(inState.getString(LAST_RECEIPT_ACTION_KEY));
 
@@ -2359,7 +2592,8 @@ public class QuickExpense extends BaseActivity {
         outState.putString(RECEIPT_CAMERA_IMAGE_FILE_PATH_KEY, receiptCameraImageDataLocalFilePath);
         // Save the last receipt action.
         outState.putString(LAST_RECEIPT_ACTION_KEY, lastReceiptAction.name());
-
+        // Save whether changes have been made.
+        outState.putBoolean(VALUES_CHANGED_KEY, changesHaveBeenMade);
         // Save the "previous receipt image data local file path".
         outState.putString(PREVIOUS_RECEIPT_IMAGE_DATA_LOCAL_FILE_PATH_KEY, previousReceiptImageDataLocalFilePath);
         // Save the "previous receipt image id".
@@ -2466,6 +2700,7 @@ public class QuickExpense extends BaseActivity {
             Log.d(Const.LOG_TAG, CLS_TAG + ".onActivityResult: build view present, handling result.");
             if (requestCode == REQUEST_TAKE_PICTURE) {
                 if (resultCode == Activity.RESULT_OK) {
+
                     receiptCaptureSuccess(data);
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     Toast toast = Toast.makeText(this, getText(R.string.activity_canceled), Toast.LENGTH_SHORT);
@@ -2509,6 +2744,7 @@ public class QuickExpense extends BaseActivity {
                             deleteReceiptImageDataLocalFilePath = false;
                         }
                     }
+                    changesHaveBeenMade = true;
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     Toast toast = Toast.makeText(this, getText(R.string.activity_canceled), Toast.LENGTH_SHORT);
                     toast.show();
@@ -2523,7 +2759,7 @@ public class QuickExpense extends BaseActivity {
                     if (receiptImageId != null) {
                         // Set the receipt action flag.
                         lastReceiptAction = ReceiptPictureSaveAction.CHOOSE_PICTURE_CLOUD;
-
+                        changesHaveBeenMade = true;
                         configureReceiptLabel();
                         // Only prompt for receipt append if we're currently
                         // connected, the mobile entry does not
@@ -2566,8 +2802,14 @@ public class QuickExpense extends BaseActivity {
                         locValue = selectedListItemText;
                         locCrnCode = crnCode;
                         locCrnKey = crnKey;
+
                         ViewUtil.setTextViewText(QuickExpense.this, R.id.expense_location, R.id.field_value, locValue,
                                 true);
+
+                        // MOB-25227 - Record whether changes have been made; if so, display 'save
+                        // changes' confirmation prompt.
+                        changesHaveBeenMade = true;
+
                         // MOB-11190 Automatically update the
                         // Currency field
                         // to the selected Country/currency.
@@ -2606,7 +2848,7 @@ public class QuickExpense extends BaseActivity {
         } else {
             // Set the last receipt action.
             lastReceiptAction = ReceiptPictureSaveAction.TAKE_PICTURE;
-
+            changesHaveBeenMade = true;
             configureReceiptLabel();
             // Only prompt for receipt append if we're currently connected, the
             // mobile entry does not
@@ -2629,8 +2871,6 @@ public class QuickExpense extends BaseActivity {
     /**
      * Will copy the image data captured by the camera.
      * 
-     * @param data
-     *            the intent object containing capture information.
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2851,7 +3091,7 @@ public class QuickExpense extends BaseActivity {
         public void onDateSet(CalendarPicker view, int year, int monthOfYear, int dayOfMonth) {
             datePickerDate.set(year, monthOfYear, dayOfMonth);
             updateDatePickerFieldValue();
-
+            changesHaveBeenMade = true;
             // Remove the dialog. This will force recreation and a reset of the
             // displayed values.
             // If we do not do this then the dialog may be shown with it's old
@@ -3015,6 +3255,42 @@ public class QuickExpense extends BaseActivity {
     }
 
     /**
+     * Will send a request to save the receipt.
+     */
+    private void saveSmartExpense() {
+
+        if (saveSmartExpenseRequest != null) {
+            //We are in the middle of another save
+            return;
+        }
+
+        if (saveSmartExpenseReceiver == null) {
+            saveSmartExpenseReceiver = new BaseAsyncResultReceiver(new Handler());
+            saveSmartExpenseReceiver.setListener(new SaveSmartExpenseListener());
+        }
+
+        //Setup SmartExpense
+        SmartExpense smartExpense = new SmartExpense(this, getUserId());
+        smartExpense.setExpKey(mobileEntry.getExpKey());
+        smartExpense.setExpenseName(mobileEntry.getExpName());
+        smartExpense.setTransactionAmount(mobileEntry.getTransactionAmount());
+        smartExpense.setCrnCode(mobileEntry.getCrnCode());
+        smartExpense.setTransactionDate(mobileEntry.getTransactionDateCalendar());
+        smartExpense.setLocName(mobileEntry.getLocationName());
+        smartExpense.setVendorDescription(mobileEntry.getVendorName());
+        smartExpense.setComment(mobileEntry.getComment());
+        smartExpense.setMeKey(mobileEntry.getMeKey());
+        smartExpense.setSmartExpenseId(mobileEntry.smartExpenseId);
+
+        saveSmartExpenseRequest = new SaveSmartExpenseRequestTask(this.getApplicationContext(),
+            REQUEST_SAVE_SMART_EXPENSE, saveSmartExpenseReceiver, smartExpense, false);
+        saveSmartExpenseRequest.execute();
+
+        //Show the Save progress dialog
+        showDialog(DIALOG_SAVE_SMART_EXPENSE);
+    }
+
+    /**
      * Will register an instance of <code>SaveExpenseReceiver</code> with the application context and set the
      * <code>saveExpenseReceiver</code> attribute.
      */
@@ -3083,6 +3359,7 @@ public class QuickExpense extends BaseActivity {
         @Override
         protected void handleFailure(Context context, Intent intent) {
             activity.showDialog(Const.DIALOG_EXPENSE_SAVE_FAILED);
+            activity.unregisterSaveExpenseReceiver();
         }
 
         @Override
@@ -3151,6 +3428,7 @@ public class QuickExpense extends BaseActivity {
                     // Offline Create.
                 }
             }
+            activity.unregisterSaveExpenseReceiver();
             activity.updateMRUs(activity.saveExpenseRequest);
             activity.setResult(Activity.RESULT_OK);
             activity.finish();

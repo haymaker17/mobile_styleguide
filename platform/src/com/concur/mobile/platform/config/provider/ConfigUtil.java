@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
 import com.concur.mobile.platform.authentication.LoginResult;
 import com.concur.mobile.platform.authentication.Permissions;
 import com.concur.mobile.platform.authentication.Permissions.PermissionName;
@@ -55,6 +56,15 @@ public class ConfigUtil {
     private static final Boolean DEBUG = Boolean.TRUE;
 
     private static final Boolean TRACK_INSERTION_TIME = Boolean.TRUE;
+
+    /**
+     * FIXME:
+     * Dummy Session Id to identify ExpenseIt session id.
+     * ExpenseIt Doesn't support session so we use this column to track expenseit authorization
+     * If that changes, we need to add a column to differentiate between expenseIt and Concur
+     * But the plan at this moment is for expenseit to have a single logon
+     */
+    private static final String EXPENSE_IT_SESSION_ID="AAAAAAAAA-1111-1111-1111-111111111111";
 
     /**
      * Will update the session expiration time for the session with id <code>sessionId</code>.
@@ -118,7 +128,11 @@ public class ConfigUtil {
                     Config.SessionColumns.LOGIN_ID, Config.SessionColumns.SERVER_URL,
                     Config.SessionColumns.SIGN_IN_METHOD, Config.SessionColumns.SSO_URL, Config.SessionColumns.EMAIL,
                     Config.SessionColumns.USER_ID };
-            cursor = resolver.query(Config.SessionColumns.CONTENT_URI, sessionColumns, null, null,
+
+            // select non-expenseIt session
+            String whereClause = Config.SessionColumns.SESSION_ID + " != ? OR " + Config.SessionColumns.SESSION_ID + " IS NULL";
+            String[] whereArgs = { EXPENSE_IT_SESSION_ID };
+            cursor = resolver.query(Config.SessionColumns.CONTENT_URI, sessionColumns, whereClause, whereArgs,
                     Config.SessionColumns.DEFAULT_SORT_ORDER);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
@@ -557,6 +571,18 @@ public class ConfigUtil {
         return hash;
     }
 
+    public static void removeExpenseItLoginInfo(Context context) {
+        ContentResolver resolver = context.getContentResolver();
+
+        // Punt the session information.
+        int rowsAffected = deleteExpenseItConfigInfo(resolver);
+
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".removeExpenseItLoginInfo: deleted " + Integer.toString(rowsAffected)
+                + " user rows.");
+        }
+    }
+
     /**
      * Will remove the information stored in the Config content provider that is supplied upon login.
      * 
@@ -568,11 +594,7 @@ public class ConfigUtil {
         ContentResolver resolver = context.getContentResolver();
 
         // Punt the session information.
-        int rowsAffected = resolver.delete(Config.SessionColumns.CONTENT_URI, null, null);
-        if (DEBUG) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".removeLoginInfo: deleted " + Integer.toString(rowsAffected)
-                    + " session rows.");
-        }
+        int rowsAffected = deleteSessionConfigInfo(resolver);
 
         // Punt the user information.
         rowsAffected = resolver.delete(Config.UserColumns.CONTENT_URI, null, null);
@@ -606,11 +628,8 @@ public class ConfigUtil {
 
         ContentResolver resolver = context.getContentResolver();
 
-        // Punt the session information.
-        int rowsAffected = resolver.delete(Config.SessionColumns.CONTENT_URI, null, null);
-        if (DEBUG) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".remoteWipe: deleted " + Integer.toString(rowsAffected) + " session rows.");
-        }
+        // Punt all session information.
+        int rowsAffected = deleteSessionConfigInfo(resolver);
 
         // Punt the user information.
         rowsAffected = resolver.delete(Config.UserColumns.CONTENT_URI, null, null);
@@ -631,6 +650,22 @@ public class ConfigUtil {
             Log.d(Const.LOG_TAG, CLS_TAG + ".remoteWipe: deleted " + Integer.toString(rowsAffected)
                     + " permissions rows.");
         }
+    }
+
+    /**
+     * Update the Config session table to include the new Token for ExpenseIt and other session info
+     * @param context
+     * @param expenseItLoginResult
+     */
+    public static void updateExpenseItLoginInfo(Context context, ExpenseItLoginResult expenseItLoginResult) {
+        if (expenseItLoginResult == null) {
+            throw new IllegalArgumentException(CLS_TAG + ".updateLoginInfo: loginResponse is null!");
+        }
+
+        ContentResolver resolver = context.getContentResolver();
+
+        // Update session information.
+        updateExpenseItSessionInfo(resolver, expenseItLoginResult, EXPENSE_IT_SESSION_ID);
     }
 
     /**
@@ -872,6 +907,120 @@ public class ConfigUtil {
     }
 
     /**
+     * Gets expenseIt session information such as OAuth token
+     * @param context
+     * @return
+     */
+    public static SessionInfo getExpenseItSessionInfo(Context context) {
+        SessionInfoImpl info = null;
+
+        ContentResolver resolver = context.getContentResolver();
+        Cursor cursor = null;
+        try {
+            String[] sessionColumns = {
+                Config.SessionColumns.ACCESS_TOKEN_KEY
+            };
+
+            // select non-expenseIt session
+            String whereClause = Config.SessionColumns.SESSION_ID + " = ?";
+            String[] whereArgs = {EXPENSE_IT_SESSION_ID};
+            cursor = resolver.query(Config.SessionColumns.CONTENT_URI, sessionColumns, whereClause, whereArgs,
+                Config.SessionColumns.DEFAULT_SORT_ORDER);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+
+                    info = new SessionInfoImpl();
+
+                    // Set the access token.
+                    info.accessToken = CursorUtil.getStringValue(cursor, Config.SessionColumns.ACCESS_TOKEN_KEY);
+                }
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return info;
+    }
+
+    /**
+     * Adds Oauth token to ExpenseIt sessionID.
+     * @param resolver
+     * @param expenseItLoginResult
+     * @param sessionId
+     */
+    public static void updateExpenseItSessionInfo(ContentResolver resolver, ExpenseItLoginResult expenseItLoginResult, String sessionId) {
+        if (expenseItLoginResult == null) {
+            throw new IllegalArgumentException(CLS_TAG + ".updateSessionInfo: expenseItLoginResult is null!");
+        }
+
+        //delete previous ExpenseIt Session
+        deleteExpenseItConfigInfo(resolver);
+
+        // Set up the content values object.
+        ContentValues values = new ContentValues();
+
+        // Access token key.
+        ContentUtils.putValue(values, Config.SessionColumns.ACCESS_TOKEN_KEY, expenseItLoginResult.getToken());
+
+        // Session id.
+        ContentUtils.putValue(values, Config.SessionColumns.SESSION_ID, sessionId);
+
+        Uri sessionUri = resolver.insert(Config.SessionColumns.CONTENT_URI, values);
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG,
+                CLS_TAG + ".updateExpenseItSessionInfo: new session uri '"
+                    + ((sessionUri != null) ? sessionUri.toString() : "null"));
+        }
+    }
+
+
+    /**
+     * Deletes rows in session table
+     * FIXME
+     * At this moment we don't have single login to expenseIt services. ExpenseIt also doesn't support Autologin
+     * We don't expire on oauth to expenseIt so therefore we keep track of the oauth.
+     * Once single login to expenseIt is implemented, we need to revisit this piece to wipe all sessions.
+     * @param resolver
+     * @return
+     */
+    private static int deleteSessionConfigInfo(ContentResolver resolver) {
+
+        String whereClause = Config.SessionColumns.SESSION_ID + " != ? OR " + Config.SessionColumns.SESSION_ID + " IS NULL";
+        String[] whereArgs = { EXPENSE_IT_SESSION_ID };
+
+        // Punt all concur session information.
+        int rowsAffected = resolver.delete(Config.SessionColumns.CONTENT_URI, whereClause, whereArgs);
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".updateSessionInfo: deleted " + Integer.toString(rowsAffected)
+                + " session rows.");
+        }
+        return rowsAffected;
+    }
+
+    /**
+     * Deletes ExpenseIt session row in Config.
+     * FIXME
+     * At this moment we don't have a single login to expenseIt services. ExpenseIt does not support Autologin.
+     * We don't expire on oauth to expenseIt so therefore we keep track of the oauth.
+     * Once single login to expenseIt is implemented, we need to revisit this piece to wipe all sessions.
+     * @param resolver
+     * @return
+     */
+    private static int deleteExpenseItConfigInfo(ContentResolver resolver) {
+        String whereClause = Config.SessionColumns.SESSION_ID + " = ?";
+        String[] whereArgs = { EXPENSE_IT_SESSION_ID };
+
+        // Punt all session information.
+        int rowsAffected = resolver.delete(Config.SessionColumns.CONTENT_URI, whereClause, whereArgs);
+        if (DEBUG) {
+            Log.d(Const.LOG_TAG, CLS_TAG + ".updateExpenseItSessionInfo: deleted " + Integer.toString(rowsAffected)
+                + " session rows.");
+        }
+        return rowsAffected;
+    }
+
+    /**
      * Will update session info table with information from login response.
      * 
      * @param resolver
@@ -888,11 +1037,7 @@ public class ConfigUtil {
         }
 
         // Punt all session information.
-        int rowsAffected = resolver.delete(Config.SessionColumns.CONTENT_URI, null, null);
-        if (DEBUG) {
-            Log.d(Const.LOG_TAG, CLS_TAG + ".updateSessionInfo: deleted " + Integer.toString(rowsAffected)
-                    + " session rows.");
-        }
+        int rowsAffected = deleteSessionConfigInfo(resolver);
 
         // Set up the content values object.
         ContentValues values = new ContentValues();

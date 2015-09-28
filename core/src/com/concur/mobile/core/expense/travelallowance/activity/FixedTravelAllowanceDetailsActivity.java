@@ -1,8 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -32,6 +29,8 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
 import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvisionEnum;
+import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
+import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
@@ -39,7 +38,6 @@ import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
@@ -47,8 +45,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-@EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL)
-public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener {
+@EventTracker.EventTrackerClassName(getClassName = FixedTravelAllowanceDetailsActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL)
+public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements IControllerListener, IFragmentCallback {
+
+    public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL = "Allowance Details: Expense-Report-TravelAllowances-DailyAllowance";
 
     /**
      * The name of this {@code Class} for logging purpose.
@@ -74,6 +74,18 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
     public static final String INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE =
             FixedTravelAllowanceDetailsActivity.class.getName() + "FixedTravelAllowance";
+
+    private static final String TAG_CONFIRM_DIALOG_FRAGMENT =
+            CLASS_TAG + ".confirm.dialog.fragment";
+
+    private static final String MSG_DIALOG_DIRTY_POSITIVE =
+            CLASS_TAG + ".message.dialog.dirty.positive";
+
+    private static final String MSG_DIALOG_DIRTY_NEUTRAL =
+            CLASS_TAG + ".message.dialog.dirty.neutral";
+
+    private static final String MSG_DIALOG_DIRTY_NEGATIVE =
+            CLASS_TAG + ".message.dialog.dirty.negative";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,18 +175,50 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
         if (item.getItemId() == R.id.menuSave && this.allowance != null) {
             updateAllowanceFromUI();
-            List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
-            allowances.add(this.allowance);
-            allowanceController.executeUpdate(allowances, expenseReportKey);
-            ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
-            bar.setVisibility(View.VISIBLE);
             item.setEnabled(false);
-            disableAllFields();
+            onSave();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void onSave() {
+        if (this.allowance == null) {
+            return;
+        }
+        List<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>();
+        allowances.add(this.allowance);
+        allowanceController.executeUpdate(allowances, expenseReportKey, null);
+        ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+        bar.setVisibility(View.VISIBLE);
+        disableAllFields();
+    }
+
+    @Override
+    public void onBackPressed() {
+        FixedTravelAllowance originAllowance = null;
+        if (this.allowance != null) {
+            updateAllowanceFromUI();
+            originAllowance = allowanceController.getFixedTA(allowance.getFixedTravelAllowanceId());
+        }
+        if (this.allowance == null || !this.allowance.equals(originAllowance)) {//is dirty
+            showIsDirtyDialog();
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private void showIsDirtyDialog() {
+        Bundle bundle = new Bundle();
+        String msgText = getResources().getString(R.string.confirm_save_message);
+        bundle.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        bundle.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DIRTY_POSITIVE);
+        bundle.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DIRTY_NEUTRAL);
+        bundle.putString(MessageDialogFragment.NEGATIVE_BUTTON, MSG_DIALOG_DIRTY_NEGATIVE);
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(bundle);
+        messageDialog.show(getSupportFragmentManager(), TAG_CONFIRM_DIALOG_FRAGMENT);
+    }
 
     /**
      * Render breakfast section
@@ -190,7 +234,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
@@ -232,7 +276,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false      )){
             rlLayout.setVisibility(View.GONE);
@@ -275,7 +319,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (    ( isEditable == true ) &&
+        if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false &&
                   controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false    )){
             rlLayout.setVisibility(View.GONE);
@@ -349,10 +393,16 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 tvValue.setText(allowance.getLodgingType().toString());
             }
 
+        TextView tvLabel = (TextView) this.findViewById(R.id.tv_lodging_label);
+        if (tvLabel != null){
+            tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.LODGING_TYPE_LABEL));
+        }
+
     }
 
     private void renderOvernight(FixedTravelAllowance allowance) {
-        if (allowance == null) {
+        if (allowance == null || allowance.isLastDay()) {
+            // This section should not be rendered if the ta is for the last day of an itinerary.
             return;
         }
         //Section should not be rendered for approver if no relevant data is available
@@ -379,6 +429,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 svSwitch.setVisibility(View.VISIBLE);
                 svSwitch.setTextOn(getResources().getString(R.string.general_yes));
                 svSwitch.setTextOff(getResources().getString(R.string.general_no));
+                svSwitch.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL));
                 svSwitch.setChecked(allowance.getOvernightIndicator());
 
             }
@@ -402,6 +453,10 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 } else {
                     textView.setText(R.string.general_no);
                 }
+            }
+            TextView tvLabel = (TextView) this.findViewById(R.id.tv_overnight_label);
+            if (tvLabel != null){
+                tvLabel.setText(allowanceController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL));
             }
 
         }
@@ -614,9 +669,9 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
     private MealProvision deriveMealProvisionFromSwitch(Switch svSwitch ){
         if (svSwitch != null){
             if (svSwitch.isChecked()){
-                return new MealProvision(MealProvision.PROVIDED_CODE, "");
+                return MealProvisionEnum.fromCode(MealProvision.PROVIDED_CODE, this);
             }else {
-                return new MealProvision(MealProvision.NOT_PROVIDED_CODE, "");
+                return MealProvisionEnum.fromCode(MealProvision.NOT_PROVIDED_CODE, this);
             }
         }
         return null;
@@ -632,7 +687,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
             for (Map.Entry<String,ICode> entry : map.entrySet()){
                 if (i == index){
-                    return new MealProvision(entry.getKey(), "");
+                    return new MealProvision(entry.getKey(), entry.getValue().getDescription());
                 }
                 index++;
             }
@@ -650,7 +705,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
             for (Map.Entry<String,ICode> entry : map.entrySet()){
                 if (i == index){
-                    return new LodgingType(entry.getKey(), "");
+                    return new LodgingType(entry.getKey(), entry.getValue().getDescription());
                 }
                 index++;
             }
@@ -671,7 +726,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                 resultIntent.putExtra(BundleId.REFRESH_FIXED_TA, true);
                 this.setResult(RESULT_OK, resultIntent);
-                onBackPressed(); //Leave the screen on success.
+                super.onBackPressed(); //Leave the screen on success
             } else {
                 Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
             }
@@ -695,4 +750,14 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         findViewById(R.id.sv_overnight).setEnabled(false);
     }
 
+    @Override
+    public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
+        if (MSG_DIALOG_DIRTY_NEGATIVE.equals(fragmentMessage)) {
+            super.onBackPressed();
+        }
+        if (MSG_DIALOG_DIRTY_POSITIVE.equals(fragmentMessage)) {
+            onSave();
+        }
+    }
 }

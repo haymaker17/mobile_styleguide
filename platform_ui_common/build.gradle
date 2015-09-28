@@ -13,7 +13,7 @@ dependencies {
     //Please uncomment following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-    compile project(':platform')
+    //compile project(':platform')
 
     /*##############   #####################     ##########################     ###################*/
 
@@ -21,7 +21,7 @@ dependencies {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-    //compile project(path: ':platform', configuration:'ocrRelease')
+    compile project(path: ':platform', configuration:'productionRelease')
 
     /*##############   #####################     ##########################     ###################*/
 

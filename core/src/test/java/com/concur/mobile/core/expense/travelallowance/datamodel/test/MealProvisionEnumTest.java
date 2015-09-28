@@ -25,7 +25,6 @@ import org.robolectric.annotation.Config;
 @RunWith(RobolectricTestRunner.class)
 
 public class MealProvisionEnumTest extends TestCase {
-    //public class MealProvisionEnumTest extends TestCase {
 
     /**
      * Check if the correct resource IDs are returned

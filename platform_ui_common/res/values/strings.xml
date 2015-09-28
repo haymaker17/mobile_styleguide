@@ -53,11 +53,13 @@
     <!-- Network Connectivity stuff. -->
     <string name="dlg_no_connectivity_title">Client Is Offline</string>
     <string name="dlg_no_connectivity_message">This operation is not supported in offline mode.  Please try again when data connectivity is available.</string>
+    <string name="reserve_dlg_no_connectivity_message">Reservations cannot be completed while your device is offline. Please reconnect to the internet and try again.</string>
+    <string name="hotel_dlg_no_connectivity_message">Unable to perform request. Please check your internet connection.</string>
     <string name="offline_header_text">Offline</string>
 
     <!-- Login UI Strings -->
     <!-- Email Lookup -->
-    <string name="email_lookup_hint">Enter Work Email or Username</string>
+    <string name="email_lookup_hint">Work Email or Username</string>
     <string name="email_lookup_continue">Next</string>
     <string name="email_lookup_unable_to_login_title">Unable to Sign In</string>
     <string name="email_lookup_unable_to_login_msg">We are unable to sign you in with this information.</string>
@@ -71,7 +73,7 @@
     <string name="login_no_offline">Offline sign in is not available.  A successful sign in must occur while online before offline mode can be used.</string>
     <string name="register_button">Need to set your PIN?</string>
     <string name="login_help_with_signin">Forgot Mobile Password (PIN)?</string>
-    <string name="login_help_with_signin_password">Forgot your Password?</string>
+    <string name="login_help_with_signin_password">Forgot Password?</string>
     <string name="login_password">Password</string>
     <string name="login_password_or_pin_invalid">Try again to re-enter your password or select I Forgot to receive sign in instructions.</string>
     <string name="login_invalid_concur_credentials">Incorrect Password</string>
@@ -84,7 +86,7 @@
     <string name="login_403_error_title">Unable to Sign In</string>
     <string name="login_403_error_message">Your password has expired or is temporary. Please reset your password.</string>
     <string name="login_403_error_reset">Reset</string>
-
+    <string name="login_expense_it_failure">Failed to login to expenseIt</string>
     <!-- SSO Login -->
     <string name="sso_sign_in">SSO Company Code Sign In</string>
 

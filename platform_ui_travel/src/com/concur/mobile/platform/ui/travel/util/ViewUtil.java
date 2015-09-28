@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.HotelPreference;
 import com.concur.mobile.platform.travel.search.hotel.HotelRecommended;
 import com.concur.mobile.platform.travel.search.hotel.HotelViolation;
@@ -68,9 +69,10 @@ public class ViewUtil {
                 return R.string.hotel_suggestion_personal_history;
             } else if (hotelRecommended.category.equalsIgnoreCase("CompanyFavorite")) {
                 return R.string.hotel_suggestion_company_favorite;
-            } else if (hotelRecommended.category.equalsIgnoreCase("Algorithm")) {
-                return R.string.hotel_suggestion_algorithm;
             }
+//            } else if (hotelRecommended.category.equalsIgnoreCase("Algorithm")) {
+//                return R.string.hotel_suggestion_algorithm;
+//            }
         }
         return -1;
 
@@ -178,7 +180,7 @@ public class ViewUtil {
      */
 
     public static HotelViolation getShowButNoBookingViolation(List<HotelViolation> violations,
-            String maxEnforcementLevel, int maxEnforcelimit) {
+                                                              String maxEnforcementLevel, int maxEnforcelimit) {
 
         HotelViolation maxEnforcementViolation = getMaxRuleEnforcementViolation(violations, maxEnforcementLevel);
         if ((maxEnforcementViolation != null
@@ -192,7 +194,7 @@ public class ViewUtil {
      * Gets the Violation with the enforcement level matched to the passed in MaxEnforcementLevel
      */
     public static HotelViolation getMaxRuleEnforcementViolation(List<HotelViolation> violations,
-            String maxEnforcementLevel) {
+                                                                String maxEnforcementLevel) {
         HotelViolation maxEnforcementViolation = null;
         if (violations != null && maxEnforcementLevel != null) {
             for (HotelViolation violation : violations) {

@@ -3,8 +3,6 @@
  */
 package com.concur.mobile.platform.expense.provider;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.content.UriMatcher;
 import android.util.SparseArray;
@@ -13,6 +11,8 @@ import com.concur.mobile.platform.provider.EncryptedSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.PlatformContentProvider;
 import com.concur.mobile.platform.provider.PlatformSQLiteOpenHelper;
 import com.concur.mobile.platform.provider.UriMatcherInfo;
+
+import java.util.HashMap;
 
 /**
  * An extension of <code>PlatformContentProvider</code> providing expense content.
@@ -47,6 +47,8 @@ public class ExpenseProvider extends PlatformContentProvider {
     private static final int RECEIPT_ID = 16;
     private static final int SMART_EXPENSES = 17;
     private static final int SMART_EXPENSE_ID = 18;
+    private static final int EXPENSEIT_RECEIPTS = 19;
+    private static final int EXPENSEIT_RECEIPT_ID = 20;
 
     // Contains the expense type projection map.
     private static HashMap<String, String> expenseTypeProjMap;
@@ -74,6 +76,9 @@ public class ExpenseProvider extends PlatformContentProvider {
 
     // Contains the smart expense projection map.
     private static HashMap<String, String> smartExpenseProjMap;
+
+    //Contains the expenseIt receipt projections map.
+    private static HashMap<String, String> expenseItReceiptProjMap;
 
     @Override
     public boolean onCreate() {
@@ -149,6 +154,10 @@ public class ExpenseProvider extends PlatformContentProvider {
         // Add smart expense.
         matcher.addURI(Expense.AUTHORITY, "smart_expenses", SMART_EXPENSES);
         matcher.addURI(Expense.AUTHORITY, "smart_expenses/#", SMART_EXPENSE_ID);
+
+        // Add expenseIt receipt.
+        matcher.addURI(Expense.AUTHORITY, "expenseit_receipts", EXPENSEIT_RECEIPTS);
+        matcher.addURI(Expense.AUTHORITY, "expenseit_receipts/#", EXPENSEIT_RECEIPT_ID);
 
         return matcher;
     }
@@ -316,7 +325,7 @@ public class ExpenseProvider extends PlatformContentProvider {
         personalCardTransactionProjMap.put(Expense.PersonalCardTransactionColumns.PERSONAL_CARD_ID,
                 Expense.PersonalCardTransactionColumns.PERSONAL_CARD_ID);
         personalCardTransactionProjMap.put(Expense.PersonalCardTransactionColumns.TAG,
-                Expense.PersonalCardTransactionColumns.TAG);
+            Expense.PersonalCardTransactionColumns.TAG);
         personalCardTransactionProjMap.put(Expense.PersonalCardTransactionColumns.IS_SPLIT,
                 Expense.PersonalCardTransactionColumns.IS_SPLIT);
         personalCardTransactionProjMap.put(Expense.PersonalCardTransactionColumns.USER_ID,
@@ -501,6 +510,25 @@ public class ExpenseProvider extends PlatformContentProvider {
         smartExpenseProjMap.put(Expense.SmartExpenseColumns.AVERAGE_DAILY_RATE,
                 Expense.SmartExpenseColumns.AVERAGE_DAILY_RATE);
         smartExpenseProjMap.put(Expense.SmartExpenseColumns.USER_ID, Expense.SmartExpenseColumns.USER_ID);
+
+        //ExpenseIt receipt projection map
+        expenseItReceiptProjMap = new HashMap();
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns._ID, Expense.ExpenseItReceiptColumns._ID);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ID, Expense.ExpenseItReceiptColumns.ID);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.USER_ID,Expense.ExpenseItReceiptColumns.USER_ID);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.REPORT_ID,Expense.ExpenseItReceiptColumns.REPORT_ID);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.NOTE,Expense.ExpenseItReceiptColumns.NOTE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.CCTYPE,Expense.ExpenseItReceiptColumns.CCTYPE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.CREATED_AT,Expense.ExpenseItReceiptColumns.CREATED_AT);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT,Expense.ExpenseItReceiptColumns.SEND_TO_CTE_AT);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.IMAGE_DATA,Expense.ExpenseItReceiptColumns.IMAGE_DATA);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT,Expense.ExpenseItReceiptColumns.TOTAL_IMAGE_COUNT);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED,Expense.ExpenseItReceiptColumns.TOTAL_IMAGES_UPLOADED);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE,Expense.ExpenseItReceiptColumns.PARSING_STATUS_CODE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE,Expense.ExpenseItReceiptColumns.PROCESSING_ENGINE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ERROR_CODE,Expense.ExpenseItReceiptColumns.ERROR_CODE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ERROR_MESSAGE,Expense.ExpenseItReceiptColumns.ERROR_MESSAGE);
+        expenseItReceiptProjMap.put(Expense.ExpenseItReceiptColumns.ETA,Expense.ExpenseItReceiptColumns.ETA);
     }
 
     /*
@@ -729,6 +757,32 @@ public class ExpenseProvider extends PlatformContentProvider {
         info.defaultSortOrder = Expense.SmartExpenseColumns.DEFAULT_SORT_ORDER;
         info.idPathPosition = Expense.SmartExpenseColumns.SMART_EXPENSE_ID_PATH_POSITION;
         map.put(SMART_EXPENSE_ID, info);
+
+
+        // Init the ExpenseIt Receipt list info.
+        info = new UriMatcherInfo();
+        info.isIdSelection = false;
+        info.mimeType = Expense.ExpenseItReceiptColumns.CONTENT_TYPE;
+        info.tableName = Expense.ExpenseItReceiptColumns.TABLE_NAME;
+        info.nullColumnName = Expense.ExpenseItReceiptColumns.USER_ID;
+        info.contentIdUriBase = Expense.ExpenseItReceiptColumns.CONTENT_URI;
+        info.defaultSortOrder = Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER;
+        info.projectionMap = expenseItReceiptProjMap;
+        map.put(EXPENSEIT_RECEIPTS, info);
+
+        //Init the ExpenseIt Receipt list info.
+        info = new UriMatcherInfo();
+        info.isIdSelection = true;
+        info.mimeType = Expense.ExpenseItReceiptColumns.CONTENT_ITEM_TYPE;
+        info.tableName = Expense.ExpenseItReceiptColumns.TABLE_NAME;
+        info.nullColumnName = Expense.ExpenseItReceiptColumns.USER_ID;
+        info.contentIdUriBase = Expense.ExpenseItReceiptColumns.CONTENT_ID_URI_BASE;
+        info.idColumnName = Expense.ExpenseItReceiptColumns._ID;
+        info.projectionMap = expenseItReceiptProjMap;
+        info.defaultSortOrder = Expense.ExpenseItReceiptColumns.DEFAULT_SORT_ORDER;
+        info.idPathPosition = Expense.ExpenseItReceiptColumns.EXPENSEIT_RECEIPT_ID_PATH_POSITION;
+        map.put(EXPENSEIT_RECEIPT_ID, info);
+
         return map;
     }
 

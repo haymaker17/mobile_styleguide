@@ -64,8 +64,7 @@
             android:paddingLeft="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/taBreakfastSpinner"
-            android:text="@string/ta_breakfast" />
+            android:layout_toLeftOf="@+id/taBreakfastSpinner" />
 
         <Spinner
             android:id="@+id/taBreakfastSpinner"
@@ -87,8 +86,7 @@
             android:paddingLeft="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/taLunchSpinner"
-            android:text="@string/ta_lunch" />
+            android:layout_toLeftOf="@+id/taLunchSpinner" />
 
         <Spinner
             android:id="@+id/taLunchSpinner"
@@ -110,8 +108,7 @@
             android:paddingLeft="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/taDinnerSpinner"
-            android:text="@string/ta_dinner" />
+            android:layout_toLeftOf="@+id/taDinnerSpinner" />
 
         <Spinner
             android:id="@+id/taDinnerSpinner"

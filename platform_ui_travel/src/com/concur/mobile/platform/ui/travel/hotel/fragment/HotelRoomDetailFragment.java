@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
 import com.concur.mobile.platform.travel.search.hotel.HotelRate;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragmentV1;
 import com.concur.mobile.platform.ui.common.util.FormatUtil;
@@ -61,7 +62,7 @@ public class HotelRoomDetailFragment extends PlatformFragmentV1 {
             mainView.findViewById(R.id.priceToBeatView).setVisibility(View.VISIBLE);
             TextView priceToBeatView = (TextView) mainView.findViewById(R.id.priceToBeatText);
             priceToBeatView.setVisibility(View.VISIBLE);
-            priceToBeatView.setText(getText(R.string.price_to_beat_label) + " : " + FormatUtil
+            priceToBeatView.setText(getString(R.string.price_to_beat_label).toUpperCase() + " : " + FormatUtil
                     .formatAmountWithNoDecimals(priceToBeat, this.getResources().getConfiguration().locale,
                             hotelRooms.get(0).getHotelRoom().currency, true, true));
         }// end of price to beat header

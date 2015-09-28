@@ -156,7 +156,7 @@
             android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name="com.concur.mobile.core.travel.activity.LocationSearchV1"
-            android:parentActivityName="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:parentActivityName="com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="stateVisible">
             <intent-filter>
@@ -187,31 +187,31 @@
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearch"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelSearchAndResultActivity"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelSearchAndResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelChoiceDetailsActivity"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelChoiceDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelBookingActivity"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelBookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.ImageDetailActivity"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.ImageDetailActivity"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
-            android:name="com.concur.mobile.platform.ui.travel.hotel.activity.HotelVoiceSearchActivity"
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelVoiceSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ConcurRestTheme.White.ActionBarTabs"/>
         <activity
-            android:name="com.concur.mobile.core.travel.hotel.activity.ShowHotelItinerary"/>
+            android:name="com.concur.mobile.core.travel.hotel.jarvis.activity.ShowHotelItinerary"/>
         <activity
             android:name="com.concur.mobile.core.travel.hotel.activity.HotelSearchResults"
             android:screenOrientation="portrait"/>
@@ -245,6 +245,7 @@
 
         <!-- Expense related activities. -->
         <activity android:name="com.concur.mobile.core.activity.ViewImage"/>
+        <activity android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItReceiptView"/>
         <activity
             android:name="com.concur.mobile.core.expense.report.activity.ExpenseReportHeader"
             android:windowSoftInputMode="adjustResize"/>
@@ -292,6 +293,9 @@
         <activity
             android:name="com.concur.mobile.core.expense.charge.activity.QuickExpense"
             android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name="com.concur.mobile.core.expense.charge.activity.ExpenseItDetailActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name="com.concur.mobile.core.expense.activity.ExpensesAndReceipts">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -320,13 +324,15 @@
                 android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar" />
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault" />
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar" />
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault" />
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar"/>
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
         <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryListSearch"
             android:theme="@style/ConcurTheme"/>
+        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity"
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
         <activity android:name="com.concur.mobile.core.travel.hotel.activity.HotelPriceToBeatSearch"/>
@@ -496,6 +502,18 @@
             android:theme="@style/ConcurTheme.Translucent.NoActionBar.Material">
         </activity>
         <activity
+            android:name="com.concur.mobile.corp.activity.FirstRunExpItTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.FirstRunExpItTravelTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.FirstRunTravelTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="com.concur.mobile.corp.activity.OpenSourceLicenseInfo"
             android:theme="@style/ConcurBaseTheme">
         </activity>
@@ -590,6 +608,9 @@
         <!-- End Google DFP -->
         <!-- ================== -->
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e256a9e4715018881b35f334cc3b7578ca7b67cc" />
     </application>
 
 </manifest>
