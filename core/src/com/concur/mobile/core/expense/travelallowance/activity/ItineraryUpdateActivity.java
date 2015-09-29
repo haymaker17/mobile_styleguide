@@ -589,8 +589,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private boolean isDataInconsistent() {
         if (itinController.hasErrors(this.itinerary)) {
-            //TODO: Add text Action not possible. Correct errors first
-            Toast.makeText(this, R.string.general_data_inconsistent, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.general_fix_errors_to_continue, Toast.LENGTH_SHORT).show();
             return true;
         }
         if (!itinController.areAllMandatoryFieldsFilled(itinerary)) {
