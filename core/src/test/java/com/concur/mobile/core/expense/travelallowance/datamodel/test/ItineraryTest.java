@@ -87,7 +87,7 @@ public class ItineraryTest extends TestCase {
     public void hashCodeTest(){
         Itinerary it = createItinerary();
         it.setSyncStatus(null); //hashCode of SyncStatus seems to be unstable
-        assertEquals(1055692505, it.hashCode());
+        assertEquals(-1633270713, it.hashCode());
     }
 
     @Test

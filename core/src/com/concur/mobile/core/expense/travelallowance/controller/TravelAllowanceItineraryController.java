@@ -166,7 +166,7 @@ public class TravelAllowanceItineraryController extends BaseController {
                     nextSegment = itinerary.getSegmentList().get(position + 1);
                 }
 
-                if (nextSegment != null) {
+                if (nextSegment != null && segment.getArrivalLocation() != null) {
                     // Check the to location of the current segment and the from location of the next segment
                     if (segment.getArrivalLocation().equals(nextSegment.getDepartureLocation())) {
                         // Create a closed compact segment
