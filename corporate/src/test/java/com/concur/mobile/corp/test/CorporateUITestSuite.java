@@ -18,9 +18,6 @@ import com.concur.mobile.core.expense.activity.ExpenseDetail;
 import com.concur.mobile.core.expense.activity.ExpensesAndReceipts;
 import com.concur.mobile.core.expense.activity.ExpensesAndReceiptsActivity;
 import com.concur.mobile.core.expense.activity.ListSearch;
-import com.concur.mobile.core.expense.activity.TAExpensesActivity;
-import com.concur.mobile.core.expense.activity.TAItineraryActivity;
-import com.concur.mobile.core.expense.activity.TAStopActivity;
 import com.concur.mobile.core.expense.charge.activity.QuickExpense;
 import com.concur.mobile.core.expense.receiptstore.activity.ExpenseReceiptCombined;
 import com.concur.mobile.core.expense.receiptstore.activity.ReceiptShare;
@@ -87,9 +84,7 @@ import com.concur.mobile.corp.activity.CompanyCodeLoginActivity;
 import com.concur.mobile.corp.activity.CompanySignOnActivity;
 import com.concur.mobile.corp.activity.EmailLookupActivity;
 import com.concur.mobile.corp.activity.ForegroundApp;
-import com.concur.mobile.corp.activity.Home;
 import com.concur.mobile.corp.activity.LocationCheckIn;
-import com.concur.mobile.corp.activity.Login;
 import com.concur.mobile.corp.activity.LoginHelp;
 import com.concur.mobile.corp.activity.LoginHelpTopic;
 import com.concur.mobile.corp.activity.LoginPasswordActivity;
@@ -113,7 +108,7 @@ import java.util.List;
 /*
 * Copyright (c) 2015 Concur Technologies, Inc.
 */
-public class CorporateUITestSuite extends CorporateTestSuite {
+public class CorporateUITestSuite extends com.concur.mobile.corp.test.CorporateTestSuite {
     private static String CLS_TAG = CorporateUITestSuite.class.getSimpleName();
 
     @Test
@@ -165,7 +160,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
                 , ExpenseSendBack.class
                 , FileSearchActivity.class
                 , ForegroundApp.class
-                , Home.class
+               // , Home.class
 //            , HotelBookingActivity.class
 //            , HotelChoiceDetailsActivity.class
 //            , HotelPriceToBeatSearch.class
@@ -186,7 +181,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
                 , LocationSearch.class
                 , LocationSearchActivity.class
                 , LocationSearchV1.class
-                , Login.class
+                //, Login.class
                 , LoginHelp.class
                 , LoginHelpTopic.class
                 , LoginPasswordActivity.class
@@ -221,9 +216,9 @@ public class CorporateUITestSuite extends CorporateTestSuite {
 //            ,ShowHotelMap.class
                 , SimpleWebViewActivity.class
                 , Startup.class
-                , TAExpensesActivity.class
-                , TAItineraryActivity.class
-                , TAStopActivity.class
+                //, TAExpensesActivity.class
+                //, TAItineraryActivity.class
+                //, TAStopActivity.class
                 , TestDriveRegistration.class
                 , TestDriveTour.class
                 , Tour.class
@@ -287,6 +282,7 @@ public class CorporateUITestSuite extends CorporateTestSuite {
 
         for (Class<? extends Activity> item : activities) {
             try {
+                Log.v(Const.LOG_TAG, CLS_TAG +">>>>>"+ item.getSimpleName()+">>>>>"+item.getName());
                 testActivity(item);
                 successfulLaunchActivities.add(item);
             } catch (Exception e) {
