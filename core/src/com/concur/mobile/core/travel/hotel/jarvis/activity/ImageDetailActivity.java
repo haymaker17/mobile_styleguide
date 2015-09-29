@@ -79,6 +79,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, Im
         }
     }
 
+
     @Override
     public void onResume() {
 

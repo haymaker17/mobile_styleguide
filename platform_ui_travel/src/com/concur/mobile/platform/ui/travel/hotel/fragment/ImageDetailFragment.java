@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -62,16 +63,16 @@ public class ImageDetailFragment extends Fragment {
         // Inflate and locate the main ImageView
         view = inflater.inflate(R.layout.image_detail_fragment, container, false);
         mImageView = (ImageView) view.findViewById(R.id.imageView);
-        //        URI uri = URI.create(mImageUrl);
-        //        // Attempt to load the image from the image cache, if not there, then the
-        //        // ImageCache will load it asynchronously and this view will be updated via
-        //        // the ImageCache broadcast receiver available in BaseActivity.
-        //        ImageCache imgCache = ImageCache.getInstance(getActivity());
-        //        Bitmap bitmap = imgCache.getBitmap(uri, null);
-        //        if (bitmap != null) {
-        //            mImageView.setImageBitmap(bitmap);
-        //        }
+        setActionBar();
         return view;
+    }
+
+
+    private void setActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        //no title currently
+        actionBar.setTitle(R.string.hotel_tab_images);
+
     }
 
     @Override
