@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -97,7 +98,9 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
         super.onCreate();
         ctx = (ConcurCore) ConcurCore.getContext();
         gcm = GoogleCloudMessaging.getInstance(ctx);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         niftyService = new NiftyService(this);
+
         register();
     }
 
@@ -164,10 +167,18 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
 
             @Override
             protected Object doInBackground(Object... params) {
-                prefs = ctx.getService().prefs;
-
                 // Try retrieving NiftyProperties from storage
                 shouldCancelService = !fillNiftyProperties();
+                if (shouldCancelService) {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".register.doInBackground(): Cancelling Start Service: Nifty Properties from log-in not in storage.");
+                }
+
+                // Make sure we can get the userId
+                user = prefs.getString(Const.PREF_USER_ID, null);
+                if (!shouldCancelService && user == null) {
+                    shouldCancelService = true;
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".register.doInBackground(): Cancelling Start Service: ConcurService or its preferences are null, cannot get user from preferences");
+                }
 
                 // Proceed with register if properties are found
                 if (!shouldCancelService) {
@@ -182,7 +193,6 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
                         token = gcm.register(gcmEnv);
 
                         // Register with Nifty
-                        user = prefs.getString(Const.PREF_USER_ID, null);
                         result = new AsyncRequestResult();
                         niftyService.registerDevice(user, token);
 
@@ -192,7 +202,6 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
 
                 } else {
                     // Properties for Nifty could not be found, log errors and destroy service
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".register.doInBackground(): Properties for Nifty not in storage.");
                     stopSelf();
                 }
 
@@ -201,22 +210,25 @@ public class NiftyPushNotificationService extends Service implements BaseAsyncRe
 
             // Register pushNotificationReceiver if registration for Nifty push notifications was not cancelled
             protected void onPostExecute(Object result) {
-                if (pushNotificationReceiver == null && !shouldCancelService) {
-                    pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
+                if (!shouldCancelService) {
+                    if (pushNotificationReceiver == null) {
+                        pushNotificationReceiver = AWSPushNotificationReceiver.getInstance();
 
-                    if (pushNotificationFilter == null) {
-                        pushNotificationFilter = new IntentFilter();
-                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
-                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
-                        pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
-                        pushNotificationFilter.addCategory("com.concur.breeze");
+                        if (pushNotificationFilter == null) {
+                            pushNotificationFilter = new IntentFilter();
+                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.RECEIVE");
+                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTRATION");
+                            pushNotificationFilter.addAction("com.google.android.c2dm.intent.REGISTER");
+                            pushNotificationFilter.addCategory("com.concur.breeze");
+                        }
+
+                        ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
+                                "com.google.android.c2dm.permission.SEND", null);
+                        if (!AWSPushNotificationReceiver.isRegistered())
+                            AWSPushNotificationReceiver.setRegistered(true);
+                    } else {
+                        Log.e(Const.LOG_TAG, CLS_TAG + ".onPostExecute: pushNotificationReceiver is *not* null!");
                     }
-
-                    ctx.registerReceiver(pushNotificationReceiver, pushNotificationFilter,
-                            "com.google.android.c2dm.permission.SEND", null);
-                    if (!AWSPushNotificationReceiver.isRegistered()) AWSPushNotificationReceiver.setRegistered(true);
-                } else {
-                    Log.e(Const.LOG_TAG, CLS_TAG + ".onPostExecute: pushNotificationReceiver is *not* null!");
                 }
             }
         }.execute(null, null, null);

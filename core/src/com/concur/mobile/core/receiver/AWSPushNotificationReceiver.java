@@ -56,7 +56,6 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
 
     protected void buildNotificationBadge(Context context, Bundle extras) {
         if (extras != null) {
-
             String title = extras.getString(Const.PUSH_CONCUR_NOTIF_SUBJECT_FIELD);
             String message = extras.getString(Const.PUSH_CONCUR_NOTIF_MESSAGE_FIELD);
             String type = extras.getString(Const.PUSH_CONCUR_NOTIF_TYPE_FIELD);
@@ -73,13 +72,12 @@ public class AWSPushNotificationReceiver extends BroadcastReceiver {
 
             if (Const.PUSH_CONCUR_NOTIF_TYPE_REPORT_APPR.equalsIgnoreCase(type)
                     || Const.PUSH_CONCUR_NOTIF_TYPE_TRIP_APPR.equalsIgnoreCase(type)) {
-
                 /*
                 * Work around android 4.4 bug in launching intent from push notification.
                 * Issue report: https://code.google.com/p/android/issues/detail?id=61850
                 * Fix used: https://github.com/phonegap-build/PushPlugin/issues/192
                 * */
-                // we do this once...
+                // Create Intent that will be cleared
                 Intent notificationIntent_forclear = new Intent(context, Approval.class);
                 notificationIntent_forclear.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 notificationIntent_forclear.putExtra("pushBundle", extras);
