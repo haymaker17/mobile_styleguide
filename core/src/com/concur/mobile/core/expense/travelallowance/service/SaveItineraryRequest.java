@@ -15,6 +15,7 @@ import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowance
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAItinerariesResponseParser;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -54,8 +55,12 @@ public class SaveItineraryRequest extends CoreAsyncRequestTask {
         //FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
         FormatUtil.addXMLElementEscaped(sb, "Name", itinerary.getName());
         FormatUtil.addXMLElementEscaped(sb, "ItinKey", itinerary.getItineraryID());
-        if (taConfig != null && taConfig.getTravelAllowanceConfigurationList() !=null) {
-            FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+        if (StringUtilities.isNullOrEmpty(itinerary.getTacKey())) {
+            if (taConfig != null && taConfig.getTravelAllowanceConfigurationList() != null) {
+                FormatUtil.addXMLElementEscaped(sb, "TacKey", taConfig.getTravelAllowanceConfigurationList().getTacKey());
+            }
+        } else {
+            FormatUtil.addXMLElementEscaped(sb, "TacKey", itinerary.getTacKey());
         }
         FormatUtil.addXMLElementEscaped(sb, "RptKey", itinerary.getExpenseReportID());
 

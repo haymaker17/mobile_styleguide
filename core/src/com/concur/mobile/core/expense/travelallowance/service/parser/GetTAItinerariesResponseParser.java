@@ -104,6 +104,9 @@ public class GetTAItinerariesResponseParser extends BaseParser {
                     currentItinerary.setLocked(false);
                 }
             }
+            if ("TacKey".equals(tag)) {
+                currentItinerary.setTacKey(text);
+            }
 		}
 
         // Handle Itinerary Segment
