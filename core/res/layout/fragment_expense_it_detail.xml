@@ -77,6 +77,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+                                android:layout_marginRight="@dimen/exp_list_header_row_title_left_margin"
                                 android:text="@string/view_receipt"
                                 android:textAppearance="@style/ListCellHeaderText"/>
                         </LinearLayout>
@@ -176,6 +177,12 @@
                             android:orientation="vertical">
 
                             <include
+                                android:id="@+id/expenseit_receipt_id_field"
+                                layout="@layout/static_text_form_field"/>
+
+                            <include layout="@layout/group_separator"/>
+
+                            <include
                                 android:id="@+id/expenseit_capture_date"
                                 layout="@layout/static_text_form_field"/>
 
@@ -209,7 +216,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/expenseit_details_linear_layout"
+                android:gravity="bottom">
 
                 <ImageView
                     android:id="@+id/ocr_expenseit_logo"

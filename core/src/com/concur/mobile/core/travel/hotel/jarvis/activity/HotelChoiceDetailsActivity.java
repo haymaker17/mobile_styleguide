@@ -271,6 +271,18 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             }
         }
 
+        // log GA events
+        if (TAB_DETAILS.equals(tabId)) {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_DETAILS_VIEWED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_DETAILS_VIEWED);
+        } else if (TAB_ROOMS.equals(tabId)) {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+        } else if (TAB_IMAGES.equals(tabId)) {
+            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_PHOTOS_VIEWED);
+            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_PHOTOS_VIEWED);
+        }
+
     }
 
     @Override

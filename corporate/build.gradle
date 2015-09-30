@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -6,8 +21,10 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
-    //compile 'com.github.deano2390:MaterialShowcaseView:1.0.5'
     compile project(':concurtourguide')
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
+        transitive = true;
+    }
 }
 
 
@@ -17,7 +34,7 @@ android {
         minSdkVersion lowestSdkSupportVersion
         targetSdkVersion latestSdkVersion
         versionCode System.getenv("VERSION_CODE") as Integer ?: 2999
-        versionName "9.26.test"
+        versionName "9.27.0"
         multiDexEnabled true
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
 

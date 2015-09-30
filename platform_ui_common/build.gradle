@@ -22,8 +22,10 @@ dependencies {
     //Please comment out following block before merge back to 'dev' branch.
     /*##############   #####################     ##########################     ###################*/
 
-    compile project(path: ':platform', configuration:'productionRelease')
+    releaseCompile project(path: ':platform', configuration:'productionRelease')
 
+    //Adding debug for selecting debug build variant
+    debugCompile project(path: ':platform', configuration:'productionDebug')
     /*##############   #####################     ##########################     ###################*/
 
 }

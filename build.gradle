@@ -77,11 +77,7 @@ subprojects {
 def includedInJacocoFullReport = [
         'base',
         'core',
-//        'corporate',
-        'platform',
-        'platform_ui_travel',
-//        'platform_ui_common',
-//        'platform_ui_expense'
+        'platform'
 ]
 
 /**
@@ -98,7 +94,17 @@ subprojects { prj ->
             version '0.7.2.+'
         }
 
-        task jacocoReport(type: JacocoReport, dependsOn: 'testDebug') {
+        def variantName = ""
+        def classDirectoriesString = "debug"
+
+        // Need to specify the project 'platform' (and others, if we decide to get code coverage
+        // on them), since it is a different build flavor.
+        if (prj.name.equals("platform")) {
+            variantName = "production"
+            classDirectoriesString = "production"
+        }
+
+        task jacocoReport(type: JacocoReport, dependsOn: "test${variantName.capitalize()}Debug") {
             group = 'Reporting'
             description = 'Generate Jacoco coverage reports after running tests.'
 
@@ -108,7 +114,7 @@ subprojects { prj ->
             }
 
             classDirectories = fileTree(
-                    dir: 'build/intermediates/classes/debug',
+                    dir: "build/intermediates/classes/${classDirectoriesString}",
                     excludes: [
                             '**/R*.class',
                             '**/BuildConfig*'
@@ -116,10 +122,10 @@ subprojects { prj ->
             )
 
             sourceDirectories = files('src')
-            executionData = files('build/jacoco/testDebug.exec')
+            executionData = files("build/jacoco/test${variantName.capitalize()}Debug.exec")
 
             doFirst {
-                files('build/intermediates/classes/debug').getFiles().each { file ->
+                files("build/intermediates/classes/${classDirectoriesString}").getFiles().each { file ->
                     if (file.name.contains('$$')) {
                         file.renameTo(file.path.replace('$$', '$'))
                     }
@@ -192,10 +198,19 @@ FileCollection generateSourceFiles(Collection projects) {
 FileCollection generateClassDirs(Collection projects) {
     def tree = fileTree('directory does not exists') // I know it's ugly :)
 
+    def classDirectoriesString = "debug"
+
     projects.each { prj ->
         //noinspection GrReassignedInClosureLocalVar
+
+        // Need to specify the project 'platform' (and others, if we decide to get code coverage
+        // on them), since it is a different build flavor.
+        if (prj.name.equals("platform")) {
+            classDirectoriesString = "production"
+        }
+
         tree += fileTree(
-                dir: "${prj.name}/build/intermediates/classes/debug",
+                dir: "${prj.name}/build/intermediates/classes/${classDirectoriesString}",
                 excludes: [
                         '**/R*.class',
                         '**/BuildConfig*'

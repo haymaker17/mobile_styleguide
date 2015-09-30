@@ -550,6 +550,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             hotelListItemsToSort = new ArrayList<HotelSearchResultListItem>(hotelListItemsTemp.size());
         }
         hotelListItemsToSort.addAll(hotelListItemsTemp);
+
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SORT + " - " + Flurry.EVENT_LABEL_DEFAULT);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SORT, Flurry.EVENT_LABEL_DEFAULT);
     }
 
     /**
@@ -700,6 +703,9 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 HotelComparator.CompareOrder.DESCENDING);
         // Perform the actual sort.
         sortByComparator(primarySort, secondarySort, hotelListItemsToSort);
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_SORT + " - " + Flurry.EVENT_LABEL_SUGGESTED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_SORT, Flurry.EVENT_LABEL_SUGGESTED);
+
     }
 
     @Override
@@ -917,8 +923,6 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 if (hotelSelected.recommended != null && hotelSelected.recommended.getSuggestedCategory() != null) {
                     paramKeys = new String[3];
                     paramValues = new String[3];
-                    paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
-                    paramValues[0] = getPropertyId(hotelSelected.propertyIds);
                     paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED;
                     paramValues[1] = Flurry.PARAM_VALUE_YES.toUpperCase();
                     paramKeys[2] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED_TYPE;
@@ -926,11 +930,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                 } else {
                     paramKeys = new String[2];
                     paramValues = new String[2];
-                    paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
-                    paramValues[0] = getPropertyId(hotelSelected.propertyIds);
                     paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED;
                     paramValues[1] = Flurry.PARAM_VALUE_NO.toUpperCase();
                 }
+                paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
+                paramValues[0] = getFormattedPropertyIdFromPropertyIds(hotelSelected.propertyIds);
+
                 Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_SELECTED + " - " + paramKeys + " - " + paramValues);
                 EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_SELECTED, paramKeys, paramValues);
                 // end of GA logging
@@ -1197,29 +1202,25 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
             // property id
             paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
-            paramValues[0] = getPropertyId(item.getHotel().propertyIds);
+            paramValues[0] = getFormattedPropertyIdFromPropertyIds(item.getHotel().propertyIds);
             Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS + " - " + paramKeys.toString() + " - " + paramValues.toString());
             EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS,
                     paramKeys, paramValues);
         }
     }
 
-    private String getPropertyId(List<HotelPropertyId> propertyIds) {
-        String id = null;
-        if (propertyIds != null && propertyIds.size() > 0) {
-            //get the property id where source is from NorthStar otherwise from source GDS
-            for (HotelPropertyId propertyId : propertyIds) {
-                if (propertyId.source != null) {
-                    if (propertyId.source.equalsIgnoreCase("NorthStar")) {
-                        id = propertyId.propertyId;
-                        break;
-                    } else if (propertyId.source.equalsIgnoreCase("GDS")) {
-                        id = propertyId.propertyId;
-                    }
-                }
-            }
+    // returns property id, source and vendor id
+    private String getFormattedPropertyIdFromPropertyIds(List<HotelPropertyId> hotelPropertyIds) {
+        StringBuilder sbr = new StringBuilder();
+        if (hotelPropertyIds != null && hotelPropertyIds.size() > 0) {
+            // just need to return the first property id, no need to check for NorthStar or GDS sources
+            sbr.append("{");
+            sbr.append("propertyId=" + hotelPropertyIds.get(0).propertyId);
+            sbr.append(", source=" + hotelPropertyIds.get(0).source);
+            sbr.append(", vendorId=" + (hotelPropertyIds.get(0).vendorId == null ? "" : hotelPropertyIds.get(0).vendorId));
+            sbr.append("}");
         }
-        return id;
+        return sbr.toString();
     }
 
 }
