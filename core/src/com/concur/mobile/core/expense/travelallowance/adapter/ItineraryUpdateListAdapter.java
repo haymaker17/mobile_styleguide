@@ -8,11 +8,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
-import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.ui.model.PositionInfoTag;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
@@ -34,7 +32,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onDateClickListener;
     private OnClickListener onLocationClickListener;
     private OnClickListener onDeleteItemClickListener;
-    private  OnClickListener onReturnToHomeListener;
+    private OnClickListener onReturnToHomeListener;
     private List<ItinerarySegment> segments;
 
     /**
@@ -70,7 +68,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         private View vgArrivalTime;
         private TextView tvArrivalTimeLabel;
         private TextView tvArrivalTimeValue;
-        private LinearLayout llReturn;
+        private View vgReturnToHome;
+        private TextView tvReturnToHome;
         private View vBorderCrossing;
         private ImageView ivDelete;
     }
@@ -143,7 +142,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vBorderCrossing != null) {
             holder.ivDelete = (ImageView) holder.vBorderCrossing.findViewById(R.id.iv_delete_icon);
         }
-        holder.llReturn = (LinearLayout) view.findViewById(R.id.ta_return_to_home);
+        holder.vgReturnToHome = view.findViewById(R.id.vg_return_to_home);
+        holder.tvReturnToHome = (TextView) view.findViewById(R.id.tv_return_to_home);
      }
 
     /**
@@ -198,7 +198,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                 }
             }
             if (this.onReturnToHomeListener != null){
-                holder.llReturn.setOnClickListener(onReturnToHomeListener);
+                holder.vgReturnToHome.setOnClickListener(onReturnToHomeListener);
             }
 
         } else {
@@ -206,6 +206,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             holder = (ViewHolder) resultView.getTag();
         }
 
+        View v = resultView.findViewById(R.id.v_arrival_separator_short);
+        if (i == 0 && v != null) {
+            v.setVisibility(View.GONE);
+        } else if (v != null) {
+            v.setVisibility(View.VISIBLE);
+        }
+        
         setPositionInfoTag(holder.ivDelete, i, PositionInfoTag.INFO_NONE);
 
         setPositionInfoTag(holder.vDepartureLocation, i, PositionInfoTag.INFO_OUTBOUND);
@@ -231,12 +238,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             withStopIcon = false;
         }
         renderArrival(segment, withStopIcon);
-
-        if (segments != null && segments.size() == 1){
-            holder.llReturn.setVisibility(View.VISIBLE);
-        }else{
-            holder.llReturn.setVisibility(View.GONE);
-        }
+        renderReturnToHome();
         renderBorderCrossing(segment, withDeleteIcon);
 
         return resultView;
@@ -257,16 +259,6 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEnabled(int position) {
-        // TODO PK: This is set to true in order to enable context menu on list items. The delete feature is currently implemented
-        // in the context menu.
-        return true;
-    }
-
     private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
@@ -274,6 +266,34 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             if (!withDeleteIcon || segment.isLocked()) {
                 holder.ivDelete.setVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    private void renderReturnToHome() {
+        if (holder.vgReturnToHome == null) {
+            return;
+        }
+        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null) {
+            holder.vgReturnToHome.setVisibility(View.VISIBLE);
+            if (holder.tvReturnToHome != null) {
+                String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
+                if (segments.get(0).getDepartureLocation() != null) {
+                    String cityCountryName = segments.get(0).getDepartureLocation().getName();
+                    int sepPos = cityCountryName.indexOf(",");
+                    String cityName = "";
+                    if (sepPos > 0) {
+                        cityName = cityCountryName.substring(0, sepPos);
+                    } else {
+                        cityName = cityCountryName;
+                    }
+                    returnText = context.getString(R.string.itin_add_return_trip, cityName);
+                } else {
+                    returnText = context.getString(R.string.itin_add_return_trip, "...");
+                }
+                holder.tvReturnToHome.setText(returnText);
+            }
+        } else {
+            holder.vgReturnToHome.setVisibility(View.GONE);
         }
     }
 
@@ -447,38 +467,38 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
      *                      of the given departure location needs to be checked.
      * @return true, if the locations are equal; otherwise false.
      */
-    public boolean hasSameLocation(List<ItinerarySegment> segments, ItinerarySegment segment, boolean likeSuccessor) {
-        if (segments == null || segment == null) {
-            return false;
-        }
-        int position =  segments.indexOf(segment);
-        if (position < 0 || position + 1 > segments.size()) {
-            return false;
-        }
-        ItineraryLocation arrival;
-        ItineraryLocation departure;
-        if (likeSuccessor) {
-            if (position + 1 >= segments.size()) {
-                return false;
-            }
-            arrival = segment.getArrivalLocation();
-            departure = segments.get(position + 1).getDepartureLocation();
-        } else {
-            if (position <= 0) {
-                return false;
-            }
-            arrival = segments.get(position - 1).getArrivalLocation();
-            departure = segment.getDepartureLocation();
-        }
-        if (arrival == null && departure == null) {
-            return false;
-        }
-        if (arrival != null) {
-            return arrival.equals(departure);
-        }
-        if (departure != null) {
-            return departure.equals(arrival);
-        }
-        return false;
-    }
+//    public boolean hasSameLocation(List<ItinerarySegment> segments, ItinerarySegment segment, boolean likeSuccessor) {
+//        if (segments == null || segment == null) {
+//            return false;
+//        }
+//        int position =  segments.indexOf(segment);
+//        if (position < 0 || position + 1 > segments.size()) {
+//            return false;
+//        }
+//        ItineraryLocation arrival;
+//        ItineraryLocation departure;
+//        if (likeSuccessor) {
+//            if (position + 1 >= segments.size()) {
+//                return false;
+//            }
+//            arrival = segment.getArrivalLocation();
+//            departure = segments.get(position + 1).getDepartureLocation();
+//        } else {
+//            if (position <= 0) {
+//                return false;
+//            }
+//            arrival = segments.get(position - 1).getArrivalLocation();
+//            departure = segment.getDepartureLocation();
+//        }
+//        if (arrival == null && departure == null) {
+//            return false;
+//        }
+//        if (arrival != null) {
+//            return arrival.equals(departure);
+//        }
+//        if (departure != null) {
+//            return departure.equals(arrival);
+//        }
+//        return false;
+//    }
 }

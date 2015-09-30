@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.util.test;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.AssignableItinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
@@ -19,6 +20,7 @@ import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -387,6 +389,35 @@ public class ItineraryUtilsTest extends TestCase {
         assertNotNull(foundMsg);
         assertEquals("Test1", foundMsg.getCode());
 
+    }
+
+    @Test
+    public void createLocationStringForAssignableItinerary() {
+        AssignableItinerary assignableItinerary = new AssignableItinerary();
+
+        assignableItinerary.addArrivalLocation("Erlangen");
+        assignableItinerary.addArrivalLocation("Nürnberg");
+        assignableItinerary.addArrivalLocation("Bamberg");
+        assignableItinerary.addArrivalLocation("Erlangen");
+
+        assertEquals("Erlangen; Nürnberg; Bamberg; Erlangen", ItineraryUtils.createLocationString(assignableItinerary));
+    }
+
+    @Test
+    public void createLocationStringForItinerary() {
+        Itinerary itinerary = new Itinerary();
+        List<ItinerarySegment> segmentList = new ArrayList<ItinerarySegment>();
+        ItinerarySegment itinerarySegment; new ItinerarySegment();
+
+        for (ItineraryLocation itLoc: locations ) {
+            itinerarySegment =  new ItinerarySegment();
+            itinerarySegment.setArrivalLocation(itLoc);
+            segmentList.add(itinerarySegment);
+        }
+
+        itinerary.setSegmentList(segmentList);
+
+        assertEquals("Frankfurt; München; New York; Mannheim", ItineraryUtils.createLocationString(itinerary));
     }
 
 }

@@ -3,15 +3,16 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
-import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.expense.travelallowance.adapter.ViewPagerAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.ControllerAction;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
@@ -22,39 +23,49 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllow
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
+import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
+import com.concur.mobile.core.expense.travelallowance.fragment.ServiceRequestListenerFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
+import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
+import com.concur.mobile.core.util.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by D049515 on 15.06.2015.
  */
 @EventTracker.EventTrackerClassName(getClassName = TravelAllowanceActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN)
-public class TravelAllowanceActivity extends BaseActivity
-        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback{
+public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
+        implements FixedTravelAllowanceListFragment.IFixedTravelAllowanceSelectedListener, IControllerListener, IFragmentCallback, PopupMenu.OnMenuItemClickListener {
 
     public static final String SCREEN_NAME_TRAVEL_ALLOWANCE_MAIN = "Tab-View: Expense-Report-TravelAllowances";
 
     private static final String CLASS_TAG = TravelAllowanceActivity.class.getSimpleName();
 
-    private static final int REQUEST_CODE_UPDATE_ITINERARY = 0x01;
-    private static final int REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS = 0x02;
+    private static final String TAG_DELETE_DIALOG_FRAGMENT = "delete.dialog.fragment";
+    private static final String TAG_UNASSIGN_DIALOG_FRAGMENT = "unassign.dialog.fragment";
+
+    private static final String MSG_DIALOG_REMOVE_POSITIVE = "dialog.remove.positive";
+    private static final String MSG_DIALOG_REMOVE_NEUTRAL = "dialog.remove.neutral";
+    private static final String MSG_DIALOG_DELETE_POSITIVE = "dialog.delete.positive";
+    private static final String MSG_DIALOG_DELETE_NEUTRAL = "dialog.delete.neutral";
 
     private String expenseReportKey;
-
-    private TravelAllowanceItineraryController itineraryController;
-    private FixedTravelAllowanceController allowanceController;
 
     private ViewPagerAdapter viewPagerAdapter;
 
     private boolean isInApproval;
+
+    private boolean itinRefreshDone = false;
+    private boolean fixedTaRefreshDone = false;
 
     /**
      * {@inheritDoc}
@@ -94,7 +105,7 @@ public class TravelAllowanceActivity extends BaseActivity
         ConcurCore app = (ConcurCore) getApplication();
 
         this.itineraryController = app.getTaController().getTaItineraryController();
-        this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
+        this.fixedTaController = app.getTaController().getFixedTravelAllowanceController();
 
         registerControllerActionListener();
 
@@ -102,17 +113,9 @@ public class TravelAllowanceActivity extends BaseActivity
             expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-
-        }
+        initializeToolbar(R.string.ta_travel_allowances);
 
         isInApproval = getIntent().getBooleanExtra(BundleId.IS_IN_APPROVAL, false);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.ta_travel_allowances);
 
         ViewPager pager = (ViewPager) findViewById(R.id.view_pager);
         List<ViewPagerAdapter.ViewPagerItem> pagerItemList = new ArrayList<ViewPagerAdapter.ViewPagerItem>();
@@ -123,6 +126,22 @@ public class TravelAllowanceActivity extends BaseActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
+        renderSummary();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_INSTANCE_STATE_ID_FIXED_TA_REFRESH_DONE, fixedTaRefreshDone);
+        outState.putBoolean(SAVED_INSTANCE_STATE_ID_ITIN_REFRESH_DONE, itinRefreshDone);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        fixedTaRefreshDone = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_ID_FIXED_TA_REFRESH_DONE, false);
+        itinRefreshDone = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_ID_ITIN_REFRESH_DONE, false);
     }
 
     @Override
@@ -136,8 +155,9 @@ public class TravelAllowanceActivity extends BaseActivity
             }
 
             if (data != null && data.getBooleanExtra(BundleId.REFRESH_FIXED_TA, false)) {
-                this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
-                FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
+                this.fixedTaController.refreshFixedTravelAllowances(expenseReportKey, null);
+                FixedTravelAllowanceListFragment fixedTaListFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
+                        FixedTravelAllowanceListFragment.class);
                 if (fixedTaListFrag != null) {
                     fixedTaListFrag.showRefreshIndicator();
                 }
@@ -176,31 +196,16 @@ public class TravelAllowanceActivity extends BaseActivity
         return list;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        SimpleTAItineraryListFragment simpleTaListFrag = getSimpleTAItineraryListFragment();
+        SimpleTAItineraryListFragment simpleTaListFrag = (SimpleTAItineraryListFragment) getFragmentByClass(SimpleTAItineraryListFragment.class);
         if (simpleTaListFrag != null) {
             Bundle bundle = new Bundle();
             ArrayList<Itinerary> arrayList = new ArrayList<Itinerary>(itineraryController.getItineraryList());
             bundle.putSerializable(BundleId.ITINERARY_LIST, arrayList);
             simpleTaListFrag.onRefreshFinished(bundle);
-        }
-        FixedTravelAllowanceListFragment fixedTaListFrag = getFixedTravelAllowanceListFragment();
-        if (fixedTaListFrag != null) {
-            //fixedTaListFrag.onRefreshFinished();
         }
     }
 
@@ -226,8 +231,8 @@ public class TravelAllowanceActivity extends BaseActivity
         if (itineraryController != null) {
             this.itineraryController.registerListener(this);
         }
-        if (this.allowanceController != null) {
-            this.allowanceController.registerListener(this);
+        if (this.fixedTaController != null) {
+            this.fixedTaController.registerListener(this);
         }
     }
 
@@ -235,25 +240,106 @@ public class TravelAllowanceActivity extends BaseActivity
         if (itineraryController != null) {
             this.itineraryController.unregisterListener(this);
         }
-        if (this.allowanceController != null) {
-            this.allowanceController.unregisterListener(this);
+        if (this.fixedTaController != null) {
+            this.fixedTaController.unregisterListener(this);
         }
     }
 
     @Override
-    public void sendMessage(String message) {
-        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "sendMessage", "message = " + message));
-        if (message.equals(TravelAllowanceItineraryListFragment.ON_REFRESH_MSG)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
+    public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
+
+        boolean isSuccess = true;
+        if (extras != null) {
+            isSuccess = extras.getBoolean(BundleId.IS_SUCCESS, true);
         }
-        if (message.equals(FixedTravelAllowanceListFragment.ON_REFRESH_MSG)) {
-            this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+
+        if (TravelAllowanceItineraryListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
+            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
         }
-        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN)) {
-            this.itineraryController.refreshItineraries(expenseReportKey, isInApproval);
+        if (FixedTravelAllowanceListFragment.ON_REFRESH_MSG.equals(fragmentMessage)) {
+            fixedTaController.refreshFixedTravelAllowances(expenseReportKey, null);
         }
-        if (message.equals(SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA)) {
-            this.allowanceController.refreshFixedTravelAllowances(expenseReportKey);
+        if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_ITIN.equals(fragmentMessage)) {
+            itineraryController.refreshItineraries(expenseReportKey, isInApproval, null);
+        }
+        if (SimpleTAItineraryListFragment.ON_REFRESH_MSG_TA.equals(fragmentMessage)) {
+            fixedTaController.refreshFixedTravelAllowances(expenseReportKey, null);
+        }
+
+        if (MSG_DELETE_ITIN_SUCCESS.equals(fragmentMessage)) {
+            refreshFixedTravelAllowances(expenseReportKey);
+            refreshItineraries(expenseReportKey, isInApproval);
+            Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+        }
+
+        if (MSG_DELETE_ITIN_FAILED.equals(fragmentMessage)) {
+            dismissProgressDialog();
+            Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();
+        }
+
+        if (MSG_UNASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
+            Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+            dismissProgressDialog();
+        }
+
+        if (MSG_UNASSIGN_ITIN_SUCCESS.equals(fragmentMessage)) {
+            if (!isSuccess) {
+                dismissProgressDialog();
+                Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            refreshAssignableItineraries(expenseReportKey);
+            refreshFixedTravelAllowances(expenseReportKey);
+            refreshItineraries(expenseReportKey, isInApproval);
+        }
+
+        if (MSG_REFRESH_ITIN_FINISHED.equals(fragmentMessage)) {
+            itinRefreshDone = true;
+            onRefreshFixedTAandItin();
+        }
+
+        if (MSG_REFRESH_TA_FINISHED.equals(fragmentMessage)) {
+            fixedTaRefreshDone = true;
+            onRefreshFixedTAandItin();
+        }
+        if (MSG_DIALOG_DELETE_POSITIVE.equals(fragmentMessage) && extras != null) {
+            Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
+            if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
+                SimpleTAItineraryListFragment listFrag = (SimpleTAItineraryListFragment) getFragmentByClass(
+                        SimpleTAItineraryListFragment.class);
+                if (listFrag != null) {
+                    listFrag.deleteItinerary(itinerary);
+                }
+            } else {
+                ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_DELETE_ITIN_LISTENER,
+                        MSG_DELETE_ITIN_SUCCESS, MSG_DELETE_ITIN_FAILED);
+                showProgressDialog();
+                itineraryController.executeDeleteItinerary(itinerary, f);
+            }
+        }
+        if (MSG_DIALOG_REMOVE_POSITIVE.equals(fragmentMessage) && extras != null) {
+            Itinerary itinerary = (Itinerary) extras.getSerializable(BundleId.ITINERARY);
+            if (StringUtilities.isNullOrEmpty(itinerary.getItineraryID())) {
+                SimpleTAItineraryListFragment listFrag = (SimpleTAItineraryListFragment) getFragmentByClass(
+                        SimpleTAItineraryListFragment.class);
+                if (listFrag != null) {
+                    listFrag.deleteItinerary(itinerary);
+                }
+            } else {
+                ServiceRequestListenerFragment f = getServiceRequestListenerFragment(TAG_UNASSIGN_REQUEST_LISTENER,
+                        MSG_UNASSIGN_ITIN_SUCCESS, MSG_UNASSIGN_ITIN_FAILED);
+                showProgressDialog();
+                itineraryController.unassignItinerary(expenseReportKey, itinerary.getItineraryID(), f);
+            }
+        }
+    }
+
+    private void onRefreshFixedTAandItin() {
+        if (itinRefreshDone && fixedTaRefreshDone) {
+            itinRefreshDone = false;
+            fixedTaRefreshDone = false;
+            dismissProgressDialog();
         }
     }
 
@@ -264,19 +350,22 @@ public class TravelAllowanceActivity extends BaseActivity
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished", "controller = " + controller.getClass().getSimpleName() +
                     ", action = " + action + ", isSuccess = " + isSuccess));
             if (controller instanceof TravelAllowanceItineraryController) {
-                TravelAllowanceItineraryListFragment itinListFrag = viewPagerAdapter.getTravelAllowanceItineraryFragment();
+                TravelAllowanceItineraryListFragment itinListFrag = (TravelAllowanceItineraryListFragment) getFragmentByClass(
+                        TravelAllowanceItineraryListFragment.class);
                 if (itinListFrag != null) {
                     itinListFrag.onRefreshFinished();
                 }
 
-                SimpleTAItineraryListFragment simpleList = getSimpleTAItineraryListFragment();
+                SimpleTAItineraryListFragment simpleList = (SimpleTAItineraryListFragment) getFragmentByClass(SimpleTAItineraryListFragment.class);
                 if (simpleList != null) {
                     simpleList.onRefreshFinished(result);
                 }
             }
 
             if (controller instanceof FixedTravelAllowanceController) {
-                FixedTravelAllowanceListFragment allowanceFrag = viewPagerAdapter.getFixedTravelAllowanceFragment();
+                renderSummary();
+                FixedTravelAllowanceListFragment allowanceFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
+                        FixedTravelAllowanceListFragment.class);
                 if (allowanceFrag != null) {
                     allowanceFrag.onRefreshFinished();
                 }
@@ -287,29 +376,122 @@ public class TravelAllowanceActivity extends BaseActivity
         }
     }
 
-    public SimpleTAItineraryListFragment getSimpleTAItineraryListFragment() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments == null) {
-            return null;
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        if (R.id.delete == item.getItemId()) {
+            Intent intent = item.getIntent();
+            Itinerary itinerary = (Itinerary) intent.getSerializableExtra(BundleId.ITINERARY);
+            showDeleteItineraryDialog(itinerary);
+
+            // needs to be always true because the intent is used for passing additional similar to menuInfo.
+            return true;
         }
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof SimpleTAItineraryListFragment) {
-                return (SimpleTAItineraryListFragment) fragment;
-            }
+
+        if (R.id.remove == item.getItemId()) {
+            Intent intent = item.getIntent();
+            Itinerary itinerary = (Itinerary) intent.getSerializableExtra(BundleId.ITINERARY);
+            showRemoveItineraryDialog(itinerary);
+
+            // needs to be always true because the intent is used for passing additional similar to menuInfo.
+            return true;
         }
-        return null;
+
+        return false;
     }
 
-    public FixedTravelAllowanceListFragment getFixedTravelAllowanceListFragment() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments == null) {
-            return null;
+    private void showDeleteItineraryDialog(final Itinerary itinerary) {
+        Bundle arguments = new Bundle();
+        Bundle extras = new Bundle();
+        String msgText = getResources().getString(R.string.ta_confirm_delete_itinerary, itinerary.getName());
+        extras.putSerializable(BundleId.ITINERARY, itinerary);
+        arguments.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        arguments.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DELETE_POSITIVE);
+        arguments.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DELETE_NEUTRAL);
+        arguments.putBundle(BundleId.FRAGMENT_MESSAGE_EXTRAS, extras);
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(arguments);
+        messageDialog.show(getSupportFragmentManager(), TAG_DELETE_DIALOG_FRAGMENT);
+    }
+
+    private void showRemoveItineraryDialog(final Itinerary itinerary) {//unassign
+        Bundle arguments = new Bundle();
+        Bundle extras = new Bundle();
+        String msgText = getResources().getString(R.string.ta_confirm_remove, itinerary.getName());
+        extras.putSerializable(BundleId.ITINERARY, itinerary);
+        arguments.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
+        arguments.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_REMOVE_POSITIVE);
+        arguments.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_REMOVE_NEUTRAL);
+        arguments.putBundle(BundleId.FRAGMENT_MESSAGE_EXTRAS, extras);
+        MessageDialogFragment messageDialog = new MessageDialogFragment();
+        messageDialog.setArguments(arguments);
+        messageDialog.show(getSupportFragmentManager(), TAG_UNASSIGN_DIALOG_FRAGMENT);
+    }
+
+    /**
+     * Renders the summary w.r.t fixed travel allowances
+     */
+    private void renderSummary() {
+
+        DefaultDateFormat dateFormatter = new DefaultDateFormat(this);
+        List<FixedTravelAllowance> allowances = fixedTaController.getFixedTravelAllowances();
+        if (allowances == null || allowances.size() == 0) {
+            findViewById(R.id.ta_summary).setVisibility(View.GONE);
+            return;
+        } else {
+            findViewById(R.id.ta_summary).setVisibility(View.VISIBLE);
         }
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof FixedTravelAllowanceListFragment) {
-                return (FixedTravelAllowanceListFragment) fragment;
+
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        TextView tvValue = (TextView) findViewById(R.id.tv_value);
+        TextView tvSubtitle1 = (TextView) findViewById(R.id.tv_subtitle_1);
+        TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
+
+        if (tvTitle != null) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(R.string.ta_total_allowance);
+        }
+
+        Double sum = fixedTaController.getSum();
+        boolean multiLocations = fixedTaController.hasMultipleGroups();
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
+
+        if (tvSubtitle2 != null) {
+            if (multiLocations) {
+                tvSubtitle2.setVisibility(View.GONE);
+            } else {
+                tvSubtitle2.setVisibility(View.VISIBLE);
+                tvSubtitle2.setText(allowances.get(0).getLocationName());
             }
         }
-        return null;
+
+        if (tvSubtitle1 != null) {
+            tvSubtitle1.setVisibility(View.VISIBLE);
+            tvSubtitle1.setText(fixedTaController.getPeriod(dateFormatter));
+        }
+
+        renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
+    }
+
+    /**
+     * Renders the amount text view
+     * @param tvAmount The reference to the text view
+     * @param amount The amount to be rendered
+     * @param crnCode The currency code associated with the amount
+     */
+    private void renderAmount(TextView tvAmount, Double amount, String crnCode) {
+
+        Locale locale = getResources().getConfiguration().locale;
+
+        if (tvAmount == null){
+            Log.e(Const.LOG_TAG, CLASS_TAG + ".renderAmount: TextView null reference!");
+            return;
+        }
+        if (amount != null) {
+            tvAmount.setVisibility(View.VISIBLE);
+            tvAmount.setText(FormatUtil.formatAmount(amount, locale, crnCode, true, true));
+        } else {
+            tvAmount.setVisibility(View.GONE);
+        }
     }
 }

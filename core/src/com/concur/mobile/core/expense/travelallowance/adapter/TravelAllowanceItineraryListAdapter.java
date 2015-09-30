@@ -56,7 +56,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 		public TextView fromDateTime;
 		public TextView toDateTime;
 		public View borderCrossing;
-		public View borderCrossingLabel;
+		public TextView borderCrossingLabel;
 		public TextView borderCrossingDateTime;
 		public View segmentDivider;
 		public View itineraryDivider;
@@ -90,6 +90,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 	private Context ctx;
 
 	private boolean bcHidden;
+	private boolean isTraveller;
 
     /**
      * Creates a list adapter for the travel allowance itinerary list.
@@ -100,10 +101,11 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
      *            The list of {@code CompactItinerary}s which results from a transformation of the data model. {@see
      *            TravelAllowanceItineraryController}
      */
-	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> itineraryList, boolean hideBC) {
+	public TravelAllowanceItineraryListAdapter(Context ctx, List<CompactItinerary> itineraryList, boolean isTraveller, boolean hideBC) {
 		super(ctx, 0);
 		this.ctx = ctx;
 		this.bcHidden = hideBC;
+		this.isTraveller = isTraveller;
 		addAll(createFlatList(itineraryList));
 	}
 
@@ -191,7 +193,7 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
             holder.fromDateTime = (TextView) view.findViewById(R.id.tv_from_date_time);
             holder.toDateTime = (TextView) view.findViewById(R.id.tv_to_date_time);
 			holder.borderCrossing = view.findViewById(R.id.v_border_crossing);
-			holder.borderCrossingLabel = view.findViewById(R.id.tv_border_crossing_label);
+			holder.borderCrossingLabel = (TextView) view.findViewById(R.id.tv_border_crossing_label);
             holder.borderCrossingDateTime = (TextView) view.findViewById(R.id.tv_border_crossing_date_time);
             holder.segmentDivider = view.findViewById(R.id.segment_separator_line);
             holder.itineraryDivider = view.findViewById(R.id.itinerary_separator_line);
@@ -235,6 +237,11 @@ public class TravelAllowanceItineraryListAdapter extends ArrayAdapter<Object> {
 				holder.borderCrossing.setVisibility(View.VISIBLE);
 			}
 			if (segment.getBorderCrossingDateTime() != null) {
+				if (isTraveller) {
+					holder.borderCrossingLabel.setText(R.string.itin_crossed_border);
+				} else {
+					holder.borderCrossingLabel.setText(R.string.itin_border_crossing);
+				}
 				holder.borderCrossingLabel.setVisibility(View.VISIBLE);
 				holder.borderCrossingDateTime.setVisibility(View.VISIBLE);
 				holder.borderCrossingDateTime.setText(formatDate(segment.getBorderCrossingDateTime(), false));

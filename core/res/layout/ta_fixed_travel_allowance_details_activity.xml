@@ -13,6 +13,7 @@
         android:background="@drawable/gradient_title_bar"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:titleTextAppearance="@style/TAToolbarTitle"
+        app:contentInsetStart="72dp"
         app:titleTextAppearance="@style/TAToolbarTitle" />
 
     <LinearLayout
@@ -198,7 +199,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_lodging"
                     android:textAppearance="@style/TALabel" />
 
                 <TextView
@@ -237,7 +237,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="@string/ta_overnight"
                     android:textAppearance="@style/TALabel" />
 
                 <Switch

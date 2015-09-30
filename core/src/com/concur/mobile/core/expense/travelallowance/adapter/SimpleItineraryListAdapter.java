@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.ItineraryUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 
 import java.util.Date;
@@ -30,7 +31,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         TextView tvValue;
         TextView tvSubtitle1;
         TextView tvSubtitle2;
-        ImageView ivDelete;
+        ImageView ivRowAction;
 
         public ViewHolder(View v) {
             super(v);
@@ -39,7 +40,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             tvValue = (TextView) vContent.findViewById(R.id.tv_value);
             tvSubtitle1 = (TextView) vContent.findViewById(R.id.tv_subtitle_1);
             tvSubtitle2 = (TextView) vContent.findViewById(R.id.tv_subtitle_2);
-            ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
+            ivRowAction = (ImageView) v.findViewById(R.id.iv_row_action_icon);
         }
     }
 
@@ -75,7 +76,7 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         }
 
         if (onDeleteClickListener != null) {
-            ImageView ivDelete = (ImageView) v.findViewById(R.id.iv_delete_icon);
+            ImageView ivDelete = (ImageView) v.findViewById(R.id.iv_row_action_icon);
             if (ivDelete != null) {
                 ivDelete.setOnClickListener(onDeleteClickListener);
             }
@@ -92,10 +93,10 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
             holder.tvTitle.setVisibility(View.VISIBLE);
             holder.tvTitle.setText(itinerary.getName());
         }
-        if (holder.ivDelete != null) {
-            holder.ivDelete.setVisibility(View.VISIBLE);
-            if (!deleteEnabled || itinerary.isLocked()) {
-                holder.ivDelete.setVisibility(View.GONE);
+        if (holder.ivRowAction != null) {
+            holder.ivRowAction.setVisibility(View.VISIBLE);
+            if (!deleteEnabled) {
+                holder.ivRowAction.setVisibility(View.GONE);
             }
         }
         if (holder.tvValue != null) {
@@ -103,7 +104,12 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         }
 
         renderSubtitle1(holder, itinerary);
-        renderSubtitle2(holder, itinerary);
+
+        if (holder.tvSubtitle2 != null) {
+            holder.tvSubtitle2.setVisibility(View.VISIBLE);
+            holder.tvSubtitle2.setText(ItineraryUtils.createLocationString(itinerary));
+        }
+        //renderSubtitle2(holder, itinerary);
     }
 
     private void renderSubtitle1(ViewHolder holder, Itinerary itinerary) {
@@ -140,25 +146,8 @@ public class SimpleItineraryListAdapter extends RecyclerView.Adapter<SimpleItine
         if (segments == null || segments.size() <= 0) {
             return;
         }
-        String locationString = StringUtilities.EMPTY_STRING;
+        String locationString = ItineraryUtils.createLocationString(itinerary);
 
-        boolean first = true;
-        int pos = 1;
-        for (ItinerarySegment segment : segments) {
-            if (segment.getArrivalLocation() != null
-                    && !StringUtilities.isNullOrEmpty(segment.getArrivalLocation().getName())) {
-                if (first) {
-                    locationString = segment.getArrivalLocation().getName();
-                    first = false;
-                } else {
-                    locationString = locationString + "; " + segment.getArrivalLocation().getName();
-                }
-            }
-            if (pos + 1 >= segments.size()) {
-                break;
-            }
-            pos++;
-        }
         if (!StringUtilities.isNullOrEmpty(locationString)) {
             holder.tvSubtitle2.setVisibility(View.VISIBLE);
             holder.tvSubtitle2.setText(locationString);
