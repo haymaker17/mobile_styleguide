@@ -249,7 +249,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         @Override
         public int getViewTypeCount() {
             // Two types of views, the normal ImageView and the top row of empty views
-            return 2;
+            return 1;
         }
 
         @Override
@@ -265,11 +265,22 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
 
         @Override
         public View getView(int position, View convertView, ViewGroup container) {
+//            // First check if this is the top row
+//            if (position < mNumColumns) {
+//                if (convertView == null) {
+//                    convertView = new View(mContext);
+//                }
+//                // Set empty view with height of ActionBar
+//                convertView.setLayoutParams(new AbsListView.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT, 0));
+//                return convertView;
+//            }
 
             // Now handle the main ImageView thumbnails
             ImageView imageView;
-            imageView = new RecyclingImageView(mContext);
+
             if (convertView == null) { // if it's not recycled, instantiate and initialize
+                imageView = new RecyclingImageView(mContext);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setBackgroundColor(getResources().getColor(R.color.grey_view_background));
                 imageView.setLayoutParams(mImageViewLayoutParams);
