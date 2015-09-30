@@ -118,6 +118,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         registerReceiver(networkActivityReceiver, networkActivityFilter);
 
         registerReceiver(locationReceiver, filterLocationsUpdated);
+
+        EventTracker.INSTANCE.activityStart(this);
     }
 
     @Override protected void onStop() {
@@ -126,6 +128,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         unregisterReceiver(networkActivityReceiver);
 
         unregisterReceiver(locationReceiver);
+
+        EventTracker.INSTANCE.activityStop(this);
     }
 
     protected void configureControls(Bundle savedInstanceState) {

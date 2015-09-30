@@ -79,6 +79,18 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     private boolean suggestedAvailable;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        EventTracker.INSTANCE.activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventTracker.INSTANCE.activityStop(this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_maps, menu);
