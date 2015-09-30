@@ -45,6 +45,7 @@ import com.concur.mobile.platform.authentication.Session;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.Calendar;
@@ -1046,6 +1047,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
 
     public static boolean isExpenseItUser() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
+
         //To show ExpenseIt features. We look for both the role and site settings
         return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled();
     }

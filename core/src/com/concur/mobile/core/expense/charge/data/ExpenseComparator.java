@@ -86,7 +86,11 @@ public class ExpenseComparator implements Comparator<Expense> {
                 case OCR_NOT_DONE:
                     transDateExp1 = exp1.getOcrItem().getUploadDate();
                     break;
+                case EXPENSEIT_NOT_DONE:
+                    transDateExp1 = exp1.getExpenseItReceipt().getCreatedAt();
+                    break;
             }
+
             // Obtain the transaction date for 'exp2'.
             Calendar transDateExp2 = null;
             Double amountExp2 = null;
@@ -127,6 +131,9 @@ public class ExpenseComparator implements Comparator<Expense> {
                     break;
                 case OCR_NOT_DONE:
                     transDateExp2 = exp2.getOcrItem().getUploadDate();
+                    break;
+                case EXPENSEIT_NOT_DONE:
+                    transDateExp2 = exp2.getExpenseItReceipt().getCreatedAt();
                     break;
             }
 
