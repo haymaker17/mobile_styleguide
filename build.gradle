@@ -69,6 +69,31 @@ subprojects {
 }
 
 / * BEGIN CODE COVERAGE * /
+apply plugin: "sonar-runner"
+
+sonarRunner {
+    sonarProperties {
+//        property 'sonar.host.url', 'http://i-eb41cc1c.concur.concurtech.org:9000/'
+//        property 'sonar.login', 'jenkinsdev'
+//        property 'sonar.password', 'pass99'
+//        property 'sonar.jdbc.url', 'jdbc:postgresql://i-eb41cc1c.concur.concurtech.org/sonar'
+//        property 'sonar.jdbc.username', 'sonar'
+//        property 'sonar.jdbc.password', 'sonarpass1'
+
+        property 'sonar.host.url', 'http://localhost:9000'
+        property 'sonar.login', 'admin'
+        property 'sonar.password', 'admin'
+
+        property 'sonar.sourceEncoding', 'UTF-8'
+        property 'sonar.language', 'java'
+        properties["sonar.java.libraries"] = "**/*.jar"
+
+        // Project information.
+        property "sonar.projectKey", "com.concur.breeze"
+        property "sonar.projectName", "ConcurMobileAndroid"
+        property "sonar.projectVersion", "9.26.0-SNAPSHOT"
+    }
+}
 
 /**
  *  List of modules that require Jacoco
@@ -87,7 +112,7 @@ subprojects { prj ->
     // Apply Jacoco only if the project is in the include list
     if (includedInJacocoFullReport.contains(prj.name)) {
 
-        apply plugin: 'jacoco'
+        apply plugin: "jacoco"
 
         jacoco {
             version '0.7.2.+'
@@ -100,7 +125,7 @@ subprojects { prj ->
         // on them), since it is a different build flavor.
         if (prj.name.equals("platform")) {
             variantName = "production"
-            classDirectoriesString = "production"
+            classDirectoriesString = "production/debug"
         }
 
         task jacocoReport(type: JacocoReport, dependsOn: "test${variantName.capitalize()}Debug") {
@@ -131,11 +156,18 @@ subprojects { prj ->
                 }
             }
         }
-    }
-}
 
-jacoco {
-    toolVersion '0.7.2.+'
+        sonarRunner {
+            sonarProperties {
+                // sonar.sources: must be included to run analysis on.
+                properties["sonar.sources"] = "src/com"
+                // sonar.jacoco.reportPath: specifies where the jacoco .exec files are found to load into SonarQube.
+                properties["sonar.jacoco.reportPath"] = "build/jacoco/test${variantName.capitalize()}Debug.exec"
+                // sonar.java.binaries: specify binaries
+                properties["sonar.java.binaries"] = "build/intermediates/classes/${classDirectoriesString}"
+            }
+        }
+    }
 }
 
 /**
@@ -205,7 +237,7 @@ FileCollection generateClassDirs(Collection projects) {
         // Need to specify the project 'platform' (and others, if we decide to get code coverage
         // on them), since it is a different build flavor.
         if (prj.name.equals("platform")) {
-            classDirectoriesString = "production"
+            classDirectoriesString = "production/debug"
         }
 
         tree += fileTree(
