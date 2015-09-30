@@ -415,7 +415,7 @@ public class CompanySignOnActivity extends BaseActivity {
                 fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
             }
             if (!fromNotification) {
-                Intent i = new Intent(this, Home.class);
+                Intent i = null;
                 if(ConcurCore.userEntryAppTimer>0){
                     ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
                     long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
@@ -428,6 +428,7 @@ public class CompanySignOnActivity extends BaseActivity {
                             signInMethod, null);
                     ConcurCore.resetUserTimers();
                 }
+                i = Startup.getStartIntent(this);
                 startActivity(i);
             }
 

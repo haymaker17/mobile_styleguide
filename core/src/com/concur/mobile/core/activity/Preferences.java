@@ -45,7 +45,6 @@ import com.concur.mobile.platform.authentication.Session;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
-import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.Calendar;
@@ -325,7 +324,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
-        doAutoLogin(prefs, app);
+        ///doAutoLogin(prefs, app);
 
         // commit chnages in preferences.
         Editor e = prefs.edit();
