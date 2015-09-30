@@ -43,15 +43,16 @@ import com.concur.mobile.platform.authentication.LoginResponseKeys;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.PlatformProperties;
-
 import com.crashlytics.android.Crashlytics;
-import io.fabric.sdk.android.Fabric;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import io.fabric.sdk.android.Fabric;
 
 @EventTracker.EventTrackerClassName(getClassName = "Startup")
 public class Startup extends BaseActivity {
@@ -330,8 +331,11 @@ public class Startup extends BaseActivity {
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
+        boolean isTestDriveUser = RolesUtil.isTestDriveUser();
+        boolean isExpItUser = Preferences.isExpenseItUser();
+        boolean isTravler =RolesUtil.isTraveler(activity);
         //check roles
-        if (!(RolesUtil.isTestDriveUser()) && Preferences.isExpenseItUser()) {
+        if (!(isTestDriveUser) && isExpItUser) {
             if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
                 shownExpenseIt = true;
                 Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
@@ -339,7 +343,7 @@ public class Startup extends BaseActivity {
                 shownExpenseIt = false;
             }
         }
-        if (!(RolesUtil.isTestDriveUser()) && isTravelOnly) {
+        if (!(isTestDriveUser) && isTravelOnly) {
             if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
                 shownTravel = true;
                 Preferences.setFirstRunExpUpgradeTravel(prefs);
@@ -370,10 +374,10 @@ public class Startup extends BaseActivity {
             }
         }
 
-        if (!shownBoth && Preferences.isExpenseItUser() && RolesUtil.isTraveler(activity)) {
+        if (!shownBoth && isExpItUser && isTravler) {
             Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
             startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
-        } else if (!shownExpenseIt && Preferences.isExpenseItUser()) {
+        } else if (!shownExpenseIt && isExpItUser) {
             Log.d(CLS_TAG, "This is ExpenseIT Only User");
             startIntent = new Intent(activity, FirstRunExpItTour.class);
         } else if (!shownTravel && isTravelOnly) {
