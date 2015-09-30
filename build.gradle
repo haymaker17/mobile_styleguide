@@ -73,16 +73,18 @@ apply plugin: "sonar-runner"
 
 sonarRunner {
     sonarProperties {
-//        property 'sonar.host.url', 'http://i-eb41cc1c.concur.concurtech.org:9000/'
-//        property 'sonar.login', 'jenkinsdev'
-//        property 'sonar.password', 'pass99'
-//        property 'sonar.jdbc.url', 'jdbc:postgresql://i-eb41cc1c.concur.concurtech.org/sonar'
-//        property 'sonar.jdbc.username', 'sonar'
-//        property 'sonar.jdbc.password', 'sonarpass1'
+        property 'sonar.host.url', 'http://i-eb41cc1c.concur.concurtech.org:9000/'
+        property 'sonar.login', 'jenkinsdev'
+        property 'sonar.password', 'pass99'
+        property 'sonar.jdbc.url', 'jdbc:postgresql://i-eb41cc1c.concur.concurtech.org/sonar'
+        property 'sonar.jdbc.username', 'sonar'
+        property 'sonar.jdbc.password', 'sonarpass1'
 
-        property 'sonar.host.url', 'http://localhost:9000'
-        property 'sonar.login', 'admin'
-        property 'sonar.password', 'admin'
+        property 'sonar.log.level', 'DEBUG'
+
+//        property 'sonar.host.url', 'http://localhost:9000'
+//        property 'sonar.login', 'admin'
+//        property 'sonar.password', 'admin'
 
         property 'sonar.sourceEncoding', 'UTF-8'
         property 'sonar.language', 'java'
@@ -91,7 +93,7 @@ sonarRunner {
         // Project information.
         property "sonar.projectKey", "com.concur.breeze"
         property "sonar.projectName", "ConcurMobileAndroid"
-        property "sonar.projectVersion", "9.26.0-SNAPSHOT"
+        property "sonar.projectVersion", "9.27.0-SNAPSHOT"
     }
 }
 
