@@ -279,11 +279,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private List<NavigationItem> navItems = new ArrayList<NavigationItem>();
 
-    private TourGuide mTutorialHandler;
-    private static boolean isTooltipShown = false;
-    private ToolTip toolTip;
-    private Overlay overlay;
-
     /**
      * A custom handler to catch a message about the login session expiring.
      */
@@ -456,9 +451,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         liveHome = this;
 
         setContentView(R.layout.home);
-
-        //tool-tip
-        mTutorialHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
 
         if (forceExpirationHome) {
             //forceExpirationHome = false;
@@ -2495,36 +2487,44 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
      * @param prefs : reference of shared preferences
      */
     private void presentShowcaseView(View view, final SharedPreferences prefs) {
-        toolTip = new ToolTip().
-                setTitle(null)
-                .setDescription(getString(R.string.expit_desc_short))
-                .setBackgroundColor(Color.parseColor("#FFFFFFFF"))
-                .setGravity(Gravity.TOP)
-                .setShadow(false);
+        try{
+            ToolTip toolTip;
+            Overlay overlay;
+            //tool-tip
+            final TourGuide mTutorialHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
+
+            toolTip = new ToolTip().
+                    setTitle(null)
+                    .setDescription(getString(R.string.expit_desc_short))
+                    .setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                    .setGravity(Gravity.TOP)
+                    .setShadow(false)
+                    .setUseCustomImgAlignment(false);
 
 
-        overlay = new Overlay()
-                .setBackgroundColor(Color.parseColor("#00FFFFFF"))
-                        // Note: disable click has no effect when setOnClickListener is used, this is here for demo purpose
-                        // if setOnClickListener is not used, disableClick() will take effect
-                .disableClick(false)
-                .setStyle(Overlay.Style.Rectangle)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mTutorialHandler.cleanUp();
-                        // commit changes in preferences.
-                        SharedPreferences.Editor e = prefs.edit();
-                        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
-                        e.commit();
-                        isTooltipShown = false;
-                    }
-                });
-        mTutorialHandler.setPointer(null)
-                .setToolTip(toolTip)
-                .setOverlay(overlay)
-                .playOn(view);
-        isTooltipShown = true;
+            overlay = new Overlay()
+                    .setBackgroundColor(Color.parseColor("#00FFFFFF"))
+                            // Note: disable click has no effect when setOnClickListener is used, this is here for demo purpose
+                            // if setOnClickListener is not used, disableClick() will take effect
+                    .disableClick(false)
+                    .setStyle(Overlay.Style.Rectangle)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mTutorialHandler.cleanUp();
+                            // commit changes in preferences.
+                            SharedPreferences.Editor e = prefs.edit();
+                            e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+                            e.commit();
+                        }
+                    });
+            mTutorialHandler.setPointer(null)
+                    .setToolTip(toolTip)
+                    .setOverlay(overlay)
+                    .playOn(view);
+        }catch(Exception e){
+           Log.e(Const.LOG_TAG, CLS_TAG + ".>>>>"+e);
+        }
     }
 
     private void hideExpenseItFooterButton() {
