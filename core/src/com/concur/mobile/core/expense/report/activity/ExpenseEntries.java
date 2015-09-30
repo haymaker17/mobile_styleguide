@@ -252,7 +252,7 @@ public class
         }
 
         if (getSupportFragmentManager().findFragmentByTag(TravelAllowanceFacade.FRAGMENT_TAG) == null
-                && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback && this.getClass().equals(ExpenseEntries.class)) {
+                && this.getClass().equals(ExpenseEntries.class)) {
             // Create the TA facade as a headless fragment
             TravelAllowanceFacade facade = new TravelAllowanceFacade();
             Bundle args = new Bundle();
@@ -263,7 +263,7 @@ public class
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        if (ViewUtil.hasTravelAllowanceFixed(this) && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback
+        if (ViewUtil.hasTravelAllowanceFixed(this)
                 && this.getClass().equals(ExpenseEntries.class)) {
             TravelAllowanceFacade facade = getTaFacade();
             if (savedInstanceState == null && facade != null) {
