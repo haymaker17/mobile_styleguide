@@ -7,30 +7,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import com.concur.core.R;
-import com.concur.mobile.core.expense.travelallowance.fragment.FixedTravelAllowanceListFragment;
-import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
-
 import java.util.List;
-import java.util.Map;
 
 /**
- * This is the adapter for the {@code ViewPager} which holds the {@code FixedTravelAllowanceListFragment} and the
- * {@code TravelAllowanceItineraryListFragment}.
+ * This is a generic adapter for the {@code ViewPager} which can hold differen {@code Fragment} objects.
  * 
- * If additional fragments should be added the #COUNT needs to be incremented. The instance of the additional fragment needs to be
- * added to the #getItem method on the desired position. Don't forget to adjust the #getPageTitle method which returns the
- * corresponding page title visible on the tabs.
+ * In order to use this adapter you need to wrap your {@code Fragment} in a {@code ViewPagerItem}.
  *
  * @author Patricius Komarnicki Created by on 23.06.2015.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
+    /**
+     * Needed to wrap {@code Fragment} objects with additional info.
+     */
     public static class ViewPagerItem {
         private String title;
         private Class<? extends Fragment> fragmentClass;
         private Bundle arguments;
 
+        /**
+         *
+         * @param title The title of the page where the fragment is displayed. This title can show up in a tab if you use a tab bar.
+         * @param fragmentClass The fragment class of your fragment.
+         * @param arguments Optional arguments which will be passed to your fragment after instantiation.
+         */
         public ViewPagerItem(String title, Class<? extends Fragment> fragmentClass, Bundle arguments) {
             this.title = title;
             this.fragmentClass = fragmentClass;
@@ -40,13 +41,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private static final String CLASS_TAG = ViewPagerAdapter.class.getSimpleName();
 
-    /**
-     * The total number of fragments managed by this adapter.
-     */
-    private final static int COUNT = 2;
-
-    private FragmentManager fm;
-    private Context context;
     private List<ViewPagerItem> itemList;
 
     /**
@@ -56,8 +50,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
      */
     public ViewPagerAdapter(FragmentManager fm, Context ctx, List<ViewPagerItem> itemList) {
         super(fm);
-        this.fm = fm;
-        this.context = ctx;
         this.itemList = itemList;
     }
 
@@ -81,15 +73,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         }
 
     }
-//    public Fragment getItem(int position) {
-//        switch (position) {
-//        case 0:
-//            return new FixedTravelAllowanceListFragment();
-//        case 1:
-//            return new TravelAllowanceItineraryListFragment();
-//        }
-//        return null;
-//    }
 
     /**
      * {@inheritDoc}
@@ -98,13 +81,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return itemList.get(position).title;
-//        switch (position) {
-//            case 0:
-//                return context.getString(R.string.ta_adjustments);
-//            case 1:
-//                return context.getString(R.string.itin_itineraries);
-//        }
-//        return null;
     }
 
     /**
@@ -116,29 +92,4 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         return itemList.size();
     }
 
-
-    /**
-     * @return The current {@code TravelAllowanceItineraryListFragment} which was added to the fragment manager.
-     *         Returns null in case the fragment can't be found.
-     */
-    public TravelAllowanceItineraryListFragment getTravelAllowanceItineraryFragment() {
-        List<Fragment> fragments = fm.getFragments();
-        for (Fragment fragment : fragments) {
-            if (fragment instanceof TravelAllowanceItineraryListFragment) {
-                return (TravelAllowanceItineraryListFragment) fragment;
-            }
-        }
-        return null;
-    }
-
-
-    public FixedTravelAllowanceListFragment getFixedTravelAllowanceFragment() {
-        List<Fragment> fragments = fm.getFragments();
-        for(Fragment fragment: fragments) {
-            if (fragment instanceof FixedTravelAllowanceListFragment) {
-                return (FixedTravelAllowanceListFragment) fragment;
-            }
-        }
-        return null;
-    }
 }

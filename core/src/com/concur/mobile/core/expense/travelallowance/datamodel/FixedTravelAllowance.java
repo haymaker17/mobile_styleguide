@@ -79,6 +79,11 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     private boolean locked;
 
     /**
+     * Indicates the last fixed ta for the last day in the itinerary
+     */
+    private boolean isLastDay;
+
+    /**
      * Creates an instance of a FixedTravelAllowance
      */
     public FixedTravelAllowance() {
@@ -297,6 +302,14 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public boolean isLastDay() {
+        return isLastDay;
+    }
+
+    public void setIsLastDay(boolean isLastDay) {
+        this.isLastDay = isLastDay;
     }
 
     /**

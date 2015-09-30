@@ -3,7 +3,7 @@ package com.concur.mobile.core.expense.travelallowance.controller;
 import android.content.Context;
 
 /**
- * This is the main controller for travel allowance. This controller includes several sub controller wich handles the TA
+ * This is the main controller for travel allowance. This controller includes several sub controller which handles the TA
  * configuration, TA itineraries and fixed allowances.
  * 
  * Created by Patricius Komarnicki on 28.08.2015.
@@ -23,7 +23,7 @@ public class TravelAllowanceController {
 
     private void initializeTaConfig() {
         if (getTAConfigController().getTravelAllowanceConfigurationList() == null) {
-            getTAConfigController().refreshConfiguration();
+            getTAConfigController().refreshConfiguration(null);
         }
     }
 
@@ -54,6 +54,15 @@ public class TravelAllowanceController {
             this.taConfigController = new TravelAllowanceConfigurationController(context);
         }
         return this.taConfigController;
+    }
+
+    /**
+     * Sets all travel allowance controller to null, which is necessary at least during  user logout
+     */
+    public void clear(){
+        this.taConfigController = null;
+        this.fixedTravelAllowanceController = null;
+        this.taItineraryController = null;
     }
 
 }
