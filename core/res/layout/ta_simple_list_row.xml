@@ -4,23 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+    <ImageView
+        android:id="@+id/iv_row_action_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_menu_moreoverflow_normal_holo_light" />
+
     <include
         android:id="@+id/v_content"
         layout="@layout/ta_generic_table_row_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp" />
-
-    <ImageView
-        android:id="@+id/iv_delete_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/icon_delete_grey"
-        android:layout_marginRight="16dp" />
+        android:layout_toLeftOf="@id/iv_row_action_icon"/>
 
     <include
         layout="@layout/ta_group_separator"

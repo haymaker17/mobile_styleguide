@@ -29,10 +29,10 @@ public class MealProvision implements Comparable<MealProvision>, Serializable, I
     private String codeDescription;
 
     /**
-     * Create a new MealProvision instance
+     * Standard constructor is needed for reflection call Class.newInstance().
+     * Don't delete this constructor!
      */
-    public MealProvision() {
-    }
+    public MealProvision() {}
 
     /**
      * Creates a new MealProvision instance
