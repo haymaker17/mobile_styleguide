@@ -751,6 +751,8 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
     private void gotoHome(Bundle emailLookup) {
+        Preferences.resetUpgradePreferencese();
+
         Intent i = new Intent(this, Home.class);
         logUserTimings(emailLookup);
         startActivity(i);

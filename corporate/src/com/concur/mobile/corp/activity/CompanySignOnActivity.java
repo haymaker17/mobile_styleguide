@@ -415,6 +415,8 @@ public class CompanySignOnActivity extends BaseActivity {
                 fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
             }
             if (!fromNotification) {
+                Preferences.resetUpgradePreferencese();
+
                 Intent i = new Intent(this, Home.class);
                 if(ConcurCore.userEntryAppTimer>0){
                     ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();

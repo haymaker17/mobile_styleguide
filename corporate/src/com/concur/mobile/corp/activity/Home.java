@@ -606,6 +606,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (!Preferences.isExpenseItUser()) {
                     showQuickExpenseFooterButton();
                     showReceiptFooterButton();
+                    hideExpenseItFooterButton();
                 } else {
                     /* MOB-24972 - Disable to show QE at bottom of screen again.
                     hideQuickExpenseFooterButton();

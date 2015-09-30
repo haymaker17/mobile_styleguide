@@ -27,7 +27,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="7sp"
             android:text="@string/splash_authenticating"
-            android:textAppearance="@style/SplashMessage"
+            android:textSize="16dp"
+            android:textColor="@color/MaterialConcurBlue"
             android:visibility="invisible" />
 
         <TextView
