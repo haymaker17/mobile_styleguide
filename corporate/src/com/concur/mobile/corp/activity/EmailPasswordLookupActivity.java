@@ -754,50 +754,27 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
             }
         }
     }
-    //TODO this is required for first run fresh install. uncomment after onupgrade scenario finishes
-
-//    private void gotoHome(Bundle emailLookup) {
-//        // Grab our default preferences and get the server address configured
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        ConcurMobile app = (ConcurMobile) getApplication();
-//        //from email lookup screen no need to expire login
-//        app.expireLogin(false);
-//
-//        Intent intent = null;
-//        if (prefs.contains(Preferences.PREF_APP_UPGRADE)) {
-//            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
-//            if (isUpgrade) {
-//                //upgrade
-//                intent = Startup.getStartIntent(this);
-//            } else {
-//                intent = getFirstRunNewUserIntent(this, prefs);
-//            }
-//        } else {
-//            intent = getFirstRunNewUserIntent(this, prefs);
-//        }
-//
-//
-//        logUserTimings(emailLookup);
-//        startActivity(intent);
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
-//    }
 
     private void gotoHome(Bundle emailLookup) {
         // Grab our default preferences and get the server address configured
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        ConcurMobile app = (ConcurMobile)getApplication();
+        ConcurMobile app = (ConcurMobile) getApplication();
         //from email lookup screen no need to expire login
         app.expireLogin(false);
 
-        Intent intent = new Intent(this,Home.class);
-        if(prefs.contains(Preferences.PREF_APP_UPGRADE)){
-            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE,false);
+        Intent intent = null;
+        if (prefs.contains(Preferences.PREF_APP_UPGRADE)) {
+            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
             if (isUpgrade) {
                 //upgrade
-                intent= Startup.getStartIntent(this);
+                intent = Startup.getStartIntent(this);
+            } else {
+                intent = getFirstRunNewUserIntent(this, prefs);
             }
+        } else {
+            intent = getFirstRunNewUserIntent(this, prefs);
         }
+
         logUserTimings(emailLookup);
         startActivity(intent);
         this.setResult(Activity.RESULT_OK);
