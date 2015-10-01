@@ -1493,6 +1493,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Update the config content provider.
         ConfigUtil.removeExpenseItLoginInfo(this);
 
+        // To make sure that the travel allowance configuration is read again after another users log is we null the controller
+        ConcurCore app = (ConcurCore) ConcurMobile.getContext().getApplicationContext();
+        if (app != null && app.getTaController() != null ) {
+            app.getTaController().clear();
+        }
+
         // Go back to the EmailLookup screen.
         Intent i = new Intent(this, EmailPasswordLookupActivity.class);
         i.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);

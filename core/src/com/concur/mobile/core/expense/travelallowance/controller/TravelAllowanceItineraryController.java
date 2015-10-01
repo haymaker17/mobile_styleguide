@@ -10,13 +10,18 @@ import android.util.Log;
 import com.concur.core.R;
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
+import com.concur.mobile.core.expense.travelallowance.datamodel.AssignableItinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.service.AbstractItineraryDeleteRequest;
+import com.concur.mobile.core.expense.travelallowance.service.AssignItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.service.DeleteItineraryRowRequest;
+import com.concur.mobile.core.expense.travelallowance.service.GetAssignableItinerariesRequest;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.service.SaveItineraryRequest;
+import com.concur.mobile.core.expense.travelallowance.service.UnassignItineraryRequest;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
@@ -28,8 +33,10 @@ import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * This controller is the glue between the backend service layer and the travel allowance itinerary UI.
@@ -53,21 +60,23 @@ public class TravelAllowanceItineraryController extends BaseController {
 
     private static final String CLASS_TAG = TravelAllowanceItineraryController.class.getSimpleName();
 
-    private BaseAsyncResultReceiver receiver;
-
     private GetTAItinerariesRequest getItinerariesRequest;
 
     private Context context;
 
     private List<Itinerary> itineraryList;
 
-    private Itinerary itineraryStage;
+    private Map<String, List<AssignableItinerary>> assignableItineraryList;
+
+    private List<BaseAsyncResultReceiver> receiverList;
 
     public TravelAllowanceItineraryController(Context context) {
         this.context = context;
+        this.receiverList = new ArrayList<BaseAsyncResultReceiver>();
+        this.assignableItineraryList = new HashMap<String, List<AssignableItinerary>>();
     }
 
-    public void refreshItineraries(String expenseReportKey, boolean isManager) {
+    public void refreshItineraries(String expenseReportKey, boolean isManager, final IRequestListener requestor) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries", "expenseReportKey = " + expenseReportKey + ", isManager = " + isManager));
         if (getItinerariesRequest != null && getItinerariesRequest.getStatus() != AsyncTask.Status.FINISHED) {
             // There is already an async task which is not finished yet. Return silently and let the task finish his work first.
@@ -75,32 +84,21 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
         this.itineraryList = new ArrayList<Itinerary>();
 
-        receiver = new BaseAsyncResultReceiver(new Handler());
+        final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiverList.add(receiver);
 
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 itineraryList = getItinerariesRequest.getItineraryList();
                 notifyListener(ControllerAction.REFRESH, true, resultData);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestSuccess", "Request success"));
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 notifyListener(ControllerAction.REFRESH, false, resultData);
-                Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshItineraries->onRequestFail", "Failed!"));
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-                // Not needed yet.
-                return;
-            }
-
-            @Override
-            public void cleanup() {
-                // Not needed yet.
-                return;
+                super.onRequestFail(resultData);
             }
         });
 
@@ -115,10 +113,6 @@ public class TravelAllowanceItineraryController extends BaseController {
             itineraryList = new ArrayList<Itinerary>();
         }
         return itineraryList;
-    }
-
-    public Itinerary getItineraryStage () {
-        return this.itineraryStage;
     }
 
     public CompactItinerary getCompactItinerary(String compactItineraryId) {
@@ -172,7 +166,7 @@ public class TravelAllowanceItineraryController extends BaseController {
                     nextSegment = itinerary.getSegmentList().get(position + 1);
                 }
 
-                if (nextSegment != null) {
+                if (nextSegment != null && segment.getArrivalLocation() != null) {
                     // Check the to location of the current segment and the from location of the next segment
                     if (segment.getArrivalLocation().equals(nextSegment.getDepartureLocation())) {
                         // Create a closed compact segment
@@ -230,7 +224,8 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdate", "Itinerary = " + updItinerary.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 Itinerary resultItinerary = (Itinerary) resultData.getSerializable(BundleId.ITINERARY);
@@ -238,32 +233,21 @@ public class TravelAllowanceItineraryController extends BaseController {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestSuccess",
                         "isSuccess = " + isSuccess + ", Resulting Itinerary = " + resultItinerary.toString()));
                 notifyListener(ControllerAction.UPDATE, isSuccess, resultData);
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeUpdateItinerary->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.UPDATE, false, resultData);
+                super.onRequestFail(resultData);
             }
 
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-            }
-
-            @Override
-            public void cleanup() {
-
-            }
         });
 
         SaveItineraryRequest request = new SaveItineraryRequest(context, receiver, updItinerary);
         request.execute();
         return true;
-    }
-
-    public synchronized void setItineraryStage(Itinerary itinerary) {
-        this.itineraryStage = itinerary;
     }
 
     /**
@@ -435,21 +419,28 @@ public class TravelAllowanceItineraryController extends BaseController {
         return result;
     }
 
-    public boolean executeDeleteItinerary(final Itinerary itinerary) {
+    public boolean executeDeleteItinerary(final Itinerary itinerary, final IRequestListener listener) {
         if (itinerary == null) {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary", "Itinerary is null! Refused."));
             return false;
         }
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary", "Itinerary = " + itinerary.toString()));
-        BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        receiverList.add(receiver);
+
         receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
             @Override
             public void onRequestSuccess(Bundle resultData) {
+                receiverList.remove(receiver);
+
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary->onRequestSuccess", "isSuccess = " + isSuccess));
                 if (isSuccess) {
                     itineraryList.remove(itinerary);
                     notifyListener(ControllerAction.DELETE, true, null);
+                    if (listener != null) {
+                        listener.onRequestSuccess(resultData);
+                    }
                 } else {
                     Message msg = (Message) resultData
                             .getSerializable(AbstractItineraryDeleteRequest.RESULT_BUNDLE_ID_MESSAGE);
@@ -457,11 +448,18 @@ public class TravelAllowanceItineraryController extends BaseController {
                         resultData.putSerializable(BundleId.ITINERARY, itinerary);
                     }
                     notifyListener(ControllerAction.DELETE, false, resultData);
+                    if (listener != null) {
+                        listener.onRequestFailed();
+                    }
                 }
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
+                receiverList.remove(receiver);
+                if (listener != null) {
+                    listener.onRequestFailed();
+                }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteItinerary->onRequestFail", "Failed!"));
                 Itinerary itin = getItinerary(itinerary.getItineraryID());
                 if (itin != null) {
@@ -472,7 +470,7 @@ public class TravelAllowanceItineraryController extends BaseController {
 
             @Override
             public void onRequestCancel(Bundle resultData) {
-
+                receiverList.remove(receiver);
             }
 
             @Override
@@ -494,7 +492,9 @@ public class TravelAllowanceItineraryController extends BaseController {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                 "executeDeleteSegment", "Itinerary Id = " + itineraryId + ", Segment = " + segment.toString()));
         BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
-        receiver.setListener(new BaseAsyncRequestTask.AsyncReplyListener() {
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, null) {
+
             @Override
             public void onRequestSuccess(Bundle resultData) {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
@@ -507,22 +507,14 @@ public class TravelAllowanceItineraryController extends BaseController {
                     resultData.putSerializable(BundleId.SEGMENT, segment);
                     notifyListener(ControllerAction.DELETE, false, resultData);
                 }
+                super.onRequestSuccess(resultData);
             }
 
             @Override
             public void onRequestFail(Bundle resultData) {
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment->onRequestFail", "Failed!"));
                 notifyListener(ControllerAction.DELETE, false, resultData);
-            }
-
-            @Override
-            public void onRequestCancel(Bundle resultData) {
-
-            }
-
-            @Override
-            public void cleanup() {
-
+                super.onRequestFail(resultData);
             }
         });
 
@@ -607,22 +599,22 @@ public class TravelAllowanceItineraryController extends BaseController {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleAfterUpdateResponse",
                 "Received Itinerary Id = " + resultItin.getItineraryID()));
         boolean isSuccess = true;
-            String itinId = resultItin.getItineraryID();
-            if (itinId != null && getItinerary(itinId) == null) {
-                // Create entire itinerary case
-                return handleItineraryCreate(updItin, resultItin);
-            } else if (itinId != null && getItinerary(itinId) != null) {
-                // Create segment or Update segment case
-                for (ItinerarySegment segment : resultItin.getSegmentList()) {
-                    if (getItinerary(itinId).getSegment(segment.getId()) == null) {
-                        isSuccess = handleSegmentCreate(updItin, segment);
-                    } else if (getItinerary(itinId).getSegment(segment.getId()) != null) {
-                        // Update segment case
-                       isSuccess = handleSegmentUpdate(updItin, segment);
-                    }
+        String itinId = resultItin.getItineraryID();
+        if (itinId != null && getItinerary(itinId) == null) {
+            // Create entire itinerary case
+            return handleItineraryCreate(updItin, resultItin);
+        } else if (itinId != null && getItinerary(itinId) != null) {
+            // Create segment or Update segment case
+            for (ItinerarySegment segment : resultItin.getSegmentList()) {
+                if (getItinerary(itinId).getSegment(segment.getId()) == null) {
+                    isSuccess = isSuccess && handleSegmentCreate(updItin, segment);
+                } else if (getItinerary(itinId).getSegment(segment.getId()) != null) {
+                    // Update segment case
+                    isSuccess = isSuccess && handleSegmentUpdate(updItin, segment);
                 }
-                getItinerary(itinId).setName(resultItin.getName()); //Should not change in updItin
             }
+            getItinerary(itinId).setName(resultItin.getName()); //Should not change in updItin
+        }
         return isSuccess;
     }
 
@@ -657,7 +649,7 @@ public class TravelAllowanceItineraryController extends BaseController {
         } else {
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleItineraryCreate",
                     "Triggering auto deletion of itinerary. Segments having errors"));
-            executeDeleteItinerary(createdItinerary);
+            executeDeleteItinerary(createdItinerary, null);
         }
         return isSuccess;
     }
@@ -772,4 +764,52 @@ public class TravelAllowanceItineraryController extends BaseController {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getSegmentWithSameHandle", "No match"));
         return null;
     }
+
+
+    public void refreshAssignableItineraries(final String expenseReportKey, final IRequestListener requestor) {
+        final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        this.receiverList.add(receiver);
+
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor) {
+            @Override
+            public void onRequestSuccess(Bundle resultData) {
+                assignableItineraryList.put(expenseReportKey, (List<AssignableItinerary>) resultData
+                        .getSerializable(BundleId.ASSIGNABLE_ITINERARIES));
+                super.onRequestSuccess(resultData);
+            }
+        });
+
+        GetAssignableItinerariesRequest request = new GetAssignableItinerariesRequest(context, receiver ,expenseReportKey);
+        request.execute();
+    }
+
+    public void assignItinerary(String rptKey, String itinKey, final IRequestListener requestor) {
+        final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor));
+
+        AssignItineraryRequest request = new AssignItineraryRequest(context, receiver, rptKey, itinKey);
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "assignItinerary", "Start Task."));
+        request.execute();
+    }
+
+    public void unassignItinerary(String rptKey, String itinKey, final IRequestListener requestor) {
+        final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());
+        this.receiverList.add(receiver);
+        receiver.setListener(new AsyncReplyListenerImpl(receiverList, receiver, requestor));
+
+        UnassignItineraryRequest request = new UnassignItineraryRequest(context, receiver, rptKey, itinKey);
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "unassignItinerary", "Start Task."));
+        request.execute();
+    }
+
+    public List<AssignableItinerary> getAssignableItineraryList(String expenseReportKey) {
+        List<AssignableItinerary> list = assignableItineraryList.get(expenseReportKey);
+        if (list == null) {
+            list = new ArrayList<AssignableItinerary>();
+        }
+
+        return list;
+    }
+
 }

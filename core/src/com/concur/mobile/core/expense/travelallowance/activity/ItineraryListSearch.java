@@ -81,6 +81,7 @@ public class ItineraryListSearch extends Activity implements INetworkActivityLis
 
     public static final String CODE_ID = "CrnCode";
     public static final String KEY_ID = "CrnKey";
+    public static final String TIME_ZONE_OFFSET_ID = "TimeZoneOffset";
 
     protected int colorWhiteStripe;
     protected int colorBlueStripe;
@@ -885,10 +886,14 @@ public class ItineraryListSearch extends Activity implements INetworkActivityLis
                                                             selectedItem.text);
                                             String crnCode = selectedItem.getFieldValueById(CODE_ID);
                                             String crnKey = selectedItem.getFieldValueById(KEY_ID);
+                                            String timeZoneOffset = selectedItem.getFieldValueById(TIME_ZONE_OFFSET_ID);
                                             activity.resultIntent.putExtra(
                                                     Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_CODE, crnCode);
                                             activity.resultIntent.putExtra(
                                                     Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_KEY, crnKey);
+                                            activity.resultIntent.putExtra(
+                                                    Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TIME_ZONE_OFFSET,
+                                                    timeZoneOffset);
                                             activity.setResult(RESULT_OK, activity.resultIntent);
                                             activity.finish();
                                         }
@@ -1023,8 +1028,10 @@ public class ItineraryListSearch extends Activity implements INetworkActivityLis
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TEXT, selectedItem.text);
                     String crnCode = selectedItem.getFieldValueById(CODE_ID);
                     String crnKey = selectedItem.getFieldValueById(KEY_ID);
+                    String timeZoneOffset = selectedItem.getFieldValueById(TIME_ZONE_OFFSET_ID);
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_CODE, crnCode);
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_CRN_KEY, crnKey);
+                    resultIntent.putExtra(Const.EXTRA_EXPENSE_LIST_SELECTED_LIST_ITEM_TIME_ZONE_OFFSET, timeZoneOffset);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
