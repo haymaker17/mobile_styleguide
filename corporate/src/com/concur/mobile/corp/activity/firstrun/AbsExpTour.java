@@ -22,29 +22,19 @@ import android.widget.ViewFlipper;
 
 import com.concur.breeze.R;
 import com.concur.mobile.core.activity.BaseActivity;
-import com.concur.mobile.core.util.Const;
-import com.concur.mobile.core.util.EventTracker;
-import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.corp.activity.Home;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
+ * Base activity for tour.
  * Created by sunill on 9/22/15.
  */
 public class AbsExpTour extends BaseActivity {
 
-    protected int activeColor;
-    protected int inactiveColor;
 
     protected ViewFlipper flipper;
     protected LinearLayout pageMarkers;
     protected GestureDetector gestureDetector;
-
-    protected long startTime = 0L;
-    protected long upTime = 0L;
 
     protected Button launch;
 
@@ -58,8 +48,6 @@ public class AbsExpTour extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         final Resources resources = getResources();
-        activeColor = resources.getColor(R.color.MaterialConcurBlue);
-        inactiveColor = resources.getColor(R.color.MaterialHintLightGray);
 
         // Find the flipper and the page dots layout
         flipper = (ViewFlipper) findViewById(R.id.tourFlipper);
@@ -68,10 +56,6 @@ public class AbsExpTour extends BaseActivity {
         // Setup the gesture listener
         gestureDetector = new GestureDetector(this, new MultiViewGestureListener());
         flipper.setOnTouchListener(new MultiViewTouchListener());
-
-        if (savedInstanceState != null) {
-            upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
-        }
 
         // on-click listener of launch button
         launch = (Button) findViewById(R.id.exp_it_travel_continue);
@@ -104,11 +88,11 @@ public class AbsExpTour extends BaseActivity {
     protected void showContinue(int currentChild,boolean buttonHit) {
         launch.setText(getString(R.string.get_started));
         if(currentChild==1 && buttonHit){
-            pageMarkers.getChildAt(currentChild-1).setBackgroundColor(inactiveColor);
-            pageMarkers.getChildAt(currentChild).setBackgroundColor(activeColor);
+            pageMarkers.getChildAt(currentChild-1).setBackground(getResources().getDrawable(R.drawable.home_tour_white_dot));
+            pageMarkers.getChildAt(currentChild).setBackground(getResources().getDrawable(R.drawable.home_tour_blue_dot));
         }else{
-            pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
-            pageMarkers.getChildAt(currentChild + 1).setBackgroundColor(activeColor);
+            pageMarkers.getChildAt(currentChild).setBackground(getResources().getDrawable(R.drawable.home_tour_white_dot));
+            pageMarkers.getChildAt(currentChild + 1).setBackground(getResources().getDrawable(R.drawable.home_tour_blue_dot));
         }
         launch.setOnClickListener(new View.OnClickListener() {
 
@@ -124,8 +108,8 @@ public class AbsExpTour extends BaseActivity {
         if(currentChild==1){
             launch.setText(getString(R.string.next));
         }
-        pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
-        pageMarkers.getChildAt(currentChild - 1).setBackgroundColor(activeColor);
+        pageMarkers.getChildAt(currentChild).setBackground(getResources().getDrawable(R.drawable.home_tour_white_dot));
+        pageMarkers.getChildAt(currentChild - 1).setBackground(getResources().getDrawable(R.drawable.home_tour_blue_dot));
         launch.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -139,8 +123,6 @@ public class AbsExpTour extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        // Start the time the user has spent on this screen.
-        startTime = System.nanoTime();
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int orientation = display.getRotation();
         // TODO MOB-16854 : required API check. Please remove this API check once you upgrade your api level to 9.
@@ -159,22 +141,16 @@ public class AbsExpTour extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        // Save the time the user spent on this screen, but
-        // perhaps put the app in the background.
-        upTime += (System.nanoTime() - startTime) / 1000000000L; // Convert to
-        // seconds.
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        // Save the uptime so we know how long the user has been on this screen,
-        // even if it has been destroyed.
-        outState.putLong(Const.ACTIVITY_STATE_UPTIME, upTime);
     }
 
+    /**
+     * Multi view gesture listener for swipe tour pages
+     * */
     protected class MultiViewGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
@@ -215,7 +191,7 @@ public class AbsExpTour extends BaseActivity {
     }
 
     /**
-     * @param skippedTour <code>true</code> if the user pressed the "Skip" or BACK button to skip the tour.
+     * @param skippedTour <code>true</code> if the user pressed the "Skip".
      */
     protected void gotoHome(boolean skippedTour) {
         // Prior to the starting the home screen, initialize the system/user
@@ -277,10 +253,6 @@ public class AbsExpTour extends BaseActivity {
 
     protected void logUptime(boolean skippedTour) {
         // Analytics stuff.
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Result:", (skippedTour ? "Skipped" : "Completed"));
-        upTime = ((System.nanoTime() - startTime) / 1000000000L) + upTime; // Convert nanoseconds to seconds.
-        params.put("Seconds on Tour:", Flurry.formatDurationEventParam(upTime));
-        EventTracker.INSTANCE.track(Flurry.CATEGORY_TEST_DRIVE, Flurry.PARAM_VALUE_TOUR, params);
+       // TODO not required at this moment
     }
 }

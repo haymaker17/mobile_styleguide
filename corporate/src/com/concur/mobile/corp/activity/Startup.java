@@ -388,68 +388,72 @@ public class Startup extends BaseActivity {
 
     public static Intent getStartIntent(Activity activity){
         Intent startIntent = null;
-        boolean shownExpenseIt = true, shownTravel = true, shownBoth = true;
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
-        boolean isTestDriveUser = RolesUtil.isTestDriveUser();
-        boolean isExpItUser = Preferences.isExpenseItUser();
-        boolean isTraveler =RolesUtil.isTraveler(activity);
-        //check roles
-        if (!(isTestDriveUser) && isExpItUser) {
-            if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
-                shownExpenseIt = true;
-                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-            } else {
-                shownExpenseIt = false;
-            }
-        }
-        if (!(isTestDriveUser) && isTravelOnly) {
-            if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
-                shownTravel = true;
-                Preferences.setFirstRunExpUpgradeTravel(prefs);
-                //if it is travel only user do not show expense it screen
-                shownExpenseIt=true;
-            } else {
-                shownTravel = false;
-                //if it is travel only user do not show expense it screen
-                shownExpenseIt=true;
-            }
-        }
-
-        if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
-            shownBoth = true;
-            shownExpenseIt = true;
-            shownTravel = true;
-            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-            Preferences.setFirstRunExpUpgradeTravel(prefs);
-            Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-        } else if (shownExpenseIt && shownTravel) {
-            shownBoth = true;
-            Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-        } else if (!shownExpenseIt && !shownTravel) {
-            shownBoth = false;
-        }else if(!shownExpenseIt){
-            if(RolesUtil.isTraveler(activity)){
-                shownBoth=false;
-            }else{
-                shownExpenseIt=false;
-            }
-        }
-
-        if (!shownBoth && isExpItUser && isTraveler) {
-            Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
-            startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
-        } else if (!shownExpenseIt && isExpItUser) {
-            Log.d(CLS_TAG, "This is ExpenseIT Only User");
-            startIntent = new Intent(activity, FirstRunExpItTour.class);
-        } else if (!shownTravel && isTravelOnly) {
-            Log.d(CLS_TAG, "This is Travel Only User");
-            startIntent = new Intent(activity, FirstRunTravelTour.class);
-        } else {
+        boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+        if(!Preferences.isFirstTimeRunning(prefs) && !isUpgrade){
             startIntent = new Intent(activity, Home.class);
-        }
+        }else{
+            boolean shownExpenseIt = true, shownTravel = true, shownBoth = true;
+            boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
+            boolean isTestDriveUser = RolesUtil.isTestDriveUser();
+            boolean isExpItUser = Preferences.isExpenseItUser();
+            boolean isTraveler =RolesUtil.isTraveler(activity);
+            //check roles
+            if (!(isTestDriveUser) && isExpItUser) {
+                if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
+                    shownExpenseIt = true;
+                    Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+                } else {
+                    shownExpenseIt = false;
+                }
+            }
+            if (!(isTestDriveUser) && isTravelOnly) {
+                if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
+                    shownTravel = true;
+                    Preferences.setFirstRunExpUpgradeTravel(prefs);
+                    //if it is travel only user do not show expense it screen
+                    shownExpenseIt=true;
+                } else {
+                    shownTravel = false;
+                    //if it is travel only user do not show expense it screen
+                    shownExpenseIt=true;
+                }
+            }
 
+            if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
+                shownBoth = true;
+                shownExpenseIt = true;
+                shownTravel = true;
+                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+                Preferences.setFirstRunExpUpgradeTravel(prefs);
+                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
+            } else if (shownExpenseIt && shownTravel) {
+                shownBoth = true;
+                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
+            } else if (!shownExpenseIt && !shownTravel) {
+                shownBoth = false;
+            }else if(!shownExpenseIt){
+                if(RolesUtil.isTraveler(activity)){
+                    shownBoth=false;
+                }else{
+                    shownExpenseIt=false;
+                }
+            }
+
+            if (!shownBoth && isExpItUser && isTraveler) {
+                Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
+                startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
+            } else if (!shownExpenseIt && isExpItUser) {
+                Log.d(CLS_TAG, "This is ExpenseIT Only User");
+                startIntent = new Intent(activity, FirstRunExpItTour.class);
+            } else if (!shownTravel && isTravelOnly) {
+                Log.d(CLS_TAG, "This is Travel Only User");
+                startIntent = new Intent(activity, FirstRunTravelTour.class);
+            } else {
+                startIntent = new Intent(activity, Home.class);
+            }
+        }
         return startIntent;
     }
     private void startCompanySignOn() {

@@ -12,7 +12,6 @@ import android.widget.ViewFlipper;
 import com.concur.breeze.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
-import com.concur.mobile.corp.activity.firstrun.AbsExpTour;
 
 public class FirstRunExpItTour extends AbsExpTour {
 
@@ -58,8 +57,8 @@ public class FirstRunExpItTour extends AbsExpTour {
     protected void setFlipForShowNext(int currentChild, Context ctx){
         flipper.setInAnimation(ctx, R.anim.slide_in_right);
         flipper.setOutAnimation(ctx, R.anim.slide_out_left);
-        pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
-        pageMarkers.getChildAt(currentChild + 1).setBackgroundColor(activeColor);
+        pageMarkers.getChildAt(currentChild).setBackground(getResources().getDrawable(R.drawable.home_tour_white_dot));
+        pageMarkers.getChildAt(currentChild + 1).setBackground(getResources().getDrawable(R.drawable.home_tour_blue_dot));
         flipper.showNext();
     }
 
@@ -67,8 +66,8 @@ public class FirstRunExpItTour extends AbsExpTour {
     protected void setFlipForShowPrevious(int currentChild, Context ctx){
         flipper.setInAnimation(ctx, R.anim.slide_in_left);
         flipper.setOutAnimation(ctx, R.anim.slide_out_right);
-        pageMarkers.getChildAt(currentChild).setBackgroundColor(inactiveColor);
-        pageMarkers.getChildAt(currentChild - 1).setBackgroundColor(activeColor);
+        pageMarkers.getChildAt(currentChild).setBackground(getResources().getDrawable(R.drawable.home_tour_white_dot));
+        pageMarkers.getChildAt(currentChild - 1).setBackground(getResources().getDrawable(R.drawable.home_tour_blue_dot));
         flipper.showPrevious();
     }
 }

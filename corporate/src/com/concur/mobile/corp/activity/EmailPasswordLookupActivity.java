@@ -782,7 +782,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
 
-    private Intent getFirstRunNewUserIntent(Activity activity, SharedPreferences prefs) {
+    public static Intent getFirstRunNewUserIntent(Activity activity, SharedPreferences prefs) {
         Intent it = null;
         boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
         boolean isExpenseItUser = Preferences.isExpenseItUser();

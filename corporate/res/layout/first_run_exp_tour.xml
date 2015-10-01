@@ -36,7 +36,7 @@
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
                 android:visibility="gone"
-                android:background="@color/MaterialConcurBlue"/>
+                android:background="@drawable/home_tour_blue_dot"/>
 
             <View
                 android:id="@+id/tourPage2Marker"
@@ -44,7 +44,7 @@
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
                 android:visibility="gone"
-                android:background="@color/MaterialLightGray"/>
+                android:background="@drawable/home_tour_white_dot"/>
 
             <View
                 android:id="@+id/tourPage3Marker"
@@ -52,7 +52,7 @@
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
                 android:visibility="gone"
-                android:background="@color/MaterialLightGray"/>
+                android:background="@drawable/home_tour_white_dot"/>
 
             <View
                 android:id="@+id/tourPage4Marker"
@@ -60,7 +60,7 @@
                 android:layout_height="@dimen/tour_flipper_square_size"
                 android:layout_marginRight="@dimen/tour_flipper_square_margin"
                 android:visibility="gone"
-                android:background="@color/MaterialLightGray"/>
+                android:background="@drawable/home_tour_white_dot"/>
         </LinearLayout>
 
 
