@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -38,10 +39,12 @@ import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.dialog.AddSmartExpenseChoiceDialogFragment;
 import com.concur.mobile.core.dialog.AlertDialogFragment;
 import com.concur.mobile.core.dialog.DialogFragmentFactory;
 import com.concur.mobile.core.dialog.DialogFragmentHandler;
 import com.concur.mobile.core.dialog.ProgressDialogFragment;
+import com.concur.mobile.core.dialog.ReceiptChoiceDialogFragment;
 import com.concur.mobile.core.dialog.SystemUnavailableDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.CashExpenseListItem;
 import com.concur.mobile.core.expense.charge.activity.CorporateCardExpenseListItem;
@@ -139,6 +142,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         void startBackgroundRefresh();
 
         void endBackgroundRefresh();
+
+        void onAddQuickExpense();
 
     }
 
@@ -531,28 +536,6 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
     }
 
-    /**
-     * Will add a new quick expense.
-     */
-    public void onAddQuickExpense() {
-        // Verify that we have expense types
-        ConcurCore concurCore = getConcurCore();
-        IExpenseEntryCache expEntCache = concurCore.getExpenseEntryCache();
-        ArrayList<ExpenseType> expenseTypes = expEntCache.getExpenseTypes();
-        if (expenseTypes != null) {
-            Intent intent = new Intent(activity, QuickExpense.class);
-            intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
-            intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_EXPENSE_LIST);
-            intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
-            startActivityForResult(intent, Const.CREATE_MOBILE_ENTRY);
-        } else {
-            // Can't go there
-            DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expense_no_expense_types_title,
-                    R.string.dlg_expense_no_expense_types_message).show(getFragmentManager(), null);
-        }
-
-    }
-
     private View buildView(LayoutInflater inflater, Bundle savedInstanceState) {
 
         // Inflate our view
@@ -572,7 +555,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
 
             @Override
             public void onClick(View v) {
-                onAddQuickExpense();
+                addQuickExpense();
             }
         });
 
@@ -1326,7 +1309,7 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
             }
             retVal = true;
         } else if (itemId == R.id.new_cash_expense) {
-            onAddQuickExpense();
+            addQuickExpense();
             retVal = true;
         } else if (itemId == R.id.refresh) {
             if (ConcurCore.isConnected()) {
@@ -1347,6 +1330,15 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         }
 
         return retVal;
+    }
+
+    private void addQuickExpense() {
+        if (Preferences.isExpenseItUser()) {
+            DialogFragment manualChoiceDialog = new AddSmartExpenseChoiceDialogFragment();
+            manualChoiceDialog.show(getFragmentManager(), ReceiptChoiceDialogFragment.DIALOG_FRAGMENT_ID);
+        } else {
+            expensesCallback.onAddQuickExpense();
+        }
     }
 
     /**
