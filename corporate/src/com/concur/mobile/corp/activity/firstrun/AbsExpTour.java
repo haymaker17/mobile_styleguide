@@ -1,4 +1,4 @@
-package com.concur.mobile.corp.activity;
+package com.concur.mobile.corp.activity.firstrun;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +26,7 @@ import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.activity.Home;
 
 import java.util.HashMap;
 import java.util.Map;

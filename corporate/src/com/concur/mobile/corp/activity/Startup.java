@@ -42,6 +42,9 @@ import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.activity.firstrun.FirstRunExpItTour;
+import com.concur.mobile.corp.activity.firstrun.FirstRunExpItTravelTour;
+import com.concur.mobile.corp.activity.firstrun.FirstRunTravelTour;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.LoginResponseKeys;
@@ -405,6 +408,8 @@ public class Startup extends BaseActivity {
             if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
                 shownTravel = true;
                 Preferences.setFirstRunExpUpgradeTravel(prefs);
+                //if it is travel only user do not show expense it screen
+                shownExpenseIt=true;
             } else {
                 shownTravel = false;
                 //if it is travel only user do not show expense it screen

@@ -323,13 +323,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.expense.activity.TAItineraryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault" />
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
-            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault" />
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
+        <activity
+            android:name="com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity"
             android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
-        <activity android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryListSearch"
+        <activity
+            android:name="com.concur.mobile.core.expense.travelallowance.activity.FixedTravelAllowanceDetailsActivity"
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
+        <activity
+            android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity"
+            android:theme="@style/ConcurBaseTheme.NoActionBar.TADefault"/>
+        <activity
+            android:name="com.concur.mobile.core.expense.travelallowance.activity.ItineraryListSearch"
             android:theme="@style/ConcurTheme"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearch"/>
         <activity android:name="com.concur.mobile.core.travel.air.activity.AirPriceToBeatSearchResults"/>
@@ -359,10 +363,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
-        <activity android:name="com.concur.mobile.core.request.activity.RequestEditActivity" >
+        <activity android:name="com.concur.mobile.core.request.activity.RequestEditActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity" />
+                android:value="com.concur.mobile.core.request.activity.RequestSummaryActivity"/>
         </activity>
         <activity
             android:name="com.concur.mobile.core.request.activity.RequestEntryActivity">
@@ -500,15 +504,35 @@
             android:theme="@style/ConcurTheme.Translucent.NoActionBar.Material">
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunExpItTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunExpItTour"
             android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunExpItTravelTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunExpItTravelTour"
             android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunTravelTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunTravelTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.firstrun.NewUserExpItTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.firstrun.NewUserExpItTravelTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.firstrun.NewUserExpTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.firstrun.NewUserExpTravelTour"
+            android:theme="@style/ConcurTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name="com.concur.mobile.corp.activity.firstrun.NewUserTravelTour"
             android:theme="@style/ConcurTheme.NoActionBar">
         </activity>
         <activity
@@ -608,7 +632,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="e256a9e4715018881b35f334cc3b7578ca7b67cc" />
+            android:value="e256a9e4715018881b35f334cc3b7578ca7b67cc"/>
     </application>
 
 </manifest>

@@ -34,6 +34,11 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpItTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpItTravelTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpTravelTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserTravelTour;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
@@ -749,6 +754,34 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
             }
         }
     }
+    //TODO this is required for first run fresh install. uncomment after onupgrade scenario finishes
+
+//    private void gotoHome(Bundle emailLookup) {
+//        // Grab our default preferences and get the server address configured
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        ConcurMobile app = (ConcurMobile) getApplication();
+//        //from email lookup screen no need to expire login
+//        app.expireLogin(false);
+//
+//        Intent intent = null;
+//        if (prefs.contains(Preferences.PREF_APP_UPGRADE)) {
+//            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+//            if (isUpgrade) {
+//                //upgrade
+//                intent = Startup.getStartIntent(this);
+//            } else {
+//                intent = getFirstRunNewUserIntent(this, prefs);
+//            }
+//        } else {
+//            intent = getFirstRunNewUserIntent(this, prefs);
+//        }
+//
+//
+//        logUserTimings(emailLookup);
+//        startActivity(intent);
+//        this.setResult(Activity.RESULT_OK);
+//        this.finish();
+//    }
 
     private void gotoHome(Bundle emailLookup) {
         // Grab our default preferences and get the server address configured
@@ -770,6 +803,40 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         this.setResult(Activity.RESULT_OK);
         this.finish();
     }
+
+
+    private Intent getFirstRunNewUserIntent(Activity activity, SharedPreferences prefs) {
+        Intent it = null;
+        boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
+        boolean isExpenseItUser = Preferences.isExpenseItUser();
+        boolean isTraveler = RolesUtil.isTraveler(activity);
+        boolean isExpenser = RolesUtil.isExpenser(activity);
+        if (Preferences.isFirstTimeRunning(prefs)) {
+            if (isTravelOnly) {
+                it = new Intent(activity, NewUserTravelTour.class);
+            } else if (isExpenseItUser) {
+                if (isTraveler) {
+                    it = new Intent(activity, NewUserExpItTravelTour.class);
+                } else {
+                    it = new Intent(activity, NewUserExpItTour.class);
+                }
+
+            } else if (isExpenser) {
+                if (isTraveler) {
+                    it = new Intent(activity, NewUserExpTravelTour.class);
+                } else {
+                    it = new Intent(activity, NewUserExpTour.class);
+                }
+            } else {
+                it = new Intent(activity, Home.class);
+            }
+        } else {
+            //go to home
+            it = new Intent(activity, Home.class);
+        }
+        return it;
+    }
+
 
     private void saveCredentials(String loginId, String pinOrPassword, String signInMethod) {
 
