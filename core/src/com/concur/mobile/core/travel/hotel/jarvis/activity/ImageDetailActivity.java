@@ -4,14 +4,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.res.Configuration;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager.LayoutParams;
 
 import com.concur.core.R;
 import com.concur.mobile.platform.travel.search.hotel.HotelImagePair;
@@ -52,13 +50,14 @@ public class ImageDetailActivity extends Activity implements OnClickListener, Im
         // resolution that is appropriate for both portrait and landscape. For best image quality
         // we shouldn't divide by 2, but this will use more memory and require a larger memory
         // cache.
-        final int longest = (height > width ? width : height) / 2;
+
+        final int longest = (height > width ? height : width) / 2;
 
         TravelImageCache.ImageCacheParams cacheParams = new TravelImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
 
-        //        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
-        mImageFetcher = new ImageFetcher(this, width, longest);
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(this, longest);
         mImageFetcher.addImageCache(getFragmentManager(), cacheParams);
         mImageFetcher.setImageFadeIn(false);
 
@@ -73,19 +72,13 @@ public class ImageDetailActivity extends Activity implements OnClickListener, Im
         mPager.setPageMargin((int) getResources().getDimension(R.dimen.horizontal_page_margin));
         mPager.setOffscreenPageLimit(2);
 
-        // Set up activity to go full screen
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
-        } else {
-            getWindow().addFlags(LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        }
-
         // Set the current item based on the extra passed in to this activity
         final int extraCurrentItem = getIntent().getIntExtra(EXTRA_IMAGE, -1);
         if (extraCurrentItem != -1) {
             mPager.setCurrentItem(extraCurrentItem);
         }
     }
+
 
     @Override
     public void onResume() {
@@ -108,16 +101,13 @@ public class ImageDetailActivity extends Activity implements OnClickListener, Im
         mImageFetcher.closeCache();
     }
 
+
     /**
      * Called by the ViewPager child fragments to load images via the one ImageFetcher
      */
+    @Override
     public ImageFetcher getImageFetcher() {
         return mImageFetcher;
-    }
-
-    @Override
-    public ImageFetcher getImageFethchert() {
-        return getImageFetcher();
     }
 
     /**

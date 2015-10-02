@@ -48,6 +48,8 @@ public enum EventTracker {
     // GA Logger verbosity.
     private static final Logger.LogLevel GA_LOG_VERBOSITY = Logger.LogLevel.VERBOSE;
 
+    private Activity activity;
+
     @Retention(value = RetentionPolicy.RUNTIME)
     @Target({ElementType.TYPE})
     public @interface EventTrackerClassName {
@@ -194,8 +196,10 @@ public enum EventTracker {
             builder.set(USER_ID_TAG, analyticsId);
             builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         }
-        EasyTracker.getInstance(appContext).send(builder.build());
+        getEasyTracker().send(builder.build());
     }
+
+
 
 
     /**
@@ -225,7 +229,7 @@ public enum EventTracker {
             builder.set(USER_ID_TAG, analyticsId);
             builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         }
-        EasyTracker.getInstance(appContext).send(builder.build());
+        getEasyTracker().send(builder.build());
     }
 
     /**
@@ -276,7 +280,7 @@ public enum EventTracker {
                     builder.set(USER_ID_TAG, analyticsId);
                     builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
                 }
-                EasyTracker.getInstance(appContext).send(builder.build());
+                getEasyTracker().send(builder.build());
             }
 
         } else {
@@ -285,12 +289,12 @@ public enum EventTracker {
                 builder.set(USER_ID_TAG, analyticsId);
                 builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
             }
-            EasyTracker.getInstance(appContext).send(builder.build());
+            getEasyTracker().send(builder.build());
         }
     }
 
     private String getAnnotation(Activity activity) {
-        String className=null;
+        String className = null;
         Annotation annotation = activity.getClass().getAnnotation(EventTrackerClassName.class);
         if (annotation != null) {
             EventTrackerClassName myAnnotation = (EventTrackerClassName) annotation;
@@ -303,10 +307,10 @@ public enum EventTracker {
     /**
      * Tracks the given event to Google Analytics after a list of high scores finishes loading
      *
-     * @param eventCategory    Event Category
-     * @param eventName  Timing Event Name
-     * @param eventLabel Timing Event Lable
-     * @param eventTimeValue      Timing Event Value
+     * @param eventCategory  Event Category
+     * @param eventName      Timing Event Name
+     * @param eventLabel     Timing Event Lable
+     * @param eventTimeValue Timing Event Value
      */
     public void trackTimings(String eventCategory, Long eventTimeValue, String eventName, String eventLabel) {
         MapBuilder builder = MapBuilder.createTiming(eventCategory, eventTimeValue, eventName, eventLabel);
@@ -315,7 +319,7 @@ public enum EventTracker {
             builder.set(USER_ID_TAG, analyticsId);
             builder.set(Fields.customDimension(CUSTOM_ID_INDEX), analyticsId);
         }
-        EasyTracker.getInstance(appContext).send(builder.build());
+        getEasyTracker().send(builder.build());
     }
 
     /**
@@ -324,6 +328,7 @@ public enum EventTracker {
      * @param activity The <code> Activity</code> to start tracking.
      */
     public void activityStart(Activity activity) {
+        this.activity = activity;
         // String className = activity.getClass().getName();
         String className = getAnnotation(activity);
         if (className != null && !className.isEmpty()) {
@@ -332,7 +337,7 @@ public enum EventTracker {
             if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
-            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, ""+sampleFrequency);
+            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, "" + sampleFrequency);
             EasyTracker.getInstance(appContext).activityStart(activity);
         }
     }
@@ -351,8 +356,20 @@ public enum EventTracker {
             if (this.analyticsId != null && !this.analyticsId.isEmpty()) {
                 EasyTracker.getInstance(appContext).set(USER_ID_TAG, analyticsId);
             }
-            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, ""+sampleFrequency);
+            EasyTracker.getInstance(appContext).set(Fields.SAMPLE_RATE, "" + sampleFrequency);
             EasyTracker.getInstance(appContext).activityStop(activity);
         }
+    }
+
+    /**
+     * Get the EasyTracker instance
+     * @return EasyTracker
+     */
+    private EasyTracker getEasyTracker() {
+        EasyTracker tracker = EasyTracker.getInstance(appContext);
+        if (activity != null) {
+            tracker.set(Fields.SCREEN_NAME, getAnnotation(activity));
+        }
+        return tracker;
     }
 }

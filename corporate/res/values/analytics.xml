@@ -29,8 +29,6 @@
     <bool name="ga_autoActivityTracking">true</bool>
 
     <string name="com.concur.mobile.core.activity.Preferences">Settings</string>
-    <string name="com.concur.mobile.core.travel.activity.LocationSearchV1">Travel-Hotel-Search-Criteria</string>
-    <string name="com.concur.mobile.core.travel.hotel.activity.RestHotelSearch">Travel-Hotel-Search-Criteria</string>
     <string name="com.concur.mobile.corp.activity.CompanyCodeLoginActivity">Sign In-SSO Company Code</string>
     <string name="com.concur.mobile.corp.activity.CompanySignOnActivity">Sign In-SSO Company Code</string>
     <string name="com.concur.mobile.corp.activity.EmailLookupActivity">Sign In-Enter Email</string>
@@ -67,6 +65,15 @@
     <string name="com.concur.mobile.core.travel.hotel.activity.HotelSearchRoomDetails">Hotel Room Details</string>
     <string name="com.concur.mobile.core.travel.hotel.activity.HotelReserveRoom">Hotel Booking</string>
     <string name="com.concur.mobile.core.travel.activity.SegmentList">Trips Itinerary</string>
+
+    <!-- screen names for Jarvis Hotel -->
+    <string name="com.concur.mobile.core.travel.activity.LocationSearchV1">Travel-Hotel-Search-Criteria</string>
+    <string name="com.concur.mobile.core.travel.hotel.jarvis.activity.RestHotelSearch">Travel-Hotel-Search-Criteria</string>
+    <string name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelSearchAndResultActivity">Travel-Hotel-Search-Results</string>
+    <string name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelChoiceDetailsActivity">Travel-Hotel-HotelOverview</string>
+    <string name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelVoiceSearchActivity">Travel-Hotel-VoiceSearch</string>
+    <string name="com.concur.mobile.core.travel.hotel.jarvis.activity.HotelBookingActivity">Travel-Hotel-Reserve</string>
+
     <!-- Flurry stuff -->
     <string name="flurry_key">DSNR475FZ4552YZJ5NDN</string>
     <!-- Sampling Rate -->
