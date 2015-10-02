@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:text="@string/hotel_sell_options_retrieving"
-        android:textColor="@color/ConcurBlue"></TextView>
+        android:textColor="@color/ConcurBlue"/>
 
     <LinearLayout
         android:id="@+id/footer"
@@ -101,7 +101,7 @@
         android:fillViewport="true">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/hotel_booking_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -372,7 +372,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"></LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </RelativeLayout>

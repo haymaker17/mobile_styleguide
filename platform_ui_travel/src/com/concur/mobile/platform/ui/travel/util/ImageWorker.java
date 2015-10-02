@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 import com.concur.mobile.platform.service.PlatformImageAsyncTask;
 
 import java.lang.ref.WeakReference;
@@ -40,6 +42,8 @@ public abstract class ImageWorker {
     private static final int MESSAGE_INIT_DISK_CACHE = 1;
     private static final int MESSAGE_FLUSH = 2;
     private static final int MESSAGE_CLOSE = 3;
+    private ImageView.ScaleType scaleType;
+    private ProgressBar progressBar;
 
     protected ImageWorker(Context context) {
         mResources = context.getResources();
@@ -56,12 +60,14 @@ public abstract class ImageWorker {
      * @param data      The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
      */
-    public void loadImage(Object data, ImageView imageView) {
+    public void loadImage(Object data, ImageView imageView, ImageView.ScaleType... sType) {
         if (data == null) {
             return;
         }
 
         BitmapDrawable value = null;
+        scaleType = (sType != null && sType.length > 0) ? sType[0] :
+                null;
 
         if (mImageCache != null) {
             value = mImageCache.getBitmapFromMemCache(String.valueOf(data));
@@ -69,11 +75,12 @@ public abstract class ImageWorker {
 
         if (value != null) {
             // Bitmap found in memory cache
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            if (scaleType != null) imageView.setScaleType(scaleType);
             imageView.setImageDrawable(value);
 
         } else if (cancelPotentialWork(data, imageView)) {
             //BEGIN_INCLUDE(execute_background_task)
+
             final BitmapWorkerTask task = new BitmapWorkerTask(data, imageView);
             final AsyncDrawable asyncDrawable = new AsyncDrawable(mResources, mLoadingBitmap, task);
             imageView.setImageDrawable(asyncDrawable);
@@ -301,6 +308,7 @@ public abstract class ImageWorker {
             if (value != null && imageView != null) {
                 setImageDrawable(imageView, value);
             }
+
             //END_INCLUDE(complete_background_work)
         }
 
@@ -356,11 +364,12 @@ public abstract class ImageWorker {
      * @param drawable
      */
     private void setImageDrawable(ImageView imageView, Drawable drawable) {
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        // imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if (scaleType != null) imageView.setScaleType(scaleType);
         if (mFadeInBitmap) {
             // Transition drawable with a transparent drawable and the final drawable
             final TransitionDrawable td = new TransitionDrawable(
-                    new Drawable[] { new ColorDrawable(android.R.color.transparent), drawable });
+                    new Drawable[]{new ColorDrawable(android.R.color.transparent), drawable});
             imageView.setBackground(new BitmapDrawable(mResources, mLoadingBitmap));
 
             imageView.setImageDrawable(td);
@@ -398,21 +407,22 @@ public abstract class ImageWorker {
         @Override
         protected Void doInBackground(Object... params) {
             switch ((Integer) params[0]) {
-            case MESSAGE_CLEAR:
-                clearCacheInternal();
-                break;
-            case MESSAGE_INIT_DISK_CACHE:
-                initDiskCacheInternal();
-                break;
-            case MESSAGE_FLUSH:
-                flushCacheInternal();
-                break;
-            case MESSAGE_CLOSE:
-                closeCacheInternal();
-                break;
+                case MESSAGE_CLEAR:
+                    clearCacheInternal();
+                    break;
+                case MESSAGE_INIT_DISK_CACHE:
+                    initDiskCacheInternal();
+                    break;
+                case MESSAGE_FLUSH:
+                    flushCacheInternal();
+                    break;
+                case MESSAGE_CLOSE:
+                    closeCacheInternal();
+                    break;
             }
             return null;
         }
+
     }
 
     protected void initDiskCacheInternal() {

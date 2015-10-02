@@ -571,8 +571,7 @@ public class RestHotelSearch extends TravelBaseActivity
     @Override
     protected void onStart() {
         super.onStart();
-//        mGoogleApiClient.connect();
-
+        EventTracker.INSTANCE.activityStart(this);
     }
 
 
@@ -581,6 +580,7 @@ public class RestHotelSearch extends TravelBaseActivity
         super.onStop();
 
         stopLocationUpdates();
+        EventTracker.INSTANCE.activityStop(this);
 
     }
 
