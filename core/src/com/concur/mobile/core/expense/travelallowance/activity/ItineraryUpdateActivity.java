@@ -588,14 +588,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     }
 
     private boolean isDataInconsistent() {
-        if (itinController.hasErrors(this.itinerary)) {
-            Toast.makeText(this, R.string.general_fix_errors_to_continue, Toast.LENGTH_SHORT).show();
-            return true;
-        }
         if (!itinController.areAllMandatoryFieldsFilled(itinerary)) {
             Toast.makeText(this, R.string.general_fill_required_fields, Toast.LENGTH_SHORT).show();
             adapter.notifyDataSetChanged();
             renderNameLabel();
+            return true;
+        }
+        if (itinController.hasErrors(this.itinerary)) {
+            Toast.makeText(this, R.string.general_fix_errors_to_continue, Toast.LENGTH_SHORT).show();
             return true;
         }
         List<ItinerarySegment> periods = itinerary.getSegmentList();
