@@ -365,6 +365,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     protected void onStart() {
         super.onStart();
         EventTracker.INSTANCE.activityStart(this);
+        // If results are from app database then the call will come through fragmentReady() which is invoked before onStart from the fragment listener
+        // This is causing the previous activity name being logged as current activity in the event track for viewed hotels action
+        if(retrieveFromDB) {
+            // Log GA tracking
+            trackViewedHotels(hotelListItemsToSort);
+        }
     }
 
     @Override
@@ -1087,8 +1093,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             });
         }
 
-        // Log GA tracking
-        trackViewedHotels(hotelListItemsToSort);
+        // If results are from app database then the call will come through fragmentReady() which is invoked before onStart from the fragment listener
+        // This is causing the previous activity name being logged as current activity in the event track for viewed hotels action
+        if(!retrieveFromDB) {
+            // Log GA tracking
+            trackViewedHotels(hotelListItemsToSort);
+        }
 
     }
 
@@ -1195,6 +1205,7 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
     // track hotels viewed
     private void trackViewedHotels(List<HotelSearchResultListItem> itemsToSort) {
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** itemsToSort in trackViewedHotels ------ " + (itemsToSort != null ? itemsToSort.size() : " itemsToSort is NULL ******"));
         for (HotelSearchResultListItem item : itemsToSort) {
 
             String[] paramKeys = new String[1];
