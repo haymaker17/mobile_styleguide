@@ -279,14 +279,14 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         }
 
         if (MSG_UNASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
-            Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.removing_not_possible, Toast.LENGTH_SHORT).show();
             dismissProgressDialog();
         }
 
         if (MSG_UNASSIGN_ITIN_SUCCESS.equals(fragmentMessage)) {
             if (!isSuccess) {
                 dismissProgressDialog();
-                Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.removing_not_possible, Toast.LENGTH_SHORT).show();
                 return;
             }
             refreshAssignableItineraries(expenseReportKey);
