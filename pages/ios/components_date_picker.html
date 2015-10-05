@@ -10,11 +10,11 @@
 		<div>
 			<figure>
 				<img src="img/ios/components/controls/date_picker/date_picker_01.png" alt="Date Picker" width="338" height="599"/>
-				<div class="figure_text">Date Picker</div>
+				<div class="figure_text">'Single' Date Picker</div>
 			</figure>
 			<figure>
 				<img src="img/ios/components/controls/date_picker/date_picker_02.png" alt="Date Picker" width="338" height="599"/>
-				<div class="figure_text">Date Picker</div>
+				<div class="figure_text">'Multi' Date Picker</div>
 			</figure>
 		</div>
 	</div>
@@ -29,10 +29,9 @@
 				Font, color, and Usage:
 				<ul>
 					<li>Default background fill: Concur Blue #0078C8</li>
-					<li>'Single' Date Picker: 64 tall</li>
-					<li>'Single' Date Picker: 100% Dynamic Wide</li>				
-					<li>Date Alignment: centerX, centerY</li>	
-					<li>Date: SF UI Display, 20 points, White #FFFFFF></li>					
+					<li>Default background: 64 tall, 375 wide - 100% dynamic wide</li>
+					<li>Date Alignment: centerX, 24 down</li>	
+					<li>Date: SF UI Display, 20 points, White #FFFFFF</li>					
 				</ul>
 			</p>
 		</div>
@@ -47,7 +46,7 @@
 </section>
 
 <section>
-<h2>'Check-in, Check-out' Date Picker</h2>	
+<h2>'Multi' Date Picker</h2>	
 <h3>Specs</h3>
 	<div class="flexContainer half">
 		<div>
@@ -55,21 +54,23 @@
 				Font, color, and Usage:
 				<ul>
 					<li>Default background fill: Concur Blue #0078C8</li>
-					<li>'Check-in, Check-out' Date Picker: 64 tall</li>
-					<li>'Check-in, Check-out' Date Picker: 100% Dynamic Wide</li>				
-					<li>'Check-in, Check-out': 15 padding</li>						
+					<li>Default background: 64 tall, 375 wide - 100% dynamic wide </li>
+<!--
 					<li>Calender Image: 15 down</li>
 					<li>Calender Image: 20x20, Cadet Blue #A7D8F1</li>
-					<li>'Check-in' Text: 15 right</li>
-					<li>'Check-in' Text: SF UI Display, 14 points, Cadet Blue #A7D8F1></li>			
-					<li>'Check-in' Date: 10 down</li>
-					<li>'Check-in' Date: SF UI Display, 16 points, White #FFFFFF></li>			
+-->
+					<li>'Check-in' Text: 50 right, 16 down</li>
+					<li>'Check-in' Text: SF UI Display, 14 points, White #FFFFFF; 60% Opacity</li>			
+					<li>'Check-in' Date: 11 down</li>
+					<li>'Check-in' Date: SF UI Display, 16 points, White #FFFFFF</li>			
 					<li>Divider Alignment: centerX, centerY</li>					
-					<li>Divider: 1px, 30% Opacity, Medium Grey #A7B6BF</li>
-					<li>'Check-out' Text: 350 right, 15 down</li>
-					<li>'Check-out' Text: SF UI Display, 14 points, Cadet Blue #A7D8F1></li>								
-					<li>'Check-out' Date: 10 down</li>
-					<li>'Check-out' Date: SF UI Display, 16 points, White #FFFFFF></li>	
+					<li>Divider: 1px, White #FFFFFF; 20% Opacity</li>					
+					<li>'Check-out' Text: 211 right, 16 down</li>
+					<li>'Check-out' Text: SF UI Display, 14 points, White #FFFFFF; 60% Opacity</li>								
+					<li>'Check-out' Date: 11 down</li>
+					<li>'Check-out' Date: SF UI Display, 16 points, White #FFFFFF</li>	
+					<li>Arrow Pointer: Indented 85 based off of current selection</li>	
+					
 				</ul>
 			</p>
 		</div>
@@ -77,7 +78,51 @@
 			<figure class="diagram">
 				<img class="redlines_on" src="img/ios/components/controls/date_picker/redlines_date_picker_02_on.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
 				<img class="redlines_off" src="img/ios/components/controls/date_picker/redlines_date_picker_02_off.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
-				<div class="figure_text">Redlines with 'Check-in, Check-out' Date Picker</div>
+				<div class="figure_text">Redlines with 'Multi' Date Picker</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>Calendar Picker</h2>	
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Default background fill: White #FFFFFF</li>
+					<li>Default background: 539 tall, 100% Dynamic Wide</li>
+					<li>Padding above Month: 24</li>				
+					<li>Month Text: SF UI Display, 17 points, Charcoal #383F46</li>	
+					<li>Padding above Days of the Week: 21</li>
+					<li>Days of the week Text: SF UI Display, 12 points, Dark Grey #7F8F97</li>
+					<li>Padding above Dates: 10</li>
+					<li>Date background fill: Light Grey #DBE1E6</li>
+					<li>Date background: 53 tall, 53 wide</li>
+					<li>Date Dividers: 1px, Medium Grey #A7B6BF; 70% Opacity</li>					
+					<li>Date Text Alignment: centerX, centerY</li>
+					<li>Date (Past) Text: SF UI Display, 16 points, Medium Grey #A7B6BF</li>
+					<li>Date (Current) background fill: Light Grey #DBE1E6</li>
+					<li>Date (Current) Text: SF UI Display, 16 points, Charcoal #383F46</li>
+					<li>Date (Future) Text: SF UI Display, 16 points, Charcoal #383F46</li>
+					<li>Selector Alignment: centerX, centerY</li>
+					<li>Selector background fill: Concur Blue #0078C8</li>
+					<li>Selector background: 30 tall, 30 Wide</li>
+					<li>Selector Highlight background fill: Concur Blue #0078C8; 10% Opacity</li>
+					<li>Selector Highlight background fill: 100% Dynamic Wide</li>					
+					<li>'Check-in' Text: SF UI Display, 16 points, White #FFFFFF</li>			
+					<li>'Check-out' Text: SF UI Display, 16 points, White #FFFFFF</li>										
+					<li>Padding below Month: 19</li>
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/ios/components/controls/date_picker/redlines_date_picker_03_on.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/date_picker/redlines_date_picker_03_off.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<div class="figure_text">Redlines with Calendar Picker</div>
 			</figure>
 		</div>
 	</div>
