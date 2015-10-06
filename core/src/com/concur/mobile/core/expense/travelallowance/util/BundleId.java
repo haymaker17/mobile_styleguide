@@ -26,5 +26,6 @@ public final class BundleId {
     public static final String IS_IN_APPROVAL = "isInApproval";
     public static final String FRAGMENT_MESSAGE_EXTRAS = "fragment.message.extras";
     public static final String ASSIGNABLE_ITINERARIES = "travelallowance.assignable.itineraries";
+    public static final String IS_FIRST_TA_ACTIVITY = "travelallowance.is.first.activity";
 
 }

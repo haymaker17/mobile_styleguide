@@ -57,6 +57,7 @@ import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 
 import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
 
+import com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -252,7 +253,7 @@ public class
         }
 
         if (getSupportFragmentManager().findFragmentByTag(TravelAllowanceFacade.FRAGMENT_TAG) == null
-                && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback && this.getClass().equals(ExpenseEntries.class)) {
+                && this.getClass().equals(ExpenseEntries.class)) {
             // Create the TA facade as a headless fragment
             TravelAllowanceFacade facade = new TravelAllowanceFacade();
             Bundle args = new Bundle();
@@ -263,7 +264,7 @@ public class
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        if (ViewUtil.hasTravelAllowanceFixed(this) && this instanceof TravelAllowanceFacade.ExpenseEntriesTACallback
+        if (ViewUtil.hasTravelAllowanceFixed(this)
                 && this.getClass().equals(ExpenseEntries.class)) {
             TravelAllowanceFacade facade = getTaFacade();
             if (savedInstanceState == null && facade != null) {
@@ -369,6 +370,9 @@ public class
                 intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
                 intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
                 intent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
+                if (AssignableItineraryListActivity.class.equals(taStartActivity)) {
+                    intent.putExtra(BundleId.IS_FIRST_TA_ACTIVITY, true);
+                }
                 ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
             }
         });

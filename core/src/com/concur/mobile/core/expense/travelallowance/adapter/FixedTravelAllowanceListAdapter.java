@@ -30,6 +30,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      * Holds all UI controls needed for rendering
      */
     private final class ViewHolder {
+        private View vListFieldContainer;
         private View vDividerTop;
         private TextView tvTitle;
         private TextView tvValue;
@@ -127,6 +128,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      */
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
+
         if (i > getCount()) {
             Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getView",
                 "Index is out of bounds. Index: " + i));
@@ -210,6 +212,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
      */
     private void createViewHolder(final View view) {
         holder = new ViewHolder();
+        holder.vListFieldContainer = view.findViewById(R.id.list_field_container);
         holder.vDividerTop = view.findViewById(R.id.v_divider_top);
         holder.vDividerBottom = view.findViewById(R.id.v_divider_bottom);
         holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
@@ -262,6 +265,10 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         if (allowance == null) {
             return;
         }
+
+//        if (holder.vListFieldContainer != null) {
+//            holder.vListFieldContainer.setBackgroundResource(R.drawable.ta_list_selector);
+//        }
 
         if (holder.vDividerTop != null) {
             if (withTopDivider) {
