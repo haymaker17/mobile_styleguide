@@ -89,6 +89,10 @@ public class GetTAItinerariesResponseParser extends BaseParser {
     @Override
 	public void handleText(String tag, String text) {
 
+//        if (text.trim().equals("")) {
+//            return;
+//        }
+
         // Handle Itinerary
         if (ITINERARY_TAG.equals(currentStartTag)) {
 			if ("ItinKey".equals(tag)) {
