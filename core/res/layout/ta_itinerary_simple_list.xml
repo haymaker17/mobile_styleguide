@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_background">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_background">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="70dp"
+                android:clipToPadding="false"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -32,17 +36,17 @@
             app:backgroundTint="#2f6996"
             app:fabSize="normal"
             app:layout_anchor="@id/recycler_view"
-            app:layout_anchorGravity="bottom|right|end" />
+            app:layout_anchorGravity="bottom|right|end"/>
 
     </android.support.design.widget.CoordinatorLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <include
         android:id="@+id/v_ta_footer"
         layout="@layout/ta_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>
