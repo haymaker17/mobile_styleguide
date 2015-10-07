@@ -235,7 +235,6 @@ p {
 
 
 
-
 /* components ------------ */
 
 .components figure img, .components video {
@@ -576,6 +575,14 @@ footer a {
 }
 
 
+.sidebar_visible #main_nav {
+	-webkit-transform: translateX(0);
+	   -moz-transform: translateX(0);
+	    -ms-transform: translateX(0);
+	     -o-transform: translateX(0);
+	        transform: translateX(0);
+}
+
 .container {
 -webkit-transition: all .25s ease-in;
    -moz-transition: all .25s ease-in;
@@ -612,19 +619,7 @@ footer a {
         transition: opacity .15s ease-in;
 }
 
-.sidebar_visible #dimmer {
-	opacity: 1;
-	z-index: 3;
-	width: 100%;
-}
 
-.sidebar_visible #main_nav {
-	-webkit-transform: translateX(0);
-	   -moz-transform: translateX(0);
-	    -ms-transform: translateX(0);
-	     -o-transform: translateX(0);
-	        transform: translateX(0);
-}
 
 #main_nav > ul {
 	margin: 0;
@@ -1594,6 +1589,7 @@ a.icon span {
 
 
 
+/*changelist*/
 
 
 
@@ -1773,6 +1769,7 @@ figure.phone p {
 
 
 
+
 /* tablets Landscape ----------- */
 @media only screen 
 and (max-width : 1024px) {
@@ -1788,6 +1785,15 @@ h3 {
 }
 */
 	
+.sidebar_visible #dimmer {
+	opacity: 1;
+	z-index: 3;
+	width: 100%;
+}
+
+
+
+
 	.container {
 	    padding-top: 75px;				
 	}
