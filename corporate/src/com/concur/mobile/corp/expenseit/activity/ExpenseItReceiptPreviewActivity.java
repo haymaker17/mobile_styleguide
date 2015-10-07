@@ -12,6 +12,8 @@ import com.concur.mobile.corp.expenseit.fragment.ExpenseItReceiptPreviewFragment
 public class ExpenseItReceiptPreviewActivity extends ActionBarActivity
         implements ExpenseItReceiptPreviewFragment.ExpenseItPreviewCallbacks{
 
+    private String receiptImageFilePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +21,7 @@ public class ExpenseItReceiptPreviewActivity extends ActionBarActivity
 
         if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
 
-            String receiptImageFilePath = getIntent().getStringExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
+            receiptImageFilePath = getIntent().getStringExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
 
             if (getSupportFragmentManager()
                     .findFragmentByTag(ExpenseItReceiptPreviewFragment.EXPENSEIT_RECEIPT_PREVIEW_FRAGMENT_TAG) == null) {
@@ -40,5 +42,4 @@ public class ExpenseItReceiptPreviewActivity extends ActionBarActivity
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
-
 }

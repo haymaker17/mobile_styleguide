@@ -4,7 +4,7 @@
                 android:background="@color/Black"
                 android:orientation="horizontal">
 
-    <ImageView
+    <com.concur.mobile.platform.ui.common.view.ScaleImageView
         android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

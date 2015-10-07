@@ -2052,6 +2052,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                             initializeUploadReceipt();
                         }
                     }
+
                 } else {
                     Log.e(Const.LOG_TAG, CLS_TAG + "USE_IMAGE_REQUEST_CODE returned as " + resultCode);
                 }
@@ -3789,10 +3790,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // UI.
         receiptCameraImageDataLocalFilePath = filePath;
 
-        if (isBlurredExpenseItImage(filePath)) {
-            initializeExpenseItReceiptPreview();
-        } else {
-            initializeUploadReceipt();
+        if (copyCapturedImage()) {
+            if (isBlurredExpenseItImage(filePath)) {
+                initializeExpenseItReceiptPreview();
+            } else {
+                initializeUploadReceipt();
+            }
         }
     }
 
