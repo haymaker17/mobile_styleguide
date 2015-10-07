@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:clickable="false"
+    android:focusable="false"
+    android:orientation="vertical"
+    android:background="@color/white_background"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:focusable="false" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:text="Manual Expense"
+        android:textColor="@color/universal_tour_ab_menu_v1"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:gravity="center_horizontal">
+    </TextView>
+
+</LinearLayout>

@@ -1,9 +1,9 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel.test;
 
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class ItinerarySegmentTest extends TestCase{
         cal.set(Calendar.HOUR_OF_DAY, 8);
         cal.set(Calendar.MINUTE, 15);
         cal.set(Calendar.SECOND, 0);
-
+        cal.set(Calendar.MILLISECOND, 0);
 
         itinSegmBase.setDepartureDateTime(cal.getTime());
     }
@@ -52,6 +52,7 @@ public class ItinerarySegmentTest extends TestCase{
         cal.set(Calendar.HOUR_OF_DAY, 8);
         cal.set(Calendar.MINUTE, 15);
         cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
 
         ItinerarySegment itinSegmComp = new ItinerarySegment();
         itinSegmComp.setDepartureDateTime(cal.getTime());
@@ -69,6 +70,7 @@ public class ItinerarySegmentTest extends TestCase{
         cal.set(Calendar.HOUR_OF_DAY, 8);
         cal.set(Calendar.MINUTE, 15);
         cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
 
         ItinerarySegment itinSegmComp = new ItinerarySegment();
         itinSegmComp.setDepartureDateTime(cal.getTime());
@@ -86,6 +88,7 @@ public class ItinerarySegmentTest extends TestCase{
         cal.set(Calendar.HOUR_OF_DAY, 8);
         cal.set(Calendar.MINUTE, 15);
         cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
 
         ItinerarySegment itinSegmComp = new ItinerarySegment();
         itinSegmComp.setDepartureDateTime(cal.getTime());
@@ -125,5 +128,48 @@ public class ItinerarySegmentTest extends TestCase{
         itinSegmBase.setDepartureDateTime(null);
 
         assertEquals(LESS, itinSegmBase.compareTo(itinSegmComp));
+    }
+
+//    @Test
+    public void hashCodeTest(){
+        assertEquals(613445870, itinSegmBase.hashCode());
+    }
+
+//    @Test
+    public void toStringTest(){
+        assertEquals("ItinerarySegment{arrivalDateTime=null, departureDateTime=Wed Jul 15 08:15:00 CEST 2015, id='null'}", itinSegmBase.toString());
+    }
+
+    @Test
+    public void id(){
+        String id = "XLV_0815";
+        itinSegmBase.setId(id);
+        assertEquals(id, itinSegmBase.getId());
+    }
+
+    @Test
+    public void setGetMessage(){
+
+        Message message = new Message(Message.Severity.ERROR, "XLV_Code");
+        itinSegmBase.setMessage(message);
+        assertEquals(message, itinSegmBase.getMessage());
+    }
+
+    @Test
+    public void isLocked(){
+        itinSegmBase.setLocked(true);
+        assertEquals(true, itinSegmBase.isLocked());
+    }
+
+    @Test
+    public void fieldEnum(){
+        assertEquals("Id", ItinerarySegment.Field.ID.getName());
+    }
+
+    @Test
+    public void getEndDateUTC() {
+        Date date;
+        date = null;
+        assertEquals(date, itinSegmBase.getEndDateUTC());
     }
 }

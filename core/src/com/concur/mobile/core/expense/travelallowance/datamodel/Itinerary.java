@@ -18,6 +18,7 @@ public class Itinerary implements Serializable{
     private String expenseReportID;
     private SynchronizationStatus syncStatus;
     private boolean locked;
+    private String tacKey;
     private List<ItinerarySegment> segmentList;
     private Message message;
 
@@ -28,7 +29,8 @@ public class Itinerary implements Serializable{
         ID("itineraryID"),
         NAME("name"),
         EXPENSE_REPORT_ID("expenseReportID"),
-        LOCKED("locked");
+        LOCKED("locked"),
+        TACKEY("tacKey");
 
         private String name;
 
@@ -92,6 +94,14 @@ public class Itinerary implements Serializable{
         this.locked = locked;
     }
 
+    public String getTacKey() {
+        return tacKey;
+    }
+
+    public void setTacKey(String tacKey) {
+        this.tacKey = tacKey;
+    }
+
     /**
      * Setter method
      * @param message The message object to be set
@@ -132,6 +142,8 @@ public class Itinerary implements Serializable{
         if (expenseReportID != null ? !expenseReportID.equals(itinerary.expenseReportID) : itinerary.expenseReportID != null)
             return false;
         if (syncStatus != itinerary.syncStatus) return false;
+        if (tacKey != null ? !tacKey.equals(itinerary.tacKey) : itinerary.tacKey != null)
+            return false;
         return equalsSegmentList(itinerary);
     }
 
@@ -142,6 +154,7 @@ public class Itinerary implements Serializable{
         result = 31 * result + (expenseReportID != null ? expenseReportID.hashCode() : 0);
         result = 31 * result + (syncStatus != null ? syncStatus.hashCode() : 0);
         result = 31 * result + (locked ? 1 : 0);
+        result = 31 * result + (tacKey != null ? tacKey.hashCode() : 0);
         result = 31 * result + (segmentList != null ? segmentList.hashCode() : 0);
         return result;
     }

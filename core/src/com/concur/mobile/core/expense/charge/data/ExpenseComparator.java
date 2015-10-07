@@ -89,6 +89,11 @@ public class ExpenseComparator implements Comparator<Expense> {
                 case EXPENSEIT_NOT_DONE:
                     transDateExp1 = exp1.getExpenseItReceipt().getCreatedAt();
                     break;
+                case UNKNOWN_EXPENSE:
+                    if (exp1.getSmartExpense().getTransactionDate() != null) {
+                        transDateExp1 = exp1.getSmartExpense().getTransactionDate();
+                    }
+                    break;
             }
 
             // Obtain the transaction date for 'exp2'.
@@ -134,6 +139,11 @@ public class ExpenseComparator implements Comparator<Expense> {
                     break;
                 case EXPENSEIT_NOT_DONE:
                     transDateExp2 = exp2.getExpenseItReceipt().getCreatedAt();
+                    break;
+                case UNKNOWN_EXPENSE:
+                    if (exp2.getSmartExpense().getTransactionDate() != null) {
+                        transDateExp2 = exp2.getSmartExpense().getTransactionDate();
+                    }
                     break;
             }
 

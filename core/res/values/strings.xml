@@ -2031,8 +2031,10 @@
     <!-- OCR -->
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="manual_expense">Manual</string>
     <string name="pdf">PDF</string>
     <string name="dlg_title_ocr_options">Create a New Expense</string>
+    <string name="dlg_title_add_expense">Create new expense</string>
     <string name="ocr_progress_status">Processing Receipt</string>
     <string name="ocr_progress_msg">Your expense is being analyzed</string>
     <string name="ocr_progress_status_failed">Processing Error</string>

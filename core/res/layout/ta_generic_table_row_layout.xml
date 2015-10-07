@@ -23,7 +23,9 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Large Text"
-            android:textAppearance="@style/TATitle"/>
+            android:textAppearance="@style/TATitle"
+            android:lines="1"
+            android:ellipsize="end"/>
 
         <ImageView
             android:id="@+id/iv_icon"

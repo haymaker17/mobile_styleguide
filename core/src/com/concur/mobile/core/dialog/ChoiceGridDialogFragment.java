@@ -18,17 +18,18 @@ import com.concur.core.R;
 
 /**
  * A dialog to display rows of action buttons with image and text
- * 
+ *
  * @deprecated - use {@link com.concur.platform.ui.common.dialog.ChoiceGridDialogFragment} instead.
- * 
+ *
  * @author yiwenw
- * 
+ *
  */
 public class ChoiceGridDialogFragment extends DialogFragment implements OnItemClickListener {
 
     private GridView mGridView;
     private ChoiceItem[] mChoiceItems;
     private Integer mTitle;
+    private boolean mIsLargeCell = true;
 
     public ChoiceGridDialogFragment() {
         super();
@@ -38,7 +39,7 @@ public class ChoiceGridDialogFragment extends DialogFragment implements OnItemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         getDialog().setTitle(mTitle);
-        View view = inflater.inflate(R.layout.grid_dialog, container);
+        View view = inflater.inflate(mIsLargeCell ? R.layout.grid_dialog : R.layout.grid_small_cell_dialog, container);
 
         mGridView = (GridView) view.findViewById(R.id.grid);
 
@@ -46,6 +47,12 @@ public class ChoiceGridDialogFragment extends DialogFragment implements OnItemCl
         mGridView.setAdapter(getAdapter(getActivity()));
         mGridView.setOnItemClickListener(this);
 
+        TextView title = (TextView) getDialog().findViewById(android.R.id.title);
+        if (title != null) {
+            title.setBackgroundColor(getResources().getColor(R.color.WhiteBackground));
+            title.setTextColor(getResources().getColor(R.color.listItemMainText));
+            //title.setTextSize(TypedValue.COMPLEX_UNIT_SP, R.dimen.abc_text_size_medium_material);
+        }
         return view;
 
     }
@@ -62,12 +69,16 @@ public class ChoiceGridDialogFragment extends DialogFragment implements OnItemCl
         mTitle = title;
     }
 
+    public void setIsLargeCellSize(boolean isLarge) {
+        mIsLargeCell = isLarge;
+    }
+
     /**
-     * 
+     *
      * @return an adapter for the grid view
      */
     public BaseAdapter getAdapter(Context ctx) {
-        return new ImageAdapter(ctx, mChoiceItems);
+        return new ImageAdapter(ctx, mChoiceItems, mIsLargeCell);
     }
 
     static public class ChoiceItem {
@@ -101,10 +112,12 @@ public class ChoiceGridDialogFragment extends DialogFragment implements OnItemCl
 
         private Context mContext;
         private ChoiceItem[] mItems;
+        private boolean mIsLargeCell;
 
-        public ImageAdapter(Context c, ChoiceItem[] items) {
+        public ImageAdapter(Context c, ChoiceItem[] items, boolean isLargeCell) {
             mContext = c;
             mItems = items;
+            mIsLargeCell = isLargeCell;
         }
 
         public int getCount() {
@@ -130,7 +143,7 @@ public class ChoiceGridDialogFragment extends DialogFragment implements OnItemCl
 
             if (cell == null) {
                 LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-                cell = inflater.inflate(R.layout.grid_dialog_cell, parent, false);
+                cell = inflater.inflate(mIsLargeCell ? R.layout.grid_dialog_cell : R.layout.grid_dialog_small_cell, parent, false);
                 holder = new ViewHolder();
                 holder.imageTitle = (TextView) cell.findViewById(R.id.text);
                 holder.image = (ImageView) cell.findViewById(R.id.image);

@@ -1,5 +1,6 @@
 package com.concur.mobile.platform.ui.travel.hotel.fragment;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 
 import com.concur.mobile.platform.ui.travel.R;
 import com.concur.mobile.platform.ui.travel.util.ImageFetcher;
+import com.concur.mobile.platform.ui.travel.util.ImageWorker;
 import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 /**
@@ -22,6 +24,7 @@ public class ImageDetailFragment extends Fragment {
     private ImageView mImageView;
     private ImageFetcher mImageFetcher;
     private ImagesFragmentListener callBackListener;
+    private View view;
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
@@ -58,18 +61,18 @@ public class ImageDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate and locate the main ImageView
-        final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
-        mImageView = (ImageView) v.findViewById(R.id.imageView);
-        //        URI uri = URI.create(mImageUrl);
-        //        // Attempt to load the image from the image cache, if not there, then the
-        //        // ImageCache will load it asynchronously and this view will be updated via
-        //        // the ImageCache broadcast receiver available in BaseActivity.
-        //        ImageCache imgCache = ImageCache.getInstance(getActivity());
-        //        Bitmap bitmap = imgCache.getBitmap(uri, null);
-        //        if (bitmap != null) {
-        //            mImageView.setImageBitmap(bitmap);
-        //        }
-        return v;
+        view = inflater.inflate(R.layout.image_detail_fragment, container, false);
+        mImageView = (ImageView) view.findViewById(R.id.imageView);
+        setActionBar();
+        return view;
+    }
+
+
+    private void setActionBar() {
+        ActionBar actionBar = getActivity().getActionBar();
+        //no title currently
+        actionBar.setTitle(R.string.hotel_tab_images);
+
     }
 
     @Override
@@ -89,9 +92,9 @@ public class ImageDetailFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // Use the parent activity to load the image asynchronously into the ImageView (so a single
         // cache can be used over all pages in the ViewPager
-        // if (ImageDetailActivity.class.isInstance(getActivity())) { //((ImageDetailActivity)
-        mImageFetcher = callBackListener.getImageFethchert();
+        mImageFetcher = callBackListener.getImageFetcher();
         if (mImageFetcher != null) {
+            //view.findViewById(R.id.image_progress).setVisibility(View.VISIBLE);
             mImageFetcher.loadImage(mImageUrl, mImageView);
         }
 
@@ -107,6 +110,7 @@ public class ImageDetailFragment extends Fragment {
         super.onDestroy();
         if (mImageView != null) {
             // Cancel any pending image work
+            ImageWorker.cancelWork(mImageView);
             mImageView.setImageDrawable(null);
         }
         if (mImageFetcher != null) {
@@ -117,7 +121,7 @@ public class ImageDetailFragment extends Fragment {
     // Container Activity must implement this call back interface
     public interface ImagesFragmentListener {
 
-        public ImageFetcher getImageFethchert();
+        public ImageFetcher getImageFetcher();
 
     }
 }
