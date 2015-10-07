@@ -720,13 +720,27 @@ ul.nav {
 
 .accordion ul span:after {
 	content: "";
+	display: block;
 	position: absolute;
 	top: 40%;
 	right: 5%;
 	width: 10px;
 	height: 10px;
 	background-image: url("../img/arrow_right.svg");
-	
+	-webkit-transition: all .15s ease;
+	   -moz-transition: all .15s ease;
+	    -ms-transition: all .15s ease;
+	     -o-transition: all .15s ease;
+	        transition: all .15s ease;
+}
+
+.accordion ul li.active > span:after, .accordion li li span.active:after {
+	background-image: url("../img/arrow_right.svg");
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	transform: rotate(90deg);
 }
 
 .accordion span {
