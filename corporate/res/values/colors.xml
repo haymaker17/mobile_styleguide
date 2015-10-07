@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--ExpenseIt Image Preview Screen Colors-->
+    <color name="concur_light_blue_ex_it">#00A9F2</color>
+    <color name="white_ex_it">#fafafa</color>
+    <color name="action_bar_background_transparent">#CC000000</color>
+    <color name="light_grey">#F1F1F1</color>
+    <color name="add_receipt_btn_stroke">#d3d3d3</color>
+</resources>
