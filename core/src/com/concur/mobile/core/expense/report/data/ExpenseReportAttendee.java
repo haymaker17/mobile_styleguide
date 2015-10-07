@@ -3,6 +3,7 @@
  */
 package com.concur.mobile.core.expense.report.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ import com.concur.mobile.platform.util.Parse;
  * 
  * @author AndrewK
  */
-public class ExpenseReportAttendee {
+public class ExpenseReportAttendee implements Serializable {
 
     public static final String FIRST_NAME_FIELD_ID = "FirstName";
     public static final String LAST_NAME_FIELD_ID = "LastName";
