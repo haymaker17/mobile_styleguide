@@ -637,6 +637,8 @@ ul.nav {
 
 
 
+
+
 #content {
 	position: absolute;
 	top: 130px;
@@ -715,13 +717,27 @@ ul.nav {
   font-size: 1.5rem;
   color: #222;
 }
+
+.accordion ul span:after {
+	content: "";
+	position: absolute;
+	top: 40%;
+	right: 5%;
+	width: 10px;
+	height: 10px;
+	background-image: url("../img/arrow_right.svg");
+	
+}
+
 .accordion span {
     display: block;
     font-weight: 300;
     color: #858585;
     line-height: 2.8rem;
     padding: 0 20px 0 30px;
+    position: relative;
 }
+
 .accordion span.top {
     font-size: 1.5rem;
 }

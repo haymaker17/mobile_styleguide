@@ -186,7 +186,12 @@ function outputChangelist(inData,inOlder,inFirst,inNewer) {
 
       var date = (m + "." + d + "." + y);
 
-	  html+= "<tr><td>" + date + "</td><td><a href='" + url + "'>" + message + "</a></td></tr>";
+      //throwing out the merge branch changes
+      if (message.substring(0,12) != 'Merge branch' ) {
+
+        html+= "<tr><td>" + date + "</td><td><a href='" + url + "' target='_blank'>" + message + "</a></td></tr>";
+      }
+	  
     });
 
 
