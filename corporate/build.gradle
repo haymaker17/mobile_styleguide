@@ -68,7 +68,8 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi', 'x86'
+//            exclude 'armeabi-v7a', 'mips' // this did not work.
+            include 'x86', 'armeabi-v7a', 'mips', 'armeabi'
             universalApk true
         }
     }
