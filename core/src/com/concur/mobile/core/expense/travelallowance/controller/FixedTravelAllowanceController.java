@@ -120,6 +120,9 @@ public class FixedTravelAllowanceController extends BaseController {
 
             @Override
             public void onRequestSuccess(Bundle resultData) {
+                if (resultData != null && resultData.containsKey(BundleId.FIXED_TRAVEL_ALLOWANCE_CONTROL_DATA)) {
+                    controlData = (FixedTravelAllowanceControlData) resultData.getSerializable(BundleId.FIXED_TRAVEL_ALLOWANCE_CONTROL_DATA);
+                }
                 fixedTravelAllowances = getFixedAllowancesRequest2.getFixedTravelAllowances();
                 //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
                 fillTAMap();
@@ -143,7 +146,6 @@ public class FixedTravelAllowanceController extends BaseController {
         });
 
         getFixedAllowancesRequest2 = new GetTAFixedAllowancesRequest2(context, receiver, expenseReportKey);
-        getFixedAllowancesRequest2.setControlData(controlData);
         getFixedAllowancesRequest2.execute();
         return true;
     }
