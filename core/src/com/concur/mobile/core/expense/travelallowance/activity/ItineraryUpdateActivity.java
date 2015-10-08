@@ -549,7 +549,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
     private void showIsDirtyDialog() {
         Bundle bundle = new Bundle();
-        String msgText = getResources().getString(R.string.confirm_save_message);
+        String msgText = getResources().getString(R.string.confirm_save_report_message);
         bundle.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
         bundle.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DIRTY_POSITIVE);
         bundle.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DIRTY_NEUTRAL);
@@ -692,7 +692,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     this.itinerary = createdItinerary;
                     ConcurCore app = (ConcurCore) getApplication();
                     allowanceController = app.getTaController().getFixedTravelAllowanceController();
-                    Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                     this.setResult(RESULT_OK, resultIntent);
@@ -723,7 +723,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (result != null) {//We get null for auto delete
                         ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
                         this.itinerary.getSegmentList().remove(deletedSegment);
-                        Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();

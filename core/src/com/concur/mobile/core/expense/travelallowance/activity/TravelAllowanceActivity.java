@@ -270,7 +270,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         if (MSG_DELETE_ITIN_SUCCESS.equals(fragmentMessage)) {
             refreshFixedTravelAllowances(expenseReportKey);
             refreshItineraries(expenseReportKey, isInApproval);
-            Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, R.string.general_delete_success, Toast.LENGTH_SHORT).show();
         }
 
         if (MSG_DELETE_ITIN_FAILED.equals(fragmentMessage)) {
