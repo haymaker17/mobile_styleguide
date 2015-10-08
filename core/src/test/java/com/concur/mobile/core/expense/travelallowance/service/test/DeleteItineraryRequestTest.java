@@ -23,7 +23,7 @@ public class DeleteItineraryRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseDeleteItinerary() {
+    public void deleteItineraryParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new DeleteItineraryRequest(null, null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "DeleteItinerarySuccess.xml");
         assertNotNull(resultData);

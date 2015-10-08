@@ -26,7 +26,7 @@ public class GetTAItinerariesRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseItinerariesWithTimezoneOffset() {
+    public void itinerariesWithTimezoneOffsetParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
         assertNotNull(resultData);

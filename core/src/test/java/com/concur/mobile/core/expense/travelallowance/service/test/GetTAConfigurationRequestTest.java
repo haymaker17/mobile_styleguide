@@ -28,7 +28,7 @@ public class GetTAConfigurationRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseTravelAllowanceConfiguration() {
+    public void travelAllowanceConfigurationParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAConfigurationRequest(null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "TAConfigRead.xml");
         assertNotNull(resultData);

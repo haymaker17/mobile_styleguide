@@ -24,7 +24,7 @@ public class GetAssignableItinerariesRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseAssignableItineraries() {
+    public void assignableItinerariesParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetAssignableItinerariesRequest(null, null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "AssignableItineraries.xml");
         assertNotNull(resultData);

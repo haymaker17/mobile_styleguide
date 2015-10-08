@@ -27,7 +27,7 @@ public class GetTAFixedAllowancesRequest2Test extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseFixedAllowances() {
+    public void fixedAllowancesParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAFixedAllowancesRequest2(null, null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "FixedAllowances.xml");
         assertNotNull(resultData);

@@ -23,7 +23,7 @@ public class AssignItineraryRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseAssignItinerary() {
+    public void assignItineraryParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new AssignItineraryRequest(null, null, null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "AssignItinerarySuccess.xml");
         assertNotNull(resultData);

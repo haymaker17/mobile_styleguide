@@ -24,7 +24,7 @@ public class DeleteItineraryRowRequestTest extends TestCase {
     private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
     @Test
-    public void parseDeleteItineraryRow() {
+    public void deleteItineraryRowParserTest() {
         FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new DeleteItineraryRowRequest(null, null, null, null));
         Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "DeleteItineraryRowSuccess.xml");
         assertNotNull(resultData);
