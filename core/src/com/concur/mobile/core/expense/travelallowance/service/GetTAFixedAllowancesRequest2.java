@@ -7,7 +7,6 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceControlData;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
-import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAFixedAllowancesResponseDOMParser;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
@@ -75,8 +74,10 @@ public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
 
         resultData.putBoolean(IS_SUCCESS, true);
         this.fixedTravelAllowances = parser.getFixedTravelAllowances();
+        this.controlData = parser.getControlData();
         ArrayList<FixedTravelAllowance> allowances = new ArrayList<FixedTravelAllowance>(this.fixedTravelAllowances);
         resultData.putSerializable(BundleId.ALLOWANCE_LIST, allowances);
+        resultData.putSerializable(BundleId.FIXED_TRAVEL_ALLOWANCE_CONTROL_DATA, controlData);
         long currentMillis = System.currentTimeMillis();
         Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
                 "Request total = " + (currentMillis - startMillis) + "ms"));
@@ -87,16 +88,9 @@ public class GetTAFixedAllowancesRequest2 extends CoreAsyncRequestTask {
         return fixedTravelAllowances;
     }
 
-
-    public void setControlData(FixedTravelAllowanceControlData controlData) {
-        this.controlData = controlData;
-    }
-
-
     @Override
     protected int parseStream(InputStream is) {
         parser = new GetTAFixedAllowancesResponseDOMParser(context);
-        parser.setControlData(controlData);
         try {
             parserStartMillis = System.currentTimeMillis();
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

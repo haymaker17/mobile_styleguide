@@ -12,6 +12,7 @@ import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.base.service.parser.CommonParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.service.parser.GetTAConfigurationParser;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
@@ -78,6 +79,7 @@ public class GetTAConfigurationRequest extends CoreAsyncRequestTask {
 
         resultData.putBoolean(IS_SUCCESS, true);
         this.configuration = parser.getConfigurationList();
+        resultData.putSerializable(BundleId.TRAVEL_ALLOWANCE_CONFIGURATION, this.configuration);
 
         long currentMillis = System.currentTimeMillis();
         Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onPostParse",
