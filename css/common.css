@@ -1463,6 +1463,8 @@ a.icon span {
 
 
 
+
+
 /* Filter List ------------ */
 
 
@@ -1578,6 +1580,13 @@ a.icon span {
 	float: left;
 }
 
+
+
+ul.no_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;	
+}
 
 
 
