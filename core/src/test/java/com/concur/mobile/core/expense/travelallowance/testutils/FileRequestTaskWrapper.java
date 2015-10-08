@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.testutils;
 
 import android.os.Bundle;
 
+import com.concur.mobile.base.service.BaseAsyncRequestTask;
 import com.concur.mobile.core.service.CoreAsyncRequestTask;
 
 import java.io.FileInputStream;
@@ -36,17 +37,10 @@ public class FileRequestTaskWrapper {
         }
 
         try {
-            parseStreamMethod = requestTask.getClass().getDeclaredMethod("parseStream", InputStream.class);
-        } catch (SecurityException e) {
+            parseStreamMethod = BaseAsyncRequestTask.class.getDeclaredMethod("parseStream", InputStream.class);
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
             return null;
-        } catch (NoSuchMethodException e) {
-            try {
-                parseStreamMethod = requestTask.getClass().getSuperclass().getDeclaredMethod("parseStream", InputStream.class);
-            } catch (NoSuchMethodException f) {
-                f.printStackTrace();
-                return null;
-            }
         }
 
         try {
@@ -69,17 +63,10 @@ public class FileRequestTaskWrapper {
         }
 
         try {
-            setResultDataMethod = requestTask.getClass().getDeclaredMethod("onPostParse");
-        } catch (SecurityException e) {
+            setResultDataMethod = BaseAsyncRequestTask.class.getDeclaredMethod("onPostParse");
+        } catch (NoSuchMethodException e) {
             e.printStackTrace();
             return null;
-        } catch (NoSuchMethodException e) {
-            try {
-                setResultDataMethod = requestTask.getClass().getSuperclass().getSuperclass().getDeclaredMethod("onPostParse", InputStream.class);
-            } catch (NoSuchMethodException f) {
-                f.printStackTrace();
-                return null;
-            }
         }
 
         try {
@@ -94,7 +81,7 @@ public class FileRequestTaskWrapper {
         }
 
         try {
-            Field resultDataField = requestTask.getClass().getSuperclass().getSuperclass().getDeclaredField("resultData");
+            Field resultDataField = BaseAsyncRequestTask.class.getDeclaredField("resultData");
             resultDataField.setAccessible(true);
             result = (Bundle) resultDataField.get(requestTask);
         } catch (NoSuchFieldException e) {
