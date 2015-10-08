@@ -30,6 +30,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.concur.core.R;
+import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.eva.data.EvaTime;
 import com.concur.mobile.eva.service.EvaApiReply;
 import com.concur.mobile.eva.service.EvaApiRequest;
@@ -110,6 +111,17 @@ public abstract class VoiceSearchActivity extends AbstractTravelSearchProgress
      * @return this book type, e.g. Hotel, Air, Car, or Rail.
      */
     protected abstract BookingSelection getBookType();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

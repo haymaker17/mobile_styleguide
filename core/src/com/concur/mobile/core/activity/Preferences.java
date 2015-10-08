@@ -45,7 +45,6 @@ import com.concur.mobile.platform.authentication.Session;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
-import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.Calendar;

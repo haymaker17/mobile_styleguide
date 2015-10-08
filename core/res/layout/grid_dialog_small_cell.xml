@@ -5,15 +5,16 @@
     android:clickable="false"
     android:focusable="false"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:background="@color/white_background"
+    android:padding="5dp" >
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_horizontal"
         android:clickable="false"
-        android:focusable="false"
-        android:layout_gravity="center_horizontal">
+        android:focusable="false" >
     </ImageView>
 
     <TextView
@@ -23,10 +24,11 @@
         android:layout_marginTop="10dp"
         android:clickable="false"
         android:focusable="false"
+        android:text="Manual Expense"
         android:textColor="@color/universal_tour_ab_menu_v1"
-        android:text="Test Camera"
-        android:gravity="center"
-        android:textSize="14sp" >
+        android:textAlignment="center"
+        android:textSize="12sp"
+        android:gravity="center_horizontal">
     </TextView>
 
 </LinearLayout>

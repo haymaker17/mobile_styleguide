@@ -119,7 +119,7 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (hotelmapFragment != null) {
+        if (hotelmapFragment != null && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
             ft.remove(hotelmapFragment);
             ft.commit();
