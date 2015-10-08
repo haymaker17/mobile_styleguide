@@ -12,6 +12,7 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'http://msprndart001.concur.concurtech.org:8081/artifactory/sandbox-local' }
 }
 
 
@@ -19,6 +20,7 @@ dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':core')
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.expenseit.receipt.detection:receipt-detection-release:0.2@aar'
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
@@ -66,7 +68,7 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi', 'x86'
+            include 'x86', 'armeabi-v7a', 'armeabi'
             universalApk true
         }
     }
