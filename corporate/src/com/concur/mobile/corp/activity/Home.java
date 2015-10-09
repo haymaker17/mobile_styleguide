@@ -542,6 +542,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
             if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
                 receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
+                copyCapturedImage();
             }
             if (savedInstanceState != null) {
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
