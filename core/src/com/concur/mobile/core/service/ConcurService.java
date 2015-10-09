@@ -1588,7 +1588,7 @@ public class ConcurService extends Service {
     public IExpenseReportListInfo getActiveReports(String userId) {
         IExpenseReportListInfo reportListInfo = null;
         List<IExpenseReportInfo> reportInfos = ReportDBUtil.loadReports(db, IExpenseReportInfo.ReportType.ACTIVE,
-            userId, false);
+                userId, false);
         if (reportInfos != null && reportInfos.size() > 0) {
             // The above active report list is the summary list, i.e.,
             // non-detail, and so are not edited.
@@ -1765,7 +1765,7 @@ public class ConcurService extends Service {
     public IExpenseReportListInfo getReportsToApproveList(String userId) {
         IExpenseReportListInfo reportListInfo = null;
         List<IExpenseReportInfo> reportInfos = ReportDBUtil.loadReports(db, IExpenseReportInfo.ReportType.APPROVAL,
-            userId, false);
+                userId, false);
         if (reportInfos != null && reportInfos.size() > 0) {
             // The above approval report list is the summary list, i.e.,
             // non-detail, and so are not edited.
@@ -3217,7 +3217,7 @@ public class ConcurService extends Service {
             SaveReceiptRequest.SaveReceiptUploadListener listener, boolean standaloneReceipt, boolean msgReq) {
 
         return sendConnectSaveReceiptRequest(userId, filePath, deleteReceiptFile, listener, standaloneReceipt,
-            SaveReceiptRequest.SaveReceiptCall.MWS, null, null, msgReq);
+                SaveReceiptRequest.SaveReceiptCall.MWS, null, null, msgReq);
     }
 
     /**
@@ -3260,7 +3260,7 @@ public class ConcurService extends Service {
             SaveReceiptRequest.SaveReceiptUploadListener listener, boolean standaloneReceipt, boolean msgReq) {
 
         return sendConnectSaveReceiptRequest(userId, filePath, deleteReceiptFile, listener, standaloneReceipt,
-            SaveReceiptRequest.SaveReceiptCall.CONNECT_POST_IMAGE, null, null, msgReq);
+                SaveReceiptRequest.SaveReceiptCall.CONNECT_POST_IMAGE, null, null, msgReq);
     }
 
     /**
@@ -3309,7 +3309,7 @@ public class ConcurService extends Service {
             boolean standaloneReceipt, String rptKey, boolean msgReq) {
 
         return sendConnectSaveReceiptRequest(userId, filePath, deleteReceiptFile, listener, standaloneReceipt,
-            SaveReceiptRequest.SaveReceiptCall.CONNECT_POST_IMAGE_REPORT, rptKey, null, msgReq);
+                SaveReceiptRequest.SaveReceiptCall.CONNECT_POST_IMAGE_REPORT, rptKey, null, msgReq);
     }
 
     /**
@@ -3831,11 +3831,6 @@ public class ConcurService extends Service {
         // being set on the application object.
         CountSummary countSummary = null;
         String userId = prefs.getString(Const.PREF_USER_ID, null);
-        //MOB-25817 High occurrence for a crash in corp.activity.Home on fabric.io
-        //Not calling getReponseLastRetrieveTS when userId is null
-        if (userId == null) {
-            return countSummary;
-        }
         String cachedResponse = db.loadResponse(Const.MSG_SUMMARY_COUNT_REQUEST, userId);
         if (cachedResponse != null) {
             Calendar lastRetrievedTS = db.getReponseLastRetrieveTS(Const.MSG_SUMMARY_COUNT_REQUEST, userId);
