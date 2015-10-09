@@ -33,6 +33,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onLocationClickListener;
     private OnClickListener onDeleteItemClickListener;
     private OnClickListener onReturnToHomeListener;
+    private OnClickListener onMessageAreaClickListener;
     private List<ItinerarySegment> segments;
 
     /**
@@ -77,7 +78,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
                                       final OnClickListener onLocationClickListener,
             final OnClickListener onDateClickListener, final OnClickListener onTimeClickListener,
-            final OnClickListener onReturnToHomeListener,
+            final OnClickListener onReturnToHomeListener, final OnClickListener onMessageAreaClickListener,
             List<ItinerarySegment> itinerarySegments) {
 
         super(context, LAYOUT_ID);
@@ -88,6 +89,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onTimeClickListener = onTimeClickListener;
         this.onReturnToHomeListener = onReturnToHomeListener;
         this.onDeleteItemClickListener = onItemClickListener;
+        this.onMessageAreaClickListener = onMessageAreaClickListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
     }
@@ -197,10 +199,16 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     holder.vgArrivalTime.setClickable(true);
                 }
             }
-            if (this.onReturnToHomeListener != null){
+            if (this.onReturnToHomeListener != null) {
                 holder.vgReturnToHome.setOnClickListener(onReturnToHomeListener);
             }
 
+            if (this.onMessageAreaClickListener != null) {
+                if (holder.vMessageArea != null) {
+                    holder.vMessageArea.setOnClickListener(onMessageAreaClickListener);
+                    holder.vMessageArea.setClickable(true);
+                }
+            }
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
@@ -222,6 +230,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         setPositionInfoTag(holder.vArrivalLocation, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalDate, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
+
+        setPositionInfoTag(holder.vMessageArea, i, PositionInfoTag.INFO_NONE);
 
         renderMessageArea(segment);
 
