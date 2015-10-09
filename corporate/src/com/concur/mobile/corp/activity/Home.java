@@ -3793,6 +3793,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (copyCapturedImage()) {
             if (isBlurredExpenseItImage(filePath)) {
+                EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Camera");
                 initializeExpenseItReceiptPreview();
             } else {
                 initializeUploadReceipt();
