@@ -25,7 +25,11 @@ import com.concur.mobile.base.ui.UIUtils;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.activity.BaseActivity;
 import com.concur.mobile.core.activity.Preferences;
+import com.concur.mobile.core.dialog.AddSmartExpenseChoiceDialogFragment;
 import com.concur.mobile.core.expense.charge.activity.ExpenseItListItem;
+import com.concur.mobile.core.expense.charge.activity.QuickExpense;
+import com.concur.mobile.core.expense.charge.data.Expense;
+import com.concur.mobile.core.expense.data.ExpenseType;
 import com.concur.mobile.core.expense.data.IExpenseEntryCache;
 import com.concur.mobile.core.expense.fragment.Expenses;
 import com.concur.mobile.core.expense.fragment.Expenses.ExpensesCallback;
@@ -66,7 +70,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallback, ReceiptStoreFragmentCallback, SortExpensesDialogFragment.SortExpenseDialogListener,
-    BackgroundSyncHandler.SyncCallback{
+    BackgroundSyncHandler.SyncCallback, AddSmartExpenseChoiceDialogFragment.SmartExpenseAddChoiceListener {
 
     public final static String CLS_TAG = ExpensesAndReceipts.class.getSimpleName();
 
@@ -87,7 +91,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
     //Bundle key for storing / restoring expenseListRequestStartTime
     private static final String BUNDLE_EXPENSE_LIST_REQUEST_START_TIME = "expense.list.request" +
-            ".start.time";
+        ".start.time";
 
     // Bundle key for string/restoring metrics timing.
     private static final String METRICS_TIMING_KEY = "METRICS_TIMING_KEY";
@@ -304,7 +308,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         if (savedInstanceState != null) {
             upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             expenseListRequestStartTime = savedInstanceState.getLong
-                    (BUNDLE_EXPENSE_LIST_REQUEST_START_TIME, 0L);
+                (BUNDLE_EXPENSE_LIST_REQUEST_START_TIME, 0L);
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -400,6 +404,64 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }
         }
         return false;
+    }
+
+    @Override
+    public void onCameraSuccess(String filePath) {
+        uploadReceiptToExpenseIt(filePath);
+    }
+
+    @Override
+    public void onCameraFailure(String filePath) {
+        com.concur.mobile.core.dialog.DialogFragmentFactory.getAlertOkayInstance(
+            this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
+            R.string.dlg_expense_camera_image_import_failed_message).show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onGallerySuccess(String filePath) {
+        uploadReceiptToExpenseIt(filePath);
+    }
+
+    @Override
+    public void onGalleryFailure(String filePath) {
+        com.concur.mobile.core.dialog.DialogFragmentFactory.getAlertOkayInstance(
+            this.getText(R.string.dlg_expense_camera_image_import_failed_title).toString(),
+            R.string.dlg_expense_camera_image_import_failed_message).show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onStorageMountFailure(String filePath) {
+        com.concur.mobile.core.dialog.DialogFragmentFactory.getAlertOkayInstance(
+            this.getText(R.string.dlg_expense_no_external_storage_available_title).toString(),
+            R.string.dlg_expense_no_external_storage_available_message).show(getSupportFragmentManager(), null);
+    }
+
+    @Override
+    public void onManualSmartExpenseSelected() {
+        onAddQuickExpense();
+    }
+
+    /**
+     * Will add a new quick expense.
+     */
+    @Override
+    public void onAddQuickExpense() {
+        // Verify that we have expense types
+        ConcurCore concurCore = getConcurCore();
+        IExpenseEntryCache expEntCache = concurCore.getExpenseEntryCache();
+        ArrayList<ExpenseType> expenseTypes = expEntCache.getExpenseTypes();
+        if (expenseTypes != null) {
+            Intent intent = new Intent(this, QuickExpense.class);
+            intent.putExtra(Const.EXTRA_EXPENSE_ENTRY_TYPE_KEY, Expense.ExpenseEntryType.CASH.name());
+            intent.putExtra(Flurry.PARAM_NAME_CAME_FROM, Flurry.PARAM_VALUE_EXPENSE_LIST);
+            intent.putExtra(Const.EXTRA_EXPENSE_MOBILE_ENTRY_ACTION, Const.CREATE_MOBILE_ENTRY);
+            startActivityForResult(intent, Const.CREATE_MOBILE_ENTRY);
+        } else {
+            // Can't go there
+            com.concur.mobile.core.dialog.DialogFragmentFactory.getAlertOkayInstance(R.string.dlg_expense_no_expense_types_title,
+                R.string.dlg_expense_no_expense_types_message).show(getSupportFragmentManager(), null);
+        }
     }
 
     @Override
@@ -510,14 +572,14 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         }
 
         // Upload ExpenseIt Receipt.
-        if(uploadExpenseItReceiptReceiver != null) {
+        if (uploadExpenseItReceiptReceiver != null) {
 
             uploadExpenseItReceiptReceiver.setListener(null);
             if (retainer != null) {
                 retainer.put(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER, uploadExpenseItReceiptReceiver);
             }
 
-            if(uploadExpenseItReceiptProgress != null) {
+            if (uploadExpenseItReceiptProgress != null) {
                 uploadExpenseItReceiptProgress.dismiss();
                 uploadExpenseItReceiptProgress = null;
             }
@@ -531,7 +593,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }
         }
 
-        if(currentExpenseItResponse != null && retainer != null) {
+        if (currentExpenseItResponse != null && retainer != null) {
             retainer.put(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST, currentExpenseItResponse);
         }
 
@@ -581,7 +643,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             }
 
             // Restore ExpenseIt Receipt receiver.
-            if(retainer.contains(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER)) {
+            if (retainer.contains(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER)) {
                 uploadExpenseItReceiptReceiver = (BaseAsyncResultReceiver) retainer.get(UPLOAD_EXPENSE_IT_RECEIPT_RECEIVER);
                 if (uploadExpenseItReceiptReceiver != null) {
 
@@ -597,9 +659,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 expenseListRequestStartTime = (long) retainer.get(REQUEST_START_TIME);
             }
 
-            if(retainer.contains(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST)) {
+            if (retainer.contains(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST)) {
                 currentExpenseItResponse = (ExpenseItPostReceiptResponse)
-                        retainer.get(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
+                    retainer.get(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
             }
 
             // Recover the last stop/replace metrics timing.
@@ -759,7 +821,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         } else {
 
             GetExpenseItExpenseListAsyncTask expenseItListReqTask = new GetExpenseItExpenseListAsyncTask(
-                    getApplicationContext(), 22, getUserId(), expenseItListReceiver);
+                getApplicationContext(), 22, getUserId(), expenseItListReceiver);
             expenseItListAsyncTask = expenseItListReqTask.execute();
 
             setIsRequestInProgress(true);
@@ -923,7 +985,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                         } else {
                             Log.e(Const.LOG_TAG, CLS_TAG + ".uploadReceiptToExpenseIt: receipt image file '" + filePath
-                                    + "' does not exist!");
+                                + "' does not exist!");
                             throw new IllegalArgumentException("Receipt image file '" + filePath + "' does not exist!");
                         }
                     } catch (SecurityException secExc) {
@@ -943,7 +1005,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                     // TODO: EXPIT - throw up error dialog?
                     Toast.makeText(getBaseContext(),
-                            "Failed to upload ExpenseIt Receipt image.", Toast.LENGTH_LONG).show();
+                        "Failed to upload ExpenseIt Receipt image.", Toast.LENGTH_LONG).show();
 
                     return;
                 }
@@ -953,7 +1015,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                 //Make the call
                 PostExpenseItReceiptAsyncTask postExpenseItReceiptAsyncTask = new PostExpenseItReceiptAsyncTask(ConcurCore.getContext(),
-                        0, uploadExpenseItReceiptReceiver, image);
+                    0, uploadExpenseItReceiptReceiver, image);
 
                 postExpenseItReceiptAsyncTask.execute();
 
@@ -1159,7 +1221,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
         private final boolean forceRefresh;
 
         public GetExpenseItListAsyncReplyListener(boolean forceRefresh) {
-            this.forceRefresh =  forceRefresh;
+            this.forceRefresh = forceRefresh;
         }
 
         @Override
@@ -1171,24 +1233,24 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
             //Record the time taken to retrieve ExpenseItListRequest
             expenseItListRequestElapsedTime = Calendar.getInstance().getTimeInMillis() -
-                    expenseListRequestStartTime;
+                expenseListRequestStartTime;
             EventTracker.INSTANCE.trackTimings(Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, expenseItListRequestElapsedTime,
-                    Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST);
+                Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST, Flurry.EVENT_RETRIEVE_EXPENSEIT_LIST);
 
 
             // Check whether or not we should refresh the GSEL if there are changes to the ExpenseIt list.
             boolean getGSEL = true;
-            if(resultData != null) {
+            if (resultData != null) {
                 ExpenseItPostReceiptResponse response = (ExpenseItPostReceiptResponse)
-                        resultData.getSerializable(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
-                if(currentExpenseItResponse != null && response != null) {
+                    resultData.getSerializable(GetExpenseItExpenseListAsyncTask.GET_EXPENSEIT_EXPENSES_LIST);
+                if (currentExpenseItResponse != null && response != null) {
                     getGSEL = !currentExpenseItResponse.equals(response);
                 }
                 currentExpenseItResponse = response;
 
             }
 
-            if(getGSEL || forceRefresh) {
+            if (getGSEL || forceRefresh) {
                 // Need to update the GSEL.
                 doGetSmartExpenseList();
             }
@@ -1240,8 +1302,8 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                     ErrorResponse error = receiptResponse.getExpenses()[0].getExpenseError();
                     if (error != null && error.isError()) {
                         Toast.makeText(getBaseContext(), String.format(
-                                "Failed processing image with the following error %s (%s)",
-                                error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
+                            "Failed processing image with the following error %s (%s)",
+                            error.getErrorMessage(), error.getErrorCode()), Toast.LENGTH_LONG).show();
                         // TODO: ANALYTICS - Track ExpenseIt image upload failure.
                         return;
                     } else {
@@ -1256,24 +1318,24 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
 
                         // Log the event.
                         EventTracker.INSTANCE.trackTimings("Expense-ExpenseIt",
-                                System.currentTimeMillis() - metricsTiming, "Upload Receipt", "");
+                            System.currentTimeMillis() - metricsTiming, "Upload Receipt", "");
 
                         return;
                     }
                 }
             }
-            Toast.makeText(getBaseContext(),"An error occurred while uploading Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "An error occurred while uploading Image", Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onRequestFail(Bundle resultData) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".OnRequestFail is called");
 
-            if(progressDialog != null) {
+            if (progressDialog != null) {
                 progressDialog.dismiss();
             }
 
-            Toast.makeText(getBaseContext(),"An error occurred uploading Image", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "An error occurred uploading Image", Toast.LENGTH_LONG).show();
             // TODO: ANALYTICS - Track ExpenseIt image upload failure.
         }
 
@@ -1282,7 +1344,7 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
             Log.d(Const.LOG_TAG, CLS_TAG + ".OnRequestCancel is called");
             // TODO: ANALYTICS - Track ExpenseIt image upload cancel.
 
-            if(progressDialog != null) {
+            if (progressDialog != null) {
                 progressDialog.dismiss();
             }
         }

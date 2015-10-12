@@ -1,19 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:clickable="false"
     android:focusable="false"
     android:orientation="vertical"
-    android:padding="5dp" >
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:clickable="false"
-        android:focusable="false" >
+        android:focusable="false"
+        android:layout_gravity="center_horizontal">
     </ImageView>
 
     <TextView
@@ -23,6 +23,8 @@
         android:layout_marginTop="10dp"
         android:clickable="false"
         android:focusable="false"
+        android:textColor="@color/universal_tour_ab_menu_v1"
+        android:text="Test Camera"
         android:gravity="center"
         android:textSize="14sp" >
     </TextView>

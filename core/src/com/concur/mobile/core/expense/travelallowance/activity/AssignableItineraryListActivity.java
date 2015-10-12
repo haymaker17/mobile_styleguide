@@ -59,6 +59,15 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
 
     private AssignableItineraryListAdapter adapter;
 
+    /**
+     * This needed in order to distinguish whether this activity was launched from
+     * the TAFacade as the first activity or not. In case this is the first activity
+     * the TravelAllowanceActivity has to be launched after an itinerary was assigned
+     * or created. In other case this Activity was launched by the TravelAllowanceActivity
+     * so only finish this activity to go back.
+     */
+    private boolean isFirstTaActivity = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,7 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
         setContentView(R.layout.ta_assignable_itin_list_activity);
 
         expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
+        isFirstTaActivity = getIntent().getBooleanExtra(BundleId.IS_FIRST_TA_ACTIVITY, false);
 
         initializeToolbar(R.string.ta_travel_allowances);
 
@@ -135,10 +145,19 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_CREATE_ITINERARY && resultCode == RESULT_OK) {
-            Intent intent = new Intent(this, TravelAllowanceActivity.class);
+            Intent intent = null;
+            if (isFirstTaActivity) {
+                intent = new Intent(this, TravelAllowanceActivity.class);
+            } else {
+                intent = new Intent();
+            }
             intent.putExtras(getIntent());
             intent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
-            this.startActivity(intent);
+            if (isFirstTaActivity) {
+                startActivity(intent);
+            } else {
+                this.setResult(RESULT_OK, intent);
+            }
             this.finish();
         }
     }
@@ -193,7 +212,7 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
         if (MSG_ASSIGN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
             if (!isSuccess ||  MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
                 dismissProgressDialog();
-                Toast.makeText(this, R.string.failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.adding_not_possible, Toast.LENGTH_SHORT).show();
                 return;
             }
             refreshAssignableItineraries(false);
@@ -220,10 +239,19 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
             dismissProgressDialog();
             taRefreshDone = false;
             itinRefreshDone = false;
-            Intent intent = new Intent(this, TravelAllowanceActivity.class);
+            Intent intent = null;
+            if (isFirstTaActivity) {
+                intent = new Intent(this, TravelAllowanceActivity.class);
+            } else {
+                intent = new Intent();
+            }
             intent.putExtras(getIntent());
             intent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
-            this.startActivity(intent);
+            if (isFirstTaActivity) {
+                startActivity(intent);
+            } else {
+                this.setResult(RESULT_OK, intent);
+            }
             this.finish();
         }
     }

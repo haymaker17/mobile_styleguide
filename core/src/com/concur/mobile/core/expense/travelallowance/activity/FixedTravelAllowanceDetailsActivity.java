@@ -210,7 +210,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 
     private void showIsDirtyDialog() {
         Bundle bundle = new Bundle();
-        String msgText = getResources().getString(R.string.confirm_save_message);
+        String msgText = getResources().getString(R.string.confirm_save_report_message);
         bundle.putString(MessageDialogFragment.MESSAGE_TEXT, msgText);
         bundle.putString(MessageDialogFragment.POSITIVE_BUTTON, MSG_DIALOG_DIRTY_POSITIVE);
         bundle.putString(MessageDialogFragment.NEUTRAL_BUTTON, MSG_DIALOG_DIRTY_NEUTRAL);
@@ -720,7 +720,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
             Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "actionFinished",
                     "Update Action callback finished with isSuccess: " + isSuccess));
             if (isSuccess) {
-                Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, R.string.general_save_success, Toast.LENGTH_SHORT).show();
                 //allowanceController.refreshFixedTravelAllowances(expenseReportKey);
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);

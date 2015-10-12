@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/white_background"
+    android:orientation="vertical">
 
     <GridView
         android:id="@+id/grid"
@@ -15,7 +16,7 @@
         android:numColumns="auto_fit"
         android:padding="20dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" >
+        android:verticalSpacing="10dp">
     </GridView>
 
 </LinearLayout>

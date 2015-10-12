@@ -22,6 +22,8 @@ import java.util.List;
  */
 public class TravelAllowanceBaseActivity extends BaseActivity {
 
+    private static final String CLASS_TAG = TravelAllowanceBaseActivity.class.getSimpleName();
+
     /**
      * Request codes for start activity with result calls.
      */
@@ -99,11 +101,10 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
     }
 
     protected void showProgressDialog() {
-        ProgressDialogFragment progressDialig = (ProgressDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_PROGRESS_DIALOG);
-        if (progressDialig == null) {
-            progressDialig = new ProgressDialogFragment();
-        }
-        progressDialig.show(getSupportFragmentManager(), TAG_PROGRESS_DIALOG);
+        getSupportFragmentManager().executePendingTransactions();
+
+        ProgressDialogFragment progressDialog = new ProgressDialogFragment();
+        progressDialog.show(getSupportFragmentManager(), TAG_PROGRESS_DIALOG);
     }
 
     protected void dismissProgressDialog() {

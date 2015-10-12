@@ -132,18 +132,16 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
                     final int numColumns = 2;
                     //(int) Math
                     //      .floor(mGridView.getWidth() / (mImageThumbSize + mImageThumbSpacing));
-                    if (numColumns > 0) {
-                        final int columnWidth = (mGridView.getWidth() / numColumns) - mImageThumbSpacing;
-                        imgAdapter.setNumColumns(numColumns);
-                        imgAdapter.setItemHeight((int) (columnWidth * 0.6));
-                        if (BuildConfig.DEBUG) {
-                            Log.d(TAG, "onCreateView - numColumns set to " + numColumns);
-                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        } else {
-                            mGridView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                        }
+                    final int columnWidth = (mGridView.getWidth() / numColumns) - mImageThumbSpacing;
+                    imgAdapter.setNumColumns(numColumns);
+                    imgAdapter.setItemHeight((int) (columnWidth * 0.6));
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "onCreateView - numColumns set to " + numColumns);
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    } else {
+                        mGridView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
                 }
             }
@@ -251,7 +249,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
         @Override
         public int getViewTypeCount() {
             // Two types of views, the normal ImageView and the top row of empty views
-            return 2;
+            return 1;
         }
 
         @Override
@@ -264,59 +262,23 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
             return true;
         }
 
-        //        // create a new ImageView for each item referenced by the Adapter
-        //        public View getView(int position, View convertView, ViewGroup parent) {
-        //
-        //            View cell = convertView;
-        //            ViewHolder holder = null;
-        //
-        //            if (cell == null) {
-        //                LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-        //                cell = inflater.inflate(R.layout.image_view, parent, false);
-        //                holder = new ViewHolder();
-        //                holder.image = (ImageView) cell.findViewById(R.id.picture);
-        //                cell.setTag(holder);
-        //            } else {
-        //                holder = (ViewHolder) cell.getTag();
-        //            }
-        //            if (images != null && images.size() > 0) {
-        //                // Set the list item tag to the uri, this tag value is used in 'ListItemAdapter.refreshView'
-        //                // to refresh the appropriate view items once images have been loaded.
-        //                URI uri = URI.create(images.get(position).image);
-        //                // Attempt to load the image from the image cache, if not there, then the
-        //                // ImageCache will load it asynchronously and this view will be updated via
-        //                // the ImageCache broadcast receiver available in BaseActivity.
-        //                ImageCache imgCache = ImageCache.getInstance(mContext);
-        //                Bitmap bitmap = imgCache.getBitmap(uri, null);
-        //                if (bitmap != null) {
-        //                    holder.image.setScaleType(ImageView.ScaleType.FIT_XY);
-        //                    // holder.image.setBackgroundColor(getResources().getColor(R.color.white_background));
-        //                    holder.image.setImageBitmap(bitmap);
-        //                } else {
-        //                    holder.image.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        //                    holder.image.setBackgroundColor(getResources().getColor(R.color.grey_view_background));
-        //                    holder.image.setImageResource(R.drawable.hotel_results_default_image);
-        //                }
-        //
-        //            }
-        //            return cell;
-        //        }
 
         @Override
         public View getView(int position, View convertView, ViewGroup container) {
-            //BEGIN_INCLUDE(load_gridview_item)
-            // First check if this is the top row
-            //            if (position < mNumColumns) {
-            //                if (convertView == null) {
-            //                    convertView = new View(mContext);
-            //                }
-            //                // Set empty view with height of ActionBar
-            //                convertView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
-            //                return convertView;
-            //            }
+//            // First check if this is the top row
+//            if (position < mNumColumns) {
+//                if (convertView == null) {
+//                    convertView = new View(mContext);
+//                }
+//                // Set empty view with height of ActionBar
+//                convertView.setLayoutParams(new AbsListView.LayoutParams(
+//                        LinearLayout.LayoutParams.MATCH_PARENT, 0));
+//                return convertView;
+//            }
 
             // Now handle the main ImageView thumbnails
             ImageView imageView;
+
             if (convertView == null) { // if it's not recycled, instantiate and initialize
                 imageView = new RecyclingImageView(mContext);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -334,7 +296,7 @@ public class HotelImagesFragment extends PlatformFragmentV1 implements AdapterVi
             // Finally load the image asynchronously into the ImageView, this also takes care of
             // setting a placeholder image while the background thread runs
             URI uri = URI.create(images.get(position).image);
-            mImageFetcher.loadImage(uri, imageView);
+            mImageFetcher.loadImage(uri, imageView, ImageView.ScaleType.CENTER_CROP);
 
             return imageView;
             //END_INCLUDE(load_gridview_item)

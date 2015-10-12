@@ -1204,7 +1204,12 @@ public class QuickExpense extends BaseActivity {
             expTypeAdapter = new ExpenseTypeSpinnerAdapter(this, null);
             ConcurCore ConcurCore = (ConcurCore) getApplication();
             IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
-            ArrayList<ExpenseType> expenseTypes = (ArrayList<ExpenseType>) expEntCache.getExpenseTypes().clone();
+            ArrayList<ExpenseType> expenseTypes = new ArrayList<>();
+            if (expEntCache != null && expEntCache.getExpenseEntries() != null) {
+                for (ExpenseType expenseType : expEntCache.getExpenseTypes()) {
+                    expenseTypes.add(expenseType);
+                }
+            }
             expTypeAdapter.addQuickExpenses(expenseTypes);
             if (mobileEntry != null) {
                 // Check whether the mobileEntry has an expense type that is not
@@ -1914,9 +1919,12 @@ public class QuickExpense extends BaseActivity {
             expTypeAdapter = new ExpenseTypeSpinnerAdapter(this, null);
             ConcurCore ConcurCore = (ConcurCore) getApplication();
             IExpenseEntryCache expEntCache = ConcurCore.getExpenseEntryCache();
-
-            @SuppressWarnings("unchecked")
-            ArrayList<ExpenseType> expenseTypes = (ArrayList<ExpenseType>) expEntCache.getExpenseTypes().clone();
+            ArrayList<ExpenseType> expenseTypes = new ArrayList<>();
+            if (expEntCache != null && expEntCache.getExpenseEntries() != null) {
+                for (ExpenseType expenseType : expEntCache.getExpenseTypes()) {
+                    expenseTypes.add(expenseType);
+                }
+            }
             expTypeAdapter.addQuickExpenses(expenseTypes);
             LayoutInflater inflater = LayoutInflater.from(this);
             View customView = inflater.inflate(R.layout.expense_mru, null);

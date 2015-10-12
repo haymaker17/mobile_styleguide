@@ -315,6 +315,19 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
     private String customTravelText;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        EventTracker.INSTANCE.activityStart(this);
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventTracker.INSTANCE.activityStop(this);
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
@@ -404,11 +417,6 @@ public class HotelBookingActivity extends TravelBaseActivity implements SpinnerD
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
 
     @Override
     protected void onDestroy() {
