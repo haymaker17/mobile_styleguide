@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -416,6 +417,104 @@ public class TravelAllowanceItineraryController extends BaseController {
                 if (itinerary.getMessage() == null) {
                     msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES);
                     itinerary.setMessage(msg);
+                }
+                result = false;
+            }
+        }
+        return result;
+    }
+
+    public boolean areDatesOverlapping(Itinerary itinerary, boolean setErrors) {
+        if (itinerary == null || itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
+            return false;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "areDatesOverlapping",
+                itinerary.toString()));
+        ItinerarySegment segment = null;
+        ItinerarySegment successorSegment = null;
+        Comparator<Date> comparator = DateUtils.getDateComparator(false);
+        Message msg = null;
+        int pos = 0;
+        int result = 0;
+        Iterator<ItinerarySegment> itItin = itinerary.getSegmentList().iterator();
+
+        while (itItin.hasNext()) {
+            segment = itItin.next();
+            result = comparator.compare(segment.getStartDateUTC(), segment.getEndDateUTC());
+            if (result > -1) {//equal or greater
+                if (setErrors) {
+                    msg = new Message(Message.Severity.ERROR, Message.MSG_UI_START_BEFORE_END,
+                            context.getString(R.string.ta_msg_start_end),
+                            ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName(),
+                            ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+                    segment.setMessage(msg);
+                }
+                return true;
+            }
+            if (itItin.hasNext()) {
+                successorSegment =  itinerary.getSegmentList().get(pos + 1);
+                result = comparator.compare(segment.getEndDateUTC(), successorSegment.getStartDateUTC());
+                if (result > -1) {//equal or greater
+                    if (setErrors) {
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR,
+                                context.getString(R.string.ta_overlap_following),
+                                ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+                        segment.setMessage(msg);
+                        msg = new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR,
+                                context.getString(R.string.ta_overlap_preceding),
+                                ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
+                        successorSegment.setMessage(msg);
+                    }
+                    return true;
+                }
+            }
+            pos++;
+        }
+        return false;
+    }
+
+    /**
+     * Checks, whether all mandatory fields are filled and sets the error message object
+     * accordingly.
+     * @param itinerary the itinerary to be checked
+     * @param setErrors if true, the errors are added to the itinerary
+     * @return false, if not all mandatory fields are filled, otherwise true.
+     */
+    public boolean areAllMandatoryFieldsFilled(Itinerary itinerary, boolean setErrors) {
+        if (itinerary == null) {
+            return true;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "areAllMandatoryFieldsFilled",
+                itinerary.toString()));
+        boolean result = true;
+        if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
+            if (setErrors) {
+                Message msg = new Message(Message.Severity.ERROR,
+                        Message.MSG_UI_MISSING_DATES, context.getString(R.string.general_fill_required_fields),
+                        Itinerary.Field.NAME.getName());
+                itinerary.setMessage(msg);
+            }
+            result = false;
+        }
+        for (ItinerarySegment segment : itinerary.getSegmentList()) {
+            List<String> fields = new ArrayList<String>();
+            if (segment.getArrivalDateTime() == null) {
+                fields.add(ItinerarySegment.Field.ARRIVAL_DATE_TIME.getName());
+            }
+            if (segment.getDepartureDateTime() ==  null) {
+                fields.add(ItinerarySegment.Field.DEPARTURE_DATE_TIME.getName());
+            }
+            if (segment.getArrivalLocation() == null) {
+                fields.add(ItinerarySegment.Field.ARRIVAL_LOCATION.getName());
+            }
+            if (segment.getDepartureLocation() == null) {
+                fields.add(ItinerarySegment.Field.DEPARTURE_LOCATION.getName());
+            }
+            if (fields.size() > 0) {
+                if (setErrors) {
+                    Message msg = new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES,
+                            context.getString(R.string.general_fill_required_fields), fields);
+                    segment.setMessage(msg);
                 }
                 result = false;
             }
