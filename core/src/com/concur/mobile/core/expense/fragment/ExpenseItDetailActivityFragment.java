@@ -165,6 +165,12 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
             case ExpenseItPostReceipt.RUBICON_LONGER_THAN_EXPECTED:
                 resId = R.string.expenseit_expense_detail_delay;
                 break;
+            case ExpenseItPostReceipt.CONCUR_TIMEOUT:
+                resId = R.string.expenseit_expense_detail_delay;
+                break;
+            case ExpenseItPostReceipt.DEFAULT_ERROR_CODE:
+                resId = R.string.expenseit_expense_detail_delay;
+                break;
             case ExpenseItPostReceipt.RUBICON_ERROR:
                 resId = R.string.expenseit_expense_detail_not_analyzed;
                 break;

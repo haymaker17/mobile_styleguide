@@ -14,7 +14,7 @@ public class ExpenseItPostReceipt implements Serializable {
     private static final String CLS_TAG = ExpenseItPostReceipt.class.getSimpleName();
 
     public static final Integer ERROR_CODE_NO_ERROR = -1;
-    public static final Integer DEFAULT_ERROR_CODE = 99;
+    public static final int DEFAULT_ERROR_CODE = 99;
     public static final int CONCUR_INVALID_ACCESS = 990;                // user's concur OAuth token is invalid
     public static final int CONCUR_OAUTH_EXPIRED_OR_REVOKED = 991;      // user's concur OAuth token is revoked or expired
     public static final int RUBICON_ERROR = 999;                        // permanent failure or unknown error
