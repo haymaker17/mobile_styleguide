@@ -177,6 +177,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private static final String OPEN_SOURCE_LIBRARY_CLASS = "open_source_library_class";
 
+    private static final String LOCAL_IMAGE_KEY = "LOCAL_IMAGE_KEY";
+
     protected int inProgressRef = 0;
 
     private String receiptCameraImageDataLocalFilePath;
@@ -542,8 +544,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
             if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
                 receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
-                copyCapturedImage();
             }
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(LOCAL_IMAGE_KEY)) {
+                receiptImageDataLocalFilePath = savedInstanceState.getString(LOCAL_IMAGE_KEY);
+            }
+
+
             if (savedInstanceState != null) {
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
@@ -1345,6 +1352,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (receiptCameraImageDataLocalFilePath != null) {
             outState.putString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
+        }
+
+        if (receiptImageDataLocalFilePath != null) {
+            outState.putString(LOCAL_IMAGE_KEY, receiptImageDataLocalFilePath);
         }
 
         if (isTipsOverlayVisible) {
@@ -3848,16 +3859,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // refresh
         // the Receipts List UI.
 
-        receiptCameraImageDataLocalFilePath = filePath;
+        receiptImageDataLocalFilePath = filePath;
 
-        if (copyCapturedImage()) {
-            if (isBlurredExpenseItImage(filePath)) {
-                EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Gallery");
-                initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY);
-            } else {
-                initializeUploadFromGallery();
-            }
+
+        if (isBlurredExpenseItImage(filePath)) {
+            EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Gallery");
+            initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY);
+        } else {
+            initializeUploadFromGallery();
         }
+
     }
 
     /*
