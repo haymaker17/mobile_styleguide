@@ -492,16 +492,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             }
 
-            // If it's the first time running, and it's not a test drive user, show
+            // If it's the first time running, show
             // tour. Set not first time running either way.
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (Preferences.isFirstTimeRunning(prefs)) {
-                if (!RolesUtil.isTestDriveUser() && (RolesUtil.isExpenser(Home.this) || RolesUtil
-                        .isTraveler(Home.this))) {
-                    showTour();
-                } else {
                     Preferences.setNotFirstTimeRunning(prefs);
-                }
             }
 
             // If the user should see the minSdkUpgradeMessage, show it.
@@ -882,163 +877,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         bodyTextView.setAutoLinkMask(RESULT_OK);
         bodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
         bodyTextView.setGravity(Gravity.CENTER);
-
-    }
-
-    /**
-     * The first time a non Test Drive user logs in, they'll see a tour screen where they can fling to the next image. These
-     * images are selected dynamically depending on user type (Travel, Expense, Both, or Neither).
-     */
-    protected void showTour() {
-
-        /**
-         * A child of SimpleOnGestureListener that overrides fling to allow the user to flip through tour screens in the
-         * ViewFlipper and shows animation when they do so.
-         */
-        class HomeTourGestureDetector extends SimpleOnGestureListener {
-
-            private static final int SWIPE_MIN_DISTANCE = 120;
-            private static final int SWIPE_MAX_OFF_PATH = 250;
-            private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-            ViewFlipper flipper;
-            ArrayList<View> homeTourDotsList;
-            String[] homeTourTitleStrings;
-            String[] homeTourMessageStrings;
-            TextView homeTourTextTitle;
-            TextView homeTourTextMessage;
-
-            public HomeTourGestureDetector(ViewFlipper flipper, ArrayList<View> homeTourDotsList) {
-                this.flipper = flipper;
-                this.homeTourDotsList = homeTourDotsList;
-
-                Resources res = getResources();
-                homeTourTitleStrings = new String[]{res.getString(R.string.home_tour_expense1_title),
-                        res.getString(R.string.home_tour_expense2_title),
-                        res.getString(R.string.home_tour_travel1_title)};
-
-                homeTourMessageStrings = new String[]{res.getString(R.string.home_tour_expense1_message),
-                        res.getString(R.string.home_tour_expense2_message),
-                        res.getString(R.string.home_tour_travel1_message)};
-
-                homeTourTextTitle = (TextView) findViewById(R.id.home_tour_text_title);
-                homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
-            }
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                try {
-                    if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                        return false;
-                    // Swipe right to left (next)
-                    if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        flipper.setInAnimation(Home.this, R.anim.slide_in_right_fast);
-                        flipper.setOutAnimation(Home.this, R.anim.slide_out_left_fast);
-
-                        homeTourDotsList.get(flipper.getDisplayedChild())
-                                .setBackgroundResource(R.drawable.home_tour_white_dot);
-
-                        flipper.showNext();
-
-                        int currentViewIndex = flipper.getDisplayedChild();
-
-                        homeTourDotsList.get(currentViewIndex).setBackgroundResource(R.drawable.home_tour_blue_dot);
-                        homeTourTextTitle.setText(homeTourTitleStrings[currentViewIndex]);
-                        homeTourTextMessage.setText(homeTourMessageStrings[currentViewIndex]);
-
-                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                            && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        flipper.setInAnimation(Home.this, R.anim.slide_in_left_fast);
-                        flipper.setOutAnimation(Home.this, R.anim.slide_out_right_fast);
-
-                        homeTourDotsList.get(flipper.getDisplayedChild())
-                                .setBackgroundResource(R.drawable.home_tour_white_dot);
-
-                        flipper.showPrevious();
-
-                        int currentViewIndex = flipper.getDisplayedChild();
-
-                        homeTourDotsList.get(currentViewIndex).setBackgroundResource(R.drawable.home_tour_blue_dot);
-                        homeTourTextTitle.setText(homeTourTitleStrings[currentViewIndex]);
-                        homeTourTextMessage.setText(homeTourMessageStrings[currentViewIndex]);
-                    }
-                } catch (Exception e) {
-                    // no-op
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-        }
-
-        View.OnClickListener dismissListener = new OnClickListener() {
-
-            public void onClick(View v) {
-                Preferences.setNotFirstTimeRunning(PreferenceManager.getDefaultSharedPreferences(Home.this));
-            }
-        };
-
-        View homeTourView = UIUtils
-                .setupOverlay((ViewGroup) getWindow().getDecorView(), R.layout.home_tour, dismissListener,
-                        R.id.home_tour_icon_cancel, this, R.anim.fade_out, 500L);
-
-        ViewFlipper homeTourFlipper = (ViewFlipper) findViewById(R.id.home_tour_view_flipper);
-        View homeTourDots = homeTourView.findViewById(R.id.home_tour_dots);
-
-        // This is the bulk of the logic to determine what to show and how to
-        // show it based on user
-        if (RolesUtil.isExpenser(Home.this)) {
-            // If Expenser, we will have multiple tour images, so we need the
-            // dots list.
-            ArrayList<View> homeTourDotsList = new ArrayList<View>();
-            homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot1));
-            homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot2));
-
-            if (RolesUtil.isTraveler(Home.this)) {
-                // Is Travel and Expense
-                homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot3));
-
-            } else {
-                // Is Expense only
-
-                // If we're not not a traveler, remove traveler image and dot
-                // for it.
-                homeTourDots.findViewById(R.id.homeTourDot3).setVisibility(View.GONE);
-                homeTourFlipper.removeView(homeTourFlipper.findViewById(R.id.homeTourTravel1));
-
-            }
-
-            // Note: Only make this for expense users because Travel Only has
-            // only one view.
-            final GestureDetector gestureDetector = new GestureDetector(this,
-                    new HomeTourGestureDetector(homeTourFlipper, homeTourDotsList));
-
-            homeTourFlipper.setOnTouchListener(new View.OnTouchListener() {
-
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            });
-        } else {
-            // Is travel only
-            // Since travel only has one screen, remove all the dots.
-            homeTourDots.setVisibility(View.GONE);
-
-            // Set text to travel text
-            Resources res = getResources();
-            TextView homeTourTextTitle = (TextView) findViewById(R.id.home_tour_text_title);
-            homeTourTextTitle.setText(res.getString(R.string.home_tour_travel1_title));
-            TextView homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
-            homeTourTextMessage.setText(res.getString(R.string.home_tour_travel1_message));
-
-            // Remove all except for the travel tour image
-            homeTourFlipper.removeView(findViewById(R.id.homeTourExpense1));
-            homeTourFlipper.removeView(findViewById(R.id.homeTourExpense2));
-
-        }
 
     }
 
