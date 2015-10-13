@@ -25,9 +25,16 @@ public class ExpenseItReceiptPreviewFragment extends Fragment {
 
     public static final String EXPENSEIT_PREVIEW_RETAKE_RESULT_KEY =  "EXPENSEIT_PREVIEW_RETAKE_RESULT";
 
+    public static final String EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY = "EXPENSEIT_PREVIEW_IMAGE_SOURCE";
+
+    public static final String EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY = "EXPENSEIT_PREVIEW_SOURCE_GALLERY";
+
+    public static final String EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY = "EXPENSEIT_PREVIEW_SOURCE_CAMERA";
+
     public static final int USE_IMAGE_REQUEST_CODE = 626;
 
     private View fragmentView;
+    private String imageSource;
     private Button retakeButton;
     private Button useButton;
     private ProgressBar receiptImageProgressBar;
@@ -41,9 +48,10 @@ public class ExpenseItReceiptPreviewFragment extends Fragment {
         void onReceiptPreviewResult(boolean retake);
     }
 
-    public static final ExpenseItReceiptPreviewFragment newInstance(String fileName) {
+    public static final ExpenseItReceiptPreviewFragment newInstance(String fileName, String imageSource) {
         ExpenseItReceiptPreviewFragment dialog = new ExpenseItReceiptPreviewFragment();
         Bundle args = new Bundle();
+        args.putString(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY, imageSource);
         args.putString(ExpenseItReceiptPreviewFragment.EXPENSEIT_IMAGE_FILE_PATH_KEY, fileName);
         dialog.setArguments(args);
 
@@ -96,13 +104,27 @@ public class ExpenseItReceiptPreviewFragment extends Fragment {
     }
 
     private void initializeActionButtons() {
-        retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
-        retakeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mExpenseItPreviewCallbacks.onReceiptPreviewResult(true);
+        if (getArguments().containsKey(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY)) {
+            imageSource = getArguments().getString(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY);
+            if (imageSource != null && imageSource.equals(EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY)) {
+                retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
+                retakeButton.setText(R.string.cancel_button);
+                retakeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().finish();
+                    }
+                });
+            } else {
+                retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
+                retakeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mExpenseItPreviewCallbacks.onReceiptPreviewResult(true);
+                    }
+                });
             }
-        });
+        }
 
         useButton = (Button) fragmentView.findViewById(R.id.accept_btn);
         useButton.setOnClickListener(new View.OnClickListener() {
