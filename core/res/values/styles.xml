@@ -961,6 +961,7 @@
 
     <style name="TATitle.Big">
         <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TATitle.Big.White">
@@ -1032,6 +1033,29 @@
     <style name="TASummaryValue.White">
         <item name="android:textColor">#ffffff</item>
     </style>
+
+    <style name="TAValueDescription">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#7f8f97</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TAValueDescription.White">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TASubHeaderSubtitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#7f8f97</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TASubHeaderSubtitle.White">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
 
     <style name="TAValue.Small">
         <item name="android:textSize">16sp</item>

@@ -444,26 +444,35 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
         TextView tvTitle = (TextView) findViewById(R.id.tv_title);
         TextView tvValue = (TextView) findViewById(R.id.tv_value);
+        TextView tvValueDesc = (TextView)findViewById(R.id.tv_value_desc);
         TextView tvSubtitle1 = (TextView) findViewById(R.id.tv_subtitle_1);
-        TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
-
-        if (tvTitle != null) {
-            tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText(R.string.ta_total_allowance);
-        }
+//        TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
 
         Double sum = fixedTaController.getSum();
         boolean multiLocations = fixedTaController.hasMultipleGroups();
         renderAmount(tvValue, sum, allowances.get(0).getCurrencyCode());
 
-        if (tvSubtitle2 != null) {
+        if (tvTitle != null) {
+            tvTitle.setVisibility(View.VISIBLE);
             if (multiLocations) {
-                tvSubtitle2.setVisibility(View.GONE);
-            } else {
-                tvSubtitle2.setVisibility(View.VISIBLE);
-                tvSubtitle2.setText(allowances.get(0).getLocationName());
+                tvTitle.setText(R.string.itin_multiple_destinations);
+            }else{
+                tvTitle.setText(allowances.get(0).getLocationName());
             }
         }
+
+        if (tvValueDesc !=null){
+            tvValueDesc.setVisibility(View.VISIBLE);
+        }
+
+//        if (tvSubtitle2 != null) {
+//            if (multiLocations) {
+//                tvSubtitle2.setVisibility(View.GONE);
+//            } else {
+//                tvSubtitle2.setVisibility(View.VISIBLE);
+//                tvSubtitle2.setText(allowances.get(0).getLocationName());
+//            }
+//        }
 
         if (tvSubtitle1 != null) {
             tvSubtitle1.setVisibility(View.VISIBLE);
