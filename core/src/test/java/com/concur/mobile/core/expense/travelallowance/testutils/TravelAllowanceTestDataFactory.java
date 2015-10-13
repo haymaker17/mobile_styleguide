@@ -1,4 +1,4 @@
-package com.concur.mobile.core.expense.travelallowance.testdata;
+package com.concur.mobile.core.expense.travelallowance.testutils;
 
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
