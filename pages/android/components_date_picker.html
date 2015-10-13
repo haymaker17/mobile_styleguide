@@ -1,0 +1,149 @@
+<div class="container components">
+
+<section>
+<h1>Date Picker</h1>
+	<div class="flexContainer half">
+		<div>
+			<p>The date picker uses the familiar calendar pattern. If a single date is required, a user may tap on the date to fill in the date form. If a date range is required, a user may tap on the start date and then the end date, or tap the start date and drag to the end date.</p>
+		</div>
+
+		<div>
+			<figure>
+				<img src="img/android/components/date_picker/date_picker_01.png" alt="Date Picker" width="338" height="599"/>
+				<div class="figure_text">'Single' Date Picker</div>
+			</figure>
+			<figure>
+				<img src="img/android/components/date_picker/date_picker_02.png" alt="Date Picker" width="338" height="599"/>
+				<div class="figure_text">'Multi' Date Picker</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>'Single' Date Picker</h2>	
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Default background fill: Concur Blue #0078C8</li>
+					<li>Default background: 208 tall, 270 wide</li>
+					<li>'Saturday' background fill: Navy Blue #0066AA</li>
+					<li>'Saturday' background: 30 tall, 270 wide</li>
+					<li>Above 'Saturday' padding: 6 tall</li>
+					<li>'Saturday' Text: Roboto, 14 points, White #FFFFFF</li>
+					<li>'Current Date' background fill: Navy Blue #0066AA</li>
+					<li>'Current Date' background: 178 tall, 270 wide</li>
+					<li>Above 'February' padding: 16 tall</li>					
+					<li>'February' Text: Roboto, 24 points, White #FFFFFF</li>
+					<li>Above '10' padding: 26 tall</li>					
+					<li>'10' Text: Roboto, 88 points, White #FFFFFF</li>
+					<li>Above '2015' padding: 22 tall</li>					
+					<li>'2015' Text: Roboto, 24 points, White #FFFFFF</li>
+					<li>Alignment: centerX</li>	
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/android/components/date_picker/redlines_date_picker_01_on.png" alt="'Single' Date Picker" width="338" height="599"/>
+				<img class="redlines_off" src="img/android/components/date_picker/redlines_date_picker_01_off.png" alt="'Single' Date Picker" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Single' Date Picker</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>'Multi' Date Picker</h2>	
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Default background fill: Concur Blue #0078C8</li>
+					<li>Default background: 68 tall, 270 wide - 100% dynamic wide </li>
+					<li>'Check-in' Text padding: 18 above, 28 right,</li>
+					<li>'Check-in' Text: Roboto, 12 pt, White #FFFFFF; 60% Opacity</li>			
+					<li>Padding above '09/08/2014' Date : 38</li>
+					<li>'Check-in' Date: Roboto, 16 points, White #FFFFFF</li>			
+					<li>Divider Alignment: centerX, centerY</li>					
+					<li>Divider: 1px, White #FFFFFF; 20% Opacity</li>					
+					<li>'Check-out' Text: 160 right, 18 down</li>
+					<li>'Check-out' Text: Roboto, 12 points, White #FFFFFF; 60% Opacity</li>								
+					<li>'Check-out' Date: 38 down</li>
+					<li>'Check-out' Date: Roboto, 16 points, White #FFFFFF</li>	
+					<li>Arrow Pointer: centerX of the current selection</li>						
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/android/components/date_picker/redlines_date_picker_02_on.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<img class="redlines_off" src="img/android/components/date_picker/redlines_date_picker_02_off.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Multi' Date Picker</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<section>
+<h2>Calendar Picker</h2>	
+<h3>Specs</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+				Font, color, and Usage:
+				<ul>
+					<li>Modal Background fill: Black #000000, 60% Opacity</li>
+					<li>Modal background: 100% Dynamic tall, 100% Dynamic Wide</li>
+					<li>Default background fill: White #FFFFFF</li>
+					<li>Default background: 516 tall, 270 wide</li>
+					<li>Default background Alignment: centerX, centerY</li>					
+					<li>Calender background: 308 tall, 270 wide</li>
+					<li>Selector alignment: centerX, centerY</li>
+					<li>Selector background fill: Concur Blue #0078C8</li>
+					<li>Selector background: 32 tall, 32 Wide</li>
+					<li>Selector text: Roboto, 12pt, White #FFFFFF</li>
+<!--
+					<li>Selector Highlight background fill: Concur Blue #0078C8; 10% Opacity</li>
+					<li>Selector Highlight background fill: 100% Dynamic Wide</li>					
+					<li>Padding above Month: 24</li>				
+					<li>Month Text: SF UI Display, 17 points, Charcoal #383F46</li>	
+					<li>Padding above Days of the Week: 21</li>
+					<li>Days of the week Text: SF UI Display, 12 points, Dark Grey #7F8F97</li>
+					<li>Padding above Dates: 10</li>
+					<li>Date background fill: Light Grey #DBE1E6</li>
+					<li>Date background: 53 tall, 53 wide</li>
+					<li>Date Dividers: 1px, Medium Grey #A7B6BF; 70% Opacity</li>					
+					<li>Date Text Alignment: centerX, centerY</li>
+					<li>Date (Past) Text: SF UI Display, 16 points, Medium Grey #A7B6BF</li>
+					<li>Date (Current) background fill: Light Grey #DBE1E6</li>
+					<li>Date (Current) Text: SF UI Display, 16 points, Charcoal #383F46</li>
+					<li>Date (Future) Text: SF UI Display, 16 points, Charcoal #383F46</li>
+					<li>Selector Alignment: centerX, centerY</li>
+					<li>Selector background fill: Concur Blue #0078C8</li>
+					<li>Selector background: 30 tall, 30 Wide</li>
+					<li>Selector Highlight background fill: Concur Blue #0078C8; 10% Opacity</li>
+					<li>Selector Highlight background fill: 100% Dynamic Wide</li>					
+					<li>'Check-in' Text: SF UI Display, 16 points, White #FFFFFF</li>			
+					<li>'Check-out' Text: SF UI Display, 16 points, White #FFFFFF</li>										
+					<li>Padding below Month: 19</li>
+-->
+				</ul>
+			</p>
+		</div>
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/android/components/date_picker/redlines_date_picker_03_on.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<img class="redlines_off" src="img/android/components/date_picker/redlines_date_picker_03_off.png" alt="'Check-in, Check-out' Date Picker" width="338" height="599"/>
+				<div class="figure_text">Redlines with Calendar Picker</div>
+			</figure>
+		</div>
+	</div>
+</section>
+
+</div>
