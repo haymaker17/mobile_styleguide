@@ -477,6 +477,7 @@
     <string name="get_help">Get Help</string>
 
     <string name="general_failed_save">"Operation failed, please try again!"</string>
+    <string name="general_failed_uploadImage">"Unable to upload image at this time, please try again later."</string>
 
     <!-- Travel related - show but booking not allowed -->
     <string name="general_booking_not_allowed_title">Reservation Not Allowed</string>
