@@ -266,9 +266,9 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
             return;
         }
 
-        if (holder.vListFieldContainer != null) {
-            holder.vListFieldContainer.setBackgroundResource(R.drawable.ta_list_selector);
-        }
+//        if (holder.vListFieldContainer != null) {
+//            holder.vListFieldContainer.setBackgroundResource(R.drawable.ta_list_selector);
+//        }
 
         if (holder.vDividerTop != null) {
             if (withTopDivider) {

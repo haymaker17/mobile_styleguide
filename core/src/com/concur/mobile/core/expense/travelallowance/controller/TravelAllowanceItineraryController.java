@@ -385,6 +385,10 @@ public class TravelAllowanceItineraryController extends BaseController {
             return true;
         }
         boolean result = true;
+        if (itinerary.getMessage() != null && itinerary.getMessage().getSeverity() == Message.Severity.ERROR
+                && Message.MSG_UI_MISSING_DATES.equals(itinerary.getMessage().getCode())) {
+            itinerary.setMessage(null);
+        }
         if (StringUtilities.isNullOrEmpty(itinerary.getName())) {
             Message msg = new Message(Message.Severity.ERROR,
                     Message.MSG_UI_MISSING_DATES, null, Itinerary.Field.NAME.getName());
