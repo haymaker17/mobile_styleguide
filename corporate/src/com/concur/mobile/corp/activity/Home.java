@@ -106,7 +106,6 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;
@@ -127,13 +126,16 @@ import com.concur.mobile.core.util.ConcurException;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.Notifications;
 import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.ExpenseItProperties;
@@ -495,6 +497,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 } else {
                     Preferences.setNotFirstTimeRunning(prefs);
                 }
+            } else {
+                // Login is completed, make sure Nifty push service is started
+                if (Preferences.allowNotifications()) {
+                    Notifications notifications = new Notifications(ConcurCore.getContext());
+                    notifications.initAWSPushService();
+                }
             }
 
             // If the user should see the minSdkUpgradeMessage, show it.
@@ -598,6 +606,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (!Preferences.isExpenseItUser()) {
                     showQuickExpenseFooterButton();
                     showReceiptFooterButton();
+                    hideExpenseItFooterButton();
                 } else {
                     /* MOB-24972 - Disable to show QE at bottom of screen again.
                     hideQuickExpenseFooterButton();
@@ -1120,22 +1129,33 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     needService = true;
                 }
             } else {
-                // Restore any receivers.
-                restoreReceivers();
+                boolean isSessionExpired = SessionManager.isSessionExpire(concurMobile);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+                if (isSessionExpired && !autoLogin ){
+                    cancelAllDataRequests();
+                    clearSessionData();
+                    showExpiredDialog();
+                    return;
+                }else{
+                    // Restore any receivers.
+                    restoreReceivers();
 
-                // Re-register the data receiver, if need be.
-                if (!dataReceiverRegistered) {
-                    registerReceiver(dataReceiver, dataReceiverFilter);
-                    dataReceiverRegistered = true;
+                    // Re-register the data receiver, if need be.
+                    if (!dataReceiverRegistered) {
+                        registerReceiver(dataReceiver, dataReceiverFilter);
+                        dataReceiverRegistered = true;
+                    }
+
+                    // Go get the data
+                    if (isServiceAvailable()) {
+                        updateDataBasedOnServiceAvail();
+                    } else {
+                        needService = true;
+                    }
+                    updateOfflineQueueBar();
                 }
 
-                // Go get the data
-                if (isServiceAvailable()) {
-                    updateDataBasedOnServiceAvail();
-                } else {
-                    needService = true;
-                }
-                updateOfflineQueueBar();
 
             }
 
@@ -1450,6 +1470,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private void logout() {
 
         if (ConcurMobile.isConnected()) {
+            // Deregister from push notifications if they are enabled and there is a network connection
+            if (Preferences.allowNotifications()) {
+                Notifications notifications = new Notifications(ConcurCore.getContext());
+                notifications.stopAWSPushService();
+            }
 
             // When logging out, we clear the Session Id, but if we're updating
             // home (IE clearing offline data, refreshing, etc.)

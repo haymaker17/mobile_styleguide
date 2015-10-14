@@ -49,7 +49,7 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
 
     // -------------------------------------------------
 
-    protected static final boolean LOG_TRAFFIC = false;
+    protected static boolean LOG_TRAFFIC = false;
 
     protected static final String HEADER_USER_AGENT = "User-Agent";
     protected static final String HEADER_CONTENT_TYPE = "Content-Type";
@@ -390,7 +390,25 @@ public abstract class BaseAsyncRequestTask extends AsyncTask<Void, Void, Integer
 
                                 if (res == RESULT_OK) {
                                     // Let the derived request do the work
-                                    res = parseStream(connection, in);
+                                    try {
+                                        res = parseStream(connection, in);
+                                    } catch (Exception ex) {
+
+                                        // MOB-25709 - Fixed JsonSyntaxException when InputStream isn't parsed correctly.
+                                        Log.e(Const.LOG_TAG, getClass().getSimpleName()
+                                                + " // Error parsing input stream. // " + getURL(), ex);
+
+                                        if(ex.getClass().getName().equals("com.google.gson.JsonSyntaxException")) {
+
+                                            boolean temp = LOG_TRAFFIC;
+                                            LOG_TRAFFIC = true;
+                                            logResponse(in);
+                                            LOG_TRAFFIC = temp;
+
+                                        }
+
+                                        res = RESULT_ERROR;
+                                    }
                                 }
                             } else {
                                 res = RESULT_ERROR;

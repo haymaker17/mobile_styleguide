@@ -1083,6 +1083,70 @@ public abstract class ConcurCore extends MultiDexApplication {
     }
 
     /**
+     * <p>
+     * Returns the api key for Nifty push notification service
+     * </p>
+     *
+     * @return Returns the api key for Nifty push notification service or empty string if nothing is found
+     */
+    public static String getNiftyApiKey() {
+        return getValueFromClientData(LoginResult.TAG_NIFTY_API_KEY);
+    }
+
+    /**
+     * <p>
+     * Returns the application Id for Nifty push notification service
+     * </p>
+     *
+     * @return Returns the application Id for Nifty push notification service or empty string if nothing is found
+     */
+    public static String getNiftyAppId() {
+        return getValueFromClientData(LoginResult.TAG_NIFTY_APP_ID);
+    }
+
+    /**
+     * <p>
+     * Returns the server address for Nifty push notification service
+     * </p>
+     *
+     * @return Returns the server address for Nifty push notification service or empty string if nothing is found
+     */
+    public static String getNiftyServer() {
+        return getValueFromClientData(LoginResult.TAG_NIFTY_SERVER);
+    }
+
+    /**
+     * <p>
+     * Returns a string from ClientData with key <code>valueTag</code>
+     * </p>
+     *
+     * @param valueTag - Key for the value to be retrieved from client data
+     *
+     * <p>
+     * Note that if the end-user has not yet logged in, then the value of <code>{appId}</code> may be blank/empty.
+     * </p>
+     *
+     * @return Returns a string from ClientData with key <code>valueTag</code> or an empty string if nothing is found
+     */
+    public static String getValueFromClientData(String valueTag) {
+        String toGet = "";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(appContext);
+        String userId = prefs.getString(Const.PREF_USER_ID, toGet);
+
+        // If the userId exists, we have logged in and can get the value
+        if (!userId.isEmpty()) {
+            ClientData clientData = new ClientData(appContext);
+            clientData.userId = userId;
+            clientData.key = valueTag;
+            if (clientData.load()) {
+                toGet = clientData.text;
+            }
+        }
+
+        return toGet;
+    }
+
+    /**
      * Initializes the EventTracker for Flurry & Google Analytics.
      */
     protected void initEventTracker() {
