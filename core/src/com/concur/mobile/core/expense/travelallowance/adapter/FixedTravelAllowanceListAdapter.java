@@ -1,12 +1,14 @@
 package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -19,18 +21,21 @@ import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.FormatUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by D049515 on 15.06.2015.
  */
-public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
+public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTravelAllowanceListAdapter.ViewHolder> {
 
     /**
      * Holds all UI controls needed for rendering
      */
-    private final class ViewHolder {
-        private View vListFieldContainer;
+    public final class ViewHolder extends RecyclerView.ViewHolder {
+        private View view;
+//        private View vListFieldContainer;
         private View vDividerTop;
         private TextView tvTitle;
         private TextView tvValue;
@@ -40,6 +45,43 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         private ViewGroup vgSubtitleEllipsized;
         private TextView tvSubtitleEllipsized;
         private TextView tvSubtitleMore;
+        private CheckBox checkBox;
+
+
+        public ViewHolder(View view, final OnClickListener listener) {
+            super(view);
+            this.view = view;
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onClick(v, getAdapterPosition());
+                    }
+                }
+            });
+//            vListFieldContainer = view.findViewById(R.id.list_field_container);
+            vDividerTop = view.findViewById(R.id.v_divider_top);
+            vDividerBottom = view.findViewById(R.id.v_divider_bottom);
+            tvTitle = (TextView) view.findViewById(R.id.tv_title);
+            tvValue = (TextView) view.findViewById(R.id.tv_value);
+            tvSubtitle1 = (TextView) view.findViewById(R.id.tv_subtitle_1);
+            tvSubtitle2 = (TextView) view.findViewById(R.id.tv_subtitle_2);
+            vgSubtitleEllipsized = (ViewGroup) view.findViewById(R.id.vg_subtitle_ellipsized);
+            tvSubtitleEllipsized = (TextView) view.findViewById(R.id.tv_subtitle_ellipsized);
+            tvSubtitleMore = (TextView) view.findViewById(R.id.tv_subtitle_more);
+            checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (listener != null) {
+                        listener.onClick(buttonView, getAdapterPosition());
+                    }
+                }
+            });
+        }
+
+
     }
 
     private FixedTravelAllowance currentAllowance;
@@ -48,7 +90,6 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
     private static final int LAYOUT_ID = R.layout.ta_generic_table_row_layout;
 
-    private Context context;
     private FixedTravelAllowanceController allowanceController;
     private IDateFormat dateFormatter;
 
@@ -58,20 +99,35 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
     public static final int HEADER_ROW = 0;
     public static final int ENTRY_ROW = 1;
 
+    private Context context;
+
+    private List<Object> items;
+
+    private OnClickListener listener;
+
+    private boolean inSelectionMode;
+
     /**
      * Creates an instance of this list adapter.
      *
      * @param context
      */
-    public FixedTravelAllowanceListAdapter(final Context context) {
-        super(context, LAYOUT_ID);
+    public FixedTravelAllowanceListAdapter(final Context context, OnClickListener listener, boolean inSelectionMode) {
         this.context = context;
+        this.inSelectionMode = inSelectionMode;
+        this.listener = listener;
 
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
 
         this.dateFormatter = new DefaultDateFormat(context);
-        addAll(allowanceController.getLocationsAndAllowances());
+
+        this.items = new ArrayList<Object>();
+        if (inSelectionMode) {
+            this.items.addAll(allowanceController.getFixedTravelAllowances());
+        } else {
+            this.items.addAll(allowanceController.getLocationsAndAllowances());
+        }
 
         layoutChangeListener = new View.OnLayoutChangeListener() {
             /**
@@ -100,82 +156,68 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         };
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
+    private Context getContext() {
+        return this.context;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEnabled(int position) {
-        if (getItemViewType(position) == HEADER_ROW) {
-            return false;
-        }
-        FixedTravelAllowance allowance = (FixedTravelAllowance) getItem(position);
-        if (allowance.getExcludedIndicator()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-
-        if (i > getCount()) {
-            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getView",
-                "Index is out of bounds. Index: " + i));
-        }
-
-        View resultView = null;
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            resultView = inflater.inflate(LAYOUT_ID, viewGroup, false);
-            createViewHolder(resultView);
-            resultView.setTag(holder);
-            if (getItemViewType(i) == ENTRY_ROW) {
-                resultView.addOnLayoutChangeListener(this.layoutChangeListener);
-            }
+    public Object getItem(int position) {
+        if (position > items.size() - 1) {
+            return null;
         } else {
-            resultView = convertView;
-            holder = (ViewHolder) resultView.getTag();
+            return items.get(position);
+        }
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.
+                from(parent.getContext()).
+                inflate(LAYOUT_ID, parent, false);
+        return new ViewHolder(v, listener);
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        if (position > getItemCount() - 1) {
+            Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getView",
+                    "Index is out of bounds. Index: " + position));
         }
 
-        if (getItemViewType(i) == HEADER_ROW) {
-            currentAllowance = null;
-            String locationName = (String) getItem(i);
-            renderHeaderRow(locationName);
-        }
+        if (getItemViewType(position) == ENTRY_ROW) {
+            this.holder = holder;
+            holder.view.addOnLayoutChangeListener(this.layoutChangeListener);
 
-
-        if (getItemViewType(i) == ENTRY_ROW) {
-            currentAllowance = (FixedTravelAllowance) getItem(i);
+            currentAllowance = (FixedTravelAllowance) getItem(position);
             boolean withBottomDivider = false;
-            if (i + 1 < getCount() && getItemViewType(i + 1) == HEADER_ROW) {
+            if (position + 1 < getItemCount() && getItemViewType(position + 1) == HEADER_ROW) {
                 withBottomDivider = true;
             }
             boolean withTopDivider = false;
-            if (i != 0) {
+            if (position != 0) {
                 withTopDivider = true;
             }
 
             renderEntryRow(currentAllowance, withTopDivider, withBottomDivider);
         }
+
+
+
+        if (getItemViewType(position) == HEADER_ROW) {
+            this.holder = holder;
+            currentAllowance = null;
+            String locationName = (String) getItem(position);
+            renderHeaderRow(locationName);
+        }
+
+
         if (holder.vDividerBottom != null) {
-            if (i + 1 >= getCount()) {//Last Divider
+            if (position + 1 >= getItemCount()) {//Last Divider
                 holder.vDividerBottom.setVisibility(View.VISIBLE);
             }
         }
-        return resultView;
     }
+
 
     /**
      * {@inheritDoc}
@@ -193,36 +235,15 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         Log.e(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "getItemViewType",
                 "Cannot identify view type for index: " + i));
 
-        return IGNORE_ITEM_VIEW_TYPE;
+        return -1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    public int getViewTypeCount() {
-        return 2;
+    public int getItemCount() {
+        return items.size();
     }
 
-
-    /**
-     * Creates the member view holder
-     *
-     * @param view The inflated view to grab the IDs from
-     */
-    private void createViewHolder(final View view) {
-        holder = new ViewHolder();
-        holder.vListFieldContainer = view.findViewById(R.id.list_field_container);
-        holder.vDividerTop = view.findViewById(R.id.v_divider_top);
-        holder.vDividerBottom = view.findViewById(R.id.v_divider_bottom);
-        holder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        holder.tvValue = (TextView) view.findViewById(R.id.tv_value);
-        holder.tvSubtitle1 = (TextView) view.findViewById(R.id.tv_subtitle_1);
-        holder.tvSubtitle2 = (TextView) view.findViewById(R.id.tv_subtitle_2);
-        holder.vgSubtitleEllipsized = (ViewGroup) view.findViewById(R.id.vg_subtitle_ellipsized);
-        holder.tvSubtitleEllipsized = (TextView) view.findViewById(R.id.tv_subtitle_ellipsized);
-        holder.tvSubtitleMore = (TextView) view.findViewById(R.id.tv_subtitle_more);
-    }
 
     /**
      * Renders the header row containing the textual representation of a location
@@ -241,7 +262,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setText(location);
-            holder.tvTitle.setTextAppearance(this.context, R.style.TASoloTitle);
+            holder.tvTitle.setTextAppearance(getContext(), R.style.TASoloTitle);
         }
         if (holder.tvValue != null) {
             holder.tvValue.setVisibility(View.GONE);
@@ -287,7 +308,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
 
         if (holder.tvTitle != null) {
-            holder.tvTitle.setTextAppearance(this.context, R.style.TATitle);
+            holder.tvTitle.setTextAppearance(getContext(), R.style.TATitle);
             holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true, false));
         }
 
@@ -310,12 +331,17 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         if (allowance.getExcludedIndicator()) {
             if (holder.tvValue != null) {
                 holder.tvValue.setVisibility(View.VISIBLE);
-                holder.tvValue.setText(this.context.getString(R.string.ta_excluded));
+                holder.tvValue.setText(getContext().getString(R.string.ta_excluded));
             }
         } else {
             renderSubtitleEllipsized(allowance);
         }
         renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
+
+        if (inSelectionMode && holder.checkBox != null) {
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setChecked(allowance.isSelected());
+        }
     }
 
     /**
@@ -355,11 +381,11 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         String provisionText = allowanceController.mealsProvisionToText(allowance, 3);
         if (StringUtilities.isNullOrEmpty(provisionText)) {
             if (allowance.getOvernightIndicator()) {
-                provisionText = context.getString(R.string.ta_overnight);
+                provisionText = getContext().getString(R.string.ta_overnight);
             }
         } else {
             if (allowance.getOvernightIndicator()) {
-                provisionText = provisionText + "; " + context.getString(R.string.ta_overnight);
+                provisionText = provisionText + "; " + getContext().getString(R.string.ta_overnight);
             }
         }
         holder.tvSubtitleEllipsized.setText(provisionText);
@@ -382,7 +408,7 @@ public class FixedTravelAllowanceListAdapter extends ArrayAdapter<Object> {
         }
         tvAmount.setVisibility(View.VISIBLE);
         if (amount != null) {
-            Locale locale = context.getResources().getConfiguration().locale;
+            Locale locale = getContext().getResources().getConfiguration().locale;
             tvAmount.setText(FormatUtil.formatAmount(amount, locale, crnCode, true, true));
         } else {
             tvAmount.setText(StringUtilities.EMPTY_STRING);

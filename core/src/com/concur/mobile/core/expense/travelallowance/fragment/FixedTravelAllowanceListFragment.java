@@ -1,30 +1,46 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.travelallowance.adapter.FixedTravelAllowanceListAdapter;
+import com.concur.mobile.core.expense.travelallowance.adapter.RecyclerViewAdapter;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
+import com.concur.mobile.core.expense.travelallowance.util.AnimationUtil;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.util.Const;
+
+import java.util.Locale;
 
 /**
  * Created by Patricius Komarnicki on 15.06.2015.
  */
-public class FixedTravelAllowanceListFragment extends ListFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FixedTravelAllowanceListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, RecyclerViewAdapter.OnClickListener {
 
     private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
     public static final String ON_REFRESH_MSG = CLASS_TAG + ".refreshAllowances";
+
+    public static final String BUNDLE_ID_IN_SELECTION_MODE = "in.selection.mode";
 
 
     private IFragmentCallback callback;
@@ -39,6 +55,8 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private FixedTravelAllowanceController allowanceController;
+
+    private boolean inSelectionMode;
 
     /**
      * Container Activity to implement this interface in order to be notified
@@ -59,13 +77,69 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.ta_fixed_travel_allowance_list, container, false);
+        if (savedInstanceState == null) {
+            inSelectionMode = false;
+        } else {
+            inSelectionMode = savedInstanceState.getBoolean(BUNDLE_ID_IN_SELECTION_MODE, false);
+        }
+
+        final View view = inflater.inflate(R.layout.ta_fixed_travel_allowance_list, container, false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        initializeSelectionModeViews(view);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity(), this, inSelectionMode);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(this.adapter);
+
         return view;
     }
+
+    private void initializeSelectionModeViews(View v) {
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        Toolbar bottomToolbar = (Toolbar) v.findViewById(R.id.toolbar_bottom);
+        View cancelButton = v.findViewById(R.id.cancel);
+        View selectionCounter = v.findViewById(R.id.tv_selection_counter);
+
+        fab.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
+        v.findViewById(R.id.btn_adjust).setOnClickListener(this);
+        v.findViewById(R.id.btn_adjust_all).setOnClickListener(this);
+
+        if (inSelectionMode) {
+            fab.setVisibility(View.GONE);
+            bottomToolbar.setVisibility(View.VISIBLE);
+            selectionCounter.setVisibility(View.VISIBLE);
+            updateSelectionCounter();
+        } else {
+            fab.setVisibility(View.VISIBLE);
+            bottomToolbar.setVisibility(View.GONE);
+            selectionCounter.setVisibility(View.GONE);
+        }
+    }
+    
+    private void updateSelectionCounter() {
+        if (getView() != null && allowanceController != null) {
+            int count = allowanceController.getSelectedTravelAllowances().size();
+            TextView counter = (TextView) getView().findViewById(R.id.tv_selection_counter);
+            counter.setText(getResources().getString(R.string.general_no_of_selected_list_items, count)
+                    .toUpperCase(Locale.getDefault()));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(BUNDLE_ID_IN_SELECTION_MODE, inSelectionMode);
+        super.onSaveInstanceState(outState);
+    }
+
+
+
+
 
     /**
      * {@inheritDoc}
@@ -80,9 +154,6 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             this.allowanceController = app.getTaController()
                     .getFixedTravelAllowanceController();
         }
-
-        this.adapter = new FixedTravelAllowanceListAdapter(this.getActivity().getApplicationContext());
-        setListAdapter(adapter);
 
         try {
             this.callback = (IFragmentCallback) activity;
@@ -112,28 +183,17 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
         refreshAdapter();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
-        if (listView != null) {
-            FixedTravelAllowanceListAdapter listAdapter = (FixedTravelAllowanceListAdapter) listView.getAdapter();
-            if (listAdapter.getItemViewType(position) == FixedTravelAllowanceListAdapter.ENTRY_ROW) {
-                FixedTravelAllowance allowance = (FixedTravelAllowance) listAdapter.getItem(position);
-                if (fixedTASelectedListener != null) {
-                    fixedTASelectedListener.onFixedTravelAllowanceSelected(allowance);
-                }
-            }
-        }
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void onRefresh() {
-        getListView().setEnabled(false);
+        View v = getView();
+        if (v == null) {
+            return;
+        }
+        v.setEnabled(false);
         if (this.callback != null) {
             this.callback.handleFragmentMessage(ON_REFRESH_MSG, null);
         } else {
@@ -142,18 +202,21 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
     }
 
     public void onRefreshFinished() {
-        if (swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null && getView() != null) {
             swipeRefreshLayout.setRefreshing(false);
-            adapter =  new FixedTravelAllowanceListAdapter(getActivity());
-            setListAdapter(adapter);
-            getListView().setEnabled(true);
+            adapter =  new FixedTravelAllowanceListAdapter(getActivity(),this, inSelectionMode);
+            RecyclerView recyclerView = getRecyclerView();
+            if (recyclerView != null) {
+                recyclerView.setAdapter(adapter);
+                getView().setEnabled(true);
+            }
         }
     }
 
     public void showRefreshIndicator() {
-        if (swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null && getView() != null) {
             swipeRefreshLayout.setRefreshing(true);
-            getListView().setEnabled(false);
+            getView().setEnabled(false);
         }
     }
 
@@ -162,9 +225,91 @@ public class FixedTravelAllowanceListFragment extends ListFragment implements Sw
             return;
         }
         Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "refreshAdapter", "Refreshing adapter."));
-        this.adapter.clear();
-        this.adapter.addAll(this.allowanceController.getLocationsAndAllowances());
-        adapter.notifyDataSetChanged();
+        adapter =  new FixedTravelAllowanceListAdapter(getActivity(), this, inSelectionMode);
+        RecyclerView recyclerView = getRecyclerView();
+        if (recyclerView != null) {
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.fab) {
+            switchToSelctionMode(true);
+        }
+
+        if (v.getId() == R.id.cancel) {
+            switchToSelctionMode(false);
+            allowanceController.unselectAll();
+        }
+
+        if (v.getId() == R.id.btn_adjust_all) {
+            allowanceController.selectAll();
+            refreshAdapter();
+        }
+    }
+
+    @Override
+    public void onClick(View v, int position) {
+        if (v.getId() == R.id.row) {
+            RecyclerView rv = getRecyclerView();
+            if (rv != null) {
+                FixedTravelAllowanceListAdapter adapter = (FixedTravelAllowanceListAdapter) rv.getAdapter();
+                FixedTravelAllowance allowance = (FixedTravelAllowance) adapter.getItem(position);
+                if (fixedTASelectedListener != null) {
+                    fixedTASelectedListener.onFixedTravelAllowanceSelected(allowance);
+                }
+            }
+        }
+
+        if (v.getId() == R.id.checkbox) {
+            RecyclerView rv = getRecyclerView();
+            CheckBox cb = (CheckBox) v;
+            if (rv != null) {
+                FixedTravelAllowanceListAdapter adapter = (FixedTravelAllowanceListAdapter) rv.getAdapter();
+                FixedTravelAllowance allowance = (FixedTravelAllowance) adapter.getItem(position);
+                allowance.setIsSelected(cb.isChecked());
+                updateSelectionCounter();
+            }
+        }
+    }
+
+
+
+    private RecyclerView getRecyclerView() {
+        View v = getView();
+        if (v != null) {
+            return (RecyclerView) v.findViewById(R.id.list);
+        } else {
+            return null;
+        }
+    }
+
+    private void switchToSelctionMode(boolean switchToSelectionMode) {
+        View v = getView();
+        if (v == null) {
+            return;
+        }
+        inSelectionMode = switchToSelectionMode;
+        View fab = v.findViewById(R.id.fab);
+        View toolbar = v.findViewById(R.id.toolbar_bottom);
+        View counter = v.findViewById(R.id.tv_selection_counter);
+        if (switchToSelectionMode) {
+            AnimationUtil.fabToolbarAnimation(fab, View.GONE, toolbar, View.VISIBLE);
+//            AnimationUtil.goneAnimation(fab);
+//            AnimationUtil.visibleAnimation(toolbar);
+            counter.setVisibility(View.VISIBLE);
+            updateSelectionCounter();
+        } else {
+            AnimationUtil.fabToolbarAnimation(fab, View.VISIBLE, toolbar, View.GONE);
+//            AnimationUtil.goneAnimation(toolbar);
+//            AnimationUtil.visibleAnimation(fab);
+            counter.setVisibility(View.GONE);
+        }
+
+        refreshAdapter();
     }
 
 }

@@ -472,4 +472,27 @@ public class FixedTravelAllowanceController extends BaseController {
         return null;
     }
 
+    public List<FixedTravelAllowance> getSelectedTravelAllowances() {
+        List<FixedTravelAllowance> result = new ArrayList<FixedTravelAllowance>();
+        for (FixedTravelAllowance ta: getFixedTravelAllowances()) {
+            if (ta.isSelected()) {
+                result.add(ta);
+            }
+        }
+
+        return result;
+    }
+
+    public void unselectAll() {
+        for (FixedTravelAllowance ta: getSelectedTravelAllowances()) {
+            ta.setIsSelected(false);
+        }
+    }
+
+    public void selectAll() {
+        for (FixedTravelAllowance ta: getFixedTravelAllowances()) {
+            ta.setIsSelected(true);
+        }
+    }
+
 }

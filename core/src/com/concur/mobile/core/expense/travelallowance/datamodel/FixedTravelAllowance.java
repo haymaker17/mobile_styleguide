@@ -84,10 +84,14 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
     private boolean isLastDay;
 
     /**
+     * Selection indicator. Used for mass editing.
+     */
+    private boolean isSelected;
+
+    /**
      * Creates an instance of a FixedTravelAllowance
      */
     public FixedTravelAllowance() {
-
     }
     /**
      * Creates an instance of a FixedTravelAllowance
@@ -310,6 +314,14 @@ public class FixedTravelAllowance implements Serializable, Comparable<FixedTrave
 
     public void setIsLastDay(boolean isLastDay) {
         this.isLastDay = isLastDay;
+    }
+
+    public void setIsSelected(boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
     }
 
     /**

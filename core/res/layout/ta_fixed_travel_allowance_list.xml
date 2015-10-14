@@ -1,23 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:orientation="vertical">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <TextView
+        android:id="@+id/tv_selection_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#2f6996"
+        android:textSize="18sp"/>
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@android:id/list"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.03"
-            android:divider="@null" />
+            android:layout_height="match_parent">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.03"
+                android:paddingBottom="70dp"
+                android:clipToPadding="false"
+                android:divider="@null" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/list"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:elevation="4dp"
+            android:src="@drawable/ic_create_white_24dp"
+            app:backgroundTint="#2f6996"
+            app:fabSize="normal"
+            app:layout_anchor="@+id/list"
+            app:layout_anchorGravity="bottom|right|end"
+           />
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradient_title_bar"
+            android:elevation="3dp"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_clear_white_24dp"
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center_vertical"/>
+
+                <Button
+                    android:id="@+id/btn_adjust_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ta_adjust_all"
+                    android:textColor="@color/btn_toolbar_selector"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"/>
+
+                <Button
+                    android:id="@+id/btn_adjust"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ta_adjust"
+                    android:textColor="@color/btn_toolbar_selector"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
 </LinearLayout>
 
