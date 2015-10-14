@@ -144,6 +144,8 @@ public class AutoLoginRequestTask extends PlatformAsyncRequestTask {
             if (!remoteWipe) {
                 // Update the config content provider.
                 ConfigUtil.updateLoginInfo(getContext(), loginResult);
+                // Update Nifty values
+                ConfigUtil.updateNiftyInClientData(getContext(), loginResult);
                 // Update Platform properties.
                 if (loginResult.accessToken != null) {
                     PlatformProperties.setAccessToken(loginResult.accessToken.key);

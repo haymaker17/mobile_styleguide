@@ -33,9 +33,7 @@ import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -58,7 +56,7 @@ public class SessionManager {
         /**
          * Invoked when the auto-login request returns back with an HTTP status 200.
          * 
-         * @param the
+         * @param sessionId
          *            Session ID returned from the auto-login, can be <code>null</code> if authentication failed (e.g. a remote
          *            wipe was sent down).
          */
@@ -67,7 +65,7 @@ public class SessionManager {
         /**
          * Invoked when something bad happened during the request (either on the server side or the actual network connection).
          * 
-         * @param the
+         * @param errorMessage
          *            error message sent from the server, can be <code>null</code>.
          */
         public void onFailure(String errorMessage);
@@ -105,14 +103,14 @@ public class SessionManager {
      * established, then this method will block until that session has been created or fails doing so. If a new session id is
      * created, it and its expiration information will be persistently stored in preferences information.
      * 
-     * @param context
+     * @param concurMobile
      *            an application context.
      * 
      * @return the current valid session id upon success; <code>null</code> upon failure.
      */
     @SuppressLint("NewApi")
     public synchronized static String validateSessionId(ConcurCore concurMobile) {
-        return SessionManager.validateSessionId(concurMobile,null);
+        return SessionManager.validateSessionId(concurMobile, true, null);
     }
 
     /**
@@ -120,8 +118,9 @@ public class SessionManager {
      * established, then this method will block until that session has been created or fails doing so. If a new session id is
      * created, it and its expiration information will be persistently stored in preferences information.
      * 
-     * @param context
+     * @param concurMobile
      *            an application context.
+     * @param logEvents
      * @param replyListener
      *            an <code>AsyncReplyListener</code> that is invoked when the Login Request Task has completed; that means if it
      *            has completed successfully, failed, or cancled.
@@ -129,7 +128,7 @@ public class SessionManager {
      * @return the current valid session id upon success; <code>null</code> upon failure.
      */
     @SuppressLint("NewApi")
-    public synchronized static String validateSessionId(ConcurCore concurMobile, final AutoLoginListener replyListener) {
+    public synchronized static String validateSessionId(ConcurCore concurMobile, final boolean logEvents, final AutoLoginListener replyListener) {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(concurMobile.getApplicationContext());
         String sessionId = PlatformProperties.getSessionId();
@@ -198,7 +197,7 @@ public class SessionManager {
                             sessionAutoLoginReceiver = new BaseAsyncResultReceiver(new Handler(
                                     handlerThread.getLooper()));
                             sessionAutoLoginReceiver.setListener(sessionManager.new SessionAutoLoginListener(
-                                    concurMobile.getApplicationContext(), replyListener));
+                                    concurMobile.getApplicationContext(), logEvents, replyListener));
 
                             UserAndSessionInfoUtil.setServerAddress(sessionInfo.getServerUrl());
 
@@ -341,10 +340,12 @@ public class SessionManager {
 
         private Context context;
         private AutoLoginListener replyListener;
+        private boolean logEvents;
 
-        public SessionAutoLoginListener(Context context, AutoLoginListener replyListener) {
+        public SessionAutoLoginListener(Context context, boolean logEvents, AutoLoginListener replyListener) {
             super();
             this.context = context;
+            this.logEvents = logEvents;
             this.replyListener = replyListener;
         }
 
@@ -363,14 +364,15 @@ public class SessionManager {
                         Log.d(Const.LOG_TAG,
                                 "SessionAutoLoginListener.onRequestSuccess: Remote Wipe sent down from auto-login.");
 
-                        // Analytics stuff.
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
-                                Flurry.LABEL_AUTO_LOGIN, null);
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_PASSWORD, null);
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
-                                Flurry.LABEL_SERVER_ERROR, null);
-
+                        if(logEvents) {
+                            // Analytics stuff.
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                                    Flurry.LABEL_AUTO_LOGIN, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                                    Flurry.LABEL_SERVER_ERROR, null);
+                        }
                         // Set the result information.
                         loginResult.sessionId = null;
                         cleanup();
@@ -396,17 +398,20 @@ public class SessionManager {
 
                     // Save the login response information.
                     Log.d(Const.LOG_TAG, CLS_TAG + ".validateSessionId: successfully created new session id.");
-                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
-                            Flurry.LABEL_AUTO_LOGIN, null);
-                    if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_SSO, null);
-                    } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
-                    } else {
-                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
-                                Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+
+                    if(logEvents) {
+                        EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_SUCCESS_METHOD,
+                                Flurry.LABEL_AUTO_LOGIN, null);
+                        if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_SSO)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_SSO, null);
+                        } else if (signInMethod.equalsIgnoreCase(com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_MOBILE_PASSWORD)) {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_MOBILE_PASSWORD, null);
+                        } else {
+                            EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SUCCESS_CREDENTIAL_TYPE,
+                                    Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                        }
                     }
                     // Set the result information.
                     loginResult.sessionId = PlatformProperties.getSessionId();
@@ -417,13 +422,14 @@ public class SessionManager {
                 loginResult.countDown();
 
                 //GA
-                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
-                        Flurry.LABEL_AUTO_LOGIN, null);
-                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
-                        Flurry.LABEL_LOGIN_USING_PASSWORD, null);
-                EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
-                        Flurry.LABEL_SERVER_ERROR, null);
-
+                if(logEvents) {
+                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_SIGN_IN_FAIL_METHOD,
+                            Flurry.LABEL_AUTO_LOGIN, null);
+                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_CREDENTIAL_TYPE,
+                            Flurry.LABEL_LOGIN_USING_PASSWORD, null);
+                    EventTracker.INSTANCE.eventTrack(Flurry.CATEGORY_SIGN_IN, Flurry.ACTION_FAIL_REASON,
+                            Flurry.LABEL_SERVER_ERROR, null);
+                }
                 // Quit the handler thread.
                 if (handlerThread != null) {
                     handlerThread.quit();

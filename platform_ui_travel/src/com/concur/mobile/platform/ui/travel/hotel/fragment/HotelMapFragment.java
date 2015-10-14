@@ -132,6 +132,7 @@ public class HotelMapFragment extends PlatformFragmentV1 implements OnMapReadyCa
     /**
      * Called when the clear button is clicked.
      */
+
     public void onClearScreenshot(View view) {
         // ImageView snapshotHolder = (ImageView) findViewById(R.id.snapshot_holder);
         snapshotHolder.setImageDrawable(null);

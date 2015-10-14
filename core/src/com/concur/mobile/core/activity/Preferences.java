@@ -1,6 +1,7 @@
 package com.concur.mobile.core.activity;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -70,6 +71,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static final String PREF_SESSION_OBSOLETE = "pref_session_key";
     public static final String PREF_SESSION_ENC = "pref_session_key_enc";
     public static final String PREF_PLATFORM_DATA_MIGRATION = "pref_platform_data_migration";
+    public static final String PREF_APP_UPGRADE = "pref_app_upgrade";
 
     public static final Crypt PREF_CRYPT;
     private static boolean hideAutoLogin = false;
@@ -323,7 +325,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
-        doAutoLogin(prefs, app);
+        ///doAutoLogin(prefs, app);
+
+        // commit chnages in preferences.
+        Editor e = prefs.edit();
+        e.putBoolean(PREF_APP_UPGRADE, true);
+        e.commit();
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {
@@ -432,6 +439,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    public static void resetUpgradePreferencese(){
+        // commit changes in preferences.
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+        e.commit();
+    }
     /**
      * This should only be called when running a new version for the first time. It will ensure that login/pin are encrypted in
      * the proper location and that the plaintext versions are deleted.
