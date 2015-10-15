@@ -1335,7 +1335,9 @@ public class ExpensesAndReceipts extends BaseActivity implements ExpensesCallbac
                 progressDialog.dismiss();
             }
 
-            Toast.makeText(getBaseContext(), "An error occurred uploading Image", Toast.LENGTH_LONG).show();
+            DialogFragmentFactory.getAlertOkayInstance(R.string.general_failed_uploadImage).show(
+                getSupportFragmentManager(), null);
+
             // TODO: ANALYTICS - Track ExpenseIt image upload failure.
         }
 

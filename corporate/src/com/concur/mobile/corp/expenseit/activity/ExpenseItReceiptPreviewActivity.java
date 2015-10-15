@@ -13,19 +13,22 @@ public class ExpenseItReceiptPreviewActivity extends ActionBarActivity
         implements ExpenseItReceiptPreviewFragment.ExpenseItPreviewCallbacks{
 
     private String receiptImageFilePath;
+    private String imageSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_it_receipt_preview);
 
-        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
+        if (getIntent().getExtras() != null && getIntent().getExtras().containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)
+                && getIntent().getExtras().containsKey(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY)) {
 
             receiptImageFilePath = getIntent().getStringExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
+            imageSource = getIntent().getStringExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY);
 
             if (getSupportFragmentManager()
                     .findFragmentByTag(ExpenseItReceiptPreviewFragment.EXPENSEIT_RECEIPT_PREVIEW_FRAGMENT_TAG) == null) {
-                ExpenseItReceiptPreviewFragment frag = ExpenseItReceiptPreviewFragment.newInstance(receiptImageFilePath);
+                ExpenseItReceiptPreviewFragment frag = ExpenseItReceiptPreviewFragment.newInstance(receiptImageFilePath, imageSource);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.expenseit_receipt_image_container, frag, ExpenseItReceiptPreviewFragment.EXPENSEIT_RECEIPT_PREVIEW_FRAGMENT_TAG)
                         .commit();

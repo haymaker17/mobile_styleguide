@@ -177,6 +177,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private static final String OPEN_SOURCE_LIBRARY_CLASS = "open_source_library_class";
 
+    private static final String LOCAL_IMAGE_KEY = "LOCAL_IMAGE_KEY";
+
     protected int inProgressRef = 0;
 
     private String receiptCameraImageDataLocalFilePath;
@@ -542,8 +544,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
             if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
                 receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
-                copyCapturedImage();
             }
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(LOCAL_IMAGE_KEY)) {
+                receiptImageDataLocalFilePath = savedInstanceState.getString(LOCAL_IMAGE_KEY);
+            }
+
+
             if (savedInstanceState != null) {
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
@@ -1347,6 +1354,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             outState.putString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
         }
 
+        if (receiptImageDataLocalFilePath != null) {
+            outState.putString(LOCAL_IMAGE_KEY, receiptImageDataLocalFilePath);
+        }
+
         if (isTipsOverlayVisible) {
             // Save the uptime so we know how long the user has been on this
             // screen,
@@ -1994,7 +2005,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             case REQUEST_EXPENSEIT_RETAKE:
                 if (resultCode == Activity.RESULT_OK) {
                     if (copyCapturedImage()) {
-                        initializeExpenseItReceiptPreview();
+                        initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
                     }
                 }
                 break;
@@ -3760,9 +3771,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         return (qualityScore != null && qualityScore.isBlurred());
     }
 
-    private void initializeExpenseItReceiptPreview() {
+    private void initializeExpenseItReceiptPreview(String imageSource) {
         Intent retakePreviewIntent = new Intent(Home.this, ExpenseItReceiptPreviewActivity.class);
         retakePreviewIntent.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        retakePreviewIntent.putExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY, imageSource);
         startActivityForResult(retakePreviewIntent, ExpenseItReceiptPreviewFragment.USE_IMAGE_REQUEST_CODE);
     }
 
@@ -3776,6 +3788,26 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
         newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(newIt);
+    }
+
+    private void initializeUploadFromGallery() {
+        Intent it = new Intent(this, ViewImage.class);
+        StringBuilder strBldr = new StringBuilder("file://");
+        strBldr.append(receiptImageDataLocalFilePath);
+        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
+        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        it.putExtra(Const.EXTRA_SHOW_MENU, true);
+        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
+
+        // Add Hide Create Expense flag to View Image page
+        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+
+        startActivity(it);
     }
 
     /*
@@ -3794,7 +3826,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         if (copyCapturedImage()) {
             if (isBlurredExpenseItImage(filePath)) {
                 EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Camera");
-                initializeExpenseItReceiptPreview();
+                initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
             } else {
                 initializeUploadReceipt();
             }
@@ -3826,23 +3858,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // class will be launched to upload/save the image to the R.S. and
         // refresh
         // the Receipts List UI.
-        Intent it = new Intent(this, ViewImage.class);
-        StringBuilder strBldr = new StringBuilder("file://");
-        strBldr.append(filePath);
-        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
-        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
-        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
-        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
-        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
-        it.putExtra(Const.EXTRA_SHOW_MENU, true);
-        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
-        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
 
-        // Add Hide Create Expense flag to View Image page
-        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+        receiptImageDataLocalFilePath = filePath;
 
-        startActivity(it);
+
+        if (isBlurredExpenseItImage(filePath)) {
+            EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Gallery");
+            initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY);
+        } else {
+            initializeUploadFromGallery();
+        }
+
     }
 
     /*

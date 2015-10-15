@@ -1,6 +1,7 @@
 package com.concur.mobile.core.expense.travelallowance.controller.test;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceItineraryController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
@@ -39,6 +40,8 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
     private List<Itinerary> itineraryList;
 
     private List<CompactItinerary> compactItineraryList;
+
+    private static final String TEST_DATA_PATH = "src/test/java/com/concur/mobile/core/expense/travelallowance/testdata";
 
 
     @Before
@@ -193,5 +196,18 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
         }
     }
 
+    @Test
+    public void parseItineraries() {
+        TravelAllowanceItineraryControllerMock controllerMock = new TravelAllowanceItineraryControllerMock(null);
+        Bundle resultData = controllerMock.refreshItineraries(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        assertNotNull(resultData);
+    }
+
+    @Test
+    public void parseAssignableItineraries() {
+        TravelAllowanceItineraryControllerMock controllerMock = new TravelAllowanceItineraryControllerMock(null);
+        Bundle resultData = controllerMock.refreshAssignableItineraries(TEST_DATA_PATH, "AssignableItineraries.xml");
+        assertNotNull(resultData);
+    }
 
 }
