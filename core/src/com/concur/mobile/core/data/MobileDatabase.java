@@ -603,6 +603,14 @@ public class MobileDatabase {
         String response = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor results = null;
+
+        //MOB-25817 High occurrence for a crash in corp.activity.Home on fabric.io
+        if (userId == null) {
+            Log.e(Const.LOG_TAG, CLS_TAG
+                + ".loadResponse: UserId is invalid for response:"+ responseId);
+            return response;
+        }
+
         try {
             results = db.rawQuery(MobileDatabaseHelper.LOAD_RESPONSE_SQL, new String[] { Integer.toString(responseId),
                     userId });

@@ -11,6 +11,8 @@ import java.util.Locale;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.concur.mobile.base.service.BaseAsyncRequestTask;
@@ -40,6 +42,8 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
 
     // Contains the service end-point for the <code>PPLogin2Light</code> MWS call.
     private final String SERVICE_END_POINT = "/mobile/MobileSession/PPLoginV3Light";
+
+    private static final String PREF_USER_ID = "pref_saved_user_id";
 
     /**
      * Contains the locale.
@@ -193,6 +197,18 @@ public class PPLoginLightRequestTask extends PlatformAsyncRequestTask {
                             PlatformProperties.setAccessToken(loginResult.accessToken.key);
                         } else {
                             PlatformProperties.setAccessToken(null);
+                        }
+                        //MOB-25817: In some instance while we are logging in. the app goes to the background just
+                        //after successful parse of the login result but the app do not get the chance of writing the
+                        //user info to the prefs. The assumption across all codebase is when sessioninfo is valid then
+                        //prefs.userId is valid.
+                        if (loginResult.userId != null) {
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                            if (prefs.getString(PREF_USER_ID, null) == null) {
+                                SharedPreferences.Editor e = prefs.edit();
+                                e.putString(PREF_USER_ID, loginResult.userId);
+                                e.commit();
+                            }
                         }
 
                         // Set up GLS server URL.
