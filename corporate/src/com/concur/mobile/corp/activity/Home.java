@@ -14,6 +14,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.LocationListener;
@@ -132,6 +134,9 @@ import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.expenseit.activity.ExpenseItReceiptPreviewActivity;
+import com.concur.mobile.corp.expenseit.fragment.ExpenseItReceiptPreviewFragment;
+import com.concur.mobile.corp.image.detection.BlurInfo;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
@@ -141,6 +146,7 @@ import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
+import com.concur.receipt.detection.nativemath.QualityAssessment;
 
 import org.apache.http.HttpStatus;
 
@@ -178,11 +184,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private static final String OPEN_SOURCE_LIBRARY_CLASS = "open_source_library_class";
 
+    private static final String LOCAL_IMAGE_KEY = "LOCAL_IMAGE_KEY";
+
     protected int inProgressRef = 0;
 
     private String receiptCameraImageDataLocalFilePath;
+
+    private QualityAssessment mQualityAssessment;
+
     private static final int REQUEST_TAKE_PICTURE = 100;
     private static final int REQUEST_CODE_MSG_CENTER = 101;
+    public static final int REQUEST_EXPENSEIT_RETAKE = 628;
 
     private static final int NAVIGATION_BOOK_TRAVEL = 0;
     private static final int NAVIGATION_RECEIPTS = 1;
@@ -545,6 +557,12 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
                 receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
             }
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(LOCAL_IMAGE_KEY)) {
+                receiptImageDataLocalFilePath = savedInstanceState.getString(LOCAL_IMAGE_KEY);
+            }
+
+
             if (savedInstanceState != null) {
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
@@ -1203,6 +1221,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             outState.putString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
         }
 
+        if (receiptImageDataLocalFilePath != null) {
+            outState.putString(LOCAL_IMAGE_KEY, receiptImageDataLocalFilePath);
+        }
+
         if (isTipsOverlayVisible) {
             // Save the uptime so we know how long the user has been on this
             // screen,
@@ -1708,6 +1730,29 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
+    protected void captureReceipt(int requestCode) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // Create a place for the camera to write its output.
+            String receiptFilePath = ViewUtil.createExternalMediaImageFilePath();
+            File receiptFile = new File(receiptFilePath);
+            Uri outputFileUri = Uri.fromFile(receiptFile);
+            receiptCameraImageDataLocalFilePath = receiptFile.getAbsolutePath();
+            Log.d(Const.LOG_TAG,
+                    CLS_TAG + ".captureReceipt: receipt image path -> '" + receiptCameraImageDataLocalFilePath + "'.");
+            // Launch the camera application.
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            intent.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
+            try {
+                startActivityForResult(intent, requestCode);
+            } catch (Exception e) {
+                // Device has no camera, see MOB-16872
+            }
+        } else {
+            showDialog(Const.DIALOG_EXPENSE_NO_EXTERNAL_STORAGE_AVAILABLE);
+        }
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         Dialog dlg = dialogs.get(id);
@@ -1829,6 +1874,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
                 break;
 
+            case REQUEST_EXPENSEIT_RETAKE:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (copyCapturedImage()) {
+                        initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
+                    }
+                }
+                break;
             case REQUEST_TAKE_PICTURE: {
                 if (resultCode == Activity.RESULT_OK) {
                     if (copyCapturedImage()) {
@@ -1871,6 +1923,22 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (resultCode == Activity.RESULT_OK) {
                     // refresh option menu
                     supportInvalidateOptionsMenu();
+                }
+                break;
+
+            case ExpenseItReceiptPreviewFragment.USE_IMAGE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    if (data.hasExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_RETAKE_RESULT_KEY)) {
+                        boolean retakeImage = data.getExtras().getBoolean(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_RETAKE_RESULT_KEY, true);
+                        if (retakeImage) {
+                            captureReceipt(REQUEST_EXPENSEIT_RETAKE);
+                        } else {
+                            initializeUploadReceipt();
+                        }
+                    }
+
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + "USE_IMAGE_REQUEST_CODE returned as " + resultCode);
                 }
                 break;
         }
@@ -3611,6 +3679,63 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
+    protected boolean isBlurredExpenseItImage(String filePath) {
+        File imgFile = new File(filePath);
+        Bitmap receiptImage = null;
+        if (imgFile.exists()) {
+            receiptImage = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        }
+
+
+        BlurInfo qualityScore = null;
+        mQualityAssessment = new QualityAssessment();
+        // Crashes with UnsatisfiedLinkError here.
+        if (receiptImage != null) {
+            qualityScore = new BlurInfo(mQualityAssessment.getQualityScore(receiptImage));
+        }
+
+        return (qualityScore != null && qualityScore.isBlurred());
+    }
+
+    private void initializeExpenseItReceiptPreview(String imageSource) {
+        Intent retakePreviewIntent = new Intent(Home.this, ExpenseItReceiptPreviewActivity.class);
+        retakePreviewIntent.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        retakePreviewIntent.putExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY, imageSource);
+        startActivityForResult(retakePreviewIntent, ExpenseItReceiptPreviewFragment.USE_IMAGE_REQUEST_CODE);
+    }
+
+    private void initializeUploadReceipt() {
+        Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
+        newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(newIt);
+    }
+
+    private void initializeUploadFromGallery() {
+        Intent it = new Intent(this, ViewImage.class);
+        StringBuilder strBldr = new StringBuilder("file://");
+        strBldr.append(receiptImageDataLocalFilePath);
+        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
+        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        it.putExtra(Const.EXTRA_SHOW_MENU, true);
+        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
+
+        // Add Hide Create Expense flag to View Image page
+        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+
+        startActivity(it);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -3622,15 +3747,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // class
         // to upload/save the image to the R.S. and refresh the Receipts List
         // UI.
-        Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
-        newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
-        newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
-        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
-        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
-        newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
-        newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-        newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(newIt);
+        receiptCameraImageDataLocalFilePath = filePath;
+
+        if (copyCapturedImage()) {
+            if (isBlurredExpenseItImage(filePath)) {
+                EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Camera");
+                initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
+            } else {
+                initializeUploadReceipt();
+            }
+        }
     }
 
     /*
@@ -3658,23 +3784,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // class will be launched to upload/save the image to the R.S. and
         // refresh
         // the Receipts List UI.
-        Intent it = new Intent(this, ViewImage.class);
-        StringBuilder strBldr = new StringBuilder("file://");
-        strBldr.append(filePath);
-        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
-        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
-        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
-        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
-        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
-        it.putExtra(Const.EXTRA_SHOW_MENU, true);
-        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
-        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
 
-        // Add Hide Create Expense flag to View Image page
-        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+        receiptImageDataLocalFilePath = filePath;
 
-        startActivity(it);
+
+        if (isBlurredExpenseItImage(filePath)) {
+            EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Gallery");
+            initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY);
+        } else {
+            initializeUploadFromGallery();
+        }
+
     }
 
     /*

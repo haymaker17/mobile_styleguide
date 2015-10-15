@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/Black"
+                android:orientation="horizontal">
+
+    <com.concur.mobile.platform.ui.common.view.ScaleImageView
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ProgressBar android:id="@+id/expenseit_receipt_image_loading_progress"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/txtvReceiptImageUnavailable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/receipt_image_unavailable"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/preview_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        layout="@layout/expenseit_image_preview_confirmation" />
+
+</RelativeLayout>

@@ -2864,7 +2864,7 @@ public class ConcurService extends Service {
 
         SaveReportEntryReceiptRequest request = null;
         String sessionId = Preferences.getSessionId();
-        if (sessionId != null) {
+        if (sessionId != null && expRepEnt != null) {
             String msgId = Long.toString(System.currentTimeMillis());
             request = new SaveReportEntryReceiptRequest();
             request.messageId = msgId;

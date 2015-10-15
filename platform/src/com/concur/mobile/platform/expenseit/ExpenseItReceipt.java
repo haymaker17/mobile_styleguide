@@ -134,7 +134,9 @@ public class ExpenseItReceipt implements ExpenseItReceiptDAO, Serializable {
      */
     public boolean isInErrorState() {
         return ExpenseItParseCode.isInErrorState(getParsingStatusCode())
-                || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR;
+                || getErrorCode() == ExpenseItPostReceipt.RUBICON_ERROR
+                || getErrorCode() == ExpenseItPostReceipt.RUBICON_LONGER_THAN_EXPECTED
+                || getErrorCode() == ExpenseItPostReceipt.CONCUR_STATUS_CODE_MAINTENANCE;
     }
 
     /**
