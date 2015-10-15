@@ -3,6 +3,7 @@ package com.concur.mobile.core.expense.travelallowance.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +34,6 @@ import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback
 import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
-import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
-import com.concur.mobile.core.expense.travelallowance.util.IDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -60,8 +59,6 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
      * The fixed travel allowance this activity is dealing with taken from intent
      */
     private FixedTravelAllowance allowance;
-
-    private IDateFormat dateFormatter;
 
     private FixedTravelAllowanceController allowanceController;
 
@@ -119,8 +116,6 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         if (StringUtilities.isNullOrEmpty(expenseReportKey) || allowance.isLocked()) {
             isEditable = false;
         }
-
-        this.dateFormatter = new DefaultDateFormat(this);
 
         ConcurCore app = (ConcurCore) getApplication();
         this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
@@ -481,7 +476,9 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         View vDividerBottom = this.findViewById(R.id.v_divider_bottom);
 
         if (tvTitle != null) {
-            String dateString = dateFormatter.format(allowance.getDate(), false, true, true);
+            String dateString = DateUtils.formatDateTime(this, allowance.getDate().getTime(),
+                                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR |
+                                        DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY);
             tvTitle.setText(dateString);
         }
         if (tvSubtitle1 != null) {

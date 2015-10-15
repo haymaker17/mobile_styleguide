@@ -3,6 +3,7 @@ package com.concur.mobile.core.expense.travelallowance.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +92,6 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
     private static final int LAYOUT_ID = R.layout.ta_generic_table_row_layout;
 
     private FixedTravelAllowanceController allowanceController;
-    private IDateFormat dateFormatter;
 
     private ViewHolder holder;
     private View.OnLayoutChangeListener layoutChangeListener;
@@ -119,8 +119,6 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
 
         ConcurCore app = (ConcurCore) context.getApplicationContext();
         this.allowanceController = app.getTaController().getFixedTravelAllowanceController();
-
-        this.dateFormatter = new DefaultDateFormat(context);
 
         this.items = new ArrayList<Object>();
         if (inSelectionMode) {
@@ -309,7 +307,9 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
 
         if (holder.tvTitle != null) {
             holder.tvTitle.setTextAppearance(getContext(), R.style.TATitle);
-            holder.tvTitle.setText(dateFormatter.format(allowance.getDate(), false, true, false));
+            holder.tvTitle.setText(DateUtils.formatDateTime(context, allowance.getDate().getTime(),
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NO_YEAR |
+                    DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_ABBREV_WEEKDAY));
         }
 
         if (holder.tvSubtitle1 != null) {

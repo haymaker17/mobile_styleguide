@@ -23,7 +23,7 @@ public class FixedTravelAllowanceListAdapterTest extends TestCase {
     @Test
     public void constructorTest(){
         FixedTravelAllowanceListAdapter adapter =
-                new FixedTravelAllowanceListAdapter(RuntimeEnvironment.application);
+                new FixedTravelAllowanceListAdapter(RuntimeEnvironment.application, null, false);
         Assert.assertNotNull(adapter);
     }
 }
