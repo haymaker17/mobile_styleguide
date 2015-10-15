@@ -263,7 +263,6 @@ public class FixedTravelAllowanceController extends BaseController {
         startDate = sortedList.get(0).getDate();
         endDate = sortedList.get(sortedList.size() - 1).getDate();
 
-//        return DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, true, true);
         return DateUtils.startEndDateToString(startDate, endDate, dateFormatter, false, false, true);
     }
 

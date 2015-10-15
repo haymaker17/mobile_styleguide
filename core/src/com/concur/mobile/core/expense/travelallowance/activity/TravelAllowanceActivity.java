@@ -29,7 +29,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItinerary
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
-import com.concur.mobile.core.expense.travelallowance.util.DefaultDateFormat;
+import com.concur.mobile.core.expense.travelallowance.util.ShortDateFormat;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
@@ -433,7 +433,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
      */
     private void renderSummary() {
 
-        DefaultDateFormat dateFormatter = new DefaultDateFormat(this);
+        ShortDateFormat dateFormatter = new ShortDateFormat(this);
         List<FixedTravelAllowance> allowances = fixedTaController.getFixedTravelAllowances();
         if (allowances == null || allowances.size() == 0) {
             findViewById(R.id.ta_summary).setVisibility(View.GONE);
@@ -446,7 +446,6 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         TextView tvValue = (TextView) findViewById(R.id.tv_value);
         TextView tvValueDesc = (TextView)findViewById(R.id.tv_value_desc);
         TextView tvSubtitle1 = (TextView) findViewById(R.id.tv_subtitle_1);
-//        TextView tvSubtitle2 = (TextView) findViewById(R.id.tv_subtitle_2);
 
         Double sum = fixedTaController.getSum();
         boolean multiLocations = fixedTaController.hasMultipleGroups();
@@ -464,15 +463,6 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         if (tvValueDesc !=null){
             tvValueDesc.setVisibility(View.VISIBLE);
         }
-
-//        if (tvSubtitle2 != null) {
-//            if (multiLocations) {
-//                tvSubtitle2.setVisibility(View.GONE);
-//            } else {
-//                tvSubtitle2.setVisibility(View.VISIBLE);
-//                tvSubtitle2.setText(allowances.get(0).getLocationName());
-//            }
-//        }
 
         if (tvSubtitle1 != null) {
             tvSubtitle1.setVisibility(View.VISIBLE);
