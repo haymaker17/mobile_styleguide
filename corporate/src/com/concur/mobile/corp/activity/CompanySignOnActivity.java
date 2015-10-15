@@ -449,7 +449,6 @@ public class CompanySignOnActivity extends BaseActivity {
                 }
                 startActivity(intent);
             }
-
             setResult(RESULT_OK);
             finish();
         }

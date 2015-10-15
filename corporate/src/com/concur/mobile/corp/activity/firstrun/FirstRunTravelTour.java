@@ -39,9 +39,7 @@ public class FirstRunTravelTour extends AbsExpTour {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         Preferences.setFirstRunExpUpgradeTravel(prefs);
         // commit changes in preferences.
-        SharedPreferences.Editor e = prefs.edit();
-        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
-        e.commit();
+        Preferences.resetUpgradePreferencese();
 
     }
 

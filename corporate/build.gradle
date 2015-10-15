@@ -27,7 +27,6 @@ dependencies {
     }
 }
 
-
 android {
 
     defaultConfig {

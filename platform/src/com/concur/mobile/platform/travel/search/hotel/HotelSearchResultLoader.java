@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+
 import com.concur.mobile.platform.service.PlatformAsyncTaskLoader;
 import com.concur.mobile.platform.service.parser.MWSResponse;
 import com.concur.mobile.platform.travel.provider.TravelUtilHotel;
@@ -79,7 +80,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
     private MWSResponse<HotelSearchRESTResult> mwsResp;
 
     public HotelSearchResultLoader(Context context, Calendar checkInDate, Calendar checkOutDate, Double lat, Double lon,
-            Integer radius, String distanceUnit) {
+                                   Integer radius, String distanceUnit) {
 
         super(context);
 
@@ -103,7 +104,7 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
      * @return
      */
     public static String prepareEndPointUrl(Double lat, Double lon, String distanceUnit, Calendar checkInDate,
-            Calendar checkOutDate) {
+                                            Calendar checkOutDate) {
 
         StringBuilder endPointUrlBldr = new StringBuilder(SERVICE_END_POINT);
         endPointUrlBldr.append("?latitude=");
@@ -176,7 +177,10 @@ public class HotelSearchResultLoader extends PlatformAsyncTaskLoader<HotelSearch
 
         } catch (IOException ioExc) {
             Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: I/O exception parsing data.", ioExc);
-        } finally {
+        } catch (RuntimeException runTimeExec) {
+            Log.e(Const.LOG_TAG, CLS_TAG + ".parseStream: RuntimeException", runTimeExec);
+        }
+        finally {
             if (is != null) {
                 try {
                     is.close();

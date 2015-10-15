@@ -326,6 +326,8 @@ public class Startup extends BaseActivity {
             logTotalTimeForAutoLogin(totalTime);
         }
         isLoginDone = true;
+        //update preferences
+
         doFinish();
     }
 

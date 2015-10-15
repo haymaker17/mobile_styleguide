@@ -127,8 +127,10 @@ import com.concur.mobile.core.util.ConcurException;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.Notifications;
 import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
@@ -496,8 +498,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             // tour. Set not first time running either way.
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (Preferences.isFirstTimeRunning(prefs)) {
-                    Preferences.setNotFirstTimeRunning(prefs);
+                Preferences.setNotFirstTimeRunning(prefs);
+                Preferences.resetUpgradePreferencese();
+            } else {
+                // Login is completed, make sure Nifty push service is started
+                if (Preferences.allowNotifications()) {
+                    Notifications notifications = new Notifications(ConcurCore.getContext());
+                    notifications.initAWSPushService();
+                }
             }
+
 
             // If the user should see the minSdkUpgradeMessage, show it.
             if ((android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) && !Preferences
@@ -966,22 +976,33 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     needService = true;
                 }
             } else {
-                // Restore any receivers.
-                restoreReceivers();
+                boolean isSessionExpired = SessionManager.isSessionExpire(concurMobile);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+                if (isSessionExpired && !autoLogin ){
+                    cancelAllDataRequests();
+                    clearSessionData();
+                    showExpiredDialog();
+                    return;
+                }else{
+                    // Restore any receivers.
+                    restoreReceivers();
 
-                // Re-register the data receiver, if need be.
-                if (!dataReceiverRegistered) {
-                    registerReceiver(dataReceiver, dataReceiverFilter);
-                    dataReceiverRegistered = true;
+                    // Re-register the data receiver, if need be.
+                    if (!dataReceiverRegistered) {
+                        registerReceiver(dataReceiver, dataReceiverFilter);
+                        dataReceiverRegistered = true;
+                    }
+
+                    // Go get the data
+                    if (isServiceAvailable()) {
+                        updateDataBasedOnServiceAvail();
+                    } else {
+                        needService = true;
+                    }
+                    updateOfflineQueueBar();
                 }
 
-                // Go get the data
-                if (isServiceAvailable()) {
-                    updateDataBasedOnServiceAvail();
-                } else {
-                    needService = true;
-                }
-                updateOfflineQueueBar();
 
             }
 
@@ -1296,6 +1317,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private void logout() {
 
         if (ConcurMobile.isConnected()) {
+            // Deregister from push notifications if they are enabled and there is a network connection
+            if (Preferences.allowNotifications()) {
+                Notifications notifications = new Notifications(ConcurCore.getContext());
+                notifications.stopAWSPushService();
+            }
 
             // When logging out, we clear the Session Id, but if we're updating
             // home (IE clearing offline data, refreshing, etc.)
@@ -2357,9 +2383,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                         public void onClick(View v) {
                             mTutorialHandler.cleanUp();
                             // commit changes in preferences.
-                            SharedPreferences.Editor e = prefs.edit();
-                            e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
-                            e.commit();
+                           Preferences.resetUpgradePreferencese();
                         }
                     });
             mTutorialHandler.setPointer(null)

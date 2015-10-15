@@ -756,7 +756,6 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
     private void gotoHome(Bundle emailLookup) {
-        // Grab our default preferences and get the server address configured
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         ConcurMobile app = (ConcurMobile) getApplication();
         //from email lookup screen no need to expire login
@@ -774,7 +773,6 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         } else {
             intent = getFirstRunNewUserIntent(this, prefs);
         }
-
         logUserTimings(emailLookup);
         startActivity(intent);
         this.setResult(Activity.RESULT_OK);

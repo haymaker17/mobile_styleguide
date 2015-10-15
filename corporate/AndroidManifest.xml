@@ -253,7 +253,7 @@
             android:name="com.concur.mobile.core.expense.activity.ListSearch"
             android:theme="@style/ConcurTheme"/>
         <activity android:name="com.concur.mobile.core.expense.report.approval.activity.ExpenseApproval"/>
-        <activity android:name="com.concur.mobile.core.expense.report.approval.activity.Approval">
+        <activity android:exported="true" android:name="com.concur.mobile.core.expense.report.approval.activity.Approval">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.concur.mobile.corp.activity.Home"/>
@@ -474,6 +474,15 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="com.concur.mobile.core.service.NiftyPushNotificationService"
+            android:label="NiftyPushNotificationService">
+            <intent-filter>
+                <action android:name="com.concur.mobile.core.receiver.AWSPushNotificationReceiver"/>
+
+                <category android:name="${applicationId}"/>
+            </intent-filter>
+        </service>
         <!-- ============ -->
         <!-- End AWS Push -->
         <!-- ============ -->

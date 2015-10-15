@@ -7,8 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.expense.receiptstore.service.ReceiptShareService;
-import com.concur.mobile.core.service.PushNotificationRegService;
+import com.concur.mobile.core.util.Notifications;
 
 /**
  * An extension of <code>BroadcastReceiver</code> for handling actions at device boot time.
@@ -32,9 +33,8 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         context.startService(serviceIntent);
 
         // Launch the AWS Push Notification service.
-        Intent myIntent = new Intent(context, PushNotificationRegService.class);
-        context.startService(myIntent);
-
+        Notifications notifications = new Notifications(ConcurCore.getContext());
+        notifications.initAWSPushService();
     }
 
 }

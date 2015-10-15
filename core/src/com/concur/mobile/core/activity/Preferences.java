@@ -1,6 +1,7 @@
 package com.concur.mobile.core.activity;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -438,6 +439,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    public static void resetUpgradePreferencese(){
+        // commit changes in preferences.
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+        e.commit();
+    }
     /**
      * This should only be called when running a new version for the first time. It will ensure that login/pin are encrypted in
      * the proper location and that the plaintext versions are deleted.
