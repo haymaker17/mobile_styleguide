@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.concur.mobile.core.travel.data;
 
@@ -13,7 +13,7 @@ import com.concur.mobile.core.util.Const;
 
 /**
  * Provides a model of a company office location.
- * 
+ *
  * @author AndrewK
  */
 public class CompanyLocation extends LocationChoice {
@@ -53,11 +53,11 @@ public class CompanyLocation extends LocationChoice {
     public String getName() {
         String formattedName = null;
         if (state == null || state.length() == 0) {
-            formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry, new Object[] {
-                    city, country });
+            formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry, new Object[]{
+                    city, country});
         } else {
             formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
-                    new Object[] { city, state, country });
+                    new Object[]{city, state, country});
         }
         if (address != null && address.length() > 0) {
             StringBuilder strBdlr = new StringBuilder();
@@ -71,11 +71,9 @@ public class CompanyLocation extends LocationChoice {
 
     /**
      * Will examine the attribute <code>localName</code> and assign the value in <code>cleanChars</code>.
-     * 
-     * @param localName
-     *            the attribute name.
-     * @param value
-     *            the attribute value trimmed of whitespace.
+     *
+     * @param localName the attribute name.
+     * @param value     the attribute value trimmed of whitespace.
      */
     public boolean handleElement(String localName, String value) {
         boolean attrSet = super.handleElement(localName, value);
@@ -98,4 +96,21 @@ public class CompanyLocation extends LocationChoice {
         return attrSet;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getProvince() {
+        String formattedName = null;
+        if (state == null || state.length() == 0) {
+            formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citycountry, new Object[]{
+                    city, country});
+
+        } else {
+            formattedName = Format.localizeText(ConcurCore.getContext(), R.string.general_citystatecountry,
+                    new Object[]{city, state, country});
+        }
+
+        return formattedName;
+    }
 }

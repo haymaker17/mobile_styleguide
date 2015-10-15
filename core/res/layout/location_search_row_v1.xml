@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/office_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:maxHeight="20dp"
+        android:minWidth="20dp"
+        android:padding="20dp"
+        android:src="@drawable/search_icon_office_location_grey" />
+
 
     <TextView
         android:id="@+id/locName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/office_icon"
+        android:layout_toRightOf="@+id/office_icon"
         android:gravity="center_vertical"
-        android:minHeight="54dp"
-        android:padding="3dp"
-        android:text="Por, Armenia"
+        android:minHeight="30dp"
+        android:text="ewewewewew "
         android:textAppearance="@style/FormFieldLabelTexHeadertV1"
-        android:textColor="@color/Black" >
-    </TextView>
 
+        android:textColor="@color/Black"></TextView>
+
+    <TextView
+        android:id="@+id/locCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locName"
+        android:layout_toEndOf="@+id/office_icon"
+        android:layout_toRightOf="@+id/office_icon"
+        android:gravity="center_vertical"
+        android:minHeight="30dp"
+        android:paddingBottom="16dp"
+        android:text="newyork US"
+        android:textAppearance="@style/FormFieldLabelTexHeadertV1"
+        android:textColor="@color/grey_text" />
+
+    <View
+        android:id="@+id/side_view_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/locName"
+        android:layout_below="@+id/locCity"
+        android:layout_gravity="center_horizontal"
+        android:layout_toRightOf="@+id/office_icon"
+        android:background="@color/cellDivider"
+        android:clickable="false"
+        android:paddingLeft="50dp" />
 </RelativeLayout>

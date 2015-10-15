@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/locationBackground"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/search_edit_frame"
@@ -14,7 +14,7 @@
         android:layout_marginBottom="4dip"
         android:background="@color/White"
         android:minHeight="56dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/search_back_button"
@@ -34,8 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:indeterminate="true" >
-        </SearchView>
+            android:indeterminate="true"></SearchView>
 
         <ImageView
             android:id="@+id/search_icon"
@@ -61,8 +60,8 @@
         android:paddingRight="20dp"
         android:text="@string/loc_search_office"
         android:textColor="@color/Black"
-        android:textSize="16sp">
-    </Button>
+        android:textSize="16sp"></Button>
+
     <Button
         android:id="@+id/currentLocation"
         android:layout_width="match_parent"
@@ -78,8 +77,7 @@
         android:paddingRight="20dp"
         android:text="@string/search_current_location"
         android:textColor="@color/Black"
-        android:textSize="16sp">
-    </Button>
+        android:textSize="16sp"></Button>
 
     <ListView
         android:id="@+id/locSearchResults"
@@ -87,11 +85,9 @@
         android:layout_height="match_parent"
         android:background="@color/locationSearchDivider"
         android:divider="@color/cellDivider"
-        android:dividerHeight="1dp"
+        android:dividerHeight="0dp"
         android:minHeight="54dp"
         android:paddingBottom="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="20dp" >
-    </ListView>
+        android:paddingRight="20dp"></ListView>
 
 </LinearLayout>

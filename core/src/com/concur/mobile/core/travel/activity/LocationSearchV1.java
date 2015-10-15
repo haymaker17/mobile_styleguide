@@ -15,8 +15,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.TextView;
+
 import com.concur.core.R;
 import com.concur.mobile.core.ConcurCore;
 import com.concur.mobile.core.receiver.NetworkActivityReceiver;
@@ -28,6 +37,7 @@ import com.concur.mobile.core.travel.service.LocationSearchReply;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.platform.ui.travel.util.ViewUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,7 +79,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     private String currentLocationName;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -89,7 +100,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                 Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
     }
 
-    @SuppressWarnings("unchecked") private ArrayList<? extends LocationChoice> extracted(Serializable locBundle) {
+    @SuppressWarnings("unchecked")
+    private ArrayList<? extends LocationChoice> extracted(Serializable locBundle) {
         return (ArrayList<? extends LocationChoice>) locBundle;
     }
 
@@ -98,7 +110,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
      * 
      * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
      */
-    @Override protected void onSaveInstanceState(Bundle outState) {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
@@ -112,7 +125,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     }
 
-    @Override protected void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
 
         registerReceiver(networkActivityReceiver, networkActivityFilter);
@@ -122,7 +136,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         EventTracker.INSTANCE.activityStart(this);
     }
 
-    @Override protected void onStop() {
+    @Override
+    protected void onStop() {
         super.onStop();
 
         unregisterReceiver(networkActivityReceiver);
@@ -154,8 +169,23 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         backButton.setOnClickListener(new OnClickListener() {
 
-            @Override public void onClick(View arg0) {
-                onBackPressed();
+            @Override
+            public void onClick(View arg0) {
+                if (searchResultsList.getVisibility() == View.VISIBLE) {
+                    searchResultsList.setVisibility(View.GONE);
+                    searchOfficeLocations.setVisibility(View.VISIBLE);
+                    currentLocationBtn.setVisibility(View.VISIBLE);
+                    currentSearchMode = SEARCH_CUSTOM;
+                    currentSearchText = null;
+                    if (currentLocationName != null) {
+                        searchView.setQueryHint(currentLocationName);
+                    } else {
+                        searchView.setQueryHint(getText(R.string.loc_search_hint_v1));
+                    }
+
+                } else {
+                    onBackPressed();
+                }
             }
         });
 
@@ -173,7 +203,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
         searchOfficeLocations.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 // Check for connectivity, if none, then display dialog and
                 // return.
                 if (!ConcurCore.isConnected()) {
@@ -184,16 +215,6 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                 // previousSearchMode = previousSearchMode == 0 ? currentSearchMode : previousSearchMode;
                 SearchResultsAdapter adapter = (SearchResultsAdapter) searchResultsList.getAdapter();
 
-                // // load previous custom search locations
-                // if (adapter.getCount() > 0 && previousSearchMode == SEARCH_CUSTOM) {
-                // preSearchText = searchText.getText().toString();
-                // if (preSearchText != null && preSearchText.length() > 0) {
-                // adapter.updatePreLocations(adapter.locations);
-                // }
-                // adapter.clearLocations();
-                // }
-                // show user company locations
-                // if (SEARCH_COMPANY_LOCATIONS == currentSearchMode) {
                 currentSearchMode = SEARCH_COMPANY_LOCATIONS;
                 ConcurCore app = (ConcurCore) getApplication();
                 ArrayList<CompanyLocation> full = app.getSystemConfig().getCompanyLocations();
@@ -203,24 +224,14 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                 currentLocationBtn.setVisibility(View.GONE);
                 searchResultsList.setVisibility(View.VISIBLE);
                 adapter.updateLocations(full);
-                // } else {
-                // if (adapter != null && adapter.preLocations.size() > 0) {
-                // adapter.updateLocations(adapter.preLocations);
-                // searchText.setText(preSearchText);
-                // }
-                // if (searchText.getText().toString().length() == 0) {
-                // adapter.clearLocations();
-                // }
-                //
-                // }
-                // previousSearchMode = currentSearchMode;
             }
 
         });
 
         currentLocationBtn.setOnClickListener(new View.OnClickListener() {
 
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 Intent i = new Intent();
                 i.putExtra(Const.EXTRA_LOCATION_SEARCH_MODE_USED, SEARCH_CURRENT_LOCATION);
                 setResult(RESULT_OK, i);
@@ -254,8 +265,6 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     /**
      * custom icons for search widget
-     *
-     * @param searchView
      */
     private void setSearchIcons() {
         try {
@@ -271,8 +280,6 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
     /**
      * custom colors to search Widget
-     *
-     * @param searchView
      */
     private void setSearchTextColour() {
 
@@ -293,7 +300,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     /**
      * on textChange listener
      */
-    @Override public boolean onQueryTextChange(String newText) {
+    @Override
+    public boolean onQueryTextChange(String newText) {
         handleSearch(newText);
         return false;
     }
@@ -301,7 +309,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
     /**
      * on text submit listener
      */
-    @Override public boolean onQueryTextSubmit(String query) {
+    @Override
+    public boolean onQueryTextSubmit(String query) {
         searchView.clearFocus();
         return true;
     }
@@ -391,27 +400,27 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
             switch (currentSearchMode) {
 
-            case SEARCH_AIRPORTS: {
-                if (ConcurCore.isConnected()) {
-                    ConcurCore app = (ConcurCore) getApplication();
-                    app.getService().searchLocations(currentSearchText, true);
+                case SEARCH_AIRPORTS: {
+                    if (ConcurCore.isConnected()) {
+                        ConcurCore app = (ConcurCore) getApplication();
+                        app.getService().searchLocations(currentSearchText, true);
+                    }
+                    break;
                 }
-                break;
-            }
-            case SEARCH_COMPANY_LOCATIONS:
-                adapter.updateLocations(filterCompanyLocations(currentSearchText));
-                break;
-            case SEARCH_RAIL_STATIONS:
-                adapter.updateLocations(filterRailStations(currentSearchText));
-                break;
-            default: {
-                currentSearchMode = SEARCH_CUSTOM;
-                if (ConcurCore.isConnected()) {
-                    ConcurCore app = (ConcurCore) getApplication();
-                    app.getService().searchLocations(currentSearchText);
+                case SEARCH_COMPANY_LOCATIONS:
+                    adapter.updateLocations(filterCompanyLocations(currentSearchText));
+                    break;
+                case SEARCH_RAIL_STATIONS:
+                    adapter.updateLocations(filterRailStations(currentSearchText));
+                    break;
+                default: {
+                    currentSearchMode = SEARCH_CUSTOM;
+                    if (ConcurCore.isConnected()) {
+                        ConcurCore app = (ConcurCore) getApplication();
+                        app.getService().searchLocations(currentSearchText);
+                    }
+                    break;
                 }
-                break;
-            }
             }
         }
 
@@ -576,8 +585,46 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
             LocationChoice loc = getItem(position);
             TextView tv = (TextView) row.findViewById(R.id.locName);
-            tv.setText(loc.getName());
+            ImageView officeIcon = (ImageView) row.findViewById(R.id.office_icon);
+            TextView city = (TextView) row.findViewById(R.id.locCity);
 
+            // int padding = ViewUtil.dpToPx(context, 20);
+            int textPadding = ViewUtil.dpToPx(context, 16);
+            //
+            if (currentSearchMode == SEARCH_COMPANY_LOCATIONS) {
+
+                CompanyLocation companyLocation = (CompanyLocation) loc;
+
+                int leftPadding = ViewUtil.dpToPx(context, 5);
+                row.setPadding(leftPadding, 0, 0, 0);
+
+                if (officeIcon != null) {
+                    officeIcon.setVisibility(View.VISIBLE);
+                }
+                if (city != null) {
+                    city.setVisibility(View.VISIBLE);
+                    Bundle address = loc.getBundle();
+                    city.setText(companyLocation.getProvince());
+                }
+//                int textLeftPadding = ViewUtil.dpToPx(context, 8);
+                tv.setPadding(0, textPadding, 0, 0);
+                tv.setText(companyLocation.getAddress());
+
+            } else {
+                int leftPadding = ViewUtil.dpToPx(context, 56);
+
+                row.setPadding(leftPadding, 0, 0, 0);
+                if (officeIcon != null) {
+                    officeIcon.setVisibility(View.GONE);
+                }
+                if (city != null) {
+                    city.setVisibility(View.GONE);
+                }
+                tv.setPadding(0, textPadding, 0, textPadding);
+                tv.setText(loc.getName());
+            }
+
+            row.requestLayout();
             return row;
         }
 
