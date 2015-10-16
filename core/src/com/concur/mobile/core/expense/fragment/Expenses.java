@@ -1717,8 +1717,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         if (mRemoveSmartExpensesRequestTask != null && mRemoveSmartExpensesRequestTask.getStatus() != AsyncTask.Status.FINISHED) {
             mRemoveSmartExpenseReceiver.setListener(mRemoveSmartExpenseAsyncReplyListener);
         } else {
-            mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask(
-                    getActivity().getApplicationContext(), 2, mRemoveSmartExpenseReceiver, smartExpenses);
+            Context context = activity != null? activity.getApplicationContext() : ConcurCore.getContext();
+            mRemoveSmartExpensesRequestTask = new RemoveSmartExpensesRequestTask(context, 2, mRemoveSmartExpenseReceiver, smartExpenses);
             mRemoveSmartExpensesRequestTask.execute();
         }
 
@@ -1737,8 +1737,8 @@ public class Expenses extends BaseFragment implements INetworkActivityListener {
         }
         // otherwise, if everything's all good, then make the call.
         else {
-            mDeleteExpenseItReceiptAsyncTask = new DeleteExpenseItReceiptAsyncTask(
-                    getActivity().getApplicationContext(), 1, mDeleteExpenseItReceiptReceiver, expenseItIds);
+            Context context = activity != null? activity.getApplicationContext() : ConcurCore.getContext();
+            mDeleteExpenseItReceiptAsyncTask = new DeleteExpenseItReceiptAsyncTask(context, 1, mDeleteExpenseItReceiptReceiver, expenseItIds);
             mDeleteExpenseItReceiptAsyncTask.execute();
         }
     }

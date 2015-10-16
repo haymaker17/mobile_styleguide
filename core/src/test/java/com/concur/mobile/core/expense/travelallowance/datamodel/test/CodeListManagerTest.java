@@ -5,6 +5,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocatio
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -18,6 +19,11 @@ import org.robolectric.annotation.Config;
 
 public class CodeListManagerTest extends TestCase {
     private CodeListManager codeListManager = CodeListManager.getInstance();
+
+    @Before
+    public void setup() {
+        codeListManager.clearAll();
+    }
 
     @Test
     public void updateItineraryLocation (){

@@ -12,20 +12,22 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url 'http://artifactory.concurtech.net/artifactory/libs-release-local' }
 }
 
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
+    compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':core')
     compile 'com.android.support:multidex:1.0.0'
+    compile(group: 'expenseit', name: 'receipt_detection', version: '0.2', classifier: 'release', ext: 'aar')
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
+    compile project(':concurtourguide')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
 }
-
 
 android {
 
@@ -66,7 +68,7 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi', 'x86'
+            include 'x86', 'armeabi-v7a', 'armeabi'
             universalApk true
         }
     }

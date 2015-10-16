@@ -8,9 +8,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -415,7 +417,6 @@ public class CompanySignOnActivity extends BaseActivity {
                 fromNotification = getIntent().getExtras().getBoolean(ConcurMobile.FROM_NOTIFICATION);
             }
             if (!fromNotification) {
-                Intent i = new Intent(this, Home.class);
                 if(ConcurCore.userEntryAppTimer>0){
                     ConcurCore.userSuccessfulLoginTimer = System.currentTimeMillis();
                     long totalWaitTime = ConcurCore.userSuccessfulLoginTimer - ConcurCore.userEntryAppTimer;
@@ -428,9 +429,26 @@ public class CompanySignOnActivity extends BaseActivity {
                             signInMethod, null);
                     ConcurCore.resetUserTimers();
                 }
-                startActivity(i);
-            }
 
+                Intent intent = null;
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                ConcurMobile app = (ConcurMobile) getApplication();
+                //from email lookup screen no need to expire login
+                app.expireLogin(false);
+
+                if (prefs.contains(Preferences.PREF_APP_UPGRADE)) {
+                    boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+                    if (isUpgrade) {
+                        //upgrade
+                        intent = Startup.getStartIntent(this);
+                    } else {
+                        intent = EmailPasswordLookupActivity.getFirstRunNewUserIntent(this, prefs);
+                    }
+                } else {
+                    intent = EmailPasswordLookupActivity.getFirstRunNewUserIntent(this, prefs);
+                }
+                startActivity(intent);
+            }
             setResult(RESULT_OK);
             finish();
         }

@@ -48,6 +48,7 @@ public class GetTAFixedAllowancesResponseDOMParser {
     public GetTAFixedAllowancesResponseDOMParser(Context context) {
         this.context = context;
         this.fixedTravelAllowances = new ArrayList<FixedTravelAllowance>();
+        this.controlData = new FixedTravelAllowanceControlData();
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
 
@@ -56,6 +57,10 @@ public class GetTAFixedAllowancesResponseDOMParser {
      */
     public List<FixedTravelAllowance> getFixedTravelAllowances() {
         return this.fixedTravelAllowances;
+    }
+
+    public FixedTravelAllowanceControlData getControlData() {
+        return this.controlData;
     }
 
     public void parse(Document dom) {
@@ -217,10 +222,5 @@ public class GetTAFixedAllowancesResponseDOMParser {
 
             }
         }
-    }
-
-
-    public void setControlData(FixedTravelAllowanceControlData controlData) {
-        this.controlData = controlData;
     }
 }

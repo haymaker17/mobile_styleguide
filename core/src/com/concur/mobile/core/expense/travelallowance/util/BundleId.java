@@ -13,6 +13,8 @@ public final class BundleId {
     public static final String POSITION_INFO_TAG = PositionInfoTag.class.getName();
     public static final String ITINERARY_LIST = "travelallowance.itinerary.list";
     public static final String ALLOWANCE_LIST = "travelallowance.allowance.list";
+    public static final String FIXED_TRAVEL_ALLOWANCE_CONTROL_DATA = "travelallowance.control.data";
+    public static final String TRAVEL_ALLOWANCE_CONFIGURATION = "travelallowance.configuration";
     public static final String SEGMENT = ItinerarySegment.class.getName();
     public static final String EXPENSE_REPORT_IS_SUBMITTED = "expense.report.isSubmitted";
     public static final String EXPENSE_REPORT_NAME = "expense.report.name";
@@ -26,5 +28,6 @@ public final class BundleId {
     public static final String IS_IN_APPROVAL = "isInApproval";
     public static final String FRAGMENT_MESSAGE_EXTRAS = "fragment.message.extras";
     public static final String ASSIGNABLE_ITINERARIES = "travelallowance.assignable.itineraries";
+    public static final String IS_FIRST_TA_ACTIVITY = "travelallowance.is.first.activity";
 
 }

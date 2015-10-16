@@ -67,4 +67,5 @@
     <color name="MaterialHintLightGray">#D2E2EB</color>
     <color name="MaterialTintLightBlue">#A5CFEB</color>
     <color name="MaterialGrayLine">#E5EAEE</color>
+    <color name="MaterialTransparent">#CC000000</color>
 </resources>
