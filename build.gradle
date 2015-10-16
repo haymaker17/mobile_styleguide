@@ -24,6 +24,7 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        //maven { url "https://jitpack.io" }
     }
 }
 
@@ -73,7 +74,7 @@ apply plugin: "sonar-runner"
 
 sonarRunner {
     sonarProperties {
-        property 'sonar.host.url', 'http://i-eb41cc1c.concur.concurtech.org:9000/'
+        property 'sonar.host.url', 'https://cmo-sonar01.concurtech.net:9000/'
         property 'sonar.login', 'jenkinsdev'
         property 'sonar.password', 'pass99'
         property 'sonar.jdbc.url', 'jdbc:postgresql://i-eb41cc1c.concur.concurtech.org/sonar'

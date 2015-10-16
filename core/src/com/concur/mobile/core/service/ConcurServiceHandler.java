@@ -229,15 +229,19 @@ public class ConcurServiceHandler extends Handler {
             ServiceRequest request = (ServiceRequest) msg.obj;
             // Only check for session validity when online.
             if (request.isSessionRequired() && ConcurCore.isConnected()) {
+
+                // MOB-25309 - Don't do GA tracking if this is called by the PushNotification service.
+                final boolean logEvents = (msg.what != Const.MSG_NOTIFICATION_REGISTER);
+
                 // Validate the current session id.
-                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(),
+                String sessionId = SessionManager.validateSessionId((ConcurCore) concurService.getApplication(), logEvents,
                         new SessionManager.AutoLoginListener() {
 
                             @Override
                             public void onSuccess(String sessionId) {
 
                                 // MOB-24610 - Don't keep log Events whenever the PushNotificaiton Service starts.
-                                if(msg.what != Const.MSG_NOTIFICATION_REGISTER) {
+                                if(logEvents) {
                                     // Flurry Notification
                                     Map<String, String> autoLoginParams = new HashMap<String, String>();
                                     autoLoginParams.put(Flurry.PARAM_NAME_TYPE, Flurry.PARAM_VALUE_AUTO_LOGIN);
@@ -259,10 +263,11 @@ public class ConcurServiceHandler extends Handler {
                             public void onRemoteWipe() {
 
                                 // Analytics stuff.
-                                Map<String, String> params = new HashMap<String, String>();
-                                params.put("Type", Flurry.EVENT_REMOTE_WIPE);
-                                EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
-
+                                if(logEvents) {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    params.put("Type", Flurry.EVENT_REMOTE_WIPE);
+                                    EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_FAILURE, params);
+                                }
                                 // MOB-18782 - If remote wipe was passed down, then notify the app.
                                 ConcurCore app = (ConcurCore) ConcurCore.getContext();
                                 app.remoteWipe();

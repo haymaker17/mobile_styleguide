@@ -159,4 +159,15 @@ public class RolesUtil {
         boolean returnVal = prefs.getBoolean(Const.PREF_CAN_GOV_USER, false);
         return returnVal;
     }
+    /**
+     * Whether logged in user is Travel only user
+     * */
+    public static boolean isTravelOnlyUser(Context context){
+        boolean isTraveler = RolesUtil.isTraveler(context);
+        boolean isTravelOnly =
+                isTraveler && !(RolesUtil.isExpenser(context) || RolesUtil.isExpenseApprover(context)
+                        || RolesUtil.isTRApprover(context) || RolesUtil.isInvoiceApprover(context) || RolesUtil
+                        .isInvoiceUser(context) || RolesUtil.isTravelApprover(context));
+        return isTravelOnly;
+    }
 }

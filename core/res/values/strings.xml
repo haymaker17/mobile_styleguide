@@ -476,6 +476,9 @@
     <string name="general_mobile_password">Mobile Password (PIN)</string>
     <string name="get_help">Get Help</string>
 
+    <string name="general_failed_save">"Operation failed, please try again!"</string>
+    <string name="general_failed_uploadImage">"Unable to upload image at this time, please try again later."</string>
+
     <!-- Travel related - show but booking not allowed -->
     <string name="general_booking_not_allowed_title">Reservation Not Allowed</string>
     <string name="general_booking_not_allowed_message">Your company\'s travel policy will not allow this reservation.</string>
@@ -1970,8 +1973,11 @@
 
     <!-- Start What's new -->
     <string-array name="whats_new">
-        <item>\u2022 Fix for Expense Report Approval notifications</item>
-        <item>\u2022 Crash Fix for some OS 5 users during start up</item>
+        <item>\u2022 Improved Sign-in </item>
+        <item>\u2022 We have redesigned the hotel booking experience in the app! We have made it easier than ever to find the perfect hotel for your next business trip with the following:</item>
+        <item>\u002D Personalized Suggestions: Now you will see hotels highlighted based on your past stays, your co-workers past stays as well as those popular with other business travelers.</item>
+        <item>\u002D Clear company policy: Now with clear visual cues on each room rate to keep you in policy.</item>
+        <item>\u002D Hotels Near You: Quickly find a hotel near you when plans change.</item>
     </string-array>
     <!-- End What's new -->
 
@@ -2084,8 +2090,7 @@
     <string name="sort_expenses_by_vendor">Vendor</string>
 
     <!-- New First Run Experinece -->
-    <string name="first_run_exp_it_page_1_title">Turn receipt into expense, as you go</string>
-    <string name="first_run_exp_it_page_1_msg">Expense it now available in concur app. Take photos of your receipts and ExpenseIt will turn the images into expenses for you.</string>
+    <string name="get_started">Get Started</string>
 
 
 </resources>

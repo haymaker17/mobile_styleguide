@@ -1,0 +1,9 @@
+<resources>
+    <!--ExpenseIt Image Preview Screen Dimens-->
+    <dimen name="preview_button_default_margin">12dp</dimen>
+    <dimen name="preview_button_size">40dp</dimen>
+    <dimen name="preview_text_padding">12dp</dimen>
+    <dimen name="preview_carat_margint_top">-1dp</dimen>
+    <dimen name="preview_coachmark_margin_side">16dp</dimen>
+    <dimen name="preview_text_overlay">48dp</dimen>
+</resources>

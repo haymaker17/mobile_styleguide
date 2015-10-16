@@ -457,6 +457,7 @@ public class Flurry {
     public static final String SCREEN_NAME_TRAVEL_HOTEL_OVERVIEW = "Travel-Hotel-HotelOverview";
     public static final String SCREEN_NAME_TRAVEL_HOTEL_RESERVE = "Travel-Hotel-Reserve";
 
+
     // event actions
     public static final String EVENT_ACTION_PLUS = "Plus";
     public static final String EVENT_ACTION_ADD_TO_TRIP = "AddToTrip";

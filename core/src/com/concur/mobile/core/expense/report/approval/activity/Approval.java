@@ -64,6 +64,7 @@ import com.concur.mobile.core.fragment.RetainerFragment;
 import com.concur.mobile.core.invoice.activity.InvoicesWebView;
 import com.concur.mobile.core.invoice.activity.PurchaseRequestsWebView;
 import com.concur.mobile.core.service.ConcurService;
+import com.concur.mobile.core.service.NiftyPushNotificationService;
 import com.concur.mobile.core.service.ServiceRequest;
 import com.concur.mobile.core.travel.activity.SegmentList;
 import com.concur.mobile.core.travel.approval.activity.ApprovalTripListItem;
@@ -80,6 +81,7 @@ import com.concur.mobile.core.util.ViewUtil;
 import com.concur.mobile.core.view.HeaderListItem;
 import com.concur.mobile.core.view.ListItem;
 import com.concur.mobile.core.view.ListItemAdapter;
+import com.concur.mobile.niftyservice.NiftyAsyncRequestTask;
 import com.concur.mobile.platform.service.parser.MWSResponseStatus;
 
 /**
@@ -257,7 +259,7 @@ public class Approval extends BaseActivity {
         }
         // Set the title header.
         getSupportActionBar().setTitle(getTitleHeaderTextResId());
-        Bundle extras = getIntent().getExtras();
+        final Bundle extras = getIntent().getExtras();
         final ConcurCore app = (ConcurCore) getApplication();
         if (extras != null && extras.containsKey(ConcurCore.FROM_NOTIFICATION)) {
             fromNotification = extras.getBoolean(ConcurCore.FROM_NOTIFICATION, false);
@@ -273,6 +275,16 @@ public class Approval extends BaseActivity {
 
                     @Override
                     protected Boolean doInBackground(Void... params) {
+                        // If we came from a notification, send read receipt if notificationId exists
+                        if (extras.containsKey(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY)) {
+                            String notificationId = extras.getString(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY);
+
+                            Context ctx = ConcurCore.getContext();
+                            Intent niftyIntent = new Intent(ctx, NiftyPushNotificationService.class);
+                            niftyIntent.putExtra(NiftyAsyncRequestTask.NOTIFICATION_ID_KEY, notificationId);
+                            ctx.startService(niftyIntent);
+                        }
+
                         boolean returnValue = app.isSessionAvailable();
                         return returnValue;
                     }
@@ -364,7 +376,7 @@ public class Approval extends BaseActivity {
             dataReceiverRegistered = true;
         }
 
-        // Set up the broadcast receiver if needbe.
+        // Set up the broadcast receiver if need be.
         if (!broadcastReceiverRegistered) {
             registerReceiver(broadcastReceiver, filter);
             broadcastReceiverRegistered = true;
@@ -376,7 +388,7 @@ public class Approval extends BaseActivity {
         // 'checkForRefreshData'.
         if (this.getClass().equals(Approval.class)) {
             if (isServiceAvailable() && dataUpdateRequest == null) {
-                // Check and request new data, if needbe.
+                // Check and request new data, if need be.
                 checkForRefreshData(false);
             }
         }
@@ -847,9 +859,7 @@ public class Approval extends BaseActivity {
     /**
      * onHandleSuccessItinerary
      * 
-     * @param activity
      * @param intent
-     * @param activity
      * */
     protected void onHandleSuccessItinerary(Intent intent) {
         String itinLocator = intent.getStringExtra(Const.EXTRA_ITIN_LOCATOR);

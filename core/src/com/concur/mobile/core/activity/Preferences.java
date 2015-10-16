@@ -1,6 +1,7 @@
 package com.concur.mobile.core.activity;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -45,6 +46,7 @@ import com.concur.mobile.platform.authentication.Session;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.util.Parse;
+import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
 
 import java.util.Calendar;
@@ -70,6 +72,7 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static final String PREF_SESSION_OBSOLETE = "pref_session_key";
     public static final String PREF_SESSION_ENC = "pref_session_key_enc";
     public static final String PREF_PLATFORM_DATA_MIGRATION = "pref_platform_data_migration";
+    public static final String PREF_APP_UPGRADE = "pref_app_upgrade";
 
     public static final Crypt PREF_CRYPT;
     private static boolean hideAutoLogin = false;
@@ -323,7 +326,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         shiftSession(prefs);
         removePreferences(prefs);
         platFormDataMigration(prefs, app);
-        doAutoLogin(prefs, app);
+        ///doAutoLogin(prefs, app);
+
+        // commit chnages in preferences.
+        Editor e = prefs.edit();
+        e.putBoolean(PREF_APP_UPGRADE, true);
+        e.commit();
     }
 
     private static void platFormDataMigration(SharedPreferences prefs, ConcurCore app) {
@@ -432,6 +440,14 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
         }
     }
 
+    public static void resetUpgradePreferencese(){
+        // commit changes in preferences.
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        SharedPreferences.Editor e = prefs.edit();
+        e.putBoolean(Preferences.PREF_APP_UPGRADE, false);
+        e.commit();
+    }
     /**
      * This should only be called when running a new version for the first time. It will ensure that login/pin are encrypted in
      * the proper location and that the plaintext versions are deleted.
@@ -1047,8 +1063,12 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
     public static boolean isExpenseItUser() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
 
+        //TODO: REMOVE THIS CHECK ONLY WHEN MODULE IS WORKING ON PROD SERVER
+        boolean isExpenseItExperienceEnabled = ExpenseItProperties.getServerAddress().equals("https://api.expenseit.com") ?
+            true : isExpenseItExperienceEnabled();
+
         //To show ExpenseIt features. We look for both the role and site settings
-        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled();
+        return prefs.getBoolean(Const.PREF_SHOW_EXPENSEIT_AD, false) && isExpenseItExperienceEnabled;
     }
 
     public static boolean isCardAgreementAccepted() {
@@ -1240,7 +1260,8 @@ public class Preferences extends PreferenceActivity implements OnSharedPreferenc
      */
     public static boolean isExpenseItExperienceEnabled() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ConcurCore.getContext());
-        return prefs.getBoolean(Const.PREF_ENABLE_EXPENSE_IT_EXPERIENCE, false);
+        boolean retVal= prefs.getBoolean(Const.PREF_ENABLE_EXPENSE_IT_EXPERIENCE, false);
+        return retVal;
     }
 
     /*
