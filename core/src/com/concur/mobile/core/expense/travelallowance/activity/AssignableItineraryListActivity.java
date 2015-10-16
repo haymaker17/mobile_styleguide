@@ -212,7 +212,7 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
         if (MSG_ASSIGN_ITIN_SUCCESS.equals(fragmentMessage) || MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
             if (!isSuccess ||  MSG_ASSIGN_ITIN_FAILED.equals(fragmentMessage)) {
                 dismissProgressDialog();
-                Toast.makeText(this, R.string.adding_not_possible, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.general_adding_not_possible, Toast.LENGTH_SHORT).show();
                 return;
             }
             refreshAssignableItineraries(false);

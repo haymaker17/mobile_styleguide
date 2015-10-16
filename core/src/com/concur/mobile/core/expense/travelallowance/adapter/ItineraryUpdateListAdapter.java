@@ -33,7 +33,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onLocationClickListener;
     private OnClickListener onDeleteItemClickListener;
     private OnClickListener onReturnToHomeListener;
+    private OnClickListener onMessageAreaClickListener;
     private List<ItinerarySegment> segments;
+    private boolean addingDisabled;
 
     /**
      * Holds all UI controls needed for rendering
@@ -77,7 +79,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     public ItineraryUpdateListAdapter(final Context context, final OnClickListener onItemClickListener,
                                       final OnClickListener onLocationClickListener,
             final OnClickListener onDateClickListener, final OnClickListener onTimeClickListener,
-            final OnClickListener onReturnToHomeListener,
+            final OnClickListener onReturnToHomeListener, final OnClickListener onMessageAreaClickListener,
             List<ItinerarySegment> itinerarySegments) {
 
         super(context, LAYOUT_ID);
@@ -88,8 +90,13 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onTimeClickListener = onTimeClickListener;
         this.onReturnToHomeListener = onReturnToHomeListener;
         this.onDeleteItemClickListener = onItemClickListener;
+        this.onMessageAreaClickListener = onMessageAreaClickListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
+    }
+
+    public void setAddingDisabled(boolean addingDisabled) {
+        this.addingDisabled = addingDisabled;
     }
 
     /**
@@ -197,10 +204,16 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     holder.vgArrivalTime.setClickable(true);
                 }
             }
-            if (this.onReturnToHomeListener != null){
+            if (this.onReturnToHomeListener != null) {
                 holder.vgReturnToHome.setOnClickListener(onReturnToHomeListener);
             }
 
+            if (this.onMessageAreaClickListener != null) {
+                if (holder.vMessageArea != null) {
+                    holder.vMessageArea.setOnClickListener(onMessageAreaClickListener);
+                    holder.vMessageArea.setClickable(true);
+                }
+            }
         } else {
             resultView = convertView;
             holder = (ViewHolder) resultView.getTag();
@@ -222,6 +235,8 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         setPositionInfoTag(holder.vArrivalLocation, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalDate, i, PositionInfoTag.INFO_INBOUND);
         setPositionInfoTag(holder.vgArrivalTime, i, PositionInfoTag.INFO_INBOUND);
+
+        setPositionInfoTag(holder.vMessageArea, i, PositionInfoTag.INFO_NONE);
 
         renderMessageArea(segment);
 
@@ -259,6 +274,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
     private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
@@ -273,7 +296,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vgReturnToHome == null) {
             return;
         }
-        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null) {
+        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null && !addingDisabled) {
             holder.vgReturnToHome.setVisibility(View.VISIBLE);
             if (holder.tvReturnToHome != null) {
                 String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
@@ -304,19 +327,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
         holder.vMessageArea.setVisibility(View.GONE);
         if (segment.isLocked()) {
-//            holder.vMessageArea.setVisibility(View.VISIBLE);
-//            if (holder.ivIcon != null) {
-//                holder.ivIcon.setImageResource(R.drawable.profile_icon_bank);
-//                holder.ivIcon.setVisibility(View.VISIBLE);
-//            }
-//            if (holder.tvMessage != null) {
-//                holder.tvMessage.setText(R.string.general_item_locked);
-//            }
             return;
         } else {
             Message msg = segment.getMessage();
-            if (msg != null && msg.getSeverity() == Message.Severity.ERROR
-                    && !Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
+            if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
                 holder.vMessageArea.setVisibility(View.VISIBLE);
                 if (holder.ivIcon != null) {
                     holder.ivIcon.setImageResource(R.drawable.icon_redex);

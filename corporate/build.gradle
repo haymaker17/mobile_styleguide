@@ -12,7 +12,6 @@ apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
-    maven { url 'http://artifactory.concurtech.net/artifactory/libs-release-local' }
 }
 
 
@@ -23,7 +22,6 @@ dependencies {
     compile(group: 'expenseit', name: 'receipt_detection', version: '0.2', classifier: 'release', ext: 'aar')
     testCompile 'org.robolectric:robolectric:3.+'
     testCompile 'junit:junit:4.+'
-    compile project(':concurtourguide')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }
