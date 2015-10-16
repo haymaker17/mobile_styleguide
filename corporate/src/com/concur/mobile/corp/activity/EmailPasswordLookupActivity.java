@@ -211,10 +211,10 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         if (loginPasswordFragment==null) {
            startEmailFragment();
         } else {
-           if(loginPasswordFragment==null){
-               startLoginFragment(emailLookupBundle);
+           if(loginPasswordFragment!=null){
+               //login password fragment is active. Do not start fragment again. This check is essential during rotation.
            }else{
-               //TODO login fragment is already active
+               startLoginFragment(emailLookupBundle);
            }
         }
 
@@ -1146,6 +1146,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         }
     }
 
+    /**
+     * Removing login fragment and start email fragment.
+    * */
     private void removeLoginFragment(){
         getSupportFragmentManager().beginTransaction().remove(loginPasswordFragment).commit();
         startEmailFragment();
