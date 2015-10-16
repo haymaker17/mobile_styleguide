@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
@@ -73,21 +73,24 @@ public class MessageDialogFragment extends DialogFragment {
     public static final String NEGATIVE_BUTTON_TEXT = CLASS_NAME + ".negative.button.text";
 
     /**
-     * Used as key of an argument. The dialog title is only shown, if this argument was provided.
+     * Used as key of an argument. The associated value is supposed to be of type {@link Message}.
+     * The message text displayed is taken from there. Also the title is displayed in case
+     * the message is of severity Error along with an error icon.
+     */
+    public static final String MESSAGE_OBJECT = CLASS_NAME + ".message.object";
+
+    /**
+     * Used as key of an argument. The dialog title is shown with the given text, if this
+     * argument was provided and no {@link MessageDialogFragment#MESSAGE_OBJECT} was provided
+     * through the arguments bundle.
      * The associated value is supposed to be of type {@link String} containing the title text.
      */
     public static final String MESSAGE_TITLE = CLASS_NAME + ".message.title";
 
     /**
-     * Used as key of an argument. The associated value is supposed to be of type {@link Message}.
-     * The message text displayed is taken from there, if no argument
-     * {@link MessageDialogFragment#MESSAGE_TEXT} was provided through the arguments bundle.
-     */
-    public static final String MESSAGE_OBJECT = CLASS_NAME + ".message.object";
-
-    /**
      * Used as key of an argument. The associated value is supposed to be of type {@link String}.
-     * The message text displayed is taken from there.
+     * The message text displayed is taken from there, if no argument
+     * {@link MessageDialogFragment#MESSAGE_OBJECT} was provided through the arguments bundle.
      */
     public static final String MESSAGE_TEXT = CLASS_NAME + ".message.text";
 
@@ -102,7 +105,8 @@ public class MessageDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final Bundle arguments = getArguments();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.TADialog);
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.TADialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         //Default texts
         String positiveButtonText = getString(R.string.general_ok);
@@ -153,12 +157,17 @@ public class MessageDialogFragment extends DialogFragment {
             if (arguments.containsKey(MESSAGE_OBJECT)) {
                 Message msg = (Message) arguments.getSerializable(MESSAGE_OBJECT);
                 builder.setMessage(msg.getMessageText(getActivity().getApplicationContext()));
-            }
-            if (arguments.containsKey(MESSAGE_TEXT)) {
-                builder.setMessage(arguments.getString(MESSAGE_TEXT));
-            }
-            if (arguments.containsKey(MESSAGE_TITLE)) {
-                builder.setTitle(arguments.getString(MESSAGE_TITLE));
+                if (msg.getSeverity() == Message.Severity.ERROR) {
+                    builder.setIcon(R.drawable.icon_redex);
+                    builder.setTitle(R.string.general_error);
+                }
+            } else {
+                if (arguments.containsKey(MESSAGE_TEXT)) {
+                    builder.setMessage(arguments.getString(MESSAGE_TEXT));
+                }
+                if (arguments.containsKey(MESSAGE_TITLE)) {
+                    builder.setTitle(arguments.getString(MESSAGE_TITLE));
+                }
             }
             //Cancelable or not
             if (arguments.containsKey(NOT_CANCELABLE)) {
