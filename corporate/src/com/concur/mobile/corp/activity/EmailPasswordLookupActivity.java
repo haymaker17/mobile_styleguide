@@ -52,7 +52,6 @@ import com.concur.mobile.platform.ui.common.IProgressBarListener;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
-import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailPasswordLookupFragment;
 import com.concur.mobile.platform.ui.common.login.NewLoginPasswordFragment;
@@ -90,6 +89,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     private static final String PROGRESSBAR_VISIBLE = "PROGRESSBAR_VISIBLE";
     private static final String PROGRESSBAR_MESSAGE = "PROGRESSBAR_MESSAGE";
+    private static final String EMAIL_LOOKUP_BUNDLE = "emailLookupBundle";
+    private static final String LOGIN_FRAGMENT = "login_fragment";
+    private static final String EMAIL_FRAGMENT = "email_fragment";
 
     public final static String TAG_LOGIN_WAIT_DIALOG = "tag.login.wait.dialog";
     protected final static String TAG_LOGIN_REMOTE_WIPE_DIALOG = "tag.login.remote.wipe.dialog";
@@ -112,6 +114,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     private byte mTwoFingerTapCount = 0;
 
     private NewLoginPasswordFragment loginPasswordFragment;
+    private EmailPasswordLookupFragment emailLookupFragment;
 
     private BaseAsyncResultReceiver autoLoginReceiver;
 
@@ -151,9 +154,20 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
             progressbarVisible = savedInstanceState.getBoolean(PROGRESSBAR_VISIBLE, false);
+            progressDlgMessage = savedInstanceState.getString(PROGRESSBAR_MESSAGE);
+
             if (progressbarVisible) {
                 showProgressBar();
             }
+
+            emailLookupBundle = savedInstanceState.getBundle(EMAIL_LOOKUP_BUNDLE);
+
+            emailLookupFragment = (EmailPasswordLookupFragment)getSupportFragmentManager().getFragment(
+                    savedInstanceState, EMAIL_FRAGMENT);
+
+            loginPasswordFragment = (NewLoginPasswordFragment)getSupportFragmentManager().getFragment(
+                    savedInstanceState, LOGIN_FRAGMENT);
+
         }
 
         ImageView img = (ImageView) findViewById(R.id.helpimg);
@@ -194,31 +208,14 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // See if we're to preload the email address.
         emailText = getIntent().getStringExtra(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE);
 
-        FragmentManager fm = getSupportFragmentManager();
-        Bundle bundle = new Bundle();
-        PlatformFragment emailLookupFragment = (PlatformFragment) fm.findFragmentByTag(FRAGMENT_EMAIL_LOOKUP);
-        if (emailLookupFragment == null) {
-            emailLookupFragment = new EmailPasswordLookupFragment();
-
-            // If we're supposed to load email lookup with text, push that to the fragment.
-            // But first check if it's empty, and if it is and autologin is enabled, get it from the Prefs.
-            if (TextUtils.isEmpty(emailText)) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                if (prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
-                    // Restore login ID : MOB-18534
-                    emailText = Preferences.getLogin(prefs, "");
-                }
-            }
-
-            bundle.putString(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE, emailText);
-            emailLookupFragment.setArguments(bundle);
-
-            ((EmailPasswordLookupFragment) emailLookupFragment).setProgressBarListener(this);
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.container, emailLookupFragment, FRAGMENT_EMAIL_LOOKUP);
-            ft.commit();
+        if (loginPasswordFragment==null) {
+           startEmailFragment();
         } else {
-            ((EmailPasswordLookupFragment) emailLookupFragment).setProgressBarListener(this);
+           if(loginPasswordFragment==null){
+               startLoginFragment(emailLookupBundle);
+           }else{
+               //TODO login fragment is already active
+           }
         }
 
         setAutoRequestReceiver();
@@ -249,9 +246,13 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     }
                 }
             });
+            FragmentManager mgr = getSupportFragmentManager();
+            if (mgr != null) {
+                FragmentTransaction ft = mgr.beginTransaction();
+                progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
+                progressbarVisible = true;
+            }
         }
-        progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
-        progressbarVisible = true;
 
     }
 
@@ -272,9 +273,18 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putBoolean(PROGRESSBAR_VISIBLE, progressbarVisible);
         outState.putString(PROGRESSBAR_MESSAGE, progressDlgMessage);
+        outState.putBundle(EMAIL_LOOKUP_BUNDLE, emailLookupBundle);
+        //Save the fragment's instance
+        if(emailLookupFragment!=null && emailLookupFragment.isVisible()){
+            getSupportFragmentManager().putFragment(outState, EMAIL_FRAGMENT, emailLookupFragment);
+        }
+        if(loginPasswordFragment!=null && loginPasswordFragment.isVisible()){
+            getSupportFragmentManager().putFragment(outState, LOGIN_FRAGMENT, loginPasswordFragment);
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -365,6 +375,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     public void onEmailLookupRequestFail(Bundle resultData) {
         trackEmailLookupFailure(Flurry.EVENT_OTHER_ERROR);
         // resultData contains the sign-in method. {Values: Password/MobilePassword/SSO} , and email id used in email lookup.
+        emailLookupBundle = resultData;
         startLoginFragment(resultData);
     }
 
@@ -383,21 +394,57 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
 
+    private void startEmailFragment(){
+        FragmentManager fm = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        emailLookupFragment = (EmailPasswordLookupFragment) fm.findFragmentByTag(FRAGMENT_EMAIL_LOOKUP);
+        if(emailLookupBundle!=null){
+            emailText  = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);
+        }
+        if (emailLookupFragment == null) {
+            emailLookupFragment = new EmailPasswordLookupFragment();
+
+            // If we're supposed to load email lookup with text, push that to the fragment.
+            // But first check if it's empty, and if it is and autologin is enabled, get it from the Prefs.
+            if (TextUtils.isEmpty(emailText)) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                if (prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
+                    // Restore login ID : MOB-18534
+                    emailText = Preferences.getLogin(prefs, "");
+                }
+            }
+
+            bundle.putString(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE, emailText);
+            emailLookupFragment.setArguments(bundle);
+
+            emailLookupFragment.setProgressBarListener(this);
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, emailLookupFragment, FRAGMENT_EMAIL_LOOKUP);
+            ft.commit();
+        } else {
+            emailLookupFragment.setProgressBarListener(this);
+        }
+    }
+
     private void startLoginFragment(Bundle emailLookupBundle) {
         FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
         loginPasswordFragment = (NewLoginPasswordFragment) fm.findFragmentByTag(FRAGMENT_LOGIN_PASSWORD);
         if (loginPasswordFragment == null) {
             loginPasswordFragment = new NewLoginPasswordFragment();
         }
-        Bundle args = new Bundle();
-        args.putBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, emailLookupBundle);
-        loginPasswordFragment.setArguments(args);
-        ft.replace(R.id.container, loginPasswordFragment, FRAGMENT_LOGIN_PASSWORD);
-        ft.addToBackStack(FRAGMENT_LOGIN_PASSWORD);
-        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        ft.commit();
-
+        if (emailLookupBundle != null) {
+            Bundle args = new Bundle();
+            args.putBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, emailLookupBundle);
+            loginPasswordFragment.setArguments(args);
+            //TODO isPasswordLoginFragmentShown=true;
+        }
+        if (emailLookupFragment!=null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, loginPasswordFragment, FRAGMENT_LOGIN_PASSWORD);
+            ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+            ft.commit();
+            //ft.commitAllowingStateLoss();
+        }
     }
 
     /*
@@ -553,6 +600,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
             if (progressDialog != null) {
                 progressDialog.dismiss();
+                progressbarVisible = false;
             }
 
             remoteWipe();
@@ -589,10 +637,11 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         noOfLoginAttempts++;
         if (progressDialog != null) {
             progressDialog.dismiss();
+            progressbarVisible = false;
         }
         if (noOfLoginAttempts > 2) {
-            loginPasswordFragment.removeFragment();
             noOfLoginAttempts = 0;
+            removeLoginFragment();
         } else {
             if (loginPasswordFragment.isDetached()) {
                 return;
@@ -956,6 +1005,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 // close dialog
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                    progressbarVisible = false;
                 }
 
                 // Go to homescreen ...
@@ -1011,6 +1061,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     Preferences.setUserLoggedOnToExpenseIt(false);
                 }
 
+                // Go to homescreen ...
+                startHomeScreen(emailLookupBundle);
+
             }
 
             /*
@@ -1026,10 +1079,11 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 // close dialog
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                    progressbarVisible = false;
                 }
                 if (noOfLoginAttempts > 2) {
-                    loginPasswordFragment.removeFragment();
                     noOfLoginAttempts = 0;
+                    removeLoginFragment();
                     return;
                 }
 
@@ -1069,5 +1123,32 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     }
 
+    @Override
+    public void onAttachFragment(android.support.v4.app.Fragment fragment) {
+        if(fragment instanceof EmailPasswordLookupFragment){
+        }
+        if(fragment instanceof NewLoginPasswordFragment){
+        }
+    }
+
+    @Override
+    public void resetEmailLookupFragment(){
+        //start email lookup fragment
+        startEmailFragment();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(loginPasswordFragment!=null && loginPasswordFragment.isVisible()){
+            removeLoginFragment();
+        } else{
+            super.onBackPressed();
+        }
+    }
+
+    private void removeLoginFragment(){
+        getSupportFragmentManager().beginTransaction().remove(loginPasswordFragment).commit();
+        startEmailFragment();
+    }
 }
 

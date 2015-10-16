@@ -1396,6 +1396,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Go back to the EmailLookup screen.
         Intent i = new Intent(this, EmailPasswordLookupActivity.class);
         i.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ConcurCore ConcurCore = (ConcurCore) getApplication();
         ConcurService ConcurService = ConcurCore.getService();
         CorpSsoQueryReply ssoQueryReply = ConcurService.getCorpSsoQueryReply();

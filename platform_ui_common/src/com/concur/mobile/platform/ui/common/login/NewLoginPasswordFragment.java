@@ -136,6 +136,12 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
          * Two finger Click listener for View.
          */
         public void setOnTouchListenerForView(View view);
+
+        /**
+         * sets email lookup fragment on screen
+         */
+
+        public void resetEmailLookupFragment();
     }
 
     /**
@@ -340,7 +346,7 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
     @Override
     public void onDetach() {
         super.onDetach();
-
+        //loginPasswordCallbacks.setPasswordFragAttached(false);
         // Set the callback to null so we don't accidentally leak the Activity instance.
         loginPasswordCallbacks = null;
     }
@@ -570,7 +576,8 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
             ViewUtil.hideSoftKeyboard(getActivity(), passwordView.getWindowToken());
 
         } else if (v.getId() == R.id.passwordLabel) {
-            getActivity().getSupportFragmentManager().popBackStack();
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+           loginPasswordCallbacks.resetEmailLookupFragment();
         }
     }
 
@@ -592,7 +599,7 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
     }
 
 
-    public void removeFragment(){
+    public void removeFragment() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
     // ################# HELPER METHODS #################### //
