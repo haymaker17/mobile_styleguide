@@ -1,5 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.datamodel.test;
 
+import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
 import com.concur.mobile.core.expense.travelallowance.util.Message;
 
@@ -40,6 +41,11 @@ public class ItinerarySegmentTest extends TestCase{
         cal.set(Calendar.MILLISECOND, 0);
 
         itinSegmBase.setDepartureDateTime(cal.getTime());
+
+        ItineraryLocation departureLocation = new ItineraryLocation();
+        departureLocation.setTimeZoneOffset(0L);
+        itinSegmBase.setDepartureLocation(departureLocation);
+
     }
 
     /**
@@ -168,8 +174,22 @@ public class ItinerarySegmentTest extends TestCase{
 
     @Test
     public void getEndDateUTC() {
-        Date date;
-        date = null;
+        Date date = null;
         assertEquals(date, itinSegmBase.getEndDateUTC());
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2015, Calendar.JULY, 15);
+        cal.set(Calendar.HOUR_OF_DAY, 1);
+        cal.set(Calendar.MINUTE, 42);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        ItineraryLocation arrivalLocation = new ItineraryLocation();
+        arrivalLocation.setTimeZoneOffset(240L);
+        itinSegmBase.setArrivalLocation(arrivalLocation);
+        itinSegmBase.setArrivalDateTime(cal.getTime());
+        cal.set(2015,Calendar.JULY,14);
+        cal.set(Calendar.HOUR_OF_DAY, 21);
+        assertEquals(cal.getTime(), itinSegmBase.getEndDateUTC());
     }
 }
