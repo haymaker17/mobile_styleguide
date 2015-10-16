@@ -346,7 +346,6 @@ public class NewLoginPasswordFragment extends PlatformFragment implements View.O
     @Override
     public void onDetach() {
         super.onDetach();
-        //loginPasswordCallbacks.setPasswordFragAttached(false);
         // Set the callback to null so we don't accidentally leak the Activity instance.
         loginPasswordCallbacks = null;
     }
