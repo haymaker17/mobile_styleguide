@@ -630,10 +630,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 adapter.setAddingDisabled(true);
                 adapter.notifyDataSetChanged();
             }
-//            if (onlineCheckActive) {//render new errors found
-//                renderNameLabel();
-//                adapter.notifyDataSetChanged();
-//            }
             return false; //leave sequence
         }
         if (itinController.areDatesOverlapping(itinerary, onlineCheckActive)) {
@@ -643,9 +639,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 adapter.setAddingDisabled(true);
                 adapter.notifyDataSetChanged();
             }
-//            if (onlineCheckActive) {//render new errors found
-//                adapter.notifyDataSetChanged();
-//            }
             return false; //leave sequence
         }
         if (itinController.hasErrors(this.itinerary)) {
@@ -655,9 +648,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 adapter.setAddingDisabled(true);
                 adapter.notifyDataSetChanged();
             }
-//            if (onlineCheckActive) {//render backend errors found
-//                adapter.notifyDataSetChanged();
-//            }
             return false; //leave sequence
         }
 
