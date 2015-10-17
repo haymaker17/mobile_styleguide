@@ -1008,9 +1008,6 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     progressbarVisible = false;
                 }
 
-                // Go to homescreen ...
-                startHomeScreen(emailLookupBundle);
-
                 // Set this back to 0 so we don't record this attempt
                 // if the user goes back to try and register. We only
                 // want to record if the user failed to sign in.
