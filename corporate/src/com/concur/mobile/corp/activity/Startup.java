@@ -191,12 +191,11 @@ public class Startup extends BaseActivity {
         if (prefs.contains(Const.PREF_SESSION_EXPIRATION) && (!Preferences.isFirstTimeRunning(prefs))) {
             boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
             if (isUpgrade) {
-                doAutoLogin(prefs,isUpgrade);
-            }else{
+                doAutoLogin(prefs, isUpgrade);
+            } else {
                 startHomeScreen();
                 doLoginFinish();
             }
-
         } else {
             // Determine whether a company sign-on URL has been cached. If so,
             // take the end-user to the company sign-on screen.
@@ -226,13 +225,13 @@ public class Startup extends BaseActivity {
                 doLoginFinish();
             } else {
                 boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
-                doAutoLogin(prefs,isUpgrade);
+                doAutoLogin(prefs, isUpgrade);
             }
         }
     }
 
 
-    private void doAutoLogin(SharedPreferences prefs, boolean isUpgrade){
+    private void doAutoLogin(SharedPreferences prefs, boolean isUpgrade) {
         emailLookupBundle = getEmailLookUpBundleFromSessionInfo(sessionInfo);
         String signInMethod = null;
         if (emailLookupBundle != null) {
@@ -241,7 +240,7 @@ public class Startup extends BaseActivity {
         if ((TextUtils.isEmpty(signInMethod))) {
             startLoginScreen();
             doLoginFinish();
-        }   else {
+        } else {
             // Perform a pin-based login.
             // See how we are going to start
             boolean disableAutoLogin = prefs.getBoolean(Const.PREF_DISABLE_AUTO_LOGIN, false);
@@ -250,9 +249,9 @@ public class Startup extends BaseActivity {
                 autoLogin = false;
             }
             //check if you have valid session, if you do then call autologin because you have valid session. if not then set autologin to false
-            if(!autoLogin && sessionInfo!=null){
-                if(!SessionManager.isSessionExpire((ConcurMobile) this.getApplication())){
-                    autoLogin=true;
+            if (!autoLogin && sessionInfo != null) {
+                if (!SessionManager.isSessionExpire((ConcurMobile) this.getApplication())) {
+                    autoLogin = true;
                 }
             }
 
@@ -262,14 +261,14 @@ public class Startup extends BaseActivity {
                 if (isUpgrade) {
                     // if autologin turn on and upgrade do autologin and go to home screen.
                     needLogin = !doLogin();
-                }else{
+                } else {
                     // if autologin turn on and not upgrade do not do anything just go to home screen
                     startHomeScreen();
                     doLoginFinish();
-                    needLogin=false;
+                    needLogin = false;
                 }
 
-            }else{
+            } else {
                 // need to expire the login
                 ConcurMobile app = (ConcurMobile) getApplication();
                 app.expireLogin(true);
@@ -286,6 +285,7 @@ public class Startup extends BaseActivity {
             // the attempt completes.
         }
     }
+
     private Bundle getEmailLookUpBundleFromSessionInfo(SessionInfo sessionInfo) {
         // Determine whether a company sign-on URL has been cached. If so,
         // take the end-user to the company sign-on screen.
@@ -334,7 +334,7 @@ public class Startup extends BaseActivity {
     private void logTotalTimeForAutoLogin(long totalWaitTime) {
         // Statistics Notification
         String signInMethod = com.concur.mobile.platform.ui.common.util.Const.LOGIN_METHOD_PASSWORD;
-        if (emailLookupBundle!=null) {
+        if (emailLookupBundle != null) {
             signInMethod = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_SIGN_IN_METHOD_KEY);
         }
         EventTracker.INSTANCE.trackTimings(Flurry.CATEGORY_SIGN_IN, totalWaitTime,
@@ -388,19 +388,19 @@ public class Startup extends BaseActivity {
         startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
     }
 
-    public static Intent getStartIntent(Activity activity){
+    public static Intent getStartIntent(Activity activity) {
         Intent startIntent = null;
         Context ctx = ConcurCore.getContext();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
-        if(!Preferences.isFirstTimeRunning(prefs) && !isUpgrade){
+        if (!Preferences.isFirstTimeRunning(prefs) && !isUpgrade) {
             startIntent = new Intent(activity, Home.class);
-        }else{
+        } else {
             boolean shownExpenseIt = true, shownTravel = true, shownBoth = true;
             boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
             boolean isTestDriveUser = RolesUtil.isTestDriveUser();
             boolean isExpItUser = Preferences.isExpenseItUser();
-            boolean isTraveler =RolesUtil.isTraveler(activity);
+            boolean isTraveler = RolesUtil.isTraveler(activity);
             //check roles
             if (!(isTestDriveUser) && isExpItUser) {
                 if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
@@ -415,11 +415,11 @@ public class Startup extends BaseActivity {
                     shownTravel = true;
                     Preferences.setFirstRunExpUpgradeTravel(prefs);
                     //if it is travel only user do not show expense it screen
-                    shownExpenseIt=true;
+                    shownExpenseIt = true;
                 } else {
                     shownTravel = false;
                     //if it is travel only user do not show expense it screen
-                    shownExpenseIt=true;
+                    shownExpenseIt = true;
                 }
             }
 
@@ -435,16 +435,16 @@ public class Startup extends BaseActivity {
                 Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
             } else if (!shownExpenseIt && !shownTravel) {
                 shownBoth = false;
-            }else if(!shownExpenseIt){
-                if(RolesUtil.isTraveler(activity)){
-                    shownBoth=false;
-                }else{
-                    shownExpenseIt=false;
+            } else if (!shownExpenseIt) {
+                if (RolesUtil.isTraveler(activity)) {
+                    shownBoth = false;
+                } else {
+                    shownExpenseIt = false;
                 }
             }
 
             if (!shownBoth && isExpItUser && isTraveler) {
-                Log.d(CLS_TAG,"This is ExpenseIT and Travel User");
+                Log.d(CLS_TAG, "This is ExpenseIT and Travel User");
                 startIntent = new Intent(activity, FirstRunExpItTravelTour.class);
             } else if (!shownExpenseIt && isExpItUser) {
                 Log.d(CLS_TAG, "This is ExpenseIT Only User");
@@ -458,6 +458,7 @@ public class Startup extends BaseActivity {
         }
         return startIntent;
     }
+
     private void startCompanySignOn() {
         // NOTE: This intent actually starts the Login activity, but passing a boolean value
         // indicating the Login activity should immediately start the company sign-on process.
@@ -539,7 +540,7 @@ public class Startup extends BaseActivity {
 
     /**
      * Attempt a login. Will spawn a LoginThread to do the work so this method will return before the login has completed.
-     *
+     * <p/>
      * When not connected just return true if we have a login ID and pin saved.
      *
      * @return true if the login was attempted, false otherwise
@@ -549,67 +550,71 @@ public class Startup extends BaseActivity {
         loginReceiver = new BaseAsyncResultReceiver(new Handler());
         loginReceiver.setListener(new StartupLoginListner());
 
-        Log.d(Const.LOG_TAG, "attempting autologin");
+        if (!orientationChange) {
+            Log.d(Const.LOG_TAG, "attempting autologin");
 
-        // Grab values
-        String loginId = (sessionInfo != null ? sessionInfo.getLoginId() : null);
-        String pinOrPassword = Preferences.getPin(PreferenceManager.getDefaultSharedPreferences(this), null);
-        String accessToken = (sessionInfo != null ? sessionInfo.getAccessToken() : null);
+            // Grab values
+            String loginId = (sessionInfo != null ? sessionInfo.getLoginId() : null);
+            String pinOrPassword = Preferences.getPin(PreferenceManager.getDefaultSharedPreferences(this), null);
+            String accessToken = (sessionInfo != null ? sessionInfo.getAccessToken() : null);
 
-        if (loginId == null || (pinOrPassword == null && accessToken == null)) {
-            Log.d(Const.LOG_TAG, "cannot autologin");
-            return false;
-        }
-
-        if (ConcurMobile.isConnected()) {
-            // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
-            // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
-            startTimeMillis = System.currentTimeMillis();
-
-            // Animate in the message about authentication happening.
-            TextView txtView = (TextView) findViewById(R.id.splash_message);
-            if (txtView != null) {
-                Animation fadeInAnim = AnimationUtils.loadAnimation(Startup.this, R.anim.fade_in);
-                fadeInAnim.setFillAfter(true);
-                txtView.setVisibility(View.VISIBLE);
-                txtView.startAnimation(fadeInAnim);
-            } else {
-                Log.e(Const.LOG_TAG, CLS_TAG + ".doLogin: can't locate splash text view!");
+            if (loginId == null || (pinOrPassword == null && accessToken == null)) {
+                Log.d(Const.LOG_TAG, "cannot autologin");
+                return false;
             }
 
-            UserAndSessionInfoUtil.setServerAddress(sessionInfo.getServerUrl());
+            if (ConcurMobile.isConnected()) {
+                // TODO MOB-23154: Right now only time tracking required for Autologin, in future if we want it for each request
+                // this implementation will be in the class PlatFormAsyncTaskRequest/BaseAsyncRequestTask.
+                startTimeMillis = System.currentTimeMillis();
 
-            // Attempt to authenticate
-            // Re-entry to the UI will be via handleMessage() below
-            if (accessToken != null) {
-                AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
-                        .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault()) {
+                // Animate in the message about authentication happening.
+                TextView txtView = (TextView) findViewById(R.id.splash_message);
+                if (txtView != null) {
+                    Animation fadeInAnim = AnimationUtils.loadAnimation(Startup.this, R.anim.fade_in);
+                    fadeInAnim.setFillAfter(true);
+                    txtView.setVisibility(View.VISIBLE);
+                    txtView.startAnimation(fadeInAnim);
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".doLogin: can't locate splash text view!");
+                }
 
-                    // MOB-20508 - If logging in was initiated by the Receipt Share (notification)
-                    // then we should modify the User Agent so it is easily detectable in MobileMetrics.
-                    @Override
-                    protected String getUserAgent() {
-                        return (fromNotification ? super.getUserAgent() + " (AutoLoginV3; From Notification)" : super
-                                .getUserAgent());
-                    }
-                };
-                autoLoginRequestTask.execute();
+                UserAndSessionInfoUtil.setServerAddress(sessionInfo.getServerUrl());
+
+                // Attempt to authenticate
+                // Re-entry to the UI will be via handleMessage() below
+                if (accessToken != null) {
+                    AutoLoginRequestTask autoLoginRequestTask = new AutoLoginRequestTask(getApplication()
+                            .getApplicationContext(), AUTO_LOGIN_REQUEST_ID, loginReceiver, Locale.getDefault()) {
+
+                        // MOB-20508 - If logging in was initiated by the Receipt Share (notification)
+                        // then we should modify the User Agent so it is easily detectable in MobileMetrics.
+                        @Override
+                        protected String getUserAgent() {
+                            return (fromNotification ? super.getUserAgent() + " (AutoLoginV3; From Notification)" : super
+                                    .getUserAgent());
+                        }
+                    };
+                    autoLoginRequestTask.execute();
+                } else {
+                    Locale locale = Locale.getDefault();
+                    PPLoginLightRequestTask ppLoginLightRequestTask = new PPLoginLightRequestTask(
+                            this.getApplicationContext(), loginReceiver, VALIDATE_PASSWORD_REQUEST_ID, locale, loginId,
+                            pinOrPassword);
+                    ppLoginLightRequestTask.execute();
+                }
+
+                return true;
+
             } else {
-                Locale locale = Locale.getDefault();
-                PPLoginLightRequestTask ppLoginLightRequestTask = new PPLoginLightRequestTask(
-                        this.getApplicationContext(), loginReceiver, VALIDATE_PASSWORD_REQUEST_ID, locale, loginId,
-                        pinOrPassword);
-                ppLoginLightRequestTask.execute();
+                // If disconnected with auto-login enabled and both values saved then say we logged in.
+                // Move us on and finish this activity
+                startHomeScreen();
+                doLoginFinish();
+
+                return true;
             }
-
-            return true;
-
         } else {
-            // If disconnected with auto-login enabled and both values saved then say we logged in.
-            // Move us on and finish this activity
-            startHomeScreen();
-            doLoginFinish();
-
             return true;
         }
     }
