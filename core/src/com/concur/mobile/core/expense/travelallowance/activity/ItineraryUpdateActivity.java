@@ -218,10 +218,14 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (itinerary != null) {
+                    if (itinerary != null && !s.toString().equals(itinerary.getName())) {
                         itinerary.setName(s.toString());
-                        checkConsistency();
-                        renderNameLabel();
+                        Message msg = itinerary.getMessage();
+                        if ((msg == null && StringUtilities.isNullOrEmpty(s.toString()))
+                                || (!StringUtilities.isNullOrEmpty(s.toString()) && addingDisabled)) {
+                            checkConsistency();
+                            renderNameLabel();
+                        }
                     }
                 }
             });
