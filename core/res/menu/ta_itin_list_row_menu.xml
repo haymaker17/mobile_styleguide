@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/remove"
-        android:title="@string/remove"/>
+        android:title="@string/general_remove_from_report"/>
 
     <item android:id="@+id/delete"
         android:title="@string/delete"/>

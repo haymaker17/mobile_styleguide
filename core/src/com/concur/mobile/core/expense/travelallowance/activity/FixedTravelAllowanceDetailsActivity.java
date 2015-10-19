@@ -234,9 +234,9 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
-        if (
-                ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false &&
-                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false    )){
+        if ((controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == false
+                && controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == false)
+                || allowance.getBreakfastProvision() == null) {
             rlLayout.setVisibility(View.GONE);
             makeDividerGone(R.id.v_divider_breakfast);
             return;
@@ -278,7 +278,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
         if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == false &&
-                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false      )){
+                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == false)
+                        || allowance.getLunchProvision() == null){
             rlLayout.setVisibility(View.GONE);
             makeDividerGone(R.id.v_divider_lunch);
             return;
@@ -321,7 +322,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         //Section should not be rendered for traveller if the customizing for the traveller doesn't allow it
         if (
                 ( controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == false &&
-                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false    )){
+                  controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == false)
+                        || allowance.getDinnerProvision() == null){
             rlLayout.setVisibility(View.GONE);
             makeDividerGone(R.id.v_divider_dinner);
             return;
@@ -352,7 +354,7 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
      * @param allowance
      */
     private void renderLodging(FixedTravelAllowance allowance) {
-        if (allowance == null) {
+        if (allowance == null || allowance.getLodgingType() == null) {
             return;
         }
         //Section should not be rendered for approver if no relevant data is available
@@ -386,6 +388,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
 //            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(this, android.R.layout.simple_spinner_item, new ArrayList<ICode>(controlData.getLodgingTypeValues().values()));
 //            spinner.setAdapter(adapter);
             renderSpinner(spinner, allowance.getLodgingType(), controlData.getLodgingTypeValues(), true);
+        } else {
+            spinner.setVisibility(View.GONE);
         }
         TextView tvValue = (TextView) this.findViewById(R.id.tv_lodging_value);
         renderTextViewProvision(tvValue, allowance.getLodgingType());
@@ -608,11 +612,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //******* Breakfast Provision **************************************************************
-        provision = null;
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == true) {
+        provision = (MealProvision) allowance.getBreakfastProvision();
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX) == true && provision != null) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_breakfast_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        } else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == true) {
+        } else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST) == true && provision != null) {
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_breakfast_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
@@ -621,11 +625,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //******* Lunch Provision ******************************************************************
-        provision = null;
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == true) {
+        provision = (MealProvision) allowance.getLunchProvision();
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX) == true && provision != null) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_lunch_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == true) {
+        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST) == true && provision != null) {
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_lunch_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
@@ -634,11 +638,11 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //******* Dinner Provision *****************************************************************
-        provision = null;
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == true) {
+        provision = (MealProvision) allowance.getDinnerProvision();
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX) == true && provision != null) {
             Switch svSwitch = (Switch) this.findViewById(R.id.sv_dinner_provided);
             provision = deriveMealProvisionFromSwitch(svSwitch);
-        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == true){
+        }else if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST) == true && provision != null){
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_dinner_provided);
             provision = deriveMealProvisionFromSpinner(spinner);
         }
@@ -647,7 +651,8 @@ public class FixedTravelAllowanceDetailsActivity extends BaseActivity implements
         }
 
         //******* Lodging **************************************************************************
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST) == true) {
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST) == true
+                && allowance.getLodgingType() != null) {
             LodgingType lodgingType = null;
             Spinner spinner = (Spinner) this.findViewById(R.id.sp_lodging_provided);
             lodgingType = deriveLodgingProvisionFromSpinner(spinner);

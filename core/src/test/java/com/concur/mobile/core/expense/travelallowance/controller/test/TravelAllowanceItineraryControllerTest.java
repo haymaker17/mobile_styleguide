@@ -7,27 +7,35 @@ import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowance
 import com.concur.mobile.core.expense.travelallowance.datamodel.Itinerary;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItineraryLocation;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.service.GetTAItinerariesRequest;
+import com.concur.mobile.core.expense.travelallowance.testutils.FileRequestTaskWrapper;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerary;
 import com.concur.mobile.core.expense.travelallowance.ui.model.CompactItinerarySegment;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
+import com.concur.mobile.core.expense.travelallowance.util.Message;
 
 import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.Robolectric;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import testconfig.CoreTestApplication;
+import testconfig.CoreTestRunner;
 
 /**
  * Created by D049515 on 14.07.2015.
  */
-@Config(manifest = Config.NONE, sdk = 21)
-@RunWith(RobolectricTestRunner.class)
+@Config(application = CoreTestApplication.class, manifest = "AndroidManifest.xml", sdk = 21)
+@RunWith(CoreTestRunner.class)
 public class TravelAllowanceItineraryControllerTest extends TestCase {
 
     Date d_04022015_1000, d_04022015_1100,
@@ -197,17 +205,110 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
     }
 
     @Test
-    public void parseItineraries() {
-        TravelAllowanceItineraryControllerMock controllerMock = new TravelAllowanceItineraryControllerMock(null);
-        Bundle resultData = controllerMock.refreshItineraries(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
-        assertNotNull(resultData);
+    public void areAllMandatoryFieldsFilledTestTrue() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.areAllMandatoryFieldsFilled(itinerary, true);
+        assertEquals(true, result);
     }
 
     @Test
-    public void parseAssignableItineraries() {
-        TravelAllowanceItineraryControllerMock controllerMock = new TravelAllowanceItineraryControllerMock(null);
-        Bundle resultData = controllerMock.refreshAssignableItineraries(TEST_DATA_PATH, "AssignableItineraries.xml");
-        assertNotNull(resultData);
+    public void areAllMandatoryFieldsFilledTestFalse() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        itinerary.getSegmentList().get(0).setArrivalDateTime(null);
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.areAllMandatoryFieldsFilled(itinerary, true);
+        assertEquals(false, result);
     }
 
+    @Test
+    public void hasErrorsTestFalse() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.hasErrors(itinerary);
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void hasErrorsTestTrue() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        itinerary.getSegmentList().get(0).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES));
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.hasErrors(itinerary);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void resetMessagesTest() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        itinerary.getSegmentList().get(0).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES));
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        controller.resetMessages(itinerary);
+        Message resultMsg = itinerary.getSegmentList().get(0).getMessage();
+        assertNull(resultMsg);
+    }
+
+    @Test
+    public void areDatesOverlappingTestFalse() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.areDatesOverlapping(itinerary, true);
+        assertEquals(false, result);
+    }
+
+    @Test
+    public void areDatesOverlappingTestTrue1() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(itinerary.getSegmentList().get(0).getArrivalDateTime());
+        cal.add(Calendar.MONTH, -1);
+        itinerary.getSegmentList().get(1).setDepartureDateTime(cal.getTime());
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.areDatesOverlapping(itinerary, true);
+        assertEquals(true, result);
+    }
+
+    @Test
+    public void areDatesOverlappingTestTrue2() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(itinerary.getSegmentList().get(0).getArrivalDateTime());
+        cal.add(Calendar.MONTH, 1);
+        itinerary.getSegmentList().get(0).setDepartureDateTime(cal.getTime());
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        boolean result = controller.areDatesOverlapping(itinerary, true);
+        assertEquals(true, result);
+    }
 }
