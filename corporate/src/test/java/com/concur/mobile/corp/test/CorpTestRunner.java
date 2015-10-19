@@ -15,6 +15,7 @@ import java.util.List;
 
 public class CorpTestRunner extends RobolectricTestRunner {
     protected String appCompatResDirFormat = "../corporate/build/intermediates/exploded-aar/com.android.support/appcompat-v7/%s/res";
+    protected String designResDirFormat = "../corporate/build/intermediates/exploded-aar/com.android.support/design/%s/res";
     protected String[] appCompatVersionsToCheck = {
         "21.0.3",
         "22.2.1"
@@ -38,18 +39,31 @@ public class CorpTestRunner extends RobolectricTestRunner {
                 List<ResourcePath> paths = super.getIncludedResourcePaths();
                 paths.add(new ResourcePath(getRClass(), getPackageName(), Fs.fileFromPath("res"), getAssetsDirectory()));
                 boolean appcompatDirFound = false;
+                boolean designDirFound = false;
                 //return the first appcompat found
                 for (String resDir : appCompatVersionsToCheck) {
-                    String resourceDir = String.format(appCompatResDirFormat, resDir);
-                    FsFile dir = Fs.fileFromPath(resourceDir);
-                    if (dir.exists()) {
-                        paths.add(new ResourcePath(getRClass(), getPackageName(), dir, getAssetsDirectory()));
+                    String appCompatResourceDir = String.format(appCompatResDirFormat, resDir);
+                    FsFile appCompatDir = Fs.fileFromPath(appCompatResourceDir);
+                    if (appCompatDir.exists() && !appcompatDirFound) {
+                        paths.add(new ResourcePath(getRClass(), getPackageName(), appCompatDir, getAssetsDirectory()));
                         appcompatDirFound = true;
-                        break;
+                    }
+
+                    String designResourceDir = String.format(designResDirFormat, resDir);
+                    FsFile designDir = Fs.fileFromPath(designResourceDir);
+                    if (designDir.exists() && !designDirFound) {
+                        paths.add(new ResourcePath(getRClass(), getPackageName(), designDir, getAssetsDirectory()));
+                        designDirFound = true;
                     }
                 }
+
+                
                 if (!appcompatDirFound) {
                     throw new IllegalArgumentException("Appcompat directory not found! Please add the correct version!");
+                }
+
+                if (!designDirFound) {
+                    throw new IllegalArgumentException("Design support lib directory not found! Please add the correct version!");
                 }
                 return paths;
             }
