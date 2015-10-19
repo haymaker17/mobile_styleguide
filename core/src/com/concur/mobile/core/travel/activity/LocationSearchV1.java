@@ -98,6 +98,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
         Log.d(com.concur.mobile.platform.ui.travel.util.Const.LOG_TAG, "LocationSearchV1*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
         EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL,
                 Flurry.EVENT_ACTION_TRAVEL_DESTINATION_TAPPED);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -123,7 +124,9 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
             outState.putSerializable(RESULT_LIST, null);
         }
 
+
     }
+
 
     @Override
     protected void onStart() {
@@ -597,8 +600,8 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
                 CompanyLocation companyLocation = (CompanyLocation) loc;
 
-                int leftPadding = ViewUtil.dpToPx(context, 5);
-                row.setPadding(leftPadding, 0, 0, 0);
+                // int leftPadding = ViewUtil.dpToPx(context, 5);
+                row.setPadding(0, 0, 0, 0);
 
                 if (officeIcon != null) {
                     officeIcon.setVisibility(View.VISIBLE);
@@ -609,7 +612,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                     city.setText(companyLocation.getProvince());
                 }
 //                int textLeftPadding = ViewUtil.dpToPx(context, 8);
-                tv.setPadding(0, textPadding, 0, 0);
+                tv.setPadding(0, textPadding, textPadding, 0);
                 tv.setText(companyLocation.getAddress());
 
             } else {
@@ -622,7 +625,7 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
                 if (city != null) {
                     city.setVisibility(View.GONE);
                 }
-                tv.setPadding(0, textPadding, 0, textPadding);
+                tv.setPadding(0, textPadding, textPadding, textPadding);
                 tv.setText(loc.getName());
             }
 

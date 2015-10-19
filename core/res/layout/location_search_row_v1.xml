@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:maxHeight="20dp"
         android:minWidth="20dp"
-        android:padding="20dp"
+        android:padding="16dp"
         android:src="@drawable/search_icon_office_location_grey" />
 
 
@@ -40,7 +40,7 @@
         android:minHeight="30dp"
         android:paddingBottom="16dp"
         android:text="newyork US"
-        android:textAppearance="@style/FormFieldLabelTexHeadertV1"
+        android:textAppearance="@style/FormFieldLabelTextV1"
         android:textColor="@color/grey_text" />
 
     <View
@@ -50,6 +50,7 @@
         android:layout_alignLeft="@+id/locName"
         android:layout_below="@+id/locCity"
         android:layout_gravity="center_horizontal"
+        android:layout_marginRight="16dp"
         android:layout_toRightOf="@+id/office_icon"
         android:background="@color/cellDivider"
         android:clickable="false"
