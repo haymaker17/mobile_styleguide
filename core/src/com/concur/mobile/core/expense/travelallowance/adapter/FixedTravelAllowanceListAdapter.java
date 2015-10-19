@@ -47,17 +47,19 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
         private TextView tvSubtitleEllipsized;
         private TextView tvSubtitleMore;
         private CheckBox checkBox;
+        private OnClickListener listener;
 
 
-        public ViewHolder(View view, final OnClickListener listener) {
+        public ViewHolder(View view, OnClickListener listener) {
             super(view);
             this.view = view;
+            this.listener = listener;
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onClick(v, getAdapterPosition());
+                    if (ViewHolder.this.listener != null) {
+                        ViewHolder.this.listener.onClick(v, getAdapterPosition());
                     }
                 }
             });
@@ -75,8 +77,8 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (listener != null) {
-                        listener.onClick(buttonView, getAdapterPosition());
+                    if (ViewHolder.this.listener != null) {
+                        ViewHolder.this.listener.onClick(buttonView, getAdapterPosition());
                     }
                 }
             });
@@ -203,6 +205,7 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
 
         if (getItemViewType(position) == HEADER_ROW) {
             this.holder = holder;
+            holder.listener = null;
             currentAllowance = null;
             String locationName = (String) getItem(position);
             renderHeaderRow(locationName);

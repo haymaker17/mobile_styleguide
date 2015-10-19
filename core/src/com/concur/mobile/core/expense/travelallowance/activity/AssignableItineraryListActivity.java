@@ -72,12 +72,6 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ta_assignable_itin_list_activity);
-
-        expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
-        isFirstTaActivity = getIntent().getBooleanExtra(BundleId.IS_FIRST_TA_ACTIVITY, false);
-
-        initializeToolbar(R.string.ta_travel_allowances);
 
         TextView tv = (TextView) findViewById(R.id.tv_list_title);
         String s = tv.getText().toString();
@@ -100,6 +94,23 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
         Intent resultIntent = new Intent();
         resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
         setResult(RESULT_OK, resultIntent);
+    }
+
+    @Override
+    protected void handleCallerIntent() {
+        super.handleCallerIntent();
+        expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
+        isFirstTaActivity = getIntent().getBooleanExtra(BundleId.IS_FIRST_TA_ACTIVITY, false);
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.ta_assignable_itin_list_activity;
+    }
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.ta_travel_allowances);
     }
 
     private void registerViewListener() {

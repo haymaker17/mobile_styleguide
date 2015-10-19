@@ -9,6 +9,7 @@ import android.util.Log;
 import com.concur.mobile.base.service.BaseAsyncResultReceiver;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
+import com.concur.mobile.core.expense.travelallowance.datamodel.LodgingType;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
@@ -90,6 +91,7 @@ public class FixedTravelAllowanceController extends BaseController {
 
     protected void setFixedTAList(List<FixedTravelAllowance> list) {
         this.fixedTravelAllowances = list;
+        Collections.sort(fixedTravelAllowances);
         this.fixedTAIdMap = new HashMap<String, FixedTravelAllowance>();
         fillTAMap();
     }
@@ -129,6 +131,7 @@ public class FixedTravelAllowanceController extends BaseController {
                 notifyListener(ControllerAction.REFRESH, true, resultData);
                 int size = 0;
                 if (fixedTravelAllowances != null) {
+                    Collections.sort(fixedTravelAllowances);
                     size = fixedTravelAllowances.size();
                 }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
@@ -493,5 +496,18 @@ public class FixedTravelAllowanceController extends BaseController {
             ta.setIsSelected(true);
         }
     }
+
+    public List<FixedTravelAllowance> applyTaValues (FixedTravelAllowance fromTa, List<FixedTravelAllowance> toTaList) {
+        for (FixedTravelAllowance ta: toTaList) {
+            ta.setBreakfastProvision((MealProvision) fromTa.getBreakfastProvision());
+            ta.setLunchProvision((MealProvision) fromTa.getLunchProvision());
+            ta.setDinnerProvision((MealProvision) fromTa.getDinnerProvision());
+            ta.setLodgingType((LodgingType) fromTa.getLodgingType());
+            ta.setOvernightIndicator(fromTa.getOvernightIndicator());
+        }
+
+        return toTaList;
+    }
+
 
 }

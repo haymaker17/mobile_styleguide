@@ -94,13 +94,28 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
     }
 
+    @Override
+    public void onMultiAdjust() {
+        Intent intent = new Intent(this, FixedTravelAllowanceDetailsActivity.class);
+
+        if(!StringUtilities.isNullOrEmpty(expenseReportKey) ){
+            intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
+        }
+
+        intent.putExtra(BundleId.IS_EDIT_MODE, true);
+
+        ArrayList<FixedTravelAllowance> selected = new ArrayList<>(fixedTaController.getSelectedTravelAllowances());
+        intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_MASS_EDIT_LIST, selected);
+        startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
+    }
+
+
     /**
      * {@inheritDoc}
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.ta_travel_allowance_activity);
 
         ConcurCore app = (ConcurCore) getApplication();
 
@@ -112,8 +127,6 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
         if (getIntent().hasExtra(BundleId.EXPENSE_REPORT_KEY)) {
             expenseReportKey = getIntent().getStringExtra(BundleId.EXPENSE_REPORT_KEY);
         }
-
-        initializeToolbar(R.string.ta_travel_allowances);
 
         isInApproval = getIntent().getBooleanExtra(BundleId.IS_IN_APPROVAL, false);
 
@@ -128,6 +141,16 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
         renderSummary();
 
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.ta_travel_allowance_activity;
+    }
+
+    @Override
+    protected String getToolbarTitle() {
+        return getString(R.string.ta_travel_allowances);
     }
 
     @Override
@@ -173,7 +196,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
                 getString(R.string.ta_adjustments), FixedTravelAllowanceListFragment.class, null);
         list.add(adjustmentFrag);
 
-        boolean isTraveller = getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE, true);
+        boolean isTraveller = getIntent().getBooleanExtra(BundleId.IS_EDIT_MODE, true);
         if (isTraveller && !getIntent().getBooleanExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, false)) {
             Bundle arguments = new Bundle();
             ArrayList<Itinerary> itinList = new ArrayList<>(itineraryController.getItineraryList());

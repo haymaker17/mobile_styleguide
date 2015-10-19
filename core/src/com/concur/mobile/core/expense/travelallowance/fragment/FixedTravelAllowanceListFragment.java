@@ -1,10 +1,6 @@
 package com.concur.mobile.core.expense.travelallowance.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -67,7 +62,9 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
          * Handles a travel allowance being selected
          * @param allowance The fixed travel allowance selected
          */
-        public void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance);
+        void onFixedTravelAllowanceSelected(FixedTravelAllowance allowance);
+
+        void onMultiAdjust();
     }
 
 
@@ -249,6 +246,12 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             allowanceController.selectAll();
             refreshAdapter();
         }
+
+        if (v.getId() == R.id.btn_adjust) {
+            if (fixedTASelectedListener != null && allowanceController.getSelectedTravelAllowances().size() > 0) {
+                fixedTASelectedListener.onMultiAdjust();
+            }
+        }
     }
 
     @Override
@@ -287,6 +290,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         }
     }
 
+    //TODO PK: In selection mode the back action should switch off the selection mode.
     private void switchToSelctionMode(boolean switchToSelectionMode) {
         View v = getView();
         if (v == null) {

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by D049515 on 16.09.2015.
  */
-public class TravelAllowanceBaseActivity extends BaseActivity {
+public abstract class TravelAllowanceBaseActivity extends BaseActivity {
 
     private static final String CLASS_TAG = TravelAllowanceBaseActivity.class.getSimpleName();
 
@@ -68,9 +68,13 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getContentViewId());
+        handleCallerIntent();
         ConcurCore app = (ConcurCore) getApplication();
         this.itineraryController = app.getTaController().getTaItineraryController();
         this.fixedTaController = app.getTaController().getFixedTravelAllowanceController();
+
+        initializeToolbar(getToolbarTitle());
     }
 
 
@@ -86,12 +90,22 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
         }
     }
 
-    protected void initializeToolbar(int titleResId) {
+    /**
+     * 
+     * @return The layout id for the layout which should be inflated by this activity.
+     */
+    protected abstract int getContentViewId();
+
+    protected abstract String getToolbarTitle();
+    
+    protected void handleCallerIntent() {}
+
+    protected void initializeToolbar(String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(titleResId);
+            getSupportActionBar().setTitle(title);
         }
 
         TextView toolBarText = (TextView) findViewById(R.id.tv_toolbar_text);
@@ -99,6 +113,7 @@ public class TravelAllowanceBaseActivity extends BaseActivity {
             toolBarText.setPadding(toolbar.getContentInsetStart(), 0, 0, 0);
         }
     }
+
 
     protected void showProgressDialog() {
         getSupportFragmentManager().executePendingTransactions();
