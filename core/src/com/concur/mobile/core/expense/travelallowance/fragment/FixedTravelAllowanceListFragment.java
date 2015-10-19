@@ -244,7 +244,9 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
 
         if (v.getId() == R.id.btn_adjust_all) {
             allowanceController.selectAll();
-            refreshAdapter();
+            if (fixedTASelectedListener != null && allowanceController.getSelectedTravelAllowances().size() > 0) {
+                fixedTASelectedListener.onMultiAdjust();
+            }
         }
 
         if (v.getId() == R.id.btn_adjust) {
@@ -256,7 +258,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
 
     @Override
     public void onClick(View v, int position) {
-        if (v.getId() == R.id.row) {
+        if (v.getId() == R.id.row && !inSelectionMode) {
             RecyclerView rv = getRecyclerView();
             if (rv != null) {
                 FixedTravelAllowanceListAdapter adapter = (FixedTravelAllowanceListAdapter) rv.getAdapter();
@@ -290,8 +292,8 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         }
     }
 
-    //TODO PK: In selection mode the back action should switch off the selection mode.
-    private void switchToSelctionMode(boolean switchToSelectionMode) {
+
+    public void switchToSelctionMode(boolean switchToSelectionMode) {
         View v = getView();
         if (v == null) {
             return;
@@ -314,6 +316,10 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         }
 
         refreshAdapter();
+    }
+
+    public boolean isInSelectionMode() {
+        return inSelectionMode;
     }
 
 }

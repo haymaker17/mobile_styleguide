@@ -96,6 +96,11 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
     @Override
     public void onMultiAdjust() {
+        ArrayList<FixedTravelAllowance> selected = new ArrayList<>(fixedTaController.getSelectedTravelAllowances());
+        if (selected.size() == 1) {
+            onFixedTravelAllowanceSelected(selected.get(0));
+            return;
+        }
         Intent intent = new Intent(this, FixedTravelAllowanceDetailsActivity.class);
 
         if(!StringUtilities.isNullOrEmpty(expenseReportKey) ){
@@ -104,7 +109,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
         intent.putExtra(BundleId.IS_EDIT_MODE, true);
 
-        ArrayList<FixedTravelAllowance> selected = new ArrayList<>(fixedTaController.getSelectedTravelAllowances());
+
         intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_MASS_EDIT_LIST, selected);
         startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
     }
@@ -151,6 +156,17 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
     @Override
     protected String getToolbarTitle() {
         return getString(R.string.ta_travel_allowances);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FixedTravelAllowanceListFragment f = (FixedTravelAllowanceListFragment) getFragmentByClass(
+                FixedTravelAllowanceListFragment.class);
+        if (f != null && f.isInSelectionMode()) {
+            f.switchToSelctionMode(false);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

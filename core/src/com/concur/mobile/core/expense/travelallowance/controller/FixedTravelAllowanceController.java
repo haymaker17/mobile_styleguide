@@ -128,7 +128,7 @@ public class FixedTravelAllowanceController extends BaseController {
                 fixedTravelAllowances = getFixedAllowancesRequest2.getFixedTravelAllowances();
                 //mealsProvisionLabels = getFixedAllowancesRequest2.getMealsProvisionLabelMap();
                 fillTAMap();
-                notifyListener(ControllerAction.REFRESH, true, resultData);
+
                 int size = 0;
                 if (fixedTravelAllowances != null) {
                     Collections.sort(fixedTravelAllowances);
@@ -136,6 +136,7 @@ public class FixedTravelAllowanceController extends BaseController {
                 }
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                         "refreshFixedTravelAllowances->onRequestSuccess", "Reading fixed TAs, Size = " + size));
+                notifyListener(ControllerAction.REFRESH, true, resultData);
                 super.onRequestSuccess(resultData);
             }
 
@@ -493,7 +494,9 @@ public class FixedTravelAllowanceController extends BaseController {
 
     public void selectAll() {
         for (FixedTravelAllowance ta: getFixedTravelAllowances()) {
-            ta.setIsSelected(true);
+            if (!ta.isLocked()) {
+                ta.setIsSelected(true);
+            }
         }
     }
 

@@ -137,7 +137,17 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
 
     @Override
     protected String getToolbarTitle() {
-        return getString(R.string.ta_daily_allowance);
+        if (massEditList == null) {
+            return getString(R.string.ta_daily_allowance);
+        } else {
+            StringBuffer sb = new StringBuffer();
+            sb.append(getString(R.string.ta_adjustments));
+            sb.append(" (");
+            sb.append(massEditList.size());
+            sb.append(")");
+            return sb.toString();
+        }
+
     }
 
     @Override
@@ -177,8 +187,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
             int i = 0;
             for (FixedTravelAllowance ta: massEditList) {
                 String dateString = DateUtils.formatDateTime(this, ta.getDate().getTime(),
-                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_WEEKDAY
-                                | DateUtils.FORMAT_ABBREV_WEEKDAY | DateUtils.FORMAT_ABBREV_MONTH);
+                        DateUtils.FORMAT_NUMERIC_DATE);
                 sb.append(dateString);
                 if (i < massEditList.size()) {
                     sb.append(", ");
@@ -188,6 +197,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
 
             TextView toolbarText = (TextView) findViewById(R.id.tv_toolbar_text);
             toolbarText.setText(sb.toString());
+            toolbarText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -305,6 +315,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         FixedTravelAllowanceControlData controlData = fixedTaController.getControlData();
         FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
         vh.tag = tag;
+
         if (isCheckBox) {
             vh.rowType = FixedTADetailAdapter.RowType.SWITCH;
             if (!isOvernight && MealProvision.PROVIDED_CODE.equals(code.getCode())) {

@@ -341,9 +341,11 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
         }
         renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
 
-        if (inSelectionMode && holder.checkBox != null) {
+        if (inSelectionMode && holder.checkBox != null && !allowance.isLocked()) {
             holder.checkBox.setVisibility(View.VISIBLE);
             holder.checkBox.setChecked(allowance.isSelected());
+        } else {
+            holder.checkBox.setVisibility(View.GONE);
         }
     }
 

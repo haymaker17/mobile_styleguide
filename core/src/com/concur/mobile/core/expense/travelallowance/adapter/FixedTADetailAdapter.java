@@ -114,6 +114,8 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
 
         holder.readOnlyValue.setVisibility(View.GONE);
         if (value.rowType == RowType.SWITCH) {
+            holder.spinner.setVisibility(View.GONE);
+            holder.label.setVisibility(View.GONE);
             holder.switchView.setVisibility(View.VISIBLE);
             holder.switchView.setChecked(value.isChecked);
             holder.switchView.setTextOn(ctx.getResources().getString(R.string.general_yes));
@@ -121,10 +123,17 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             holder.switchView.setText(value.label);
             holder.switchView.setEnabled(true);
             if (value.isReadOnly) {
-                holder.switchView.setEnabled(true);
+                holder.switchView.setEnabled(false);
+                holder.switchView.setVisibility(View.GONE);
+                holder.readOnlyValue.setVisibility(View.VISIBLE);
+                holder.label.setVisibility(View.VISIBLE);
+                holder.label.setText(value.label);
+                if (value.isChecked) {
+                    holder.readOnlyValue.setText(R.string.general_yes);
+                } else {
+                    holder.readOnlyValue.setText(R.string.general_no);
+                }
             }
-            holder.spinner.setVisibility(View.GONE);
-            holder.label.setVisibility(View.GONE);
         }
 
         if (value.rowType == RowType.SPINNER) {

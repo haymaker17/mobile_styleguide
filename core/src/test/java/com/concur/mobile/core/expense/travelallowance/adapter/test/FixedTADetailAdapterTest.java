@@ -77,6 +77,67 @@ public class FixedTADetailAdapterTest extends TestCase {
         assertEquals(RuntimeEnvironment.application.getString(R.string.general_no), viewHolder.switchView.getTextOff());
     }
 
+    @Test
+    public void testReadOnlySwitch() {
+        FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
+        vh.tag = "test";
+        vh.rowType = FixedTADetailAdapter.RowType.SWITCH;
+        vh.isChecked = true;
+        vh.label = "test label";
+        vh.isReadOnly = true;
+        List<FixedTADetailAdapter.ValueHolder> values = new ArrayList<>();
+        values.add(vh);
+
+        adapter = new FixedTADetailAdapter(RuntimeEnvironment.application, values);
+        recyclerView.setAdapter(adapter);
+        recyclerView.measure(0, 0);
+        recyclerView.layout(0, 0, 100, 10000);
+
+        FixedTADetailAdapter.ViewHolder viewHolder = (FixedTADetailAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
+        assertNotNull(viewHolder);
+        assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
+        assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
+
+        assertEquals(RuntimeEnvironment.application.getString(R.string.general_yes), viewHolder.readOnlyValue.getText());
+        assertEquals("test label", viewHolder.label.getText());
+        assertEquals("test", viewHolder.switchView.getTag());
+    }
+
+    @Test
+    public void testReadOnlySpinner() {
+        List<ICode> codeList = new ArrayList<>();
+        codeList.add(new MealProvision("meal1", "meal 1 provision"));
+        codeList.add(new MealProvision("meal2", "meal 2 provision"));
+        codeList.add(new MealProvision("meal3", "meal 3 provision"));
+        FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
+        vh.tag = "test";
+        vh.rowType = FixedTADetailAdapter.RowType.SPINNER;
+        vh.label = "test label";
+        vh.spinnerValues = codeList;
+        vh.selectedSpinnerPosition = 1;
+        vh.isReadOnly = true;
+        List<FixedTADetailAdapter.ValueHolder> values = new ArrayList<>();
+        values.add(vh);
+
+        adapter = new FixedTADetailAdapter(RuntimeEnvironment.application, values);
+        recyclerView.setAdapter(adapter);
+        recyclerView.measure(0, 0);
+        recyclerView.layout(0, 0, 100, 10000);
+
+        FixedTADetailAdapter.ViewHolder viewHolder = (FixedTADetailAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
+        assertNotNull(viewHolder);
+        assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
+        assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
+
+        assertEquals("test label", viewHolder.label.getText());
+        assertEquals("test", viewHolder.spinner.getTag());
+
+        assertEquals("meal 2 provision", viewHolder.readOnlyValue.getText());
+    }
 
     @Test
     public void testSpinner() {
