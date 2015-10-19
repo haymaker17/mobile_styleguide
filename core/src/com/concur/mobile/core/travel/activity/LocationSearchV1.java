@@ -171,10 +171,12 @@ public class LocationSearchV1 extends Activity implements INetworkActivityListen
 
             @Override
             public void onClick(View arg0) {
-                if (searchResultsList.getVisibility() == View.VISIBLE) {
+                if (searchResultsList != null && searchResultsList.getVisibility() == View.VISIBLE) {
                     searchResultsList.setVisibility(View.GONE);
                     searchOfficeLocations.setVisibility(View.VISIBLE);
                     currentLocationBtn.setVisibility(View.VISIBLE);
+                    SearchResultsAdapter adapter = searchResultsList.getAdapter() != null ? (SearchResultsAdapter) searchResultsList.getAdapter() : null;
+                    if (adapter != null) adapter.clearLocations();
                     currentSearchMode = SEARCH_CUSTOM;
                     currentSearchText = null;
                     if (currentLocationName != null) {
