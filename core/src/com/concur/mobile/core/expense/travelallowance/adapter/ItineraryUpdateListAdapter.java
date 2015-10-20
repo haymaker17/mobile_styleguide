@@ -309,9 +309,9 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
                     } else {
                         cityName = cityCountryName;
                     }
-                    returnText = context.getString(R.string.itin_add_return_trip, cityName);
+                    returnText = context.getString(R.string.itin_add_return_trip_android, cityName);
                 } else {
-                    returnText = context.getString(R.string.itin_add_return_trip, "...");
+                    returnText = context.getString(R.string.itin_add_return_trip_android, "...");
                 }
                 holder.tvReturnToHome.setText(returnText);
             }

@@ -123,7 +123,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         if (getView() != null && allowanceController != null) {
             int count = allowanceController.getSelectedTravelAllowances().size();
             TextView counter = (TextView) getView().findViewById(R.id.tv_selection_counter);
-            counter.setText(getResources().getString(R.string.general_no_of_selected_list_items, count)
+            counter.setText(getResources().getString(R.string.general_no_of_selected_list_items_android, count)
                     .toUpperCase(Locale.getDefault()));
         }
     }
