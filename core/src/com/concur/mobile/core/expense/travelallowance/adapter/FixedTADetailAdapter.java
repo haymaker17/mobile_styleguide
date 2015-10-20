@@ -2,6 +2,7 @@ package com.concur.mobile.core.expense.travelallowance.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.concur.core.R;
 import com.concur.mobile.core.expense.travelallowance.datamodel.ICode;
+import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
         public boolean isChecked;
         public List<ICode> spinnerValues;
         public int selectedSpinnerPosition;
+        public boolean multiValuesSelected;
     }
 
     public final class ViewHolder extends RecyclerView.ViewHolder {
@@ -141,12 +144,15 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             holder.label.setVisibility(View.VISIBLE);
             holder.label.setText(value.label);
             holder.spinner.setVisibility(View.VISIBLE);
-            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(ctx, android.R.layout.simple_spinner_item,
-                    value.spinnerValues);
+            ArrayAdapter<ICode> adapter = createSpinnerAdapter(value.spinnerValues, value.multiValuesSelected);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holder.spinner.setAdapter(adapter);
-            holder.spinner.setSelection(value.selectedSpinnerPosition);
-            
+            if (value.multiValuesSelected) {
+                holder.spinner.setSelection(value.spinnerValues.size() - 1);
+            } else {
+                holder.spinner.setSelection(value.selectedSpinnerPosition);
+            }
+
             if (value.isReadOnly) {
                 holder.spinner.setVisibility(View.GONE);
                 holder.readOnlyValue.setVisibility(View.VISIBLE);
@@ -154,6 +160,23 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             }
         }
 
+    }
+
+    private ArrayAdapter<ICode> createSpinnerAdapter(List<ICode> spinnerValues, boolean multiValuesSelected) {
+        if (!multiValuesSelected) {
+            return new ArrayAdapter<ICode>(ctx, android.R.layout.simple_spinner_item, spinnerValues);
+        } else {
+            spinnerValues.add(new MealProvision("dummy", ctx.getString(R.string.ta_multiple_values)));
+            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(ctx, android.R.layout.simple_spinner_item,
+                    spinnerValues) {
+
+                @Override
+                public int getCount() {
+                    return super.getCount() - 1;
+                }
+            };
+            return adapter;
+        }
     }
 
     @Override

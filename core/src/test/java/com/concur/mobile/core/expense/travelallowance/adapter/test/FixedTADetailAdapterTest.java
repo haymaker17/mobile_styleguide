@@ -171,6 +171,43 @@ public class FixedTADetailAdapterTest extends TestCase {
 
         assertTrue(viewHolder.spinner.getSelectedItemPosition() == 1);
         assertEquals(new MealProvision("meal2", "meal 2 provision"), (MealProvision)viewHolder.spinner.getSelectedItem());
+        assertEquals(3, viewHolder.spinner.getAdapter().getCount());
+    }
+
+    @Test
+    public void testSpinnerMultiSelect() {
+        List<ICode> codeList = new ArrayList<>();
+        codeList.add(new MealProvision("meal1", "meal 1 provision"));
+        codeList.add(new MealProvision("meal2", "meal 2 provision"));
+        codeList.add(new MealProvision("meal3", "meal 3 provision"));
+        FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
+        vh.tag = "test";
+        vh.rowType = FixedTADetailAdapter.RowType.SPINNER;
+        vh.label = "test label";
+        vh.spinnerValues = codeList;
+        vh.selectedSpinnerPosition = 1;
+        vh.multiValuesSelected = true;
+        List<FixedTADetailAdapter.ValueHolder> values = new ArrayList<>();
+        values.add(vh);
+
+        adapter = new FixedTADetailAdapter(RuntimeEnvironment.application, values);
+        recyclerView.setAdapter(adapter);
+        recyclerView.measure(0, 0);
+        recyclerView.layout(0, 0, 100, 10000);
+
+        FixedTADetailAdapter.ViewHolder viewHolder = (FixedTADetailAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
+        assertNotNull(viewHolder);
+        assertTrue(viewHolder.spinner.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.GONE);
+        assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
+
+        assertEquals("test label", viewHolder.label.getText());
+        assertEquals("test", viewHolder.spinner.getTag());
+
+        assertTrue(viewHolder.spinner.getSelectedItemPosition() == 3);
+        assertEquals("dummy", ((ICode)viewHolder.spinner.getSelectedItem()).getCode());
+        assertEquals(3, viewHolder.spinner.getAdapter().getCount());
     }
 
 }

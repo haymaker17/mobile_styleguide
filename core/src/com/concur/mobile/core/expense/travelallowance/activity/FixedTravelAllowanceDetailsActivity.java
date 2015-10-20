@@ -249,44 +249,80 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         FixedTravelAllowanceControlData controlData = fixedTaController.getControlData();
 
         if (allowance.getBreakfastProvision() != null) {
+            boolean brMultiSelection = false;
+            if (massEditList != null) {
+                for (FixedTravelAllowance al : massEditList) {
+                    if (!allowance.getBreakfastProvision().equals(al.getBreakfastProvision())) {
+                        brMultiSelection = true;
+                        break;
+                    }
+                }
+            }
             FixedTADetailAdapter.ValueHolder breakfast = fromCode( TAG_BREAKFAST,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL),
-                    allowance.getBreakfastProvision(), false, false);
+                    allowance.getBreakfastProvision(), false, false, brMultiSelection);
             if (breakfast != null) {
                 result.add(breakfast);
             }
         }
 
         if (allowance.getLunchProvision() != null) {
+            boolean luMultiSelection = false;
+            if (massEditList != null) {
+                for (FixedTravelAllowance al : massEditList) {
+                    if (!allowance.getLunchProvision().equals(al.getLunchProvision())) {
+                        luMultiSelection = true;
+                        break;
+                    }
+                }
+            }
             FixedTADetailAdapter.ValueHolder lunch = fromCode( TAG_LUNCH,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL),
-                    allowance.getLunchProvision(), false, false);
+                    allowance.getLunchProvision(), false, false, luMultiSelection);
             if (lunch != null) {
                 result.add(lunch);
             }
         }
 
         if (allowance.getDinnerProvision() != null) {
+            boolean diMultiSelection = false;
+            if (massEditList != null) {
+                for (FixedTravelAllowance al : massEditList) {
+                    if (!allowance.getDinnerProvision().equals(al.getDinnerProvision())) {
+                        diMultiSelection = true;
+                        break;
+                    }
+                }
+            }
             FixedTADetailAdapter.ValueHolder dinner = fromCode( TAG_DINNER,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL),
-                    allowance.getDinnerProvision(), false, false);
+                    allowance.getDinnerProvision(), false, false, diMultiSelection);
             if (dinner != null) {
                 result.add(dinner);
             }
         }
 
         if (allowance.getLodgingType() != null) {
+            boolean loMultiSelection = false;
+            if (massEditList != null) {
+                for (FixedTravelAllowance al : massEditList) {
+                    if (!allowance.getLodgingType().equals(al.getLodgingType())) {
+                        loMultiSelection = true;
+                        break;
+                    }
+                }
+            }
             FixedTADetailAdapter.ValueHolder lodgingType = fromCode( TAG_LODGING,
                     false,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.LODGING_TYPE_LABEL),
-                    allowance.getLodgingType(), true, false);
+                    allowance.getLodgingType(), true, false, loMultiSelection);
             if (lodgingType != null) {
                 result.add(lodgingType);
             }
@@ -297,7 +333,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
                     true,
                     false,
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL),
-                    null, false, true);
+                    null, false, true, false);
             if (overnight != null) {
                 result.add(overnight);
             }
@@ -308,13 +344,14 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
 
 
     private FixedTADetailAdapter.ValueHolder fromCode(String tag, boolean isCheckBox, boolean isPickList, String label, ICode code,
-                                                      boolean isLodgingType, boolean isOvernight) {
+                                                      boolean isLodgingType, boolean isOvernight, boolean multiSelect) {
         if (!isCheckBox && !isPickList) {
             return null;
         }
         FixedTravelAllowanceControlData controlData = fixedTaController.getControlData();
         FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
         vh.tag = tag;
+        vh.multiValuesSelected = multiSelect;
 
         if (isCheckBox) {
             vh.rowType = FixedTADetailAdapter.RowType.SWITCH;
@@ -512,22 +549,22 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         List<ICode> meals = new ArrayList<>(fixedTaController.getControlData().getProvidedMealValues().values());
         List<ICode> lodging = new ArrayList<>(fixedTaController.getControlData().getLodgingTypeValues().values());
 
-        if (TAG_BREAKFAST.equals(parent.getTag())) {
+        if (TAG_BREAKFAST.equals(parent.getTag()) && position < meals.size()) {
             MealProvision mealProvision = new MealProvision(meals.get(position).getCode(),
                     meals.get(position).getDescription());
             allowance.setBreakfastProvision(mealProvision);
         }
-        if (TAG_LUNCH.equals(parent.getTag())) {
+        if (TAG_LUNCH.equals(parent.getTag()) && position < meals.size()) {
             MealProvision mealProvision = new MealProvision(meals.get(position).getCode(),
                     meals.get(position).getDescription());
             allowance.setLunchProvision(mealProvision);
         }
-        if (TAG_DINNER.equals(parent.getTag())) {
+        if (TAG_DINNER.equals(parent.getTag()) && position < meals.size()) {
             MealProvision mealProvision = new MealProvision(meals.get(position).getCode(),
                     meals.get(position).getDescription());
             allowance.setDinnerProvision(mealProvision);
         }
-        if (TAG_LODGING.equals(parent.getTag())) {
+        if (TAG_LODGING.equals(parent.getTag())&& position < lodging.size()) {
             LodgingType lodgingType = new LodgingType(lodging.get(position).getCode(),
                     lodging.get(position).getDescription());
             allowance.setLodgingType(lodgingType);
