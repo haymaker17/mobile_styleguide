@@ -44,10 +44,6 @@ public class MessageDialogFragmentTest extends TestCase {
         messageDialog.setArguments(bundle);
         MyFragmentActivity activity = Robolectric.buildActivity(MyFragmentActivity.class).create()
                 .start().resume().get();
-//        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(messageDialog, null);
-//        fragmentTransaction.commit();
         messageDialog.show(activity.getSupportFragmentManager(), "MSG_DIALOG_TAG");
         assertNotNull(messageDialog);
     }
