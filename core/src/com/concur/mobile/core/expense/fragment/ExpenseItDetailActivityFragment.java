@@ -23,6 +23,8 @@ import com.concur.core.R;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.FormatUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.platform.expenseit.ExpenseItParseCode;
+import com.concur.mobile.platform.expenseit.ExpenseItPostReceipt;
 import com.concur.mobile.platform.expenseit.ExpenseItReceipt;
 import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 
@@ -143,10 +145,54 @@ public class ExpenseItDetailActivityFragment extends PlatformFragment {
         TextView note = (TextView) fragmentView.findViewById(R.id.expenseit_analyzing_note);
         note.setText(R.string.expenseit_failure_note);
 
+        TextView errorMessage = (TextView) fragmentView.findViewById(R.id.expenseit_error_text);
+        errorMessage.setText(getErrorMessage());
+
         LinearLayout message = (LinearLayout) fragmentView.findViewById(R.id.expenseit_error_message_field);
         message.setVisibility(View.VISIBLE);
     }
 
+    private int getErrorMessage() {
+
+        int resId = R.string.expenseit_expense_detail_not_analyzed;
+        // we only have to consider either the ErrorCode (rubicorn) or parsingStatuscode
+        // additional messgaes also add to valid messages in ExpenseItReceipt.isInErrorState.
+        // rubicorn error messages take priority
+        switch (expenseItReceipt.getErrorCode()) {
+            case ExpenseItPostReceipt.CONCUR_STATUS_CODE_MAINTENANCE:
+                resId = R.string.expenseit_expense_detail_maintenance;
+                break;
+            case ExpenseItPostReceipt.RUBICON_LONGER_THAN_EXPECTED:
+                resId = R.string.expenseit_expense_detail_delay;
+                break;
+            case ExpenseItPostReceipt.CONCUR_TIMEOUT:
+                resId = R.string.expenseit_expense_detail_delay;
+                break;
+            case ExpenseItPostReceipt.DEFAULT_ERROR_CODE:
+                resId = R.string.expenseit_expense_detail_delay;
+                break;
+            case ExpenseItPostReceipt.RUBICON_ERROR:
+                resId = R.string.expenseit_expense_detail_not_analyzed;
+                break;
+            default:
+                // No Rubicorn error found - parsingStatuscode
+                if (expenseItReceipt.getParsingStatusCode() == ExpenseItParseCode.MULTIPLE_RECEIPTS.value()) {
+                    resId = ExpenseItParseCode.MULTIPLE_RECEIPTS.getResId();
+                } else if (expenseItReceipt.getParsingStatusCode() == ExpenseItParseCode.UNREADABLE.value()) {
+                    resId = ExpenseItParseCode.UNREADABLE.getResId();
+                } else if (expenseItReceipt.getParsingStatusCode() == ExpenseItParseCode.NOT_RECEIPT.value()) {
+                    resId = ExpenseItParseCode.NOT_RECEIPT.getResId();
+                } else if (expenseItReceipt.getParsingStatusCode() == ExpenseItParseCode.NO_IMAGE_FOUND.value()) {
+                    resId = ExpenseItParseCode.NO_IMAGE_FOUND.getResId();
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".getErrorMessage could not find expenseItReceipt parsingStatusCode " + expenseItReceipt.getParsingStatusCode());
+                }
+                break;
+
+        }
+
+        return resId;
+    }
     private void setReceiptIdLabelAndFieldValues() {
         View receiptIdView = fragmentView.findViewById(R.id.expenseit_receipt_id_field);
         TextView receiptIdLabel = (TextView) receiptIdView.findViewById(R.id.field_name);

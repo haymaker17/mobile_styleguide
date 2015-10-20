@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retake">Retake</string>
+    <string name="use">Use</string>
+    <string name="camera_blur_warning">Blurry image detected. Please retake.</string>
+    <string name="preview_image_title">Preview Image</string>
+    <string name="receipt_image_unavailable">Receipt Image Unavailable</string>
+    <string name="cancel_button">Cancel</string>
+</resources>

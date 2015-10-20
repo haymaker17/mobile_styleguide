@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.util.Log;
 import com.concur.mobile.platform.travel.search.hotel.*;
@@ -61,9 +62,16 @@ public class TravelUtilHotel {
                     df.format(new Date().getTime() + 5 * 60 * 1000)); // 5 mins expiry time.
 
             // insert hotel search result
-            Uri hotelSearchResultInsertUri = resolver.insert(Travel.HotelSearchResultColumns.CONTENT_URI, values);
-
-            values.clear();
+            Uri hotelSearchResultInsertUri = null;
+            try {
+                hotelSearchResultInsertUri = resolver.insert(Travel.HotelSearchResultColumns.CONTENT_URI, values);
+            } catch (SQLiteConstraintException dbError) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: unable to insert Hotel results", dbError);
+            } catch (Exception ex) {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".insertHotelDetails: unable to insert Hotel results", ex);
+            } finally {
+                values.clear();
+            }
 
             if (hotelSearchResultInsertUri != null) {
 

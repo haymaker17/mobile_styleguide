@@ -13,6 +13,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.LocationListener;
@@ -106,7 +109,6 @@ import com.concur.mobile.core.fragment.navigation.Navigation.NavigationListener;
 import com.concur.mobile.core.fragment.navigation.Navigation.SimpleNavigationItem;
 import com.concur.mobile.core.fragment.navigation.Navigation.TextNavigationItem;
 import com.concur.mobile.core.request.activity.RequestListActivity;
-import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.service.CorpSsoQueryReply;
 import com.concur.mobile.core.service.ServiceRequest;
@@ -127,17 +129,24 @@ import com.concur.mobile.core.util.ConcurException;
 import com.concur.mobile.core.util.Const;
 import com.concur.mobile.core.util.EventTracker;
 import com.concur.mobile.core.util.Flurry;
+import com.concur.mobile.core.util.Notifications;
 import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.ViewUtil;
+import com.concur.mobile.core.util.net.SessionManager;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.expenseit.activity.ExpenseItReceiptPreviewActivity;
+import com.concur.mobile.corp.expenseit.fragment.ExpenseItReceiptPreviewFragment;
+import com.concur.mobile.corp.image.detection.BlurInfo;
 import com.concur.mobile.platform.authentication.LogoutRequestTask;
 import com.concur.mobile.platform.authentication.SessionInfo;
 import com.concur.mobile.platform.config.provider.ConfigUtil;
 import com.concur.mobile.platform.location.LastLocationTracker;
+import com.concur.mobile.platform.request.util.RequestStatus;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
 import com.concur.mobile.platform.ui.common.util.ImageUtil;
 import com.concur.platform.ExpenseItProperties;
 import com.concur.platform.PlatformProperties;
+import com.concur.receipt.detection.nativemath.QualityAssessment;
 
 import org.apache.http.HttpStatus;
 
@@ -151,6 +160,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+
+import tourguide.tourguide.Overlay;
+import tourguide.tourguide.ToolTip;
+import tourguide.tourguide.TourGuide;
 
 @EventTracker.EventTrackerClassName(getClassName = Flurry.SCREEN_NAME_HOME)
 public class Home extends BaseActivity implements View.OnClickListener, NavigationListener, ReceiptChoiceListener {
@@ -171,11 +184,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private static final String OPEN_SOURCE_LIBRARY_CLASS = "open_source_library_class";
 
+    private static final String LOCAL_IMAGE_KEY = "LOCAL_IMAGE_KEY";
+
     protected int inProgressRef = 0;
 
     private String receiptCameraImageDataLocalFilePath;
+
+    private QualityAssessment mQualityAssessment;
+
     private static final int REQUEST_TAKE_PICTURE = 100;
     private static final int REQUEST_CODE_MSG_CENTER = 101;
+    public static final int REQUEST_EXPENSEIT_RETAKE = 628;
 
     private static final int NAVIGATION_BOOK_TRAVEL = 0;
     private static final int NAVIGATION_RECEIPTS = 1;
@@ -269,6 +288,8 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     protected ActionBarDrawerToggle mDrawerToggle;
 
     private AlertDialogFragment confirmationDialog;
+
+    private static final String SHOWCASE_EXP_IT_ID = "showcase_for_expense_it_button";
 
     private List<NavigationItem> navItems = new ArrayList<NavigationItem>();
 
@@ -485,17 +506,20 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             }
 
-            // If it's the first time running, and it's not a test drive user, show
+            // If it's the first time running, show
             // tour. Set not first time running either way.
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (Preferences.isFirstTimeRunning(prefs)) {
-                if (!RolesUtil.isTestDriveUser() && (RolesUtil.isExpenser(Home.this) || RolesUtil
-                        .isTraveler(Home.this))) {
-                    showTour();
-                } else {
-                    Preferences.setNotFirstTimeRunning(prefs);
+                Preferences.setNotFirstTimeRunning(prefs);
+                Preferences.resetUpgradePreferencese();
+            } else {
+                // Login is completed, make sure Nifty push service is started
+                if (Preferences.allowNotifications()) {
+                    Notifications notifications = new Notifications(ConcurCore.getContext());
+                    notifications.initAWSPushService();
                 }
             }
+
 
             // If the user should see the minSdkUpgradeMessage, show it.
             if ((android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) && !Preferences
@@ -533,19 +557,25 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
             if (savedInstanceState != null && savedInstanceState.containsKey(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH)) {
                 receiptCameraImageDataLocalFilePath = savedInstanceState.getString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH);
             }
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(LOCAL_IMAGE_KEY)) {
+                receiptImageDataLocalFilePath = savedInstanceState.getString(LOCAL_IMAGE_KEY);
+            }
+
+
             if (savedInstanceState != null) {
                 upTime = savedInstanceState.getLong(Const.ACTIVITY_STATE_UPTIME, 0L);
             }
 
-        hideFooter();
-        hideBookFooterButton();
-        hideMileageFooterButton();
-        // OCR: Disable backdoor Easter egg.
-        if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
-            hideQuickExpenseFooterButton();
-        }
-        hideReceiptFooterButton();
-        hideTravelRequestRow();
+            hideFooter();
+            hideBookFooterButton();
+            hideMileageFooterButton();
+            // OCR: Disable backdoor Easter egg.
+            if (!Preferences.isExpenseItUser()/* || !Preferences.shouldUseNewOcrFeatures() */) {
+                hideQuickExpenseFooterButton();
+            }
+            hideReceiptFooterButton();
+            hideTravelRequestRow();
 
             // Hide the travel UI elements, if need be.
             boolean isTraveler = RolesUtil.isTraveler(Home.this);
@@ -598,6 +628,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 if (!Preferences.isExpenseItUser()) {
                     showQuickExpenseFooterButton();
                     showReceiptFooterButton();
+                    hideExpenseItFooterButton();
                 } else {
                     /* MOB-24972 - Disable to show QE at bottom of screen again.
                     hideQuickExpenseFooterButton();
@@ -878,163 +909,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     }
 
     /**
-     * The first time a non Test Drive user logs in, they'll see a tour screen where they can fling to the next image. These
-     * images are selected dynamically depending on user type (Travel, Expense, Both, or Neither).
-     */
-    protected void showTour() {
-
-        /**
-         * A child of SimpleOnGestureListener that overrides fling to allow the user to flip through tour screens in the
-         * ViewFlipper and shows animation when they do so.
-         */
-        class HomeTourGestureDetector extends SimpleOnGestureListener {
-
-            private static final int SWIPE_MIN_DISTANCE = 120;
-            private static final int SWIPE_MAX_OFF_PATH = 250;
-            private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-            ViewFlipper flipper;
-            ArrayList<View> homeTourDotsList;
-            String[] homeTourTitleStrings;
-            String[] homeTourMessageStrings;
-            TextView homeTourTextTitle;
-            TextView homeTourTextMessage;
-
-            public HomeTourGestureDetector(ViewFlipper flipper, ArrayList<View> homeTourDotsList) {
-                this.flipper = flipper;
-                this.homeTourDotsList = homeTourDotsList;
-
-                Resources res = getResources();
-                homeTourTitleStrings = new String[]{res.getString(R.string.home_tour_expense1_title),
-                        res.getString(R.string.home_tour_expense2_title),
-                        res.getString(R.string.home_tour_travel1_title)};
-
-                homeTourMessageStrings = new String[]{res.getString(R.string.home_tour_expense1_message),
-                        res.getString(R.string.home_tour_expense2_message),
-                        res.getString(R.string.home_tour_travel1_message)};
-
-                homeTourTextTitle = (TextView) findViewById(R.id.home_tour_text_title);
-                homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
-            }
-
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                try {
-                    if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                        return false;
-                    // Swipe right to left (next)
-                    if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        flipper.setInAnimation(Home.this, R.anim.slide_in_right_fast);
-                        flipper.setOutAnimation(Home.this, R.anim.slide_out_left_fast);
-
-                        homeTourDotsList.get(flipper.getDisplayedChild())
-                                .setBackgroundResource(R.drawable.home_tour_white_dot);
-
-                        flipper.showNext();
-
-                        int currentViewIndex = flipper.getDisplayedChild();
-
-                        homeTourDotsList.get(currentViewIndex).setBackgroundResource(R.drawable.home_tour_blue_dot);
-                        homeTourTextTitle.setText(homeTourTitleStrings[currentViewIndex]);
-                        homeTourTextMessage.setText(homeTourMessageStrings[currentViewIndex]);
-
-                    } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                            && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                        flipper.setInAnimation(Home.this, R.anim.slide_in_left_fast);
-                        flipper.setOutAnimation(Home.this, R.anim.slide_out_right_fast);
-
-                        homeTourDotsList.get(flipper.getDisplayedChild())
-                                .setBackgroundResource(R.drawable.home_tour_white_dot);
-
-                        flipper.showPrevious();
-
-                        int currentViewIndex = flipper.getDisplayedChild();
-
-                        homeTourDotsList.get(currentViewIndex).setBackgroundResource(R.drawable.home_tour_blue_dot);
-                        homeTourTextTitle.setText(homeTourTitleStrings[currentViewIndex]);
-                        homeTourTextMessage.setText(homeTourMessageStrings[currentViewIndex]);
-                    }
-                } catch (Exception e) {
-                    // no-op
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-        }
-
-        View.OnClickListener dismissListener = new OnClickListener() {
-
-            public void onClick(View v) {
-                Preferences.setNotFirstTimeRunning(PreferenceManager.getDefaultSharedPreferences(Home.this));
-            }
-        };
-
-        View homeTourView = UIUtils
-                .setupOverlay((ViewGroup) getWindow().getDecorView(), R.layout.home_tour, dismissListener,
-                        R.id.home_tour_icon_cancel, this, R.anim.fade_out, 500L);
-
-        ViewFlipper homeTourFlipper = (ViewFlipper) findViewById(R.id.home_tour_view_flipper);
-        View homeTourDots = homeTourView.findViewById(R.id.home_tour_dots);
-
-        // This is the bulk of the logic to determine what to show and how to
-        // show it based on user
-        if (RolesUtil.isExpenser(Home.this)) {
-            // If Expenser, we will have multiple tour images, so we need the
-            // dots list.
-            ArrayList<View> homeTourDotsList = new ArrayList<View>();
-            homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot1));
-            homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot2));
-
-            if (RolesUtil.isTraveler(Home.this)) {
-                // Is Travel and Expense
-                homeTourDotsList.add(homeTourDots.findViewById(R.id.homeTourDot3));
-
-            } else {
-                // Is Expense only
-
-                // If we're not not a traveler, remove traveler image and dot
-                // for it.
-                homeTourDots.findViewById(R.id.homeTourDot3).setVisibility(View.GONE);
-                homeTourFlipper.removeView(homeTourFlipper.findViewById(R.id.homeTourTravel1));
-
-            }
-
-            // Note: Only make this for expense users because Travel Only has
-            // only one view.
-            final GestureDetector gestureDetector = new GestureDetector(this,
-                    new HomeTourGestureDetector(homeTourFlipper, homeTourDotsList));
-
-            homeTourFlipper.setOnTouchListener(new View.OnTouchListener() {
-
-                public boolean onTouch(View v, MotionEvent event) {
-                    return gestureDetector.onTouchEvent(event);
-                }
-            });
-        } else {
-            // Is travel only
-            // Since travel only has one screen, remove all the dots.
-            homeTourDots.setVisibility(View.GONE);
-
-            // Set text to travel text
-            Resources res = getResources();
-            TextView homeTourTextTitle = (TextView) findViewById(R.id.home_tour_text_title);
-            homeTourTextTitle.setText(res.getString(R.string.home_tour_travel1_title));
-            TextView homeTourTextMessage = (TextView) findViewById(R.id.home_tour_text_message);
-            homeTourTextMessage.setText(res.getString(R.string.home_tour_travel1_message));
-
-            // Remove all except for the travel tour image
-            homeTourFlipper.removeView(findViewById(R.id.homeTourExpense1));
-            homeTourFlipper.removeView(findViewById(R.id.homeTourExpense2));
-
-        }
-
-    }
-
-    /**
      * If this user is a test drive user, this will get called the first time the user loads the home screen to show the test
      * drive tips overlay
      */
@@ -1087,7 +961,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.concur.mobile.corp.activity.BaseActivity#onResume()
      */
     @Override
@@ -1120,22 +994,33 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     needService = true;
                 }
             } else {
-                // Restore any receivers.
-                restoreReceivers();
+                boolean isSessionExpired = SessionManager.isSessionExpire(concurMobile);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                boolean autoLogin = prefs.getBoolean(Const.PREF_AUTO_LOGIN, false);
+                if (isSessionExpired && !autoLogin ){
+                    cancelAllDataRequests();
+                    clearSessionData();
+                    showExpiredDialog();
+                    return;
+                }else{
+                    // Restore any receivers.
+                    restoreReceivers();
 
-                // Re-register the data receiver, if need be.
-                if (!dataReceiverRegistered) {
-                    registerReceiver(dataReceiver, dataReceiverFilter);
-                    dataReceiverRegistered = true;
+                    // Re-register the data receiver, if need be.
+                    if (!dataReceiverRegistered) {
+                        registerReceiver(dataReceiver, dataReceiverFilter);
+                        dataReceiverRegistered = true;
+                    }
+
+                    // Go get the data
+                    if (isServiceAvailable()) {
+                        updateDataBasedOnServiceAvail();
+                    } else {
+                        needService = true;
+                    }
+                    updateOfflineQueueBar();
                 }
 
-                // Go get the data
-                if (isServiceAvailable()) {
-                    updateDataBasedOnServiceAvail();
-                } else {
-                    needService = true;
-                }
-                updateOfflineQueueBar();
 
             }
 
@@ -1248,7 +1133,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see com.concur.mobile.corp.activity.BaseActivity#onPause()
      */
     @Override
@@ -1302,7 +1187,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onDestroy()
      */
     @Override
@@ -1334,6 +1219,10 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
         if (receiptCameraImageDataLocalFilePath != null) {
             outState.putString(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
+        }
+
+        if (receiptImageDataLocalFilePath != null) {
+            outState.putString(LOCAL_IMAGE_KEY, receiptImageDataLocalFilePath);
         }
 
         if (isTipsOverlayVisible) {
@@ -1450,6 +1339,11 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
     private void logout() {
 
         if (ConcurMobile.isConnected()) {
+            // Deregister from push notifications if they are enabled and there is a network connection
+            if (Preferences.allowNotifications()) {
+                Notifications notifications = new Notifications(ConcurCore.getContext());
+                notifications.stopAWSPushService();
+            }
 
             // When logging out, we clear the Session Id, but if we're updating
             // home (IE clearing offline data, refreshing, etc.)
@@ -1502,6 +1396,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // Go back to the EmailLookup screen.
         Intent i = new Intent(this, EmailPasswordLookupActivity.class);
         i.putExtra(com.concur.mobile.platform.ui.common.util.Const.EXTRA_LOGOUT, true);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         ConcurCore ConcurCore = (ConcurCore) getApplication();
         ConcurService ConcurService = ConcurCore.getService();
         CorpSsoQueryReply ssoQueryReply = ConcurService.getCorpSsoQueryReply();
@@ -1836,6 +1731,29 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
+    protected void captureReceipt(int requestCode) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            // Create a place for the camera to write its output.
+            String receiptFilePath = ViewUtil.createExternalMediaImageFilePath();
+            File receiptFile = new File(receiptFilePath);
+            Uri outputFileUri = Uri.fromFile(receiptFile);
+            receiptCameraImageDataLocalFilePath = receiptFile.getAbsolutePath();
+            Log.d(Const.LOG_TAG,
+                    CLS_TAG + ".captureReceipt: receipt image path -> '" + receiptCameraImageDataLocalFilePath + "'.");
+            // Launch the camera application.
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            intent.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptCameraImageDataLocalFilePath);
+            try {
+                startActivityForResult(intent, requestCode);
+            } catch (Exception e) {
+                // Device has no camera, see MOB-16872
+            }
+        } else {
+            showDialog(Const.DIALOG_EXPENSE_NO_EXTERNAL_STORAGE_AVAILABLE);
+        }
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         Dialog dlg = dialogs.get(id);
@@ -1892,7 +1810,7 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
      */
     @Override
@@ -1957,6 +1875,13 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
                 break;
 
+            case REQUEST_EXPENSEIT_RETAKE:
+                if (resultCode == Activity.RESULT_OK) {
+                    if (copyCapturedImage()) {
+                        initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
+                    }
+                }
+                break;
             case REQUEST_TAKE_PICTURE: {
                 if (resultCode == Activity.RESULT_OK) {
                     if (copyCapturedImage()) {
@@ -2001,12 +1926,27 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                     supportInvalidateOptionsMenu();
                 }
                 break;
+
+            case ExpenseItReceiptPreviewFragment.USE_IMAGE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    if (data.hasExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_RETAKE_RESULT_KEY)) {
+                        boolean retakeImage = data.getExtras().getBoolean(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_RETAKE_RESULT_KEY, true);
+                        if (retakeImage) {
+                            captureReceipt(REQUEST_EXPENSEIT_RETAKE);
+                        } else {
+                            initializeUploadReceipt();
+                        }
+                    }
+
+                } else {
+                    Log.e(Const.LOG_TAG, CLS_TAG + "USE_IMAGE_REQUEST_CODE returned as " + resultCode);
+                }
+                break;
         }
     }
 
     /**
      * Will copy the image data captured by the camera.
-     *
      */
     private boolean copyCapturedImage() {
         boolean retVal = true;
@@ -2268,54 +2208,6 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
-    /**
-     * Determines whether personal car mileage should be displayed on action menu. Requires car configs to have been loaded.
-     */
-    private boolean showPersonalCarMileage() {
-
-        // Test Drive users never show Personal Car Mileage in the footer.
-        if (Preferences.isTestDriveUser()) {
-            return false;
-        }
-        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
-        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
-            return true;
-        }
-
-        ConcurMobile concurMobile = (ConcurMobile) getApplication();
-        ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
-        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
-            carConfigList = concurMobile.getService().getCarConfigs();
-        }
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
-
-        if (carConfigList != null && carConfigList.size() > 0) {
-            if (RolesUtil.isExpenser(Home.this)) {
-                for (int i = 0; i < carConfigList.size(); i++) {
-                    // Check rates availability under PER_ONE (fixed) or cars
-                    // availability under PER_VARIABLE
-                    CarConfig carConfig = carConfigList.get(i);
-                    if (carConfig != null) {
-                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode) && ((
-                                carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE)
-                                        && carConfig.rates.size() > 0))
-                                // TODO this line of code is not required.
-                                // Double check with Walt
-                                // ||
-                                // ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_COM_FIX)
-                                // && carConfig.rates.size()>0))
-                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR)
-                                && carConfig.details.size() > 0))) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Will update the trip-related information displayed on the screen.
@@ -2516,7 +2408,60 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
 
     private void showExpenseItFooterButton() {
         showFooter();
+        View view = findViewById(R.id.homeExpenseIt);
         setViewVisible(R.id.homeExpenseIt);
+
+        Context ctx = ConcurCore.getContext();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+        if (isUpgrade) {
+            presentShowcaseView(view, prefs);
+        }
+    }
+
+    /**
+     * Show expense it coach mark
+     *
+     * @param view  : view on which we need to show coach mark
+     * @param prefs : reference of shared preferences
+     */
+    private void presentShowcaseView(View view, final SharedPreferences prefs) {
+        try{
+            ToolTip toolTip;
+            Overlay overlay;
+            //tool-tip
+            final TourGuide mTutorialHandler = TourGuide.init(this).with(TourGuide.Technique.Click);
+
+            toolTip = new ToolTip().
+                    setTitle(null)
+                    .setDescription(getString(R.string.expit_desc_short))
+                    .setBackgroundColor(Color.parseColor("#FFFFFFFF"))
+                    .setGravity(Gravity.TOP)
+                    .setShadow(false)
+                    .setUseCustomImgAlignment(false);
+
+
+            overlay = new Overlay()
+                    .setBackgroundColor(Color.parseColor("#00FFFFFF"))
+                            // Note: disable click has no effect when setOnClickListener is used, this is here for demo purpose
+                            // if setOnClickListener is not used, disableClick() will take effect
+                    .disableClick(false)
+                    .setStyle(Overlay.Style.Rectangle)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mTutorialHandler.cleanUp();
+                            // commit changes in preferences.
+                           Preferences.resetUpgradePreferencese();
+                        }
+                    });
+            mTutorialHandler.setPointer(null)
+                    .setToolTip(toolTip)
+                    .setOverlay(overlay)
+                    .playOn(view);
+        }catch(Exception e){
+           Log.e(Const.LOG_TAG, CLS_TAG + ".>>>>"+e);
+        }
     }
 
     private void hideExpenseItFooterButton() {
@@ -2548,6 +2493,55 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
                 }
             }
         }
+    }
+
+    /**
+     * Determines whether personal car mileage should be displayed on action menu. Requires car configs to have been loaded.
+     */
+    private boolean showPersonalCarMileage() {
+
+        // Test Drive users never show Personal Car Mileage in the footer.
+        if (Preferences.isTestDriveUser()) {
+            return false;
+        }
+        // MOB-20183 requires that if offline and showCarMileage preference is true then show the car mileage to bottom bar.
+        if ((!ConcurMobile.isConnected()) && (ViewUtil.isShowMileageExpenseOnHomeScreenEnabled(Home.this))) {
+            return true;
+        }
+
+        ConcurMobile concurMobile = (ConcurMobile) getApplication();
+        ArrayList<CarConfig> carConfigList = concurMobile.getCarConfigs();
+        if (carConfigList == null && concurMobile.getService() != null) { // MOB-24854 - for some reason ConcurService is null...don't know why...
+            carConfigList = concurMobile.getService().getCarConfigs();
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String userCurrencyCode = prefs.getString(Const.PREF_USER_CRN_CODE, null);
+
+        if (carConfigList != null && carConfigList.size() > 0) {
+            if (RolesUtil.isExpenser(Home.this)) {
+                for (int i = 0; i < carConfigList.size(); i++) {
+                    // Check rates availability under PER_ONE (fixed) or cars
+                    // availability under PER_VARIABLE
+                    CarConfig carConfig = carConfigList.get(i);
+                    if (carConfig != null) {
+                        if (carConfig.crnCode.equalsIgnoreCase(userCurrencyCode) && ((
+                                carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_ONE)
+                                        && carConfig.rates.size() > 0))
+                                // TODO this line of code is not required.
+                                // Double check with Walt
+                                // ||
+                                // ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_COM_FIX)
+                                // && carConfig.rates.size()>0))
+                                || ((carConfig.configType.equalsIgnoreCase(CarConfig.TYPE_PER_VAR)
+                                && carConfig.details.size() > 0))) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private void hideMileageFooterButton() {
@@ -3686,6 +3680,63 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         }
     }
 
+    protected boolean isBlurredExpenseItImage(String filePath) {
+        File imgFile = new File(filePath);
+        Bitmap receiptImage = null;
+        if (imgFile.exists()) {
+            receiptImage = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        }
+
+
+        BlurInfo qualityScore = null;
+        mQualityAssessment = new QualityAssessment();
+        // Crashes with UnsatisfiedLinkError here.
+        if (receiptImage != null) {
+            qualityScore = new BlurInfo(mQualityAssessment.getQualityScore(receiptImage));
+        }
+
+        return (qualityScore != null && qualityScore.isBlurred());
+    }
+
+    private void initializeExpenseItReceiptPreview(String imageSource) {
+        Intent retakePreviewIntent = new Intent(Home.this, ExpenseItReceiptPreviewActivity.class);
+        retakePreviewIntent.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        retakePreviewIntent.putExtra(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY, imageSource);
+        startActivityForResult(retakePreviewIntent, ExpenseItReceiptPreviewFragment.USE_IMAGE_REQUEST_CODE);
+    }
+
+    private void initializeUploadReceipt() {
+        Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
+        newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(newIt);
+    }
+
+    private void initializeUploadFromGallery() {
+        Intent it = new Intent(this, ViewImage.class);
+        StringBuilder strBldr = new StringBuilder("file://");
+        strBldr.append(receiptImageDataLocalFilePath);
+        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
+        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
+        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
+        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
+        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
+        it.putExtra(Const.EXTRA_SHOW_MENU, true);
+        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, receiptImageDataLocalFilePath);
+        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
+        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
+
+        // Add Hide Create Expense flag to View Image page
+        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+
+        startActivity(it);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -3697,15 +3748,16 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // class
         // to upload/save the image to the R.S. and refresh the Receipts List
         // UI.
-        Intent newIt = new Intent(Home.this, ExpensesAndReceipts.class);
-        newIt.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
-        newIt.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
-        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
-        newIt.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
-        newIt.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
-        newIt.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-        newIt.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(newIt);
+        receiptCameraImageDataLocalFilePath = filePath;
+
+        if (copyCapturedImage()) {
+            if (isBlurredExpenseItImage(filePath)) {
+                EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Camera");
+                initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_CAMERA_KEY);
+            } else {
+                initializeUploadReceipt();
+            }
+        }
     }
 
     /*
@@ -3733,23 +3785,17 @@ public class Home extends BaseActivity implements View.OnClickListener, Navigati
         // class will be launched to upload/save the image to the R.S. and
         // refresh
         // the Receipts List UI.
-        Intent it = new Intent(this, ViewImage.class);
-        StringBuilder strBldr = new StringBuilder("file://");
-        strBldr.append(filePath);
-        it.putExtra(Const.EXTRA_EXPENSE_RECEIPT_URL_KEY, strBldr.toString());
-        it.putExtra(Const.EXTRA_RECEIPT_ONLY_FRAGMENT, false);
-        it.putExtra(ReceiptStoreFragment.EXTRA_START_OCR_ON_UPLOAD, true);
-        //We may need to check for more conditions here such as if we're connected successfully to expenseit.
-        it.putExtra(ReceiptStoreFragment.EXTRA_USE_EXPENSEIT, Preferences.isExpenseItUser());
-        it.putExtra(Const.EXTRA_SHOW_MENU, true);
-        it.putExtra(Const.EXTRA_EXPENSE_IMAGE_FILE_PATH, filePath);
-        it.putExtra(Flurry.PARAM_NAME_FROM, Flurry.PARAM_VALUE_CAMERA);
-        it.putExtra(Const.EXTRA_EXPENSE_SCREEN_TITLE_KEY, getText(R.string.receipt_image));
 
-        // Add Hide Create Expense flag to View Image page
-        it.putExtra(ViewImage.EXTRA_HIDE_CREATE_EXPENSE_ACTION_MENU, true);
+        receiptImageDataLocalFilePath = filePath;
 
-        startActivity(it);
+
+        if (isBlurredExpenseItImage(filePath)) {
+            EventTracker.INSTANCE.eventTrack("Camera-Component", "Blurred", "Gallery");
+            initializeExpenseItReceiptPreview(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY);
+        } else {
+            initializeUploadFromGallery();
+        }
+
     }
 
     /*

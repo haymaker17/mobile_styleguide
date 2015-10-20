@@ -983,7 +983,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             getApplicationContext().registerReceiver(reportHeaderDetailReceiver, reportHeaderDetailFilter);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".registerReportHeaderDetailReceiver: reportHeaderDetailReceiver is *not* null!");
+                + ".registerReportHeaderDetailReceiver: reportHeaderDetailReceiver is *not* null!");
         }
     }
 
@@ -1044,7 +1044,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                 toReceiptImageId);
         if (appendReportEntryReceiptRequest == null) {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".sendAppendReportEntryReceiptRequest: unable to create 'AppendReceiptImage' request!");
+                + ".sendAppendReportEntryReceiptRequest: unable to create 'AppendReceiptImage' request!");
             unregisterAppendReportEntryReceiptReceiver();
         } else {
             appendReportEntryReceiptReceiver.setServiceRequest(appendReportEntryReceiptRequest);
@@ -1064,7 +1064,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             getApplicationContext().registerReceiver(appendReportEntryReceiptReceiver, appendReportEntryReceiptFilter);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".registerAppendReportEntryReceiver: appendReportEntryReceiptReceiver is *not* null!");
+                + ".registerAppendReportEntryReceiver: appendReportEntryReceiptReceiver is *not* null!");
         }
     }
 
@@ -1088,22 +1088,32 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
      * 
      * @param receiptImageId
      *            contains the receipt image ID of the receipt to associate with the report entry.
+     * @return Success if the image can be saved. This is used to dismiss the waiting dialog
      */
-    protected void sendSaveReportEntryReceiptRequest(String receiptImageId) {
-        if (receiptImageId != null && receiptImageId.length() > 0) {
-            ConcurService concurService = getConcurService();
-            registerSaveReportEntryReceiptReceiver();
-            saveReportEntryReceiptRequest = concurService.sendSaveReportEntryReceiptRequest(getUserId(), expRep,
-                    getSelectedExpenseReportEntry(), receiptImageId);
-            if (saveReportEntryReceiptRequest == null) {
-                Log.e(Const.LOG_TAG, CLS_TAG
-                        + ".sendSaveReportEntryReceiptRequest: unable to create 'SaveReportEntryReceipt' request!");
-                unregisterSaveReportEntryReceiptReceiver();
-            } else {
-                saveReportEntryReceiptReceiver.setRequest(saveReportEntryReceiptRequest);
-            }
+    protected boolean sendSaveReportEntryReceiptRequest(String receiptImageId) {
+        if (getSelectedExpenseReportEntry() == null) {
+            com.concur.mobile.core.dialog.DialogFragmentFactory.getAlertOkayInstance(
+                this.getText(R.string.general_error).toString(),
+                R.string.general_failed_save).show(getSupportFragmentManager(), null);
+            return false;
         } else {
-            Log.e(Const.LOG_TAG, CLS_TAG + ".sendSaveReportEntryReceiptRequest: receiptImageId is null or empty");
+
+            if (receiptImageId != null && receiptImageId.length() > 0) {
+                ConcurService concurService = getConcurService();
+                registerSaveReportEntryReceiptReceiver();
+                saveReportEntryReceiptRequest = concurService.sendSaveReportEntryReceiptRequest(getUserId(), expRep,
+                    getSelectedExpenseReportEntry(), receiptImageId);
+                if (saveReportEntryReceiptRequest == null) {
+                    Log.e(Const.LOG_TAG, CLS_TAG
+                        + ".sendSaveReportEntryReceiptRequest: unable to create 'SaveReportEntryReceipt' request!");
+                    unregisterSaveReportEntryReceiptReceiver();
+                } else {
+                    saveReportEntryReceiptReceiver.setRequest(saveReportEntryReceiptRequest);
+                }
+            } else {
+                Log.e(Const.LOG_TAG, CLS_TAG + ".sendSaveReportEntryReceiptRequest: receiptImageId is null or empty");
+            }
+            return true;
         }
     }
 
@@ -1134,7 +1144,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             saveReportEntryReceiptReceiver = null;
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".unregisterSaveReportEntryReceiptReceiver: saveReportEntryReceiptReceiver is null!");
+                + ".unregisterSaveReportEntryReceiptReceiver: saveReportEntryReceiptReceiver is null!");
         }
     }
 
@@ -1149,7 +1159,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                 getSelectedExpenseReportEntry());
         if (clearReportEntryReceiptRequest == null) {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".clearSaveReportEntryReceiptRequest: unable to create 'ClearReportEntryReceipt' request!");
+                + ".clearSaveReportEntryReceiptRequest: unable to create 'ClearReportEntryReceipt' request!");
             unregisterClearReportEntryReceiptReceiver();
         } else {
             clearReportEntryReceiptReceiver.setServiceRequest(clearReportEntryReceiptRequest);
@@ -1169,7 +1179,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             getApplicationContext().registerReceiver(clearReportEntryReceiptReceiver, clearReportEntryReceiptFilter);
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".registerClearReportEntryReceiver: clearReportEntryReceiptReceiver is *not* null!");
+                + ".registerClearReportEntryReceiver: clearReportEntryReceiptReceiver is *not* null!");
         }
     }
 
@@ -1183,7 +1193,7 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
             clearReportEntryReceiptReceiver = null;
         } else {
             Log.e(Const.LOG_TAG, CLS_TAG
-                    + ".unregisterClearReportEntryReceiptReceiver: clearReportEntryReceiptReceiver is null!");
+                + ".unregisterClearReportEntryReceiptReceiver: clearReportEntryReceiptReceiver is null!");
         }
     }
 
@@ -2051,9 +2061,10 @@ public abstract class AbstractExpenseActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                sendSaveReportEntryReceiptRequest(savingReceiptImageId);
-                                // Show the saving receipt dialog id.
-                                showDialog(getSavingReceiptDialogId());
+                                if (sendSaveReportEntryReceiptRequest(savingReceiptImageId)) {
+                                    // Show the saving receipt dialog id.
+                                    showDialog(getSavingReceiptDialogId());
+                                }
                             }
                         });
                     }

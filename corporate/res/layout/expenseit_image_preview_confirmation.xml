@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/action_bar_background_transparent"
+                tools:ignore="contentDescription">
+
+    <TextView
+        android:id="@+id/text_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/preview_button_default_margin"
+        android:layout_marginRight="@dimen/preview_button_default_margin"
+        android:background="@drawable/rounded_bg"
+        android:padding="@dimen/preview_text_padding"
+        android:text="@string/camera_blur_warning"
+        android:textColor="@color/white_ex_it"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_overlay"
+        android:layout_marginLeft="@dimen/preview_button_default_margin"
+        android:layout_marginRight="@dimen/preview_button_default_margin"
+        android:minHeight="@dimen/preview_text_overlay">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/preview_button_default_margin"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/preview_carat_margint_top"
+                android:src="@drawable/android_icon_bkg_arrow"/>
+
+            <Button
+                android:id="@+id/retake_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/preview_button_size"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_standard"
+                android:text="@string/retake"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/accept_btn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/preview_button_size"
+            android:layout_gravity="center|bottom"
+            android:layout_marginLeft="@dimen/preview_button_default_margin"
+            android:layout_weight="1"
+            android:background="@drawable/btn_standard"
+            android:text="@string/use"/>
+    </LinearLayout>
+
+</RelativeLayout>

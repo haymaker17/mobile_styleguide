@@ -35,6 +35,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
     private OnClickListener onReturnToHomeListener;
     private OnClickListener onMessageAreaClickListener;
     private List<ItinerarySegment> segments;
+    private boolean addingDisabled;
 
     /**
      * Holds all UI controls needed for rendering
@@ -92,6 +93,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         this.onMessageAreaClickListener = onMessageAreaClickListener;
         this.segments = itinerarySegments;
         addAll(itinerarySegments);
+    }
+
+    public void setAddingDisabled(boolean addingDisabled) {
+        this.addingDisabled = addingDisabled;
     }
 
     /**
@@ -269,6 +274,14 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
     private void renderBorderCrossing(final ItinerarySegment segment, final boolean withDeleteIcon) {
         //Currently we show the delete icon only, if necessary. Border Crossing itself is not yet supported
         if (holder.ivDelete != null) {
@@ -283,7 +296,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (holder.vgReturnToHome == null) {
             return;
         }
-        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null) {
+        if (segments != null && segments.size() == 1 && onReturnToHomeListener != null && !addingDisabled) {
             holder.vgReturnToHome.setVisibility(View.VISIBLE);
             if (holder.tvReturnToHome != null) {
                 String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
@@ -314,19 +327,10 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
 
         holder.vMessageArea.setVisibility(View.GONE);
         if (segment.isLocked()) {
-//            holder.vMessageArea.setVisibility(View.VISIBLE);
-//            if (holder.ivIcon != null) {
-//                holder.ivIcon.setImageResource(R.drawable.profile_icon_bank);
-//                holder.ivIcon.setVisibility(View.VISIBLE);
-//            }
-//            if (holder.tvMessage != null) {
-//                holder.tvMessage.setText(R.string.general_item_locked);
-//            }
             return;
         } else {
             Message msg = segment.getMessage();
-            if (msg != null && msg.getSeverity() == Message.Severity.ERROR
-                    && !Message.MSG_UI_MISSING_DATES.equals(msg.getCode())) {
+            if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
                 holder.vMessageArea.setVisibility(View.VISIBLE);
                 if (holder.ivIcon != null) {
                     holder.ivIcon.setImageResource(R.drawable.icon_redex);

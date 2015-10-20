@@ -30,6 +30,7 @@ import com.concur.mobile.core.util.net.LoginRequest;
 import com.concur.mobile.corp.ConcurMobile;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.ui.common.dialog.NoConnectivityDialogFragment;
+import com.concur.mobile.platform.ui.common.login.EmailPasswordLookupFragment;
 import com.concur.mobile.platform.util.Format;
 
 import java.util.HashMap;
@@ -333,13 +334,26 @@ public abstract class BasePasswordSet extends BaseActivity implements OnClickLis
                 params.put("Attempt Count", bucket);
                 EventTracker.INSTANCE.track(Flurry.CATEGORY_SIGN_IN, Flurry.EVENT_NAME_RESET_PIN_SUCCESS, params);
 
-                // Log user in asynchronously and land on Home screen
-                new LoginOnSuccess((ConcurMobile) ConcurMobile.getContext(),
-                        resultData.getString(BaseResetPassword.LOGIN_ID)).execute();
+
+                // MOB-25830 - Disabling old (very old) login task and kicking off to the Login screen instead.
+//                // Log user in asynchronously and land on Home screen
+//                new LoginOnSuccess((ConcurMobile) ConcurMobile.getContext(),
+//                        resultData.getString(BaseResetPassword.LOGIN_ID)).execute();
 
                 // TODO: Rename these classes once password subclass is built if we can make them more generic.
                 Preferences.clearPinResetEmail();
                 Preferences.clearPinResetKeyPart();
+
+                // MOB-25830 - Ideally, we want to refactor this so to use the NEW Login and AutoLogin endpoints
+                // and properly save the SessionInfo and other data.  But for now, we will just kick the user
+                // back to the login screen and have them re-auth using the new services.
+
+                Intent i = new Intent(BasePasswordSet.this, EmailPasswordLookupActivity.class);
+                i.putExtra(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE, resultData.getString(BaseResetPassword.LOGIN_ID));
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+
+                finish();
 
             } else {
 

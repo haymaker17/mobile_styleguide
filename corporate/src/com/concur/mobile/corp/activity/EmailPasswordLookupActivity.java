@@ -34,6 +34,11 @@ import com.concur.mobile.core.util.Flurry;
 import com.concur.mobile.core.util.RolesUtil;
 import com.concur.mobile.core.util.UserAndSessionInfoUtil;
 import com.concur.mobile.corp.ConcurMobile;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpItTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpItTravelTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserExpTravelTour;
+import com.concur.mobile.corp.activity.firstrun.NewUserTravelTour;
 import com.concur.mobile.platform.authentication.AutoLoginRequestTask;
 import com.concur.mobile.platform.authentication.EmailLookUpRequestTask;
 import com.concur.mobile.platform.authentication.ExpenseItLoginResult;
@@ -47,7 +52,6 @@ import com.concur.mobile.platform.ui.common.IProgressBarListener;
 import com.concur.mobile.platform.ui.common.dialog.AlertDialogFragment;
 import com.concur.mobile.platform.ui.common.dialog.DialogFragmentFactory;
 import com.concur.mobile.platform.ui.common.dialog.ProgressDialogFragment;
-import com.concur.mobile.platform.ui.common.fragment.PlatformFragment;
 import com.concur.mobile.platform.ui.common.login.EmailLookupFragment;
 import com.concur.mobile.platform.ui.common.login.EmailPasswordLookupFragment;
 import com.concur.mobile.platform.ui.common.login.NewLoginPasswordFragment;
@@ -85,6 +89,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     private static final String PROGRESSBAR_VISIBLE = "PROGRESSBAR_VISIBLE";
     private static final String PROGRESSBAR_MESSAGE = "PROGRESSBAR_MESSAGE";
+    private static final String EMAIL_LOOKUP_BUNDLE = "emailLookupBundle";
+    private static final String LOGIN_FRAGMENT = "login_fragment";
+    private static final String EMAIL_FRAGMENT = "email_fragment";
 
     public final static String TAG_LOGIN_WAIT_DIALOG = "tag.login.wait.dialog";
     protected final static String TAG_LOGIN_REMOTE_WIPE_DIALOG = "tag.login.remote.wipe.dialog";
@@ -107,6 +114,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     private byte mTwoFingerTapCount = 0;
 
     private NewLoginPasswordFragment loginPasswordFragment;
+    private EmailPasswordLookupFragment emailLookupFragment;
 
     private BaseAsyncResultReceiver autoLoginReceiver;
 
@@ -146,9 +154,20 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // Enable the progress mask if needed
         if (savedInstanceState != null) {
             progressbarVisible = savedInstanceState.getBoolean(PROGRESSBAR_VISIBLE, false);
+            progressDlgMessage = savedInstanceState.getString(PROGRESSBAR_MESSAGE);
+
             if (progressbarVisible) {
                 showProgressBar();
             }
+
+            emailLookupBundle = savedInstanceState.getBundle(EMAIL_LOOKUP_BUNDLE);
+
+            emailLookupFragment = (EmailPasswordLookupFragment)getSupportFragmentManager().getFragment(
+                    savedInstanceState, EMAIL_FRAGMENT);
+
+            loginPasswordFragment = (NewLoginPasswordFragment)getSupportFragmentManager().getFragment(
+                    savedInstanceState, LOGIN_FRAGMENT);
+
         }
 
         ImageView img = (ImageView) findViewById(R.id.helpimg);
@@ -189,31 +208,14 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         // See if we're to preload the email address.
         emailText = getIntent().getStringExtra(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE);
 
-        FragmentManager fm = getSupportFragmentManager();
-        Bundle bundle = new Bundle();
-        PlatformFragment emailLookupFragment = (PlatformFragment) fm.findFragmentByTag(FRAGMENT_EMAIL_LOOKUP);
-        if (emailLookupFragment == null) {
-            emailLookupFragment = new EmailPasswordLookupFragment();
-
-            // If we're supposed to load email lookup with text, push that to the fragment.
-            // But first check if it's empty, and if it is and autologin is enabled, get it from the Prefs.
-            if (TextUtils.isEmpty(emailText)) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                if (prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
-                    // Restore login ID : MOB-18534
-                    emailText = Preferences.getLogin(prefs, "");
-                }
-            }
-
-            bundle.putString(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE, emailText);
-            emailLookupFragment.setArguments(bundle);
-
-            ((EmailPasswordLookupFragment) emailLookupFragment).setProgressBarListener(this);
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.container, emailLookupFragment, FRAGMENT_EMAIL_LOOKUP);
-            ft.commit();
+        if (loginPasswordFragment==null) {
+           startEmailFragment();
         } else {
-            ((EmailPasswordLookupFragment) emailLookupFragment).setProgressBarListener(this);
+           if(loginPasswordFragment!=null){
+               //login password fragment is active. Do not start fragment again. This check is essential during rotation.
+           }else{
+               startLoginFragment(emailLookupBundle);
+           }
         }
 
         setAutoRequestReceiver();
@@ -244,9 +246,13 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     }
                 }
             });
+            FragmentManager mgr = getSupportFragmentManager();
+            if (mgr != null) {
+                FragmentTransaction ft = mgr.beginTransaction();
+                progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
+                progressbarVisible = true;
+            }
         }
-        progressDialog.show(getSupportFragmentManager(), TAG_LOGIN_WAIT_DIALOG);
-        progressbarVisible = true;
 
     }
 
@@ -267,9 +273,18 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putBoolean(PROGRESSBAR_VISIBLE, progressbarVisible);
         outState.putString(PROGRESSBAR_MESSAGE, progressDlgMessage);
+        outState.putBundle(EMAIL_LOOKUP_BUNDLE, emailLookupBundle);
+        //Save the fragment's instance
+        if(emailLookupFragment!=null && emailLookupFragment.isVisible()){
+            getSupportFragmentManager().putFragment(outState, EMAIL_FRAGMENT, emailLookupFragment);
+        }
+        if(loginPasswordFragment!=null && loginPasswordFragment.isVisible()){
+            getSupportFragmentManager().putFragment(outState, LOGIN_FRAGMENT, loginPasswordFragment);
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -360,6 +375,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     public void onEmailLookupRequestFail(Bundle resultData) {
         trackEmailLookupFailure(Flurry.EVENT_OTHER_ERROR);
         // resultData contains the sign-in method. {Values: Password/MobilePassword/SSO} , and email id used in email lookup.
+        emailLookupBundle = resultData;
         startLoginFragment(resultData);
     }
 
@@ -378,21 +394,57 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
 
+    private void startEmailFragment(){
+        FragmentManager fm = getSupportFragmentManager();
+        Bundle bundle = new Bundle();
+        emailLookupFragment = (EmailPasswordLookupFragment) fm.findFragmentByTag(FRAGMENT_EMAIL_LOOKUP);
+        if(emailLookupBundle!=null){
+            emailText  = emailLookupBundle.getString(EmailLookUpRequestTask.EXTRA_LOGIN_ID_KEY);
+        }
+        if (emailLookupFragment == null) {
+            emailLookupFragment = new EmailPasswordLookupFragment();
+
+            // If we're supposed to load email lookup with text, push that to the fragment.
+            // But first check if it's empty, and if it is and autologin is enabled, get it from the Prefs.
+            if (TextUtils.isEmpty(emailText)) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                if (prefs.getBoolean(Const.PREF_SAVE_LOGIN, false)) {
+                    // Restore login ID : MOB-18534
+                    emailText = Preferences.getLogin(prefs, "");
+                }
+            }
+
+            bundle.putString(EmailPasswordLookupFragment.ARGS_EMAIL_TEXT_VALUE, emailText);
+            emailLookupFragment.setArguments(bundle);
+
+            emailLookupFragment.setProgressBarListener(this);
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, emailLookupFragment, FRAGMENT_EMAIL_LOOKUP);
+            ft.commit();
+        } else {
+            emailLookupFragment.setProgressBarListener(this);
+        }
+    }
+
     private void startLoginFragment(Bundle emailLookupBundle) {
         FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
         loginPasswordFragment = (NewLoginPasswordFragment) fm.findFragmentByTag(FRAGMENT_LOGIN_PASSWORD);
         if (loginPasswordFragment == null) {
             loginPasswordFragment = new NewLoginPasswordFragment();
         }
-        Bundle args = new Bundle();
-        args.putBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, emailLookupBundle);
-        loginPasswordFragment.setArguments(args);
-        ft.replace(R.id.container, loginPasswordFragment, FRAGMENT_LOGIN_PASSWORD);
-        ft.addToBackStack(FRAGMENT_LOGIN_PASSWORD);
-        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-        ft.commit();
-
+        if (emailLookupBundle != null) {
+            Bundle args = new Bundle();
+            args.putBundle(EmailLookUpRequestTask.EXTRA_LOGIN_BUNDLE, emailLookupBundle);
+            loginPasswordFragment.setArguments(args);
+            //TODO isPasswordLoginFragmentShown=true;
+        }
+        if (emailLookupFragment!=null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.container, loginPasswordFragment, FRAGMENT_LOGIN_PASSWORD);
+            ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+            ft.commit();
+            //ft.commitAllowingStateLoss();
+        }
     }
 
     /*
@@ -548,6 +600,7 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
             if (progressDialog != null) {
                 progressDialog.dismiss();
+                progressbarVisible = false;
             }
 
             remoteWipe();
@@ -584,10 +637,11 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
         noOfLoginAttempts++;
         if (progressDialog != null) {
             progressDialog.dismiss();
+            progressbarVisible = false;
         }
         if (noOfLoginAttempts > 2) {
-            loginPasswordFragment.removeFragment();
             noOfLoginAttempts = 0;
+            removeLoginFragment();
         } else {
             if (loginPasswordFragment.isDetached()) {
                 return;
@@ -751,80 +805,62 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
     }
 
     private void gotoHome(Bundle emailLookup) {
-        Intent i = new Intent(this, Home.class);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        ConcurMobile app = (ConcurMobile) getApplication();
+        //from email lookup screen no need to expire login
+        app.expireLogin(false);
+
+        Intent intent = null;
+        if (prefs.contains(Preferences.PREF_APP_UPGRADE)) {
+            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+            if (isUpgrade) {
+                //upgrade
+                intent = Startup.getStartIntent(this);
+            } else {
+                intent = getFirstRunNewUserIntent(this, prefs);
+            }
+        } else {
+            intent = getFirstRunNewUserIntent(this, prefs);
+        }
         logUserTimings(emailLookup);
-        startActivity(i);
+        startActivity(intent);
         this.setResult(Activity.RESULT_OK);
         this.finish();
     }
 
-    //TODO re-enable this for first run experience after new login finish.
-//    private void gotoHome(Bundle emailLookup) {
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        Intent startIntent=null;
-//        if(!(Preferences.isFirstTimeRunning(prefs))){
-//            boolean shownExpenseIt = false, shownTravel = false, shownBoth = false;
-//            Context ctx = ConcurCore.getContext();
-//            //check roles
-//            if (!(RolesUtil.isTestDriveUser()) && Preferences.shouldShowExpenseItAd()) {
-//                if (Preferences.isFirstRunExpUpgradeExpenseIt(prefs)) {
-//                    shownExpenseIt = true;
-//                    Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-//                } else {
-//                    shownExpenseIt = false;
-//                }
-//            }
-//            if (!(RolesUtil.isTestDriveUser()) && RolesUtil.isTraveler(ctx)) {
-//                if (Preferences.isFirstRunExpUpgradeTravel(prefs)) {
-//                    shownTravel = true;
-//                    Preferences.setFirstRunExpUpgradeTravel(prefs);
-//                } else {
-//                    shownTravel = false;
-//                }
-//            }
-//
-//            if (Preferences.isFirstRunExpUpgradeExpenseItTravel(prefs)) {
-//                shownBoth = true;
-//                shownExpenseIt = true;
-//                shownTravel = true;
-//                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-//                Preferences.setFirstRunExpUpgradeTravel(prefs);
-//                Preferences.setFirstRunExpUpgradeExpenseIt(prefs);
-//            } else if (shownExpenseIt && shownTravel) {
-//                shownBoth = true;
-//                Preferences.setFirstRunExpUpgradeExpenseItTravel(prefs);
-//            } else {
-//                shownBoth = false;
-//            }
-//
-//            if (!shownBoth && Preferences.shouldShowExpenseItAd() && RolesUtil.isTraveler(ctx)) {
-//                Toast.makeText(ctx, "This is ExpenseIT and Travel User", Toast.LENGTH_LONG).show();
-//                startIntent = new Intent(this, FirstRunExpItTravelTour.class);
-//                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//            } else if (!shownExpenseIt && Preferences.shouldShowExpenseItAd()) {
-//                Toast.makeText(ctx, "This is ExpenseIT Only User", Toast.LENGTH_LONG).show();
-//                startIntent = new Intent(this, FirstRunExpItTour.class);
-//                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//            } else if (!shownTravel && RolesUtil.isTraveler(ctx)) {
-//                Toast.makeText(ctx, "This is Travel Only User", Toast.LENGTH_LONG).show();
-//                startIntent = new Intent(this, FirstRunTravelTour.class);
-//                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//            } else {
-//                startIntent = new Intent(this, Home.class);
-//                boolean launchExpList = getIntent().getBooleanExtra(Home.LAUNCH_EXPENSE_LIST, false);
-//                startIntent.putExtra(Home.LAUNCH_EXPENSE_LIST, launchExpList);
-//            }
-//        }else{
-//            startIntent = new Intent(this, Home.class);
-//            logUserTimings(emailLookup);
-//        }
-//        startActivity(startIntent);
-//        this.setResult(Activity.RESULT_OK);
-//        this.finish();
-//    }
+
+    public static Intent getFirstRunNewUserIntent(Activity activity, SharedPreferences prefs) {
+        Intent it = null;
+        boolean isTravelOnly = RolesUtil.isTravelOnlyUser(activity);
+        boolean isExpenseItUser = Preferences.isExpenseItUser();
+        boolean isTraveler = RolesUtil.isTraveler(activity);
+        boolean isExpenser = RolesUtil.isExpenser(activity);
+        if (Preferences.isFirstTimeRunning(prefs)) {
+            if (isTravelOnly) {
+                it = new Intent(activity, NewUserTravelTour.class);
+            } else if (isExpenseItUser) {
+                if (isTraveler) {
+                    it = new Intent(activity, NewUserExpItTravelTour.class);
+                } else {
+                    it = new Intent(activity, NewUserExpItTour.class);
+                }
+
+            } else if (isExpenser) {
+                if (isTraveler) {
+                    it = new Intent(activity, NewUserExpTravelTour.class);
+                } else {
+                    it = new Intent(activity, NewUserExpTour.class);
+                }
+            } else {
+                it = new Intent(activity, Home.class);
+            }
+        } else {
+            //go to home
+            it = new Intent(activity, Home.class);
+        }
+        return it;
+    }
+
 
     private void saveCredentials(String loginId, String pinOrPassword, String signInMethod) {
 
@@ -969,10 +1005,8 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 // close dialog
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                    progressbarVisible = false;
                 }
-
-                // Go to homescreen ...
-                startHomeScreen(emailLookupBundle);
 
                 // Set this back to 0 so we don't record this attempt
                 // if the user goes back to try and register. We only
@@ -1024,6 +1058,9 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                     Preferences.setUserLoggedOnToExpenseIt(false);
                 }
 
+                // Go to homescreen ...
+                startHomeScreen(emailLookupBundle);
+
             }
 
             /*
@@ -1039,10 +1076,11 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
                 // close dialog
                 if (progressDialog != null) {
                     progressDialog.dismiss();
+                    progressbarVisible = false;
                 }
                 if (noOfLoginAttempts > 2) {
-                    loginPasswordFragment.removeFragment();
                     noOfLoginAttempts = 0;
+                    removeLoginFragment();
                     return;
                 }
 
@@ -1082,5 +1120,35 @@ public class EmailPasswordLookupActivity extends BaseActivity implements IProgre
 
     }
 
+    @Override
+    public void onAttachFragment(android.support.v4.app.Fragment fragment) {
+        if(fragment instanceof EmailPasswordLookupFragment){
+        }
+        if(fragment instanceof NewLoginPasswordFragment){
+        }
+    }
+
+    @Override
+    public void resetEmailLookupFragment(){
+        //start email lookup fragment
+        startEmailFragment();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(loginPasswordFragment!=null && loginPasswordFragment.isVisible()){
+            removeLoginFragment();
+        } else{
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Removing login fragment and start email fragment.
+    * */
+    private void removeLoginFragment(){
+        getSupportFragmentManager().beginTransaction().remove(loginPasswordFragment).commit();
+        startEmailFragment();
+    }
 }
 
