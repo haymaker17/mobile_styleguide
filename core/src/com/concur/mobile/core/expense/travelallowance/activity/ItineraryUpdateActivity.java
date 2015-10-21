@@ -798,6 +798,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                     if (result != null) {//We get null for auto delete
                         ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
                         this.itinerary.getSegmentList().remove(deletedSegment);
+                        onlineCheckActive = true; //Remove errors and search for others.
+                        checkConsistency();
                     }
                 } else {
                     Toast.makeText(this, R.string.general_delete_fail, Toast.LENGTH_SHORT).show();

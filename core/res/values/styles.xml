@@ -1001,7 +1001,7 @@
     </style>
 
     <style name="TAMessage">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#bf6767</item>
         <item name="android:fontFamily">sans-serif</item>

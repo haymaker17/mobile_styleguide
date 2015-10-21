@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/vg_message_area"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFF5F5"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:orientation="horizontal">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/v_message_separator_top"
+        layout="@layout/ta_group_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/vg_message_area"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/icon_redex" />
+        android:background="#FFF5F5"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp">
 
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/icon_redex" />
 
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="56dp"
-        android:layout_marginRight="16dp"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textAppearance="@style/TAMessage" />
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="16dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Error"
+            android:textAppearance="@style/TAMessage" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/v_message_separator_bottom"
+        layout="@layout/ta_group_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>
