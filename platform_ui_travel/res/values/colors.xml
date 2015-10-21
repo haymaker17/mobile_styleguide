@@ -13,4 +13,5 @@
     <color name="empty_view_background">#f7fafd</color>
     <color name="grey_view_background">#EEEEEE</color>
     <color name="orange">#ef812d</color>
+    <color name="grey_text">#a7b6bf</color>
 </resources>

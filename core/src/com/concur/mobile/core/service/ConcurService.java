@@ -2765,7 +2765,7 @@ public class ConcurService extends Service {
      * @param userId
      *            the user id.
      * 
-     * @param expRepEnt
+     * @param expRepEntDet
      *            the expense report entry to save.
      * 
      * @return an instance of <code>SaveReportEntryRequest</code>.
@@ -2805,13 +2805,10 @@ public class ConcurService extends Service {
     /**
      * Will itemize a hotel entry.
      * 
-     * @param userId
-     *            the user id.
-     * 
-     * @param expRepEnt
+     * @param expRepEntDet
      *            the expense report entry to save.
      * 
-     * @return an instance of <code>SaveReportEntryRequest</code>.
+     * @return an instance of <code>ItemizeHotelRequest</code>.
      */
     public ItemizeHotelRequest sendItemizeHotelRequest(ExpenseReportEntryDetail expRepEntDet, boolean combineAmounts,
             String checkIn, String checkOut, String nights, Double roomRate, Double roomTax, Double otherTax1,
@@ -2932,8 +2929,8 @@ public class ConcurService extends Service {
      *            the user id.
      * @param expRepDet
      *            the expense report detail object.
-     * @param frmFldViews
-     *            the list of form field view objects containing edited values.
+     * @param copyDownToChildForms
+     *
      * @return An instance of <code>SaveReportRequest</code> if the request could be made; <code>null</code> otherwise.
      */
     public SaveReportRequest sendSaveReportRequest(String userId, ExpenseReportDetail expRepDet,
@@ -3445,7 +3442,7 @@ public class ConcurService extends Service {
      * 
      * @param carKey
      *            the car key of the vehicle
-     * @param date
+     * @param tranDate
      *            the date of the entry.
      * @param excludeRpeKey
      *            the RPE_KEY of the entry to not include in the calc.
@@ -3640,9 +3637,7 @@ public class ConcurService extends Service {
 
     /**
      * Will send a request to the server to add a series of transactions to a report.
-     * 
-     * @param userId
-     *            the request user id.
+     *
      * @param reportKey
      *            the report key.
      * @param reportName

@@ -8,12 +8,12 @@
 
 
     <!-- Replace placeholder ID with your tracking ID -->
-    <string name="ga_trackingId">UA-47360705-4</string>
+    <!--<string name="ga_trackingId">UA-47360705-4</string>-->
 
     <!--testing id for testing-->
-    <!--<string name="ga_trackingId">UA-47360705-9</string>-->
+    <string name="ga_trackingId">UA-47360705-9</string>
 
-    <!--ray's analytics id-->
+    <!--Sir Chi's(ray's) analytics id-->
     <!--<string name="ga_trackingId">UA-63130914-1</string>-->
 
     <!--
@@ -41,7 +41,6 @@
     <string name="com.concur.mobile.corp.activity.Startup">Startup</string>
     <string name="com.concur.mobile.corp.activity.TestDriveRegistration">Test Drive Registration</string>
     <string name="com.concur.mobile.corp.activity.UniversalTour">Learn More</string>
-
     <!-- Enable automatic exception tracking -->
     <bool name="ga_reportUncaughtExceptions">true</bool>
 

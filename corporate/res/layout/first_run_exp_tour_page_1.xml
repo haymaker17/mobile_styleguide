@@ -19,8 +19,10 @@
             android:layout_column="1"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/test_drive_tour_img_margin_top"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/test_drive_tour_image2"/>
+            android:src="@drawable/first_run_nu_tour1"/>
     </TableRow>
 
     <TableRow
@@ -36,7 +38,11 @@
             android:layout_column="1"
             android:orientation="vertical">
 
-            <include layout="@layout/dot_group_saparator"/>
+            <View xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="2px"
+                  android:layerType="software"/>
+
 
             <TextView
                 android:id="@+id/tour_welcome_title"
@@ -44,8 +50,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/test_drive_tour_text_margin_top"
                 android:layout_marginTop="@dimen/test_drive_tour_text_margin_top"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_title"
+                android:text="@string/expit_receipt_to_expense"
                 android:textAppearance="@style/TourText_Material"/>
 
             <TextView
@@ -55,7 +63,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:gravity="center_horizontal"
-                android:text="@string/first_run_exp_it_page_1_msg"
+                android:text="@string/expit_available_desc_long"
                 android:textAppearance="@style/TourSmallSecondaryText_Material"/>
 
 

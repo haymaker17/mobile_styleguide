@@ -78,10 +78,20 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
     // for GA tracking
     private boolean suggestedAvailable;
 
+    // flag for GA tracking to track initial landing page rooms tab
+    private boolean isActivityStarted;
+
     @Override
     protected void onStart() {
         super.onStart();
         EventTracker.INSTANCE.activityStart(this);
+
+        // log the default rooms viewed event for the first time activity creation as it will be skipped in the updateTab method
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+
+        // set the flag to true for the consecutive tabs including rooms tab
+        isActivityStarted = true;
     }
 
     @Override
@@ -288,8 +298,12 @@ public class HotelChoiceDetailsActivity extends TravelBaseActivity
             Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_DETAILS_VIEWED);
             EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_DETAILS_VIEWED);
         } else if (TAB_ROOMS.equals(tabId)) {
-            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
-            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+            // First time when this updateTab is called from the fragment, this activity onstart is not invoked hence the activity name of the previous activity is being logged for this event.
+            // So, skip the event logging here and do it in onStart(), only for the first time activity creation. Later, for consecutive tab clicks, the event should be logged here (this flag is set to true in onStart())
+            if (isActivityStarted) {
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_ROOMS_VIEWED);
+            }
         } else if (TAB_IMAGES.equals(tabId)) {
             Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_PHOTOS_VIEWED);
             EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_PHOTOS_VIEWED);

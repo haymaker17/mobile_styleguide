@@ -24,6 +24,8 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
+        maven { url 'http://artifactory.concurtech.net/artifactory/libs-release-local' }
+        //maven { url "https://jitpack.io" }
     }
 }
 
