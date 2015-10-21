@@ -47,6 +47,7 @@ public class ExpenseDBSchema {
     // DATABASE_VERSION = 8 -- added 'PCA_KEY' to 'SMART_EXPENSE' table.
     // DATABASE_VERSION = 9 -- added additional receipt columns to 'RECEIPT' table.
     // DATABASE_VERSION = 10 -- added support for 'REJECT_CODE' column in 'SMART_EXPENSE' table.
+    // DATABASE_VERSION = 11 -- added support for 'EXPENSEIT_RECEIPT' table during upgrade.
     static final int DATABASE_VERSION = 11;
     // ****
     // NOTE: Please leave one blank line between table column definitions, it prevents formatting
