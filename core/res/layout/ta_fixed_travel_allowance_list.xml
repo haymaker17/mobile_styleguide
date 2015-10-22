@@ -48,6 +48,7 @@
             app:fabSize="normal"
             app:layout_anchor="@+id/list"
             app:layout_anchorGravity="bottom|right|end"
+            android:visibility="gone"
            />
 
         <android.support.v7.widget.Toolbar
@@ -57,10 +58,11 @@
             android:layout_gravity="bottom"
             android:background="@drawable/gradient_title_bar"
             android:elevation="3dp"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:visibility="gone">
 
-            <LinearLayout
+            android:visibility="visible">
+
+            <!--android:theme="@style/Theme.AppCompat.NoActionBar"-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -68,30 +70,52 @@
                     android:id="@+id/cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginRight="8dp"
                     android:src="@drawable/ic_clear_white_24dp"
                     android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical"/>
+                    android:paddingRight="8dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
 
-                <Button
-                    android:id="@+id/btn_adjust_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ta_adjust_all"
-                    android:textColor="@color/btn_toolbar_selector"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"/>
+
 
                 <Button
                     android:id="@+id/btn_adjust"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
                     android:text="@string/ta_adjust"
                     android:textColor="@color/btn_toolbar_selector"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"/>
+                    android:background="@android:color/transparent"
+                    android:gravity="right|center"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:minWidth="64dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentRight="true"
+                    />
 
-            </LinearLayout>
+                <Button
+                    android:id="@+id/btn_adjust_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/ta_adjust_all"
+                    android:textColor="@color/btn_toolbar_selector"
+                    android:background="@android:color/transparent"
+                    android:gravity="right|center"
+                    android:paddingRight="8dp"
+                    android:paddingLeft="8dp"
+                    android:minWidth="64dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@id/btn_adjust"
+                    android:layout_toStartOf="@id/btn_adjust"/>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 

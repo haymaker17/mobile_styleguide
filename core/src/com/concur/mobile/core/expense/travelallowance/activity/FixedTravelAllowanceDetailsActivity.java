@@ -35,6 +35,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvisionEnum;
 import com.concur.mobile.core.expense.travelallowance.fragment.IFragmentCallback;
 import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFragment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.SelectedTravelAllowancesList;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.StringUtilities;
@@ -66,7 +67,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
     private boolean isEditable;
     private String expenseReportKey;
     
-    private List<FixedTravelAllowance> massEditList;
+    private SelectedTravelAllowancesList massEditList;
 
     public static final String INTENT_EXTRA_KEY_FIXED_TRAVEL_ALLOWANCE =
             FixedTravelAllowanceDetailsActivity.class.getName() + "FixedTravelAllowance";
@@ -97,7 +98,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         super.onCreate(savedInstanceState);
 
         if (massEditList != null && massEditList.size() > 0) {
-            this.allowance = massEditList.get(0);
+            this.allowance = massEditList.getTemplate();
         }
 
         if (StringUtilities.isNullOrEmpty(expenseReportKey) || allowance.isLocked()) {
@@ -164,8 +165,20 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
                 expenseReportKey = callerIntent.getStringExtra(BundleId.EXPENSE_REPORT_KEY);
             }
 
-            massEditList = (List<FixedTravelAllowance>) callerIntent
-                    .getSerializableExtra(INTENT_EXTRA_KEY_MASS_EDIT_LIST);
+            Object list = callerIntent.getSerializableExtra(INTENT_EXTRA_KEY_MASS_EDIT_LIST);
+            if (list != null) {
+                // I would expect a SelectedTravelAllowanceList object but there is a Android bug.
+                // In case your Object implements List and Serializable and you put it to a Bundle, the getSerializable method
+                // returns always an ArrayList object which cannot be casted to your original object.
+                if (list instanceof ArrayList) {
+                    massEditList = new SelectedTravelAllowancesList((ArrayList)list);
+                } else if (list instanceof SelectedTravelAllowancesList) {
+                    // This else branch will be passed only in case google provide a fix for the bug mentioned above.
+                    // From experience I know google never provide fixed for such bugs but miracles can happen ;-)
+                    // https://code.google.com/p/android/issues/detail?id=3847
+                    massEditList = (SelectedTravelAllowancesList) list;
+                }
+            }
 
             if (massEditList != null && massEditList.size() > 0) {
                 isEditable = true;
@@ -189,7 +202,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
                 String dateString = DateUtils.formatDateTime(this, ta.getDate().getTime(),
                         DateUtils.FORMAT_NUMERIC_DATE);
                 sb.append(dateString);
-                if (i < massEditList.size()) {
+                if (i < massEditList.size() - 1) {
                     sb.append(", ");
                 }
                 i++;
@@ -249,91 +262,79 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         FixedTravelAllowanceControlData controlData = fixedTaController.getControlData();
 
         if (allowance.getBreakfastProvision() != null) {
-            boolean brMultiSelection = false;
+            boolean isBrMulti = false;
             if (massEditList != null) {
-                for (FixedTravelAllowance al : massEditList) {
-                    if (!allowance.getBreakfastProvision().equals(al.getBreakfastProvision())) {
-                        brMultiSelection = true;
-                        break;
-                    }
-                }
+                isBrMulti = massEditList.isBreakfastMultiSelected();
             }
             FixedTADetailAdapter.ValueHolder breakfast = fromCode( TAG_BREAKFAST,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.BREAKFAST_PROVIDED_LABEL),
-                    allowance.getBreakfastProvision(), false, false, brMultiSelection);
+                    allowance.getBreakfastProvision(), false, false, isBrMulti);
             if (breakfast != null) {
                 result.add(breakfast);
             }
         }
 
         if (allowance.getLunchProvision() != null) {
-            boolean luMultiSelection = false;
+            boolean isLuMulti = false;
             if (massEditList != null) {
-                for (FixedTravelAllowance al : massEditList) {
-                    if (!allowance.getLunchProvision().equals(al.getLunchProvision())) {
-                        luMultiSelection = true;
-                        break;
-                    }
-                }
+                isLuMulti = massEditList.isLunchMultiSelected();
             }
             FixedTADetailAdapter.ValueHolder lunch = fromCode( TAG_LUNCH,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.LUNCH_PROVIDED_LABEL),
-                    allowance.getLunchProvision(), false, false, luMultiSelection);
+                    allowance.getLunchProvision(), false, false, isLuMulti);
             if (lunch != null) {
                 result.add(lunch);
             }
         }
 
         if (allowance.getDinnerProvision() != null) {
-            boolean diMultiSelection = false;
+            boolean isDiMulti = false;
             if (massEditList != null) {
-                for (FixedTravelAllowance al : massEditList) {
-                    if (!allowance.getDinnerProvision().equals(al.getDinnerProvision())) {
-                        diMultiSelection = true;
-                        break;
-                    }
-                }
+                isDiMulti = massEditList.isDinnerMultiSelected();
             }
             FixedTADetailAdapter.ValueHolder dinner = fromCode( TAG_DINNER,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX),
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.DINNER_PROVIDED_LABEL),
-                    allowance.getDinnerProvision(), false, false, diMultiSelection);
+                    allowance.getDinnerProvision(), false, false, isDiMulti);
             if (dinner != null) {
                 result.add(dinner);
             }
         }
 
         if (allowance.getLodgingType() != null) {
-            boolean loMultiSelection = false;
+            boolean isLoMulti = false;
             if (massEditList != null) {
-                for (FixedTravelAllowance al : massEditList) {
-                    if (!allowance.getLodgingType().equals(al.getLodgingType())) {
-                        loMultiSelection = true;
-                        break;
-                    }
-                }
+                isLoMulti = massEditList.isLodgingTypeMultiSelected();
             }
             FixedTADetailAdapter.ValueHolder lodgingType = fromCode( TAG_LODGING,
                     false,
                     controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LODGING_TYPE_PICKLIST),
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.LODGING_TYPE_LABEL),
-                    allowance.getLodgingType(), true, false, loMultiSelection);
+                    allowance.getLodgingType(), true, false, isLoMulti);
             if (lodgingType != null) {
                 result.add(lodgingType);
             }
         }
 
-        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX) == true && !allowance.isLastDay()) {
+        boolean isLastDay = allowance.isLastDay();
+        if (massEditList != null && !massEditList.hasOnlyLastDays()) {
+            isLastDay = false;
+        }
+        if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_OVERNIGHT_CHECKBOX) == true && !isLastDay) {
+            boolean isOnMulti = false;
+            if (massEditList != null) {
+                isOnMulti = massEditList.isOvernightMultiSelected();
+            }
             FixedTADetailAdapter.ValueHolder overnight = fromCode( TAG_OVERNIGHT,
                     true,
                     false,
                     fixedTaController.getControlData().getLabel(FixedTravelAllowanceControlData.OVERNIGHT_LABEL),
-                    null, false, true, false);
+                    null, false, true, isOnMulti);
             if (overnight != null) {
                 result.add(overnight);
             }
@@ -404,6 +405,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
             showIsDirtyDialog();
             return;
         }
+        setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
 
@@ -490,7 +492,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
                 resultIntent.putExtra(Const.EXTRA_EXPENSE_REFRESH_HEADER, true);
                 resultIntent.putExtra(BundleId.REFRESH_FIXED_TA, true);
                 this.setResult(RESULT_OK, resultIntent);
-                super.onBackPressed(); //Leave the screen on success
+                this.finish();
             } else {
                 Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
             }
@@ -508,7 +510,8 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
     public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
         if (MSG_DIALOG_DIRTY_NEGATIVE.equals(fragmentMessage)) {
-            super.onBackPressed();
+            setResult(RESULT_CANCELED);
+            finish();
         }
         if (MSG_DIALOG_DIRTY_POSITIVE.equals(fragmentMessage)) {
             onSave();

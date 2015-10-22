@@ -1,11 +1,14 @@
 package com.concur.mobile.core.expense.travelallowance.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import com.concur.mobile.core.expense.travelallowance.fragment.MessageDialogFrag
 import com.concur.mobile.core.expense.travelallowance.fragment.ServiceRequestListenerFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.SimpleTAItineraryListFragment;
 import com.concur.mobile.core.expense.travelallowance.fragment.TravelAllowanceItineraryListFragment;
+import com.concur.mobile.core.expense.travelallowance.ui.model.SelectedTravelAllowancesList;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.expense.travelallowance.util.ShortDateFormat;
@@ -96,19 +100,18 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
     @Override
     public void onMultiAdjust() {
-        ArrayList<FixedTravelAllowance> selected = new ArrayList<>(fixedTaController.getSelectedTravelAllowances());
+        SelectedTravelAllowancesList selected = fixedTaController.getSelectedTravelAllowances();
         if (selected.size() == 1) {
             onFixedTravelAllowanceSelected(selected.get(0));
             return;
         }
         Intent intent = new Intent(this, FixedTravelAllowanceDetailsActivity.class);
 
-        if(!StringUtilities.isNullOrEmpty(expenseReportKey) ){
+        if (!StringUtilities.isNullOrEmpty(expenseReportKey)) {
             intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expenseReportKey);
         }
 
         intent.putExtra(BundleId.IS_EDIT_MODE, true);
-
 
         intent.putExtra(FixedTravelAllowanceDetailsActivity.INTENT_EXTRA_KEY_MASS_EDIT_LIST, selected);
         startActivityForResult(intent, REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS);
@@ -141,6 +144,30 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
         pager.setAdapter(viewPagerAdapter);
 
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position != 0) {
+                    FixedTravelAllowanceListFragment fixedTaListFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
+                            FixedTravelAllowanceListFragment.class);
+                    if (fixedTaListFrag != null && fixedTaListFrag.isInSelectionMode()) {
+                        fixedTaListFrag.switchToSelctionMode(false);
+                        fixedTaController.unselectAll();
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(pager);
 
@@ -164,6 +191,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
                 FixedTravelAllowanceListFragment.class);
         if (f != null && f.isInSelectionMode()) {
             f.switchToSelctionMode(false);
+            fixedTaController.unselectAll();
         } else {
             super.onBackPressed();
         }
@@ -199,6 +227,14 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
                         FixedTravelAllowanceListFragment.class);
                 if (fixedTaListFrag != null) {
                     fixedTaListFrag.showRefreshIndicator();
+                }
+            }
+
+            if (requestCode == REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS && resultCode == RESULT_OK) {
+                FixedTravelAllowanceListFragment fixedTaListFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
+                        FixedTravelAllowanceListFragment.class);
+                if (fixedTaListFrag != null) {
+                    fixedTaListFrag.switchToSelctionMode(false);
                 }
             }
         }
@@ -370,6 +406,14 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
                         MSG_UNASSIGN_ITIN_SUCCESS, MSG_UNASSIGN_ITIN_FAILED);
                 showProgressDialog();
                 itineraryController.unassignItinerary(expenseReportKey, itinerary.getItineraryID(), f);
+            }
+        }
+        
+        if (FixedTravelAllowanceListFragment.MSG_SELECTION_MODE_SWITCH.equals(fragmentMessage)) {
+            if (extras != null) {
+                boolean inSelectionMode = extras
+                        .getBoolean(FixedTravelAllowanceListFragment.BUNDLE_ID_IN_SELECTION_MODE, false);
+                findViewById(R.id.view_pager).setEnabled(!inSelectionMode);
             }
         }
     }

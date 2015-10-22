@@ -14,6 +14,7 @@ import com.concur.mobile.core.expense.travelallowance.datamodel.MealProvision;
 import com.concur.mobile.core.expense.travelallowance.service.GetTAFixedAllowancesRequest2;
 import com.concur.mobile.core.expense.travelallowance.service.IRequestListener;
 import com.concur.mobile.core.expense.travelallowance.service.UpdateFixedAllowances;
+import com.concur.mobile.core.expense.travelallowance.ui.model.SelectedTravelAllowancesList;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DateUtils;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
@@ -475,8 +476,8 @@ public class FixedTravelAllowanceController extends BaseController {
         return null;
     }
 
-    public List<FixedTravelAllowance> getSelectedTravelAllowances() {
-        List<FixedTravelAllowance> result = new ArrayList<FixedTravelAllowance>();
+    public SelectedTravelAllowancesList getSelectedTravelAllowances() {
+        SelectedTravelAllowancesList result = new SelectedTravelAllowancesList();
         for (FixedTravelAllowance ta: getFixedTravelAllowances()) {
             if (ta.isSelected()) {
                 result.add(ta);
@@ -500,13 +501,29 @@ public class FixedTravelAllowanceController extends BaseController {
         }
     }
 
-    public List<FixedTravelAllowance> applyTaValues (FixedTravelAllowance fromTa, List<FixedTravelAllowance> toTaList) {
+    public List<FixedTravelAllowance> applyTaValues (FixedTravelAllowance fromTa, SelectedTravelAllowancesList toTaList) {
         for (FixedTravelAllowance ta: toTaList) {
-            ta.setBreakfastProvision((MealProvision) fromTa.getBreakfastProvision());
-            ta.setLunchProvision((MealProvision) fromTa.getLunchProvision());
-            ta.setDinnerProvision((MealProvision) fromTa.getDinnerProvision());
-            ta.setLodgingType((LodgingType) fromTa.getLodgingType());
-            ta.setOvernightIndicator(fromTa.getOvernightIndicator());
+            if (!toTaList.isBreakfastMultiSelected()) {
+                ta.setBreakfastProvision((MealProvision) fromTa.getBreakfastProvision());
+            }
+
+            if (!toTaList.isLunchMultiSelected()) {
+                ta.setLunchProvision((MealProvision) fromTa.getLunchProvision());
+            }
+
+            if (!toTaList.isDinnerMultiSelected()) {
+                ta.setDinnerProvision((MealProvision) fromTa.getDinnerProvision());
+            }
+
+            if (!toTaList.isLodgingTypeMultiSelected()) {
+                ta.setLodgingType((LodgingType) fromTa.getLodgingType());
+            }
+
+
+            if (!ta.isLastDay() && !toTaList.hasOnlyLastDays()) {
+                ta.setOvernightIndicator(fromTa.getOvernightIndicator());
+            }
+
         }
 
         return toTaList;

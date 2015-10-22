@@ -9,25 +9,34 @@
         style="@style/TAListRowDivider"
         android:layout_width="wrap_content"
         android:visibility="gone"/>
+    
 
     <RelativeLayout
         android:id="@+id/list_field_container"
         style="@style/TARow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/v_divider_top">
+        android:layout_below="@+id/v_divider_top"
+        android:paddingLeft="0dp">
+
+        <View
+            android:id="@+id/v_checkbox_space"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:text="Large Text"
             android:textAppearance="@style/TATitle"
             android:lines="1"
             android:ellipsize="end"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/checkbox"
-            android:layout_toEndOf="@+id/checkbox"/>
+            android:layout_toRightOf="@id/v_checkbox_space"
+            />
 
         <CheckBox
             android:id="@+id/checkbox"
@@ -81,18 +90,19 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_subtitle_2" >
+            android:layout_below="@+id/tv_subtitle_2"
+            android:layout_alignLeft="@id/tv_title">
 
         <TextView
             android:id="@+id/tv_subtitle_ellipsized"
-            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:layout_alignParentLeft="true"
             android:ellipsize="end"
             android:text="Small Text"
             android:layout_weight="0.4"
-            android:textAppearance="@style/TASubTitle" />
+            android:textAppearance="@style/TASubTitle"/>
 
         <TextView
             android:id="@+id/tv_subtitle_more"

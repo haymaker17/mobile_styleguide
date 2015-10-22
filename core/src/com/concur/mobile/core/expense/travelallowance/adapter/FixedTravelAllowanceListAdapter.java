@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.concur.core.R;
@@ -47,6 +48,7 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
         private TextView tvSubtitleEllipsized;
         private TextView tvSubtitleMore;
         private CheckBox checkBox;
+        private View checkboxSpace;
         private OnClickListener listener;
 
 
@@ -73,6 +75,7 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
             vgSubtitleEllipsized = (ViewGroup) view.findViewById(R.id.vg_subtitle_ellipsized);
             tvSubtitleEllipsized = (TextView) view.findViewById(R.id.tv_subtitle_ellipsized);
             tvSubtitleMore = (TextView) view.findViewById(R.id.tv_subtitle_more);
+            checkboxSpace = view.findViewById(R.id.v_checkbox_space);
             checkBox = (CheckBox) view.findViewById(R.id.checkbox);
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -342,12 +345,16 @@ public class FixedTravelAllowanceListAdapter extends RecyclerViewAdapter<FixedTr
         renderAmount(holder.tvValue, allowance.getAmount(), allowance.getCurrencyCode());
 
         if (inSelectionMode && holder.checkBox != null && !allowance.isLocked()) {
+            holder.checkboxSpace.setVisibility(View.VISIBLE);
             holder.checkBox.setVisibility(View.VISIBLE);
             holder.checkBox.setChecked(allowance.isSelected());
         } else {
+            holder.checkboxSpace.setVisibility(View.GONE);
             holder.checkBox.setVisibility(View.GONE);
         }
     }
+    
+
 
     /**
      * Renders the overnight indication

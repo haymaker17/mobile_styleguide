@@ -34,6 +34,8 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
 
     private static final String CLASS_TAG = FixedTravelAllowanceListFragment.class.getSimpleName();
     public static final String ON_REFRESH_MSG = CLASS_TAG + ".refreshAllowances";
+    public static final String MSG_SELECTION_MODE_SWITCH = CLASS_TAG + ".selection.mode.switch";
+
 
     public static final String BUNDLE_ID_IN_SELECTION_MODE = "in.selection.mode";
 
@@ -111,7 +113,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             fab.setVisibility(View.GONE);
             bottomToolbar.setVisibility(View.VISIBLE);
             selectionCounter.setVisibility(View.VISIBLE);
-            updateSelectionCounter();
+            updateSelectionCounter(v);
         } else {
             fab.setVisibility(View.VISIBLE);
             bottomToolbar.setVisibility(View.GONE);
@@ -119,10 +121,10 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         }
     }
     
-    private void updateSelectionCounter() {
-        if (getView() != null && allowanceController != null) {
+    private void updateSelectionCounter(View v) {
+        if (v != null && allowanceController != null) {
             int count = allowanceController.getSelectedTravelAllowances().size();
-            TextView counter = (TextView) getView().findViewById(R.id.tv_selection_counter);
+            TextView counter = (TextView) v.findViewById(R.id.tv_selection_counter);
             counter.setText(getResources().getString(R.string.general_no_of_selected_list_items_android, count)
                     .toUpperCase(Locale.getDefault()));
         }
@@ -133,9 +135,6 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         outState.putBoolean(BUNDLE_ID_IN_SELECTION_MODE, inSelectionMode);
         super.onSaveInstanceState(outState);
     }
-
-
-
 
 
     /**
@@ -276,7 +275,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
                 FixedTravelAllowanceListAdapter adapter = (FixedTravelAllowanceListAdapter) rv.getAdapter();
                 FixedTravelAllowance allowance = (FixedTravelAllowance) adapter.getItem(position);
                 allowance.setIsSelected(cb.isChecked());
-                updateSelectionCounter();
+                updateSelectionCounter(getView());
             }
         }
     }
@@ -299,16 +298,27 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             return;
         }
         inSelectionMode = switchToSelectionMode;
+
         View fab = v.findViewById(R.id.fab);
         View toolbar = v.findViewById(R.id.toolbar_bottom);
         View counter = v.findViewById(R.id.tv_selection_counter);
+        View swipeView = v.findViewById(R.id.swipe_refresh_layout);
+
+        if (callback != null) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(BUNDLE_ID_IN_SELECTION_MODE, inSelectionMode);
+            callback.handleFragmentMessage(MSG_SELECTION_MODE_SWITCH, bundle);
+        }
+
         if (switchToSelectionMode) {
+            swipeView.setEnabled(false);
             AnimationUtil.fabToolbarAnimation(fab, View.GONE, toolbar, View.VISIBLE);
 //            AnimationUtil.goneAnimation(fab);
 //            AnimationUtil.visibleAnimation(toolbar);
             counter.setVisibility(View.VISIBLE);
-            updateSelectionCounter();
+            updateSelectionCounter(v);
         } else {
+            swipeView.setEnabled(true);
             AnimationUtil.fabToolbarAnimation(fab, View.VISIBLE, toolbar, View.GONE);
 //            AnimationUtil.goneAnimation(toolbar);
 //            AnimationUtil.visibleAnimation(fab);

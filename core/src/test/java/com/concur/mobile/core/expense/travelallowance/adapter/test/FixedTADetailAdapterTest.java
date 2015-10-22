@@ -66,6 +66,7 @@ public class FixedTADetailAdapterTest extends TestCase {
         assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
         assertTrue(viewHolder.label.getVisibility() == View.GONE);
         assertTrue(viewHolder.readOnlyValue.getVisibility() == View.GONE);
+        assertTrue(viewHolder.icon.getVisibility() == View.GONE);
         assertTrue(viewHolder.switchView.getVisibility() == View.VISIBLE);
 
         assertTrue(viewHolder.switchView.isChecked());
@@ -98,7 +99,9 @@ public class FixedTADetailAdapterTest extends TestCase {
         assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
         assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
         assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.icon.getVisibility() == View.GONE);
         assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
+
 
         assertEquals(RuntimeEnvironment.application.getString(R.string.general_yes), viewHolder.readOnlyValue.getText());
         assertEquals("test label", viewHolder.label.getText());
@@ -131,6 +134,7 @@ public class FixedTADetailAdapterTest extends TestCase {
         assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
         assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
         assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.icon.getVisibility() == View.GONE);
         assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
 
         assertEquals("test label", viewHolder.label.getText());
@@ -164,6 +168,7 @@ public class FixedTADetailAdapterTest extends TestCase {
         assertTrue(viewHolder.spinner.getVisibility() == View.VISIBLE);
         assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
         assertTrue(viewHolder.readOnlyValue.getVisibility() == View.GONE);
+        assertTrue(viewHolder.icon.getVisibility() == View.GONE);
         assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
 
         assertEquals("test label", viewHolder.label.getText());
@@ -197,17 +202,45 @@ public class FixedTADetailAdapterTest extends TestCase {
 
         FixedTADetailAdapter.ViewHolder viewHolder = (FixedTADetailAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
         assertNotNull(viewHolder);
-        assertTrue(viewHolder.spinner.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
         assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
-        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.GONE);
+        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.icon.getVisibility() == View.VISIBLE);
         assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
 
         assertEquals("test label", viewHolder.label.getText());
-        assertEquals("test", viewHolder.spinner.getTag());
+        assertEquals(RuntimeEnvironment.application.getString(R.string.ta_multiple_values), viewHolder.readOnlyValue.getText());
 
-        assertTrue(viewHolder.spinner.getSelectedItemPosition() == 3);
-        assertEquals("dummy", ((ICode)viewHolder.spinner.getSelectedItem()).getCode());
-        assertEquals(3, viewHolder.spinner.getAdapter().getCount());
+    }
+
+    @Test
+    public void testMultiSelectSwitch() {
+        FixedTADetailAdapter.ValueHolder vh = new FixedTADetailAdapter.ValueHolder();
+        vh.tag = "test";
+        vh.rowType = FixedTADetailAdapter.RowType.SWITCH;
+        vh.isChecked = true;
+        vh.label = "test label";
+        vh.multiValuesSelected = true;
+        List<FixedTADetailAdapter.ValueHolder> values = new ArrayList<>();
+        values.add(vh);
+
+        adapter = new FixedTADetailAdapter(RuntimeEnvironment.application, values);
+        recyclerView.setAdapter(adapter);
+        recyclerView.measure(0, 0);
+        recyclerView.layout(0, 0, 100, 10000);
+
+        FixedTADetailAdapter.ViewHolder viewHolder = (FixedTADetailAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
+        assertNotNull(viewHolder);
+        assertTrue(viewHolder.spinner.getVisibility() == View.GONE);
+        assertTrue(viewHolder.label.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.readOnlyValue.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.icon.getVisibility() == View.VISIBLE);
+        assertTrue(viewHolder.switchView.getVisibility() == View.GONE);
+
+
+        assertEquals(RuntimeEnvironment.application.getString(R.string.ta_multiple_values), viewHolder.readOnlyValue.getText());
+        assertEquals("test label", viewHolder.label.getText());
+        assertEquals("test", viewHolder.switchView.getTag());
     }
 
 }
