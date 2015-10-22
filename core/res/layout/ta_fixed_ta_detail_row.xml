@@ -35,6 +35,15 @@
             android:text="Large Text"
             android:textAppearance="@style/TAValue.Small" />
 
+        <ImageView
+            android:id="@+id/iv_multi_value_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_label"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_info_grey"/>
+
         <Spinner
             android:id="@+id/sp_spinner"
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
         public TextView readOnlyValue;
         public Switch switchView;
         public Spinner spinner;
+        public ImageView icon;
 
         public ViewHolder(View itemView, AdapterView.OnItemSelectedListener spinnerListener,
                 CompoundButton.OnCheckedChangeListener switchListener) {
@@ -58,6 +60,7 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             switchView.setOnCheckedChangeListener(switchListener);
             spinner = (Spinner) itemView.findViewById(R.id.sp_spinner);
             spinner.setOnItemSelectedListener(spinnerListener);
+            icon = (ImageView) itemView.findViewById(R.id.iv_multi_value_icon);
         }
 
         public void setTag(String tag) {
@@ -116,6 +119,8 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
         holder.setTag(value.tag);
 
         holder.readOnlyValue.setVisibility(View.GONE);
+        holder.icon.setVisibility(View.GONE);
+
         if (value.rowType == RowType.SWITCH) {
             holder.spinner.setVisibility(View.GONE);
             holder.label.setVisibility(View.GONE);
@@ -125,7 +130,7 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             holder.switchView.setTextOff(ctx.getResources().getString(R.string.general_no));
             holder.switchView.setText(value.label);
             holder.switchView.setEnabled(true);
-            if (value.isReadOnly) {
+            if (value.isReadOnly || value.multiValuesSelected == true) {
                 holder.switchView.setEnabled(false);
                 holder.switchView.setVisibility(View.GONE);
                 holder.readOnlyValue.setVisibility(View.VISIBLE);
@@ -135,6 +140,10 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
                     holder.readOnlyValue.setText(R.string.general_yes);
                 } else {
                     holder.readOnlyValue.setText(R.string.general_no);
+                }
+                if (value.multiValuesSelected == true){
+                    holder.icon.setVisibility(View.VISIBLE);
+                    holder.readOnlyValue.setText(R.string.ta_multiple_values);
                 }
             }
         }
@@ -153,10 +162,13 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
                 holder.spinner.setSelection(value.selectedSpinnerPosition);
             }
 
-            if (value.isReadOnly) {
+            if (value.isReadOnly || value.multiValuesSelected == true) {
                 holder.spinner.setVisibility(View.GONE);
                 holder.readOnlyValue.setVisibility(View.VISIBLE);
-                holder.readOnlyValue.setText(value.spinnerValues.get(value.selectedSpinnerPosition).toString());
+                holder.readOnlyValue.setText(value.spinnerValues.get(holder.spinner.getSelectedItemPosition()).toString());
+                if (value.multiValuesSelected == true){
+                    holder.icon.setVisibility(View.VISIBLE);
+                }
             }
         }
 
