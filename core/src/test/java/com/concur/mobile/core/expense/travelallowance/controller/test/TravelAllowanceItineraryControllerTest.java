@@ -311,4 +311,46 @@ public class TravelAllowanceItineraryControllerTest extends TestCase {
         boolean result = controller.areDatesOverlapping(itinerary, true);
         assertEquals(true, result);
     }
+
+    @Test
+    public void resetSegmentMessageTest() {
+        Message resultMsg = null;
+        Activity activity = Robolectric.buildActivity(Activity.class).create().get();
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        itinerary.getSegmentList().get(0).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR));
+        itinerary.getSegmentList().get(1).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
+        TravelAllowanceItineraryController controller = new TravelAllowanceItineraryController(activity);
+        controller.resetSegmentMessage(itinerary, 0);
+        resultMsg = itinerary.getSegmentList().get(0).getMessage();
+        assertNull(resultMsg);
+        resultMsg = itinerary.getSegmentList().get(1).getMessage();
+        assertNull(resultMsg);
+        itinerary.getSegmentList().get(0).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_SUCCESSOR));
+        itinerary.getSegmentList().get(1).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_OVERLAPPING_PREDECESSOR));
+        controller.resetSegmentMessage(itinerary, 1);
+        resultMsg = itinerary.getSegmentList().get(0).getMessage();
+        assertNull(resultMsg);
+        resultMsg = itinerary.getSegmentList().get(1).getMessage();
+        assertNull(resultMsg);
+        itinerary.getSegmentList().get(0).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES));
+        itinerary.getSegmentList().get(1).setMessage(new Message(Message.Severity.ERROR, Message.MSG_UI_MISSING_DATES));
+        controller.resetSegmentMessage(itinerary, 1);
+        resultMsg = itinerary.getSegmentList().get(0).getMessage();
+        assertNotNull(resultMsg);
+        resultMsg = itinerary.getSegmentList().get(1).getMessage();
+        assertNull(resultMsg);
+    }
+
+    @Test
+    public void getSegmentPositionById() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAItinerariesRequest(null, null, null, false));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "ItineraryReadXMLWithTimeZoneOffset.xml");
+        List<Itinerary> itineraries = (List<Itinerary>) resultData.getSerializable(BundleId.ITINERARY_LIST);
+        Itinerary itinerary = itineraries.get(0);
+        int pos = controller.getSegmentPositionById(itinerary, "gWlC24nTF3TceHtrT5LoTXK0oJv$spVlA");
+        assertEquals(0, pos);
+    }
 }

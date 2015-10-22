@@ -429,7 +429,10 @@ public class TravelAllowanceItineraryController extends BaseController {
                 boolean isSuccess = resultData.getBoolean(AbstractItineraryDeleteRequest.IS_SUCCESS, false);
                 Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "executeDeleteSegment->onRequestSuccess", "isSuccess = " + isSuccess));
                 if (isSuccess) {
-                    getItinerary(itineraryId).getSegmentList().remove(segment);
+                    int pos = getSegmentPositionById(getItinerary(itineraryId), segment.getId());
+                    if (pos > -1) {
+                        getItinerary(itineraryId).getSegmentList().remove(pos);
+                    }
                     resultData.putSerializable(BundleId.SEGMENT, segment);
                     notifyListener(ControllerAction.DELETE, true, resultData);
                 } else {
@@ -500,6 +503,41 @@ public class TravelAllowanceItineraryController extends BaseController {
         }
     }
 
+    /**
+     * Clears the segment message at the given position. In case the segment contains an UI message
+     * referring to overlapping with predecessor segment or successor segment the method will clear
+     * the corresponding mirror message from the predecessor respectively from the successor in
+     * addition.
+     * @param itinerary The itinerary holding the segments
+     */
+    public void resetSegmentMessage(Itinerary itinerary, int position) {
+        if (itinerary == null || itinerary.getSegmentList() == null || itinerary.getSegmentList().size() == 0) {
+            return;
+        }
+        if (position < 0 || position + 1 > itinerary.getSegmentList().size()
+                || itinerary.getSegmentList().get(position) == null) {
+            return;
+        }
+        Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "resetSegmentMessage",
+                "For " + itinerary.getSegmentList().get(position).toString()));
+        Message msg = itinerary.getSegmentList().get(position).getMessage();
+        if (msg != null) {
+            if (Message.MSG_UI_OVERLAPPING_PREDECESSOR.equals(msg.getCode()) && position > 0) {
+                Message msgPredecessor = itinerary.getSegmentList().get(position - 1).getMessage();
+                if (msgPredecessor != null && Message.MSG_UI_OVERLAPPING_SUCCESSOR.equals(msgPredecessor.getCode())) {
+                    itinerary.getSegmentList().get(position - 1).setMessage(null);
+                }
+            }
+            if (Message.MSG_UI_OVERLAPPING_SUCCESSOR.equals(msg.getCode())
+                    && position + 1 < itinerary.getSegmentList().size()) {
+                Message msgSuccessor = itinerary.getSegmentList().get(position + 1).getMessage();
+                if (msgSuccessor != null && Message.MSG_UI_OVERLAPPING_PREDECESSOR.equals(msgSuccessor.getCode())) {
+                    itinerary.getSegmentList().get(position + 1).setMessage(null);
+                }
+            }
+            itinerary.getSegmentList().get(position).setMessage(null);
+        }
+    }
 
     private boolean handleAfterUpdateResponse(Itinerary updItin, Itinerary resultItin) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleAfterUpdateResponse",
@@ -671,6 +709,25 @@ public class TravelAllowanceItineraryController extends BaseController {
         return null;
     }
 
+    /**
+     * Retrieves the first position of the segment with the given ID.
+     * @param itinerary The Itinerary to search in.
+     * @param segmentId The segment ID to search for.
+     * @return The position if found. Otherwise -1.
+     */
+    public int getSegmentPositionById(Itinerary itinerary, String segmentId) {
+        int position = -1;
+        if (itinerary != null && itinerary.getSegmentList() != null && itinerary.getSegmentList().size() > 0
+                && !StringUtilities.isNullOrEmpty(segmentId)) {
+            for (ItinerarySegment segment : itinerary.getSegmentList()) {
+                position++;
+                if (segmentId.equals(segment.getId())) {
+                    return position;
+                }
+            }
+        }
+        return position;
+    }
 
     public void refreshAssignableItineraries(final String expenseReportKey, final IRequestListener requestor) {
         final BaseAsyncResultReceiver receiver = new BaseAsyncResultReceiver(new Handler());

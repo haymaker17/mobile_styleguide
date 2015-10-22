@@ -8,14 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -223,6 +221,9 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         Message msg = itinerary.getMessage();
                         if ((msg == null && StringUtilities.isNullOrEmpty(s.toString()))
                                 || (!StringUtilities.isNullOrEmpty(s.toString()) && addingDisabled)) {
+                            if (msg != null) {
+                                itinerary.setMessage(null);
+                            }
                             checkConsistency();
                             renderNameLabel();
                         }
@@ -320,6 +321,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         itinController.registerListener(this);
         allowanceController.registerListener(this);
 
+        renderNameLabel();
         renderDefaultValues();
         renderFAB();
 
@@ -422,6 +424,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                         } else {
                             segment.setArrivalLocation(itinLocation);
                         }
+                        itinController.resetSegmentMessage(itinerary, currentPosition.getPosition());
                         checkConsistency();
                     }
                 }
@@ -622,9 +625,6 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         if (itinController == null) {
             return true;
         }
-        if (onlineCheckActive) {//reset messages and find new errors.
-            itinController.resetMessages(itinerary);
-        }
         //Start check sequence. Prio 1 mandatory fields, Prio 2 overlaps, Prio 3 backend errors
         if (!itinController.areAllMandatoryFieldsFilled(itinerary, onlineCheckActive)) {
             addingDisabled = true;
@@ -693,37 +693,25 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
     }
 
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.add(R.string.delete);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        // This works only with one menu item. In case there should be more items you need to check which one was selected!
-        // The context menu implementation is only temporary until the final ui design is in place.
-
-        if (this.itinerary == null) {
-            return true;
+    private void onDelete() {
+        if (itinerary == null || itinerary.getSegmentList() == null || currentPosition == null) {
+            return;
         }
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        ItinerarySegment segment = (ItinerarySegment) adapter.getItem(info.position);
-        deleteSegment(segment);
-
-        return true;
-    }
-
-    private void deleteSegment(ItinerarySegment segment) {
+        ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
+        if (segment == null) {
+            return;
+        }
         if (segment.getId() == null) {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Segment id is null so only removing from Itinerary."));
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
+                    "onDelete", "Segment id is null - transient. So only removing from Itinerary."));
+            itinController.resetSegmentMessage(itinerary, currentPosition.getPosition());
             itinerary.getSegmentList().remove(segment);
-            onlineCheckActive = true; //Remove errors and search for others.
+            onlineCheckActive = true;
             checkConsistency();
             refreshAdapter();
         } else {
-            Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "onContextItemSelected", "Delete Segment - Trigger executeDeleteSegment on itinController."));
+            Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
+                    "onDelete", "Segment is persistent. Trigger executeDeleteSegment on itinController."));
             itinController.executeDeleteSegment(itinerary.getItineraryID(), segment);
         }
     }
@@ -774,10 +762,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
                     showProgressBar(false);
-                    addingDisabled = true;
+                    addingDisabled = false;
                     onlineCheckActive = true;
                     renderFAB();
-                    adapter.setAddingDisabled(true);
+                    adapter.setAddingDisabled(addingDisabled);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(this, R.string.general_save_fail, Toast.LENGTH_SHORT).show();
                 }
@@ -797,8 +785,10 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 if (isSuccess) {
                     if (result != null) {//We get null for auto delete
                         ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
+                        int position = this.itinerary.getSegmentList().indexOf(deletedSegment);
+                        itinController.resetSegmentMessage(itinerary, position);
                         this.itinerary.getSegmentList().remove(deletedSegment);
-                        onlineCheckActive = true; //Remove errors and search for others.
+                        onlineCheckActive = true;
                         checkConsistency();
                     }
                 } else {
@@ -832,8 +822,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
     public void handleFragmentMessage(String fragmentMessage, Bundle extras) {
         Log.d(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG, "handleFragmentMessage", "message = " + fragmentMessage));
         if (MSG_DIALOG_DELETE_POSITIVE.equals(fragmentMessage)) {
-            ItinerarySegment segment = itinerary.getSegmentList().get(currentPosition.getPosition());
-            deleteSegment(segment);
+            onDelete();
         }
         if (MSG_DIALOG_DIRTY_NEGATIVE.equals(fragmentMessage)) {
             if (itinController != null) {
@@ -873,6 +862,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 } else {
                     segment.setArrivalDateTime(date);
                 }
+                itinController.resetSegmentMessage(itinerary, currentPosition.getPosition());
                 adapter.notifyDataSetChanged();
                 checkConsistency();
             }
@@ -899,6 +889,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 } else {
                     segment.setArrivalDateTime(date);
                 }
+                itinController.resetSegmentMessage(itinerary, currentPosition.getPosition());
                 adapter.notifyDataSetChanged();
                 checkConsistency();
             }
