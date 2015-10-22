@@ -659,7 +659,23 @@ public class Startup extends BaseActivity {
                                             Flurry.LABEL_LOGIN_USING_PASSWORD, null);
                                 }
                             }
+
+                            // TODO: MOB-25936 - REMOVE THE FOLLOWING CODE AFTER EXPENSEIT V2 AND SSO IS RELEASED. >>>
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Startup.this);
+                            boolean isUpgrade = prefs.getBoolean(Preferences.PREF_APP_UPGRADE, false);
+
+                            if (isUpgrade && Preferences.isExpenseItUser() && !Preferences.isUserLoggedInExpenseIt()) {
+                                Log.d(Const.LOG_TAG, CLS_TAG + ".doAutoLogin - the user was not logged into ExpenseIt.");
+                                startLoginScreen();
+                                doLoginFinish();
+                            } else {
+                                startHomeScreen();
+                            }
+                            // TODO: <<<<< REMOVE ABOVE CODE.
+
+                            /* ORIGINAL CODE:
                             startHomeScreen();
+                            */
                         }
                         ConcurMobile app = (ConcurMobile) getApplication();
                         app.expireLogin(false);
