@@ -135,14 +135,8 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
         if (massEditList == null) {
             return getString(R.string.ta_daily_allowance);
         } else {
-            StringBuffer sb = new StringBuffer();
-            sb.append(getString(R.string.ta_adjustments));
-            sb.append(" (");
-            sb.append(massEditList.size());
-            sb.append(")");
-            return sb.toString();
+            return getString(R.string.ta_adjustments);
         }
-
     }
 
     @Override
