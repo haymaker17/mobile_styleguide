@@ -62,7 +62,7 @@ public class ExpenseItReceiptPreviewFragment extends Fragment {
         receiptImageView = (ImageView) fragmentView.findViewById(R.id.camera_preview);
         receiptImageUnavailable = (TextView) fragmentView.findViewById(R.id.txtvReceiptImageUnavailable);
 
-        if (receiptImageView != null) {
+        if (getActivity() != null && receiptImageView != null) {
             final String receiptImageFilePath = getArguments().getString(ExpenseItReceiptPreviewFragment.EXPENSEIT_IMAGE_FILE_PATH_KEY);
             if (receiptImageFilePath != null) {
                 receiptImageView.post(new Runnable() {
@@ -104,35 +104,37 @@ public class ExpenseItReceiptPreviewFragment extends Fragment {
     }
 
     private void initializeActionButtons() {
-        if (getArguments().containsKey(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY)) {
-            imageSource = getArguments().getString(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY);
-            if (imageSource != null && imageSource.equals(EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY)) {
-                retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
-                retakeButton.setText(R.string.cancel_button);
-                retakeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getActivity().finish();
-                    }
-                });
-            } else {
-                retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
-                retakeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mExpenseItPreviewCallbacks.onReceiptPreviewResult(true);
-                    }
-                });
+        if (getActivity() != null) {
+            if (getArguments().containsKey(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY)) {
+                imageSource = getArguments().getString(ExpenseItReceiptPreviewFragment.EXPENSEIT_PREVIEW_IMAGE_SOURCE_KEY);
+                if (imageSource != null && imageSource.equals(EXPENSEIT_PREVIEW_SOURCE_GALLERY_KEY)) {
+                    retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
+                    retakeButton.setText(R.string.cancel_button);
+                    retakeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getActivity().finish();
+                        }
+                    });
+                } else {
+                    retakeButton = (Button) fragmentView.findViewById(R.id.retake_btn);
+                    retakeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mExpenseItPreviewCallbacks.onReceiptPreviewResult(true);
+                        }
+                    });
+                }
             }
-        }
 
-        useButton = (Button) fragmentView.findViewById(R.id.accept_btn);
-        useButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mExpenseItPreviewCallbacks.onReceiptPreviewResult(false);
-            }
-        });
+            useButton = (Button) fragmentView.findViewById(R.id.accept_btn);
+            useButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mExpenseItPreviewCallbacks.onReceiptPreviewResult(false);
+                }
+            });
+        }
     }
 
     @Override

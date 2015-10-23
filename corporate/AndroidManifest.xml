@@ -516,15 +516,15 @@
             android:theme="@style/ConcurTheme.Translucent.NoActionBar.Material" >
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunExpItTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunExpItTour"
             android:theme="@style/ConcurTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunExpItTravelTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunExpItTravelTour"
             android:theme="@style/ConcurTheme.NoActionBar" >
         </activity>
         <activity
-            android:name="com.concur.mobile.corp.activity.FirstRunTravelTour"
+            android:name="com.concur.mobile.corp.activity.firstrun.FirstRunTravelTour"
             android:theme="@style/ConcurTheme.NoActionBar" >
         </activity>
         <activity

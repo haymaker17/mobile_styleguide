@@ -12,6 +12,7 @@ import com.concur.mobile.platform.expense.provider.upgrade.AddPcaKeyToSmartExpen
 import com.concur.mobile.platform.expense.provider.upgrade.AddReceiptContentIdToMobileEntryUpgradeAction;
 import com.concur.mobile.platform.expense.provider.upgrade.AddReceiptTableUpgradeAction;
 import com.concur.mobile.platform.expense.provider.upgrade.DBVer10UpgradeAction;
+import com.concur.mobile.platform.expense.provider.upgrade.DBVer11UpgradeAction;
 import com.concur.mobile.platform.expense.provider.upgrade.DBVer7UpgradeAction;
 import com.concur.mobile.platform.expense.provider.upgrade.DBVer9UpgradeAction;
 import com.concur.mobile.platform.expense.provider.upgrade.SmartExpenseUpgradeAction;
@@ -46,7 +47,8 @@ public class ExpenseDBSchema {
     // DATABASE_VERSION = 8 -- added 'PCA_KEY' to 'SMART_EXPENSE' table.
     // DATABASE_VERSION = 9 -- added additional receipt columns to 'RECEIPT' table.
     // DATABASE_VERSION = 10 -- added support for 'REJECT_CODE' column in 'SMART_EXPENSE' table.
-    static final int DATABASE_VERSION = 10;
+    // DATABASE_VERSION = 11 -- added support for 'EXPENSEIT_RECEIPT' table during upgrade.
+    static final int DATABASE_VERSION = 11;
     // ****
     // NOTE: Please leave one blank line between table column definitions, it prevents formatting
     // from randomly combining on different lines making code browsing more difficult.
@@ -925,6 +927,13 @@ public class ExpenseDBSchema {
                 SchemaUpgradeAction sua = new DBVer10UpgradeAction(db, oldVersion, newVersion);
                 if (!sua.upgrade()) {
                     Log.e(Const.LOG_TAG, CLS_TAG + ".onUpgrade: failed to execute DBVer10UpgradeAction!");
+                }
+                break;
+            }
+            case 10: {
+                SchemaUpgradeAction sua = new DBVer11UpgradeAction(db, oldVersion, newVersion);
+                if (!sua.upgrade()) {
+                    Log.e(Const.LOG_TAG, CLS_TAG + ".onUpgrade: failed to execute DBVer11UpgradeAction!");
                 }
                 break;
             }

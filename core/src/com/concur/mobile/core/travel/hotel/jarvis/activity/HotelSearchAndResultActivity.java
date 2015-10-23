@@ -365,6 +365,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
     protected void onStart() {
         super.onStart();
         EventTracker.INSTANCE.activityStart(this);
+        // If results are from app database then the call will come through fragmentReady() which is invoked before onStart from the fragment listener
+        // This is causing the previous activity name being logged as current activity in the event track for viewed hotels action
+        if(retrieveFromDB) {
+            // Log GA tracking
+            trackViewedHotels(hotelListItemsToSort);
+        }
     }
 
     @Override
@@ -930,26 +936,22 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
                     && hotelSelected.availabilityErrorCode == null) {
 
                 // GA event logging
-                String[] paramKeys = null;
-                String[] paramValues = null;
+                StringBuilder sb = new StringBuilder("{");
+                sb.append(Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID + ":");
+                sb.append(getFormattedPropertyIdFromPropertyIds(hotelSelected.propertyIds));
+                sb.append(", ");
+                sb.append(Flurry.EVENT_LABEL_HOTEL_RECOMMENDED + ":");
                 if (hotelSelected.recommended != null && hotelSelected.recommended.getSuggestedCategory() != null) {
-                    paramKeys = new String[3];
-                    paramValues = new String[3];
-                    paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED;
-                    paramValues[1] = Flurry.PARAM_VALUE_YES.toUpperCase();
-                    paramKeys[2] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED_TYPE;
-                    paramValues[2] = hotelSelected.recommended.getSuggestedCategory(); //CompanyFavourite etc
+                    sb.append(Flurry.PARAM_VALUE_YES);
+                    sb.append(", ");
+                    sb.append(Flurry.EVENT_LABEL_HOTEL_RECOMMENDED_TYPE + ":");
+                    sb.append(hotelSelected.recommended.getSuggestedCategory()); //CompanyFavourite etc);
                 } else {
-                    paramKeys = new String[2];
-                    paramValues = new String[2];
-                    paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDED;
-                    paramValues[1] = Flurry.PARAM_VALUE_NO.toUpperCase();
+                    sb.append(Flurry.PARAM_VALUE_NO);
                 }
-                paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
-                paramValues[0] = getFormattedPropertyIdFromPropertyIds(hotelSelected.propertyIds);
-
-                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_SELECTED + " - " + paramKeys + " - " + paramValues);
-                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_SELECTED, paramKeys, paramValues);
+                sb.append(";}");
+                Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_HOTEL_SELECTED + " - " + sb.toString());
+                EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_HOTEL_SELECTED, sb.toString());
                 // end of GA logging
 
                 hotelSelected.showNearMe = searchNearMe;
@@ -1087,8 +1089,12 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
             });
         }
 
-        // Log GA tracking
-        trackViewedHotels(hotelListItemsToSort);
+        // If results are from app database then the call will come through fragmentReady() which is invoked before onStart from the fragment listener
+        // This is causing the previous activity name being logged as current activity in the event track for viewed hotels action
+        if(!retrieveFromDB) {
+            // Log GA tracking
+            trackViewedHotels(hotelListItemsToSort);
+        }
 
     }
 
@@ -1195,30 +1201,28 @@ public class HotelSearchAndResultActivity extends TravelBaseActivity
 
     // track hotels viewed
     private void trackViewedHotels(List<HotelSearchResultListItem> itemsToSort) {
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** itemsToSort in trackViewedHotels ------ " + (itemsToSort != null ? itemsToSort.size() : " itemsToSort is NULL ******"));
+        StringBuilder sb = new StringBuilder("{");
         for (HotelSearchResultListItem item : itemsToSort) {
-
-            String[] paramKeys = new String[1];
-            String[] paramValues = new String[1];
+            // property id
+            sb.append(Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID + ":");
+            sb.append(getFormattedPropertyIdFromPropertyIds(item.getHotel().propertyIds));
             if (item.getHotel().recommended != null) {
-                paramKeys = new String[2];
-                paramValues = new String[2];
+                sb.append(",");
 
                 // recommendation score
-                paramKeys[1] = Flurry.EVENT_LABEL_HOTEL_RECOMMENDATION_SCORE;
-                paramValues[1] = Double.toString(item.getHotel().recommended.totalScore);
+                sb.append(Flurry.EVENT_LABEL_HOTEL_RECOMMENDATION_SCORE + ":");
+                sb.append(Double.toString(item.getHotel().recommended.totalScore));
 
                 if (!suggestedAvailable) {
                     suggestedAvailable = (item.getHotel().recommended.getSuggestedCategory() == null ? false : true);
                 }
             }
-
-            // property id
-            paramKeys[0] = Flurry.EVENT_LABEL_HOTEL_PROPERTY_ID;
-            paramValues[0] = getFormattedPropertyIdFromPropertyIds(item.getHotel().propertyIds);
-            Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS + " - " + paramKeys.toString() + " - " + paramValues.toString());
-            EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS,
-                    paramKeys, paramValues);
+            sb.append(";");
         }
+        sb.append("}");
+        EventTracker.INSTANCE.eventTrack(Flurry.EVENT_CATEGORY_TRAVEL_HOTEL, Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS, sb.toString());
+        Log.d(Const.LOG_TAG, CLS_TAG + "*********************** EventTracker - " + Flurry.EVENT_CATEGORY_TRAVEL_HOTEL + " - " + Flurry.EVENT_ACTION_TRAVEL_VIEWED_HOTELS + " - " + sb.toString());
     }
 
     // returns property id, source and vendor id
