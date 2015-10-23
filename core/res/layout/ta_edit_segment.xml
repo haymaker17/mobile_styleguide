@@ -116,7 +116,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
-            android:text="@string/itin_add_return_trip"
+            android:text="@string/itin_add_return_trip_android"
             android:visibility="visible"
             android:textColor="#2f6996"
             android:textSize="16sp"/>

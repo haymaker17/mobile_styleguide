@@ -299,7 +299,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
         if (segments != null && segments.size() == 1 && onReturnToHomeListener != null && !addingDisabled) {
             holder.vgReturnToHome.setVisibility(View.VISIBLE);
             if (holder.tvReturnToHome != null) {
-                String returnText =  context.getString(R.string.itin_add_return_trip, StringUtilities.EMPTY_STRING);
+                String returnText =  context.getString(R.string.itin_add_return_trip_android, StringUtilities.EMPTY_STRING);
                 if (segments.get(0).getDepartureLocation() != null) {
                     String cityCountryName = segments.get(0).getDepartureLocation().getName();
                     int sepPos = cityCountryName.indexOf(",");

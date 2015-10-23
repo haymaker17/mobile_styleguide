@@ -230,11 +230,13 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
                 }
             }
 
-            if (requestCode == REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS && resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_FIXED_TRAVEL_ALLOWANCE_DETAILS
+                    && (resultCode == RESULT_OK || resultCode == RESULT_CANCELED)) {
                 FixedTravelAllowanceListFragment fixedTaListFrag = (FixedTravelAllowanceListFragment) getFragmentByClass(
                         FixedTravelAllowanceListFragment.class);
                 if (fixedTaListFrag != null) {
                     fixedTaListFrag.switchToSelctionMode(false);
+                    fixedTaController.unselectAll();
                 }
             }
         }
