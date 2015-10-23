@@ -983,6 +983,15 @@
         <item name="android:textColor">#ffffff</item>
     </style>
 
+    <style name="TASubTitle.Big">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TASubTitle.Big.White">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
     <style name="TALabel">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>

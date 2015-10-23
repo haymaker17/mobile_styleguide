@@ -12,13 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +41,6 @@ import com.concur.mobile.core.util.FormatUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @EventTracker.EventTrackerClassName(getClassName = FixedTravelAllowanceDetailsActivity.SCREEN_NAME_TRAVEL_ALLOWANCE_FIXED_DETAIL)
 public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActivity implements IControllerListener, IFragmentCallback, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
@@ -194,23 +188,12 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(title);
         }
-
         if (massEditList != null && massEditList.size() > 0) {
-            StringBuffer sb = new StringBuffer();
-            int i = 0;
-            for (FixedTravelAllowance ta: massEditList) {
-                String dateString = DateUtils.formatDateTime(this, ta.getDate().getTime(),
-                        DateUtils.FORMAT_NUMERIC_DATE);
-                sb.append(dateString);
-                if (i < massEditList.size() - 1) {
-                    sb.append(", ");
-                }
-                i++;
-            }
-
             TextView toolbarText = (TextView) findViewById(R.id.tv_toolbar_text);
-            toolbarText.setText(sb.toString());
-            toolbarText.setVisibility(View.VISIBLE);
+            if (toolbarText != null) {
+                toolbarText.setText(getResources().getString(R.string.general_no_of_selected_list_items_android,  massEditList.size()));
+                toolbarText.setVisibility(View.VISIBLE);
+            }
         }
     }
 

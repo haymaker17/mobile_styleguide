@@ -158,7 +158,7 @@ public class MessageDialogFragment extends DialogFragment {
                 Message msg = (Message) arguments.getSerializable(MESSAGE_OBJECT);
                 builder.setMessage(msg.getMessageText(getActivity().getApplicationContext()));
                 if (msg.getSeverity() == Message.Severity.ERROR) {
-                    builder.setIcon(R.drawable.icon_redex);
+                    builder.setIcon(R.drawable.icon_error_oval);
                     builder.setTitle(R.string.general_error);
                 }
             } else {

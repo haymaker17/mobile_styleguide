@@ -333,7 +333,7 @@ public class ItineraryUpdateListAdapter extends ArrayAdapter<Object> {
             if (msg != null && msg.getSeverity() == Message.Severity.ERROR) {
                 holder.vMessageArea.setVisibility(View.VISIBLE);
                 if (holder.ivIcon != null) {
-                    holder.ivIcon.setImageResource(R.drawable.icon_redex);
+                    holder.ivIcon.setImageResource(R.drawable.icon_error_oval);
                     holder.ivIcon.setVisibility(View.VISIBLE);
                 }
                 if (holder.tvMessage != null) {

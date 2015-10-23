@@ -55,7 +55,7 @@
         android:lines="1"
         android:visibility="gone"
         android:text="Small Text"
-        android:textAppearance="@style/TASubHeaderSubtitle.White" />
+        android:textAppearance="@style/TAValueDescription.White" />
 
     <TextView
         android:id="@+id/tv_subtitle_2"
