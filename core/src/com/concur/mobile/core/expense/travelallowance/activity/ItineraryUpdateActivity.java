@@ -712,6 +712,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         } else {
             Log.i(DebugUtils.LOG_TAG_TA, DebugUtils.buildLogText(CLASS_TAG,
                     "onDelete", "Segment is persistent. Trigger executeDeleteSegment on itinController."));
+            showProgressBar(true);
             itinController.executeDeleteSegment(itinerary.getItineraryID(), segment);
         }
     }
@@ -762,7 +763,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
                 } else {
                     taskChain = 0; //Important due to auto delete and error situations. -> Abort chain.
                     showProgressBar(false);
-                    addingDisabled = false;
+                    addingDisabled = true;
                     onlineCheckActive = true;
                     renderFAB();
                     adapter.setAddingDisabled(addingDisabled);
@@ -782,6 +783,7 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
         }
         if (action == ControllerAction.DELETE) {
             if (controller instanceof TravelAllowanceItineraryController) {
+                showProgressBar(false);
                 if (isSuccess) {
                     if (result != null) {//We get null for auto delete
                         ItinerarySegment deletedSegment = (ItinerarySegment) result.getSerializable(BundleId.SEGMENT);
