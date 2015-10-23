@@ -6,43 +6,47 @@
 
     <include
         android:id="@+id/v_message_separator_top"
-        layout="@layout/ta_group_separator"
+        layout="@layout/ta_error_frame"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/vg_message_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF5F5"
         android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp">
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="28dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="24dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/icon_error_oval" />
 
         <TextView
+            android:layout_alignParentLeft="true"
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="72dp"
             android:layout_marginRight="16dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Error"
-            android:textAppearance="@style/TAMessage" />
+            android:textAppearance="@style/TAMessage"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_icon"
+            android:layout_toEndOf="@+id/iv_icon" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <include
         android:id="@+id/v_message_separator_bottom"
-        layout="@layout/ta_group_separator"
+        layout="@layout/ta_error_frame"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
