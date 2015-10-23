@@ -22,6 +22,7 @@ import com.concur.mobile.core.expense.travelallowance.adapter.RecyclerViewAdapte
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.datamodel.FixedTravelAllowance;
 import com.concur.mobile.core.expense.travelallowance.util.AnimationUtil;
+import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.expense.travelallowance.util.DebugUtils;
 import com.concur.mobile.core.util.Const;
 
@@ -55,6 +56,8 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
 
     private boolean inSelectionMode;
 
+    private boolean isEditMode;
+
     /**
      * Container Activity to implement this interface in order to be notified
      * in case any fixed travel allowance was selected from the list
@@ -82,6 +85,11 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             inSelectionMode = savedInstanceState.getBoolean(BUNDLE_ID_IN_SELECTION_MODE, false);
         }
 
+        Bundle args = getArguments();
+        if (args != null) {
+            isEditMode = args.getBoolean(BundleId.IS_EDIT_MODE, true);
+        }
+
         final View view = inflater.inflate(R.layout.ta_fixed_travel_allowance_list, container, false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
@@ -94,6 +102,10 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(this.adapter);
+
+        if (!isEditMode) {
+            view.findViewById(R.id.fab).setVisibility(View.GONE);
+        }
 
         return view;
     }
