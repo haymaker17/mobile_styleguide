@@ -314,6 +314,8 @@ public class ItineraryUpdateActivity extends BaseActivity implements IController
 
         // In case of Create also create the first segment
         if (StringUtilities.isNullOrEmpty(this.itinerary.getItineraryID() ) && this.itinerary.getSegmentList().size() == 0){
+            this.addingDisabled = true;
+            adapter.setAddingDisabled(this.addingDisabled);
             addNewRow(false);
         }
 

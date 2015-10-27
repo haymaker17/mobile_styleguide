@@ -333,7 +333,7 @@ public class FixedTravelAllowanceDetailsActivity extends TravelAllowanceBaseActi
 
         if (isCheckBox) {
             vh.rowType = FixedTADetailAdapter.RowType.SWITCH;
-            if (!isOvernight && MealProvision.PROVIDED_CODE.equals(code.getCode())) {
+            if (!isOvernight && !MealProvision.NOT_PROVIDED_CODE.equals(code.getCode())) {
                 vh.isChecked = true;
             }
             if (isOvernight) {

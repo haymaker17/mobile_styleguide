@@ -33,6 +33,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tv_label"
             android:text="Large Text"
+            android:textColor="@android:color/black"
             android:textAppearance="@style/TAValue.Small" />
 
         <ImageView

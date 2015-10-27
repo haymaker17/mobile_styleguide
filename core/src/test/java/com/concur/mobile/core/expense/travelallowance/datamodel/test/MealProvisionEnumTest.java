@@ -51,7 +51,7 @@ public class MealProvisionEnumTest extends TestCase {
     public void fromCodeWithoutContext(){
         assertEquals(MealProvisionEnum.PROVIDED,     MealProvisionEnum.fromCode("PRO"));
         assertEquals(MealProvisionEnum.NOT_PROVIDED, MealProvisionEnum.fromCode("NPR"));
-        assertNull(MealProvisionEnum.fromCode("XLV"));
+        assertEquals(MealProvisionEnum.PROVIDED,     MealProvisionEnum.fromCode("XLV"));
     }
 
 }

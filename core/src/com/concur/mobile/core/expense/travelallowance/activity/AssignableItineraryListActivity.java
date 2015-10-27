@@ -110,7 +110,7 @@ public class AssignableItineraryListActivity extends TravelAllowanceBaseActivity
 
     @Override
     protected String getToolbarTitle() {
-        return getString(R.string.ta_travel_allowances);
+        return getString(R.string.itin_assign);
     }
 
     private void registerViewListener() {

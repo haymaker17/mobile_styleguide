@@ -243,10 +243,13 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
     }
 
     private List<ViewPagerAdapter.ViewPagerItem> getViewPagerItemList() {
-
         List<ViewPagerAdapter.ViewPagerItem> list = new ArrayList<>();
+
         Bundle adjustmentsArguments = new Bundle();
-        adjustmentsArguments.putBoolean(BundleId.IS_EDIT_MODE, getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE, true));
+        if (getIntent().getExtras() != null) {
+            adjustmentsArguments.putBoolean(BundleId.IS_EDIT_MODE, getIntent().getExtras().getBoolean(BundleId.IS_EDIT_MODE, true));
+        }
+
         ViewPagerAdapter.ViewPagerItem adjustmentFrag = new ViewPagerAdapter.ViewPagerItem(
                 getString(R.string.ta_adjustments), FixedTravelAllowanceListFragment.class, adjustmentsArguments);
         list.add(adjustmentFrag);
@@ -278,6 +281,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
     @Override
     protected void onResume() {
         super.onResume();
+        renderSummary();
         SimpleTAItineraryListFragment simpleTaListFrag = (SimpleTAItineraryListFragment) getFragmentByClass(SimpleTAItineraryListFragment.class);
         if (simpleTaListFrag != null) {
             Bundle bundle = new Bundle();

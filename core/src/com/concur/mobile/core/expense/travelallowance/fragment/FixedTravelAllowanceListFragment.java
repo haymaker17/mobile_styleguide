@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -107,6 +108,8 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             view.findViewById(R.id.fab).setVisibility(View.GONE);
         }
 
+        controlAdjustButton(view);
+
         return view;
     }
 
@@ -126,6 +129,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
             bottomToolbar.setVisibility(View.VISIBLE);
             selectionCounter.setVisibility(View.VISIBLE);
             updateSelectionCounter(v);
+            controlAdjustButton(v);
         } else {
             fab.setVisibility(View.VISIBLE);
             bottomToolbar.setVisibility(View.GONE);
@@ -288,11 +292,25 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
                 FixedTravelAllowance allowance = (FixedTravelAllowance) adapter.getItem(position);
                 allowance.setIsSelected(cb.isChecked());
                 updateSelectionCounter(getView());
+                controlAdjustButton(getView());
             }
         }
     }
 
-
+    private void controlAdjustButton(View view) {
+        if (view == null) {
+            return;
+        }
+        Button btnAdjust = (Button) view.findViewById(R.id.btn_adjust);
+        if (btnAdjust == null) {
+            return;
+        }
+        if (allowanceController.getSelectedTravelAllowances().size() <= 0) {
+            btnAdjust.setEnabled(false);
+        } else {
+            btnAdjust.setEnabled(true);
+        }
+    }
 
     private RecyclerView getRecyclerView() {
         View v = getView();
@@ -329,6 +347,7 @@ public class FixedTravelAllowanceListFragment extends Fragment implements SwipeR
 //            AnimationUtil.visibleAnimation(toolbar);
             counter.setVisibility(View.VISIBLE);
             updateSelectionCounter(v);
+            controlAdjustButton(v);
         } else {
             swipeView.setEnabled(true);
             AnimationUtil.fabToolbarAnimation(fab, View.VISIBLE, toolbar, View.GONE);

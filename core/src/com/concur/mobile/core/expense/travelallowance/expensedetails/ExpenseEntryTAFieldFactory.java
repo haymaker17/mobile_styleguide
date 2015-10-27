@@ -107,6 +107,9 @@ public class ExpenseEntryTAFieldFactory {
 
             ICode breakfast = ta.getBreakfastProvision();
             if (breakfast != null && controller.showBreakfastProvision()) {
+                if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_BREAKFAST_PROVIDED_CHECKBOX)) {
+                    controlType = ExpenseReportFormField.ControlType.EDIT;
+                }
                 ExpenseReportFormField field1 = new ExpenseReportFormField(BREAKFAST_FIELD_ID, breakfastLabel,
                         breakfast.getDescription(), accessType, controlType, dataType, true);
 
@@ -126,6 +129,9 @@ public class ExpenseEntryTAFieldFactory {
 
             ICode lunch = ta.getLunchProvision();
             if (lunch != null && controller.showLunchProvision()) {
+                if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_CHECKBOX)) {
+                    controlType = ExpenseReportFormField.ControlType.EDIT;
+                }
                 ExpenseReportFormField field2 = new ExpenseReportFormField(LUNCH_FIELD_ID, lunchLabel, lunch.getDescription(),
                         accessType, controlType, dataType, true);
                 if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_LUNCH_PROVIDED_PICKLIST)) {
@@ -141,6 +147,9 @@ public class ExpenseEntryTAFieldFactory {
 
             ICode dinner = ta.getDinnerProvision();
             if (dinner != null && controller.showDinnerProvision()) {
+                if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_CHECKBOX)) {
+                    controlType = ExpenseReportFormField.ControlType.EDIT;
+                }
                 ExpenseReportFormField field3 = new ExpenseReportFormField(DINNER_FIELD_ID, dinnerLabel, dinner.getDescription(),
                         accessType, controlType, dataType, true);
                 if (controlData.getControlValue(FixedTravelAllowanceControlData.SHOW_DINNER_PROVIDED_PICKLIST)) {
@@ -199,7 +208,7 @@ public class ExpenseEntryTAFieldFactory {
         }
 
         ExpenseReportFormField.AccessType accessType = isEditable ? ExpenseReportFormField.AccessType.RW : ExpenseReportFormField.AccessType.RO;
-        ExpenseReportFormField.ControlType controlType = isEditable ? ExpenseReportFormField.ControlType.PICK_LIST : ExpenseReportFormField.ControlType.EDIT;
+        ExpenseReportFormField.ControlType controlType = isEditable ? ExpenseReportFormField.ControlType.CHECKBOX : ExpenseReportFormField.ControlType.EDIT;
         ExpenseReportFormField.DataType dataType = isEditable ? ExpenseReportFormField.DataType.BOOLEAN : ExpenseReportFormField.DataType.VARCHAR;
 
         // Overnight Indicator

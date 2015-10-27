@@ -26,12 +26,16 @@ public enum MealProvisionEnum {
     }
 
     public static MealProvisionEnum fromCode(final String code) {
+        // Default is provided because due to config changes there could be a different value than PRO or NPR. Here the behavior
+        // is the same as in the browser app and iPhone app
+        MealProvisionEnum result = PROVIDED;
         for (MealProvisionEnum mealProvisionEnum : values()) {
             if (mealProvisionEnum.code.equals(code)) {
-                return mealProvisionEnum;
+                result = mealProvisionEnum;
+                break;
             }
         }
-        return null;
+        return result;
     }
 
     public static MealProvision fromCode(final String code, final Context context) {

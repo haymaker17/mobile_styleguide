@@ -57,7 +57,6 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             label = (TextView) itemView.findViewById(R.id.tv_label);
             readOnlyValue = (TextView) itemView.findViewById(R.id.tv_read_only_value);
             switchView = (Switch) itemView.findViewById(R.id.sv_switch);
-            switchView.setOnCheckedChangeListener(switchListener);
             spinner = (Spinner) itemView.findViewById(R.id.sp_spinner);
             spinner.setOnItemSelectedListener(spinnerListener);
             icon = (ImageView) itemView.findViewById(R.id.iv_multi_value_icon);
@@ -125,7 +124,9 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
             holder.spinner.setVisibility(View.GONE);
             holder.label.setVisibility(View.GONE);
             holder.switchView.setVisibility(View.VISIBLE);
+            holder.switchView.setOnCheckedChangeListener(null);
             holder.switchView.setChecked(value.isChecked);
+            holder.switchView.setOnCheckedChangeListener(switchListener);
             holder.switchView.setTextOn(ctx.getResources().getString(R.string.general_yes));
             holder.switchView.setTextOff(ctx.getResources().getString(R.string.general_no));
             holder.switchView.setText(value.label);
@@ -176,7 +177,9 @@ public class FixedTADetailAdapter extends RecyclerViewAdapter<FixedTADetailAdapt
 
     private ArrayAdapter<ICode> createSpinnerAdapter(List<ICode> spinnerValues, boolean multiValuesSelected) {
         if (!multiValuesSelected) {
-            return new ArrayAdapter<ICode>(ctx, android.R.layout.simple_spinner_item, spinnerValues);
+            ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(ctx, R.layout.ta_spinner_selected_item, spinnerValues) ;
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            return adapter;
         } else {
             spinnerValues.add(new MealProvision("dummy", ctx.getString(R.string.ta_multiple_values)));
             ArrayAdapter<ICode> adapter = new ArrayAdapter<ICode>(ctx, android.R.layout.simple_spinner_item,
