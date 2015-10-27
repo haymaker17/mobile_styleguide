@@ -32,9 +32,7 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
     }
 
     private void checkMultiSelection(Collection<FixedTravelAllowance> allowances) {
-        if (allowances == null || allowances.size() == 0) {
-            return;
-        }
+
         ArrayList<FixedTravelAllowance> list = new ArrayList<FixedTravelAllowance>(allowances);
         FixedTravelAllowance template = getTemplate();
         if (template == null) {
@@ -42,6 +40,9 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
         }
 
         for (FixedTravelAllowance ta:  list) {
+            if (ta == null) {
+                continue;
+            }
             if (!iCodeEqual(template.getBreakfastProvision(), ta.getBreakfastProvision())) {
                 isBreakfastMultiSelected = true;
             }
@@ -66,6 +67,9 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
 
     @Override
     public boolean add(FixedTravelAllowance object) {
+        if (object  == null) {
+            return false;
+        }
         boolean result = super.add(object);
         checkMultiSelection(this);
         return result;
@@ -73,12 +77,18 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
 
     @Override
     public void add(int index, FixedTravelAllowance object) {
+        if (object  == null) {
+            return;
+        }
         super.add(index, object);
         checkMultiSelection(this);
     }
 
     @Override
     public boolean addAll(Collection<? extends FixedTravelAllowance> collection) {
+        if (collection  == null) {
+            return false;
+        }
         boolean result = super.addAll(collection);
         checkMultiSelection(this);
         return result;
@@ -86,6 +96,9 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
 
     @Override
     public boolean addAll(int index, Collection<? extends FixedTravelAllowance> collection) {
+        if (collection  == null) {
+            return false;
+        }
         boolean result = super.addAll(index, collection);
         checkMultiSelection(this);
         return result;
@@ -93,11 +106,8 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
 
 
     private boolean iCodeEqual(ICode a, ICode b) {
-        if (a == null && b != null) {
-            return false;
-        }
 
-        if (a != null && b == null) {
+        if ((a != null && b == null) || (a == null && b != null)) {
             return false;
         }
 
@@ -115,7 +125,7 @@ public class SelectedTravelAllowancesList extends ArrayList<FixedTravelAllowance
         }
         FixedTravelAllowance result = null;
         for (FixedTravelAllowance ta: list) {
-            if (!ta.isLastDay()) {
+            if (ta != null && !ta.isLastDay()) {
                 result = ta;
                 break;
             }
