@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/header_itinerary"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:visibility="gone">
+
+    <LinearLayout
+        android:id="@+id/layout_wo_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_selector_gradient_background"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/list_cell_padding_bottom"
+        android:paddingLeft="@dimen/list_cell_padding_left"
+        android:paddingRight="@dimen/list_cell_padding_right"
+        android:paddingTop="@dimen/list_cell_padding_top"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+            android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+            android:src="@drawable/icon_travel_allowance_grey"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+            android:text="@string/ta_travel_allowances"
+            android:textAppearance="@style/ListCellHeaderText"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_with_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/list_selector_gradient_background"
+        android:paddingLeft="@dimen/list_cell_padding_left"
+        android:paddingRight="@dimen/list_cell_padding_right"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_travel_allowance_grey"
+            android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
+            android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+                android:text="@string/ta_travel_allowances"
+                android:textAppearance="@style/ListCellHeaderText"
+                />
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
+                android:text="Some text"
+                android:textAppearance="@style/ListCellHeaderText"
+                android:textSize="14dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

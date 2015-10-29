@@ -351,10 +351,13 @@ public class
     @Override
     public void enableTAItineraryButton(final Class<?> taStartActivity, final boolean isEditMode, final boolean isInApproval) {
         View button = findViewById(R.id.header_itinerary);
+        View layoutWoSubtitle = findViewById(R.id.layout_wo_subtitle);
+        View layoutWithSubtitle = findViewById(R.id.layout_with_subtitle);
         if (button == null) {
             return;
         }
         button.setVisibility(View.VISIBLE);
+        layoutWoSubtitle.setVisibility(View.VISIBLE);
         button.setFocusable(true);
         button.setClickable(true);
 

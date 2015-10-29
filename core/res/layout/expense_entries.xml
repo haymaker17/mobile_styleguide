@@ -102,34 +102,7 @@
 
                     <!--  Separator between view/attach receipt and itinerary  -->
                     <include layout="@layout/group_separator"/>
-                    <LinearLayout
-                        android:id="@+id/header_itinerary"
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/list_selector_gradient_background"
-                        android:paddingLeft="@dimen/list_cell_padding_left"
-                        android:paddingRight="@dimen/list_cell_padding_right"
-                        android:paddingTop="@dimen/list_cell_padding_top"
-                        android:paddingBottom="@dimen/list_cell_padding_bottom"
-						android:visibility="gone"
-                    >
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_travel_allowance_grey"
-                            android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
-                            android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
-                        />
-                        <TextView
-                            android:id="@+id/view_itinerary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/exp_list_header_row_title_left_margin"
-                            android:text="@string/ta_travel_allowances"
-                            android:textAppearance="@style/ListCellHeaderText"
-                        />
-                    </LinearLayout>
+                    <include layout="@layout/ta_expense_entries_ta_button" />
 	  			</LinearLayout>
 	  			<View
 	  				android:layout_width="fill_parent"
