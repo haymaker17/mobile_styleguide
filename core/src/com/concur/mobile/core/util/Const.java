@@ -938,6 +938,7 @@ public final class Const {
     public static final String EXTRA_EXPENSE_REPORT_DEFAULT_APPROVER = "expense.report.default.approver";
     public static final String EXTRA_EXPENSE_REPORT_SELECTED_APPROVER = "expense.report.selected.approver";
     public static final String EXTRA_EXPENSE_ATTENDEE_TYPE_OLD_KEY_FROM_DUP = "expense.attendee.type.key.from.duplicate";
+    public static final String EXTRA_EXPENSE_REPORT_NEWLY_CREATED = "expense.report.newly.created.indicator";
 
     public static final String EXTRA_CHECK_PROMPT_TO_RATE = "check.prompt.to.rate";
 

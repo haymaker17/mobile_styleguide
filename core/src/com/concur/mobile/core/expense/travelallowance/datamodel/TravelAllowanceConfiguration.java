@@ -75,6 +75,8 @@ public class TravelAllowanceConfiguration implements Serializable{
 
     private  String tacKey;
 
+    private boolean displayWizard;
+
 
     public String getConfigCode() {
         return configCode;
@@ -194,5 +196,13 @@ public class TravelAllowanceConfiguration implements Serializable{
 
     public void setUseOvernight(boolean useOvernight) {
         this.useOvernight = useOvernight;
+    }
+
+    public boolean getDisplayWizard() {
+        return displayWizard;
+    }
+
+    public void setDisplayWizard(boolean displayWizard) {
+        this.displayWizard = displayWizard;
     }
 }

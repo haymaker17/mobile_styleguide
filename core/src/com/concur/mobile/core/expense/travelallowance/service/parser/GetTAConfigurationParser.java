@@ -96,6 +96,12 @@ public class GetTAConfigurationParser extends BaseParser {
                     newConfiguration.setUseOvernight(false);
                 }
                 break;
+            case "displayWizard":
+                if ("NEVER".equals(text)) {
+                    newConfiguration.setDisplayWizard(false);
+                } else {
+                    newConfiguration.setDisplayWizard(true);
+                }
             default:
                 break;
         };

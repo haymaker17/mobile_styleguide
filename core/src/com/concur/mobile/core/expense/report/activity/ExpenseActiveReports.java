@@ -727,6 +727,7 @@ public class ExpenseActiveReports extends ExpenseApproval {
             Intent i = new Intent(this, ExpenseEntries.class);
             i.putExtra(Const.EXTRA_EXPENSE_REPORT_KEY, reportKey);
             i.putExtra(Const.EXTRA_EXPENSE_REPORT_SOURCE, Const.EXPENSE_REPORT_SOURCE_ACTIVE);
+            i.putExtra(Const.EXTRA_EXPENSE_REPORT_NEWLY_CREATED, true);
             startActivity(i);
         }
         super.onActivityResult(requestCode, resultCode, data);

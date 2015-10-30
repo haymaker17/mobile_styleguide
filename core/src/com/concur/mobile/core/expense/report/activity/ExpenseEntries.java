@@ -59,6 +59,7 @@ import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
 
 import com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
+import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -396,6 +397,13 @@ public class
     @Override
     public void taDateRefreshFinished() {
         dismissDialog(Const.DIALOG_EXPENSE_RETRIEVE_REPORT_ENTRY_DETAIL_PROGRESS);
+        boolean erNewlyCreated = getIntent().getBooleanExtra(Const.EXTRA_EXPENSE_REPORT_NEWLY_CREATED, false);
+        ConcurCore app = (ConcurCore) this.getApplication();
+        TravelAllowanceConfiguration taConfig = app.getTaController().getTAConfigController().getTravelAllowanceConfigurationList();
+        if (erNewlyCreated && taConfig != null && taConfig.getDisplayWizard()) {
+            View button = findViewById(R.id.header_itinerary);
+            button.performClick();
+        }
     }
 
     @Override
