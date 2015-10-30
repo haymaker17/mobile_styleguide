@@ -11,6 +11,7 @@ import com.concur.mobile.core.expense.report.data.ExpenseReport;
 import com.concur.mobile.core.expense.report.data.ExpenseReportEntryDetail;
 import com.concur.mobile.core.expense.report.data.ExpenseReportFormField;
 import com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity;
+import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.activity.TravelAllowanceActivity;
 import com.concur.mobile.core.expense.travelallowance.controller.FixedTravelAllowanceController;
 import com.concur.mobile.core.expense.travelallowance.controller.TravelAllowanceConfigurationController;
@@ -74,7 +75,7 @@ public class TravelAllowanceFacade extends Fragment {
     private boolean taUpdateSucceeded = false;
 
     private boolean isTaSwitchedOn = false;
-
+    
     private List<ExpenseReportFormField> expenseDetailsTAFormFields;
 
     private IRequestListener itinRefreshListener = new IRequestListener() {
@@ -237,8 +238,13 @@ public class TravelAllowanceFacade extends Fragment {
 
                     if (itineraryController != null && itineraryController.getItineraryList().size() == 0) {
                         if (expenseEntriesCallback != null) {
-                            expenseEntriesCallback.enableTAItineraryButton(AssignableItineraryListActivity.class,
-                                    true, isManager);
+                            if (itineraryController.getAssignableItineraryList(expRep.reportKey).size() == 0) {
+                                expenseEntriesCallback.enableTAItineraryButton(ItineraryUpdateActivity.class,
+                                        true, isManager);
+                            } else {
+                                expenseEntriesCallback.enableTAItineraryButton(AssignableItineraryListActivity.class,
+                                        true, isManager);
+                            }
                         }
                     } else {
                         if (expenseEntriesCallback != null) {

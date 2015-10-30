@@ -58,6 +58,7 @@ import com.concur.mobile.core.expense.service.GetExpenseTypesRequest;
 import com.concur.mobile.core.expense.travelallowance.TravelAllowanceFacade;
 
 import com.concur.mobile.core.expense.travelallowance.activity.AssignableItineraryListActivity;
+import com.concur.mobile.core.expense.travelallowance.activity.ItineraryUpdateActivity;
 import com.concur.mobile.core.expense.travelallowance.util.BundleId;
 import com.concur.mobile.core.service.ConcurService;
 import com.concur.mobile.core.util.Const;
@@ -356,8 +357,14 @@ public class
         if (button == null) {
             return;
         }
+
         button.setVisibility(View.VISIBLE);
-        layoutWoSubtitle.setVisibility(View.VISIBLE);
+        if (AssignableItineraryListActivity.class.equals(taStartActivity)
+                || ItineraryUpdateActivity.class.equals(taStartActivity)) {
+            layoutWoSubtitle.setVisibility(View.VISIBLE);
+        } else {
+            layoutWithSubtitle.setVisibility(View.VISIBLE);
+        }
         button.setFocusable(true);
         button.setClickable(true);
 

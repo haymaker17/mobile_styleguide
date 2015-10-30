@@ -19,7 +19,6 @@
             app:titleTextAppearance="@style/TAToolbarTitle"
             android:titleTextAppearance="@style/TAToolbarTitle"
             android:background="@android:color/transparent"
-            app:contentInsetStart="72dp"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <TextView

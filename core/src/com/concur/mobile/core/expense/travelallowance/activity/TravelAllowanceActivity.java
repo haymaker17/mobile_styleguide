@@ -187,6 +187,7 @@ public class TravelAllowanceActivity extends TravelAllowanceBaseActivity
 
     @Override
     public void onBackPressed() {
+        setResult(RESULT_OK);
         FixedTravelAllowanceListFragment f = (FixedTravelAllowanceListFragment) getFragmentByClass(
                 FixedTravelAllowanceListFragment.class);
         if (f != null && f.isInSelectionMode()) {
