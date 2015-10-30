@@ -12,142 +12,123 @@
 <section>	
 <h2>iOS Screenshots</h2>
 	<ul class="filterOptions centered" id="filters">
-		<li data-filter="all" 		       	>All<span></span></li>
-		<li data-filter="filter_login"		>Login<span></span></li>
-		<li data-filter="filter_trips"		>Trips<span></span></li>
-		<li data-filter="filter_expense"	>Expense<span></span></li>
+		<li ng-click="myFilter = {}" class="active">All<span></span></li>
+		<li ng-click="myFilter = {category: 'Login'}">Login<span></span></li>
+		<li ng-click="myFilter = {category: 'Travel'}">Travel<span></span></li>
+		<li ng-click="myFilter = {category: 'Expense'}">Expense<span></span></li>
 	</ul>
-	<div class="filterItemsContainer" id="isotope">
+	<div class="filterItemsContainer" ng-controller="MarketingFilter">
+
+		<div ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate=" 'animate' ">
+			<img src="{{screenshot.url}}" alt="{{screenshot.title}}" width="338" height="599" />
+			<h4>{{screenshot.title}}</h4>
+			<p>{{screenshot.category}}</p>
+		</div>
+
+<!-- 
 
 		<div class="filter_content">
-			<img src="../img/marketing/ios/01_login.png" alt="Image Name" width="338" height="599" />
+			<img src="img/marketing/ios/01_login.png" alt="Image Name" width="338" height="599" />
 			<h4>Sign In | Test Drive</h4>
 			<p>Login</p>
 		</div>
 		<div class="filter_content">
-			<img src="../img/marketing/ios/02_main_menu.png" alt="Main Menu" width="338" height="599" />
+			<img src="img/marketing/ios/02_main_menu.png" alt="Main Menu" width="338" height="599" />
 			<h4>Main Menu</h4>
 			<p>Login</p>
 		</div>
 		<div class="filter_temp_view">
-			<img src="../img/marketing/ios/03_trip.png" alt="New Trip" width="338" height="599" />
+			<img src="img/marketing/ios/03_trip.png" alt="New Trip" width="338" height="599" />
 			<h4>New Trip</h4>
 			<p>Login</p>
 		</div>
 		<div class="filter_login">
-			<img src="../img/marketing/ios/04_trip_options.png" alt="Trip Options" width="338" height="599" />
+			<img src="img/marketing/ios/04_trip_options.png" alt="Trip Options" width="338" height="599" />
 			<h4>Trip Options</h4>
 			<p>Login</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/05_air_search.png" alt="Air Search" width="338" height="599" />
+			<img src="img/marketing/ios/05_air_search.png" alt="Air Search" width="338" height="599" />
 			<h4>Air Search</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/06_air_results.png" alt="Air Results" width="338" height="599" />
+			<img src="img/marketing/ios/06_air_results.png" alt="Air Results" width="338" height="599" />
 			<h4>Air Results</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/07_air_carrier.png" alt="Air Carrier" width="338" height="599" />
+			<img src="img/marketing/ios/07_air_carrier.png" alt="Air Carrier" width="338" height="599" />
 			<h4>Air Carrier</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/08_air_details.png" alt="Air Details" width="338" height="599" />
+			<img src="img/marketing/ios/08_air_details.png" alt="Air Details" width="338" height="599" />
 			<h4>Air Details</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/09_hotel_search.png" alt="Hotel Search" width="338" height="599" />
+			<img src="img/marketing/ios/09_hotel_search.png" alt="Hotel Search" width="338" height="599" />
 			<h4>Hotel Search</h4>
 			<p>Expense</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/10_hotel_results.png" alt="Hotel Results" width="338" height="599" />
+			<img src="img/marketing/ios/10_hotel_results.png" alt="Hotel Results" width="338" height="599" />
 			<h4>Hotel Results</h4>
 			<p>Expense</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/11_hotel_details.png" alt="Hotel Details" width="338" height="599" />
+			<img src="img/marketing/ios/11_hotel_details.png" alt="Hotel Details" width="338" height="599" />
 			<h4>Hotel Details</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/12_hotel_photos.png" alt="Hotel Photos" width="338" height="599" />
+			<img src="img/marketing/ios/12_hotel_photos.png" alt="Hotel Photos" width="338" height="599" />
 			<h4>Hotel Photos</h4>
-			<p>Trips</p>
+			<p>Travel</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/13_car_search.png" alt="Car Search" width="338" height="599" />
+			<img src="img/marketing/ios/13_car_search.png" alt="Car Search" width="338" height="599" />
 			<h4>Car Search</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/14_car_results.png" alt="Car Results" width="338" height="599" />
+			<img src="img/marketing/ios/14_car_results.png" alt="Car Results" width="338" height="599" />
 			<h4>Car Results</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/15_car_sort.png" alt="Car Sort" width="338" height="599" />
+			<img src="img/marketing/ios/15_car_sort.png" alt="Car Sort" width="338" height="599" />
 			<h4>Car Sort</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/16_car_details.png" alt="Car Details" width="338" height="599" />
+			<img src="img/marketing/ios/16_car_details.png" alt="Car Details" width="338" height="599" />
 			<h4>Car Details</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/17_receipt.png" alt="Receipt" width="338" height="599" />
+			<img src="img/marketing/ios/17_receipt.png" alt="Receipt" width="338" height="599" />
 			<h4>Receipt</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_status">
-			<img src="../img/marketing/ios/18_expense.png" alt="Expense" width="338" height="599" />
+			<img src="img/marketing/ios/18_expense.png" alt="Expense" width="338" height="599" />
 			<h4>Expense</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/19_expense_list.png" alt="Expense List" width="338" height="599" />
+			<img src="img/marketing/ios/19_expense_list.png" alt="Expense List" width="338" height="599" />
 			<h4>Expense List</h4>
 			<p>Receipts</p>
 		</div>
 		<div class="filter_menus">
-			<img src="../img/marketing/ios/20_reports.png" alt="Reports" width="338" height="599" />
+			<img src="img/marketing/ios/20_reports.png" alt="Reports" width="338" height="599" />
 			<h4>Reports</h4>
 			<p>Receipts</p>
 		</div>
+
+		 -->
 	</div>
 </section>
 </div>
-
-<script>
-jQuery(document).ready(function($) {
-	// initialize Isotope after all images have loaded
-	var $container = $('#isotope').imagesLoaded( function() {
-	  $container.isotope({
-	    // options
-	  });
-	});
-
-
-    // filter items on button click
-    $('#filters').on( 'click', 'li', function() {
-	      
-	    alert('hello');  
-	      
-        var filterValue = $(this).attr('data-filter');
-
-        if (filterValue == "all") { 
-        		filterValue = "*";
-        }
-        else {
-        	filterValue = "." + filterValue;
-        }
-        $container.isotope({ filter: filterValue });
-    
-    });
-});
-</script>

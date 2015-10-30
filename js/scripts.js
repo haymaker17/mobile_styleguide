@@ -34,17 +34,34 @@ $(function() {
       currentHash.parent("li").addClass('active');
 
    }
-   
+
+
+
 
 }); /* end document.ready ------------ */
 
 
 //run when partials are loaded
-function routeChangeScripts(inRoute) {
+angular.module('mobileStyleguide').controller('routeController', ['$scope', function ($scope) {
 
-  //sr.init();
+  $scope.load = function() {
+  // do your $() stuff here
+  
+      $(".filterOptions li").on('click', function(){
+        $(this).siblings('li').removeClass('active');
+        $(this).addClass('active');
+      });
 
-}
+  };
+
+  //don't forget to call the load function
+  $scope.load();
+}]);
+
+
+
+
+
 
 
 
@@ -259,3 +276,5 @@ function fixHeader() {
    $('body').toggleClass("fixedHeader", (fromTop > 60));
    
 }
+
+

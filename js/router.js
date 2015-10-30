@@ -13,7 +13,8 @@ app.config(function($routeProvider) {
         .when('/pages/:name*', {
         	templateUrl: function(urlattr){
         		return 'pages/' + urlattr.name + '.html';
-        	}
+        	},
+            controller: 'routeController'
         })
         .otherwise({
         	redirectTo: 'pages/introduction.html'
@@ -22,10 +23,10 @@ app.config(function($routeProvider) {
 });
 
 
-app.run(function($rootScope, $location){
-$rootScope.$on('$routeChangeStart', function(event, route){
-    routeChangeScripts(route);
-  });
-});
+// app.run(function($rootScope, $location){
+// $rootScope.$on('$routeChangeStart', function(event, route){
+//     routeChangeScripts(route);
+//   });
+// });
 
 

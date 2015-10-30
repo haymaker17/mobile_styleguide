@@ -1517,6 +1517,7 @@ a.icon span {
 	box-shadow: inset 0 0 5px 2px rgba(0,0,0,.1);
 }
 
+
 .filterItemsContainer, ul.screens {
 	color: #858585;
 	font-size: .8rem;		
@@ -1564,14 +1565,22 @@ a.icon span {
 }
 
 
-#isotope > div {
+.filterItemsContainer > div {
 	width: 23%;
 	display: inline-block;
 	margin-right: 1%;
 	margin-bottom: 20px;
 }
 
-
+.animate-enter {
+	-webkit-transition: 1s linear all; /* Chrome */
+	transition: 1s linear all;
+	opacity: 0;
+}
+ 
+.animate-enter.animate-enter-active {
+	opacity: 1;
+}
 
 
 
