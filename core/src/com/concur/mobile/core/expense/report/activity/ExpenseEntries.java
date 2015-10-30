@@ -196,6 +196,9 @@ public class
     // A reference to an outstanding request.
     private ReportEntryFormRequest entryFormRequest;
 
+    // A reference to the Travel Allowance Start Intent
+    private Intent taStartIntent = null;
+
     /**
      * Indicates if the tips overlay is currently showing.
      */
@@ -354,6 +357,18 @@ public class
         View button = findViewById(R.id.header_itinerary);
         View layoutWoSubtitle = findViewById(R.id.layout_wo_subtitle);
         View layoutWithSubtitle = findViewById(R.id.layout_with_subtitle);
+
+        taStartIntent = new Intent(ExpenseEntries.this, taStartActivity);
+        taStartIntent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
+        taStartIntent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
+        taStartIntent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
+        taStartIntent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
+        taStartIntent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
+        taStartIntent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
+        if (AssignableItineraryListActivity.class.equals(taStartActivity)) {
+            taStartIntent.putExtra(BundleId.IS_FIRST_TA_ACTIVITY, true);
+        }
+
         if (button == null) {
             return;
         }
@@ -373,17 +388,7 @@ public class
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExpenseEntries.this, taStartActivity);
-                intent.putExtra(BundleId.EXPENSE_REPORT_KEY, expRep.reportKey);
-                intent.putExtra(BundleId.EXPENSE_REPORT_NAME, expRep.reportName);
-                intent.putExtra(BundleId.EXPENSE_REPORT_IS_SUBMITTED, expRep.isSubmitted());
-                intent.putExtra(BundleId.EXPENSE_REPORT_DATE, expRep.reportDateCalendar.getTime());
-                intent.putExtra(BundleId.IS_EDIT_MODE, isEditMode);
-                intent.putExtra(BundleId.IS_IN_APPROVAL, isInApproval);
-                if (AssignableItineraryListActivity.class.equals(taStartActivity)) {
-                    intent.putExtra(BundleId.IS_FIRST_TA_ACTIVITY, true);
-                }
-                ExpenseEntries.this.startActivityForResult(intent, REQUEST_VIEW_TA_ITINERARY);
+                ExpenseEntries.this.startActivityForResult(taStartIntent, REQUEST_VIEW_TA_ITINERARY);
             }
         });
     }
@@ -1300,6 +1305,10 @@ public class
             } else {
                 showDialog(Const.DIALOG_NO_CONNECTIVITY);
             }
+        } else if (itemId == R.id.add_itinerary) {
+            if (taStartIntent != null) {
+                startActivityForResult(taStartIntent, REQUEST_VIEW_TA_ITINERARY);
+            }
         }
         return retVal;
     }
@@ -1311,6 +1320,9 @@ public class
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        if (this.taStartIntent == null) {
+            menu.removeItem(R.id.add_itinerary);
+        }
         menu.removeItem(R.id.capture_receipt_picture);
         menu.removeItem(R.id.select_picture);
         return super.onPrepareOptionsMenu(menu);

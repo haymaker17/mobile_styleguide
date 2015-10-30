@@ -75,7 +75,7 @@ public class TravelAllowanceFacade extends Fragment {
     private boolean taUpdateSucceeded = false;
 
     private boolean isTaSwitchedOn = false;
-    
+
     private List<ExpenseReportFormField> expenseDetailsTAFormFields;
 
     private IRequestListener itinRefreshListener = new IRequestListener() {
