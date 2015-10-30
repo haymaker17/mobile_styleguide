@@ -25,7 +25,7 @@
             android:layout_marginLeft="@dimen/exp_list_header_row_icon_margin"
             android:layout_marginRight="@dimen/exp_list_header_row_icon_margin"
             android:src="@drawable/icon_travel_allowance_grey"
-            />
+            android:layout_gravity="center_vertical"/>
 
         <TextView
             android:id="@+id/tv_title"
