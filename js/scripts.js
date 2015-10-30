@@ -41,12 +41,13 @@ $(function() {
 }); /* end document.ready ------------ */
 
 
+
 //run when partials are loaded
 angular.module('mobileStyleguide').controller('routeController', ['$scope', function ($scope) {
-
   $scope.load = function() {
   // do your $() stuff here
-  
+
+      //give the active tab the class 'active'
       $(".filterOptions li").on('click', function(){
         $(this).siblings('li').removeClass('active');
         $(this).addClass('active');
