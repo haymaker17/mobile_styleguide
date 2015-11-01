@@ -4,6 +4,7 @@ var app = angular.module('mobileStyleguide', [
 ]);
 
 //when you click on the nav, load the partials into the ng-view
+//also added a controller so we can run code when the partials are loaded. See the scripts.js file for that funciton.
 app.config(function($routeProvider) {
 	//set routes
     $routeProvider
@@ -13,19 +14,11 @@ app.config(function($routeProvider) {
         .when('/pages/:name*', {
         	templateUrl: function(urlattr){
         		return 'pages/' + urlattr.name + '.html';
-        	}
+        	},
+            controller: 'routeController'
         })
         .otherwise({
         	redirectTo: 'pages/introduction.html'
       	});
         
 });
-
-
-app.run(function($rootScope, $location){
-$rootScope.$on('$routeChangeStart', function(event, route){
-    routeChangeScripts(route);
-  });
-});
-
-

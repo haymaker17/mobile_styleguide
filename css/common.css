@@ -866,6 +866,10 @@ ul.nav {
 	background: #2D6A95;
 }
 
+.endeavour_blue {
+	background: #0066AA;
+}
+
 .concur_blue {
 	background: #0078C8;
 }
@@ -1469,9 +1473,8 @@ a.icon span {
 
 /* Filter List ------------ */
 
-
-
 .filterOptions {
+	margin-bottom: 30px;
 	overflow: hidden;
 	padding: 0;
 	width: 100%;
@@ -1489,7 +1492,7 @@ a.icon span {
 
 .filterOptions li:hover {
 	cursor: pointer;
-	background: rgba(100,100,100,.2);
+	background: rgb(249,249,249);
 }
 
 .filterOptions span {
@@ -1515,20 +1518,22 @@ a.icon span {
 }
 
 .filterItemsContainer, ul.screens {
-	color: #222222;
+	color: #858585;
+	font-size: .8rem;		
 	list-style: none;
 	padding: 0;
 }
 
 .filterItemsContainer h4, ul.screens h4 {
+	color: #383F46;
 	margin: 0;
-	font-size: 1.1rem;
-	font-weight: 200;
+	font-size: .8rem;
+	font-weight: 500;
 	margin-left: 5%;
 }
 
 .filterItemsContainer p, ul.screens p {
-	margin-top: .2rem;
+	margin-top: -0.3rem;
 	margin-left: 5%;
 }
 
@@ -1551,22 +1556,30 @@ a.icon span {
 	width: 90%;
 	height: auto;
 	margin: 0;
-	border: 1px solid #a7b6bf;
+	border: 1px solid #e2e2e2;
 }
 .filterItemsContainer img, ul.screens img {
-	margin-left: 5%;
+/* 	margin-left: 5%; */
 	
 }
 
 
-#isotope > div {
-	width: 24%;
+.filterItemsContainer > div {
+	width: 23%;
 	display: inline-block;
 	margin-right: 1%;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
-
+.animate-enter {
+	-webkit-transition: 1s linear all; /* Chrome */
+	transition: 1s linear all;
+	opacity: 0;
+}
+ 
+.animate-enter.animate-enter-active {
+	opacity: 1;
+}
 
 
 

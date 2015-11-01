@@ -1,0 +1,22 @@
+<div class="container">
+<section>
+<h1>Design Guidelines</h1>
+<p>If there is ever a question about how something works in Concur Mobile, the first place to look is the UI guidelines for the platform itself. As much as possible, we follow the platform-specific design principles provided by the platform owners. </p>
+
+<button ng-click="myFilter = {category: 1}" type="button">Type 1</button>
+<button ng-click="myFilter = {category: 2}" type="button">Type 2</button>
+<button ng-click="myFilter = {category: 3}" type="button">Type 3</button>
+<button ng-click="myFilter = {}" type="button">Clear Filter</button>
+
+<ul ng-controller="MarketingFilter">
+<li ng-repeat="image in images | filter:myFilter">
+	<img src="{{image.url}}" height="50" width="50" />
+	<div>
+		<h4><a href="{{image.link}}">{{image.name}}</a></h4>
+	</div>		
+</li>
+</ul>
+</section>
+
+
+</div>
