@@ -34,5 +34,37 @@ public class GetTAConfigurationRequestTest extends TestCase {
         assertNotNull(resultData);
         TravelAllowanceConfiguration taConfig = (TravelAllowanceConfiguration) resultData.getSerializable(BundleId.TRAVEL_ALLOWANCE_CONFIGURATION);
         assertEquals("TAC100007", taConfig.getConfigCode());
+        assertEquals("Y", taConfig.getDeductForProvidedBreakfast());
+        assertEquals("Y", taConfig.getDeductForProvidedLunch());
+        assertEquals("Y", taConfig.getDeductForProvidedDinner());
+        assertEquals("Y", taConfig.getDefaultBreakfastToProvided());
+        assertEquals("Y", taConfig.getDefaultLunchToProvided());
+        assertEquals("Y", taConfig.getDefaultDinnerToProvided());
+        assertEquals("FIXED", taConfig.getLodgingTat());
+        assertEquals("DE", taConfig.getMealDeductionList());
+        assertEquals("FIXED", taConfig.getMealsTat());
+        assertEquals("Y", taConfig.getSingleRowCheck());
+        assertEquals("7", taConfig.getTacKey());
+        assertTrue(taConfig.isUseBorderCrossTime());
+        assertTrue(taConfig.isUseLodgingType());
+        assertTrue(taConfig.isUseOvernight());
+        assertTrue(taConfig.getDisplayWizard());
+    }
+
+    /**
+     * This method uses a different input file to make sure that all line of coding are used.
+     * It checks only those values of travel allowance configuration, which are different compared
+     * to the first method.
+     */
+    @Test
+    public void travelAllowanceConfigurationParserTest2() {
+        FileRequestTaskWrapper requestWrapper = new FileRequestTaskWrapper(new GetTAConfigurationRequest(null, null));
+        Bundle resultData = requestWrapper.parseFile(TEST_DATA_PATH, "TAConfigRead2.xml");
+        assertNotNull(resultData);
+        TravelAllowanceConfiguration taConfig = (TravelAllowanceConfiguration) resultData.getSerializable(BundleId.TRAVEL_ALLOWANCE_CONFIGURATION);
+        assertFalse(taConfig.isUseBorderCrossTime());
+        assertFalse(taConfig.isUseLodgingType());
+        assertFalse(taConfig.isUseOvernight());
+        assertFalse(taConfig.getDisplayWizard());
     }
 }

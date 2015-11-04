@@ -1,7 +1,5 @@
 package com.concur.mobile.core.expense.travelallowance.service.parser;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.concur.mobile.base.service.parser.BaseParser;
 import com.concur.mobile.core.expense.travelallowance.datamodel.TravelAllowanceConfiguration;
@@ -97,11 +95,12 @@ public class GetTAConfigurationParser extends BaseParser {
                 }
                 break;
             case "displayWizard":
-                if ("NEVER".equals(text)) {
+                if ("NEVR".equals(text)) {
                     newConfiguration.setDisplayWizard(false);
                 } else {
                     newConfiguration.setDisplayWizard(true);
                 }
+                break;
             default:
                 break;
         };
