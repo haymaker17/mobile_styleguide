@@ -12,13 +12,13 @@
                 android:icon="@android:drawable/ic_menu_add"
                 android:title="@string/new_expense"/>
             <item
-                android:id="@+id/add_itinerary"
-                android:icon="@android:drawable/ic_menu_add"
-                android:title="@string/ta_add_new_itin" />
-            <item
                 android:id="@+id/import_expenses"
                 android:icon="@android:drawable/ic_menu_add"
                 android:title="@string/import_expenses"/>
+            <item
+                android:id="@+id/add_itinerary"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="@string/ta_add_new_itin" />
         </menu>
     </item>
     <item

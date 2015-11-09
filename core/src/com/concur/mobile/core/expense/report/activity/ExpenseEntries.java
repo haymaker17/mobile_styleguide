@@ -370,6 +370,8 @@ public class
             taStartIntent.putExtra(BundleId.IS_FIRST_TA_ACTIVITY, true);
         }
 
+        this.invalidateOptionsMenu();
+
         if (button == null) {
             return;
         }
@@ -1328,8 +1330,18 @@ public class
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (this.taStartIntent == null) {
-            menu.removeItem(R.id.add_itinerary);
+        if (taStartIntent == null) {
+            MenuItem menuAdd = menu.findItem(R.id.menuAdd);
+            if (menuAdd != null) {
+                SubMenu subMenu = menuAdd.getSubMenu();
+                if (subMenu != null) {
+                    MenuItem addItinerary = subMenu.findItem(R.id.add_itinerary);
+                    if (addItinerary != null) {
+                        addItinerary.setVisible(false);
+                        addItinerary.setEnabled(false);
+                    }
+                }
+            }
         }
         menu.removeItem(R.id.capture_receipt_picture);
         menu.removeItem(R.id.select_picture);
