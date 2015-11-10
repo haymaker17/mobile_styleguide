@@ -1336,7 +1336,7 @@ a.icon span {
 	background-size: 22px;
 }
 
-.img_block  .icon.arrow::before {
+.img_block .icon.arrow::before {
 	background: url(../img/icons_web/arrow_right.svg) no-repeat;
 }
 
@@ -1407,6 +1407,39 @@ a.icon span {
 }
 
 
+.img_block.medium li {
+	height: 150px;
+	width: 23%;
+	margin: 0 2.6% 20px 0;
+}
+.img_block.medium li:nth-of-type(4n) {
+	margin-right: 0;
+}
+
+.img_block li span {
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	line-height: 1rem;
+	margin-bottom: 5%;
+}
+
+.img_block li div::before,
+.img_block li div::after {
+	pointer-events: none;
+}
+
+.img_block li h4 {
+	word-spacing: -0.15em;
+	font-weight: 200;
+	width: 80%;
+	text-align: left;
+	display: inline-block;
+	float: left;
+}
+
 
 
 
@@ -1474,7 +1507,7 @@ a.icon span {
 /* Filter List ------------ */
 
 .filterOptions {
-	margin-bottom: 30px;
+	margin-bottom: 45px;
 	overflow: hidden;
 	padding: 0;
 	width: 100%;
@@ -1487,12 +1520,12 @@ a.icon span {
 	padding: 10px 0;
 	border: 1px solid #e4e4e4;
 	border-right-width: 0;
-	width: 14%;
+	width: 23.2%;
 }
 
 .filterOptions li:hover {
 	cursor: pointer;
-	background: rgb(249,249,249);
+	text-decoration: underline;
 }
 
 .filterOptions span {
@@ -1514,7 +1547,8 @@ a.icon span {
 
 .filterOptions li.active {
 	background: rgba(228,228,228,.3);
-	box-shadow: inset 0 0 5px 2px rgba(0,0,0,.1);
+	color: #0078C8;
+/* 	box-shadow: inset 0 0 5px 2px rgba(0,0,0,.1); */
 }
 
 .filterItemsContainer, ul.screens {
@@ -1533,7 +1567,8 @@ a.icon span {
 }
 
 .filterItemsContainer p, ul.screens p {
-	margin-top: -0.3rem;
+	margin-top: -0.2rem;
+	margin-bottom: 0.2rem;	
 	margin-left: 5%;
 }
 
