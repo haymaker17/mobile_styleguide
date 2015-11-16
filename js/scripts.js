@@ -49,8 +49,9 @@ angular.module('mobileStyleguide').controller('routeController', ['$scope', func
 
       //give the active tab the class 'active'
       $(".filterOptions li").on('click', function(){
-        $(this).siblings('li').removeClass('active');
-        $(this).addClass('active');
+        var filter = $(this).attr("class");
+        $(".filterOptions").find("li").removeClass('active');
+        $("li."+filter).addClass('active');
       });
 
   };

@@ -267,9 +267,23 @@ p {
 	margin-top: 25px;
 }
 
+#search_icon {
+	display: block;
+	position: absolute;
+}
 
-
-
+#searchbox {
+	display: inline-block;
+	position: relative;
+	left: 30px;	
+	border: 0px solid;
+	outline: 0;
+	width: 92%;	
+}
+input#searchbox.ng-valid.ng-dirty.ng-valid-parse.ng-touched, 
+input#searchbox.ng-untouched.ng-valid.ng-dirty.ng-valid-parse {
+	color: #0078C8;
+}
 
 
 
