@@ -1518,6 +1518,23 @@ a.icon span {
 
 
 
+/* Swipebox ------------ */ 
+
+a.swipebox {
+	display: block;
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
 /* Filter List ------------ */
 
 .filterOptions {
