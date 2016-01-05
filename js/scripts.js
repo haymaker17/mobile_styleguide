@@ -54,6 +54,8 @@ angular.module('mobileStyleguide').controller('routeController', ['$scope', func
         $("li."+filter).addClass('active');
       });
 
+      $( '.swipebox' ).swipebox();
+
   };
 
   //don't forget to call the load function

@@ -26,7 +26,7 @@
 
 	<ul class="img_block medium popup" ng-controller="iOSIconFilter">
 	<li data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate="'animate'">
-		<img src="{{screenshot.url}}" alt="{{screenshot.title}}">
+		<img ng-src="{{screenshot.url}}" alt="{{screenshot.title}}">
 		<div>
 			<h4>{{screenshot.title}}</h4>
 			<a href="{{screenshot.download}}" target="_blank" class="icon-download"></a>

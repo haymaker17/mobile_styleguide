@@ -22,8 +22,8 @@
 	
 	<div class="filterItemsContainer " ng-controller="iOSMarketingFilter">
 
-		<div data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate=" 'animate' ">
-			<img src="{{screenshot.url}}" alt="{{screenshot.title}}" width="338" height="599" />
+		<div data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate="'animate'">
+			<a href="{{screenshot.url}}" class="swipebox" title="{{screenshot.title}}"><img ng-src="{{screenshot.url}}" alt="{{screenshot.title}}" width="338" height="599" /></a>
 <!--
 			<div>
 				<h4>Download</h4>
@@ -89,7 +89,7 @@
 	<div class="filterItemsContainer " ng-controller="AndrioidMarketingFilter">
 
 		<div data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate=" 'animate' ">
-			<img src="{{screenshot.url}}" alt="{{screenshot.title}}" width="338" height="599" />
+			<img ng-src="{{screenshot.url}}" alt="{{screenshot.title}}" width="338" height="599" />
 				<h4>{{screenshot.title}}</h4>
 				<p>{{screenshot.category}}</p>
 		</div>
