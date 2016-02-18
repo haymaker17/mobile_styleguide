@@ -196,6 +196,10 @@ p {
 
 
 
+.flexContainer.half.remove_padding > div:nth-child(odd) {
+	padding-right: 0%;
+}
+
 
 
 
