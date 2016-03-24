@@ -352,7 +352,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/car.svg', 
         	title: 'Car', 
         	download: 'img/icons/pdf/icon_car.pdf',
-          	category: 'Expense Reports Mileage',      	
+          	category: 'Expense Reports Mileage Travel',      	
         	platform: 'iOS Android'        	
         },  
         {
@@ -418,7 +418,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/credit_card.svg', 
         	title: 'Credit Card', 
         	download: 'img/icons/pdf/icon_credit_card.pdf',
-          	category: 'Expense Reports Action',      	
+          	category: 'Expense Reports Action Travel',      	
         	platform: 'iOS Android'       	
         },         
         {
@@ -564,7 +564,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/hotel.svg', 
         	title: 'Hotel', 
         	download: 'img/icons/pdf/icon_hotel.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -615,7 +615,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	title: 'Map Locator', 
         	download: 'img/icons/pdf/icon_map_locator.pdf',
           	category: 'Expense Reports Travel',      	
-        	description: 'Pin Map Location',
+        	description: 'Pin Map Location Travel',
         	platform: 'iOS Android'       	
         },
         {
@@ -644,15 +644,15 @@ app.controller('iOSIconFilter', function ($scope) {
         	title: 'Mic', 
         	download: 'img/icons/pdf/icon_mic.pdf',
           	category: 'Expense Travel Action',
-        	description: 'Microphone',
+        	description: 'Microphone Travel',
         	platform: 'iOS Android'       	
         },
         {
         	url: 'img/icons/mileage.svg', 
         	title: 'Mileage', 
         	download: 'img/icons/pdf/icon_mileage.pdf',
-          	category: 'Expense',      	
-        	platform: 'iOS Android'       	
+          	category: 'Expense Travel',      	
+        	platform: 'iOS Android'
         },
         {
         	url: 'img/icons/more.svg', 
@@ -679,7 +679,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/one_way.svg', 
         	title: 'One Way', 
         	download: 'img/icons/pdf/icon_one_way.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -694,7 +694,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	title: 'Person', 
         	download: 'img/icons/pdf/icon_person.pdf',
           	category: 'Expense Travel',
-        	description: 'Guest',          	      	
+        	description: 'Guest',
         	platform: 'iOS Android'       	
         },
         {
@@ -715,7 +715,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/rail.svg', 
         	title: 'Rail', 
         	download: 'img/icons/pdf/icon_rail.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -753,7 +753,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/round_trip.svg', 
         	title: 'Round Trip', 
         	download: 'img/icons/pdf/icon_round_trip.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -830,7 +830,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/time.svg', 
         	title: 'Time', 
         	download: 'img/icons/pdf/icon_time.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },          
         {
@@ -861,7 +861,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	url: 'img/icons/trip.svg', 
         	title: 'Trip', 
         	download: 'img/icons/pdf/icon_trip.pdf',
-          	category: 'Expense',      	
+          	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },  
         {
