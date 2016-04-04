@@ -1233,7 +1233,7 @@ a.icon span {
 .img_block.medium li {
 	height: 150px;
 	width: 23%;
-		margin: 0 2.6% 20px 0;
+	margin: 0 2.6% 20px 0;
 }
 .img_block.medium li:nth-of-type(4n) {
 	margin-right: 0;
@@ -1526,13 +1526,16 @@ a.icon span {
 	margin-bottom: 1rem;
     line-height: 1.1rem;
 }
-/* seiji */
+
 p.icon_text.ng-binding {
 	position: relative;
-	margin: 56% 0 0 0;	
+	margin: 38% 0 0 0;	
 	color: #A7B6BF;
 }
 
+img.icon_image {
+	bottom: 30px;
+}
 
 
 
@@ -1817,6 +1820,7 @@ and (min-width : 1281px) {
 
 
 
+
 }
 
 
@@ -2048,7 +2052,15 @@ h3 {
 		width: 382px;
 	}
 
+p.icon_text.ng-binding {
+	font-size: small;
+	line-height: 1.3em;
+	margin: 65% 0 0 0;	
+}
 
+img.icon_image {
+	bottom: 25px;
+}
 
 
 
@@ -2084,7 +2096,15 @@ and (max-width : 900px) {
 	width: 100%;
 }
 
+p.icon_text.ng-binding {
+	font-size: small;
+	line-height: 1.3em;
+	margin: 65% 0 0 0;	
+}
 
+img.icon_image {
+	bottom: 25px;
+}
 	
 
 
@@ -2121,6 +2141,18 @@ and (max-width : 768px) {
 		font-size: .7rem;
 /* 		margin-left: 280px;	 */
 	}
+
+	p.icon_text.ng-binding {
+		font-size: small;
+		line-height: 1.3em;
+		margin: 55% 0 0 0;	
+	}
+	
+	img.icon_image {
+		bottom: 30px;
+	}
+
+
 
 }
 
@@ -2222,7 +2254,15 @@ and (max-width : 480px) {
 		padding: 5% 5%;
 	}	
 	
+p.icon_text.ng-binding {
+	font-size: small;
+	line-height: 1.3em;
+	margin: 65% 0 0 0;	
+}
 
+img.icon_image {
+	bottom: 25px;
+}
 		
 }
 

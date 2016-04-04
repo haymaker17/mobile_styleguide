@@ -61,7 +61,7 @@
 	<li data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate="'animate'" bn-line-item>
 	<p class="icon_text">{{screenshot.title}}</p>			
 	
-		<img ng-src="{{screenshot.url}}" alt="{{screenshot.title}}">
+		<img class="icon_image" ng-src="{{screenshot.url}}" alt="{{screenshot.title}}">
 		<div>
 			<h4><a href="{{screenshot.ios_18}}" target="_blank">18pt</a></h4>
 			<a href="{{screenshot.ios_18}}" target="_blank" class="icon-download"></a>
