@@ -4,16 +4,49 @@
 <h1>Mobile Iconography</h1>
 	<div class="three_quarters float_left">
 		<p>A system icon, or UI icon, symbolizes a command, file, device, or directory. System icons are also used to represent common actions like trash, print, and save.</p>
-		<p>The design of system icons is simple, modern, friendly, and sometimes quirky. Each icon is reduced to its minimal form, with every idea edited to its essence. The designs ensure readability and clarity even at small sizes.</p>
+		<p>The design of system icons is simple, modern, friendly, and sometimes quirky. Each icon is reduced to its minimal form, with every idea edited to its essence. The designs ensure readability and clarity even at small sizes.</p>	
 	</div>
 	<div class="quarter float_left"><p><a href="img/icons/concur_icons.zip" class="icon"><img src="img/icons_web/arrow_download.svg" height="25" width="25">Icon Kit<br><span>3.1 MB (.zip)</span></a></p></div>
 </section>
 
+<section>
+<!-- <h2>Waiting to Upload</h2>	 -->
+<h3>Usage</h3>
+	<div class="flexContainer half">
+		<div>
+			<p>
+			Icons are exported to their native OS and each are exported to their appropriate resolution based on usage.  
+			</p>
+			<p>
+			We've standardize the use of our icons to 3 common sizes. 
+			</p>
+			<p>
+				<ul>
+					<li>48pt - Large</li>					
+					<li>36pt - Medium</li>	
+					<li>24pt - Small</li>	
+					<li>18pt - Micro</li>							
+				</ul>
+			</p>	
+				<div class="figure_text">*Currently only supported in iOS</div>					
+		</div>
+<!--
+		<div>
+			<figure class="diagram">
+				<img class="redlines_on" src="img/ios/components/controls/status_flags/redlines_status_flags_01_on.png" alt="Status Flags" width="338" height="599"/>
+				<img class="redlines_off" src="img/ios/components/controls/status_flags/redlines_status_flags_01_off.png" alt="Status Flags" width="338" height="599"/>
+				<div class="figure_text">Redlines with 'Waiting to Upload' Status Flag</div>
+			</figure>
+		</div>
+-->
+	</div>
+</section>
+
 
 <section>	
-	
+<h2>Search</h2>	
 	<img src="img/icons_web/search.svg" height="25" width="25" id="search_icon">
-	<input ng-model="myFilter" placeholder="Search by Icon Name, Category, or Platform" id="searchbox">
+	<input ng-model="myFilter" placeholder="Icon Name, Category, or Platform" id="searchbox">
 
 <!--
 	<ul class="filterOptions">
@@ -24,13 +57,23 @@
 	</ul>
 -->
 
-	<ul class="img_block medium popup" ng-controller="iOSIconFilter">
+	<ul class="img_block medium third" ng-controller="iOSIconFilter">
 	<li data-sr="ease-in, over .5s" ng-repeat="screenshot in screenshots | filter:myFilter" ng-animate="'animate'" bn-line-item>
+	<p class="icon_text">{{screenshot.title}}</p>			
+	
 		<img ng-src="{{screenshot.url}}" alt="{{screenshot.title}}">
 		<div>
-			<h4>{{screenshot.title}}</h4>
-			<a href="{{screenshot.download}}" target="_blank" class="icon-download"></a>
-		</div>			
+			<h4><a href="{{screenshot.ios_18}}" target="_blank">18pt</a></h4>
+			<a href="{{screenshot.ios_18}}" target="_blank" class="icon-download"></a>
+
+			<h4><a href="{{screenshot.ios_24}}" target="_blank">24pt</a></h4>
+			<a href="{{screenshot.ios_24}}" target="_blank" class="icon-download"></a>
+
+			<h4><a href="{{screenshot.ios_36}}" target="_blank">36pt</a></h4>
+			<a href="{{screenshot.ios_36}}" target="_blank" class="icon-download"></a>
+			<h4><a href="{{screenshot.ios_48}}" target="_blank">48pt</a></h4>
+			<a href="{{screenshot.ios_48}}" target="_blank" class="icon-download"></a>
+		</div>
 	</li>
 	</ul>
 
