@@ -1530,13 +1530,13 @@ a.icon span {
 p.icon_text.ng-binding {
 	position: relative;
 	margin: 38% 0 0 0;	
-	color: #A7B6BF;
+	color: #7F8F97;
 }
 
 img.icon_image {
+	width: 20%;
 	bottom: 30px;
 }
-
 
 
 /* Swipebox ------------ */ 

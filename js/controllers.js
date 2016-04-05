@@ -276,14 +276,14 @@ app.controller('iOSIconFilter', function ($scope) {
         	platform: 'iOS'
         },   
         {
-        	url: 'img/icons/add_to_report.svg',
+        	url: 'img/icons/add_to_reports.svg',
         	title: 'Add to Reports',
         	download: 'img/icons/pdf/icon_add_to_report.pdf',
         	ios_18: 'img/icons/black/18/icon_add_to_reports_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_add_to_reports_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_add_to_reports_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_add_to_reports_48pt.zip',     
-          	category: 'Expense',
+          	category: 'Expense Reports Action',
         	platform: 'iOS Android'
         },
         {
@@ -294,41 +294,41 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_allocate_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_allocate_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_allocate_48pt.zip',        	
-          	category: 'Reports Action',
+          	category: 'Expense Reports Action',
         	platform: 'iOS Android'
         },
         {
-        	url: 'img/icons/approvals.svg',
-        	title: 'Approvals',
+        	url: 'img/icons/approval.svg',
+        	title: 'Approval',
         	download: 'img/icons/pdf/icon_approvals.pdf',
         	ios_18: 'img/icons/black/18/icon_approval_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_approval_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_approval_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_approval_48pt.zip',        	
           	category: 'Reports',
-        	description: 'Conformation Check',
+        	description: 'Menu Confirmation Check',
         	platform: 'iOS Android'
         },
         {
-        	url: 'img/icons/down_arrow.svg', 
+        	url: 'img/icons/arrow_down.svg', 
         	title: 'Arrow Down', 
         	download: 'img/icons/pdf/icon_down_arrow.pdf',
          	ios_18: 'img/icons/black/18/icon_arrow_down_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_arrow_down_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_arrow_down_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_arrow_down_48pt.zip',    
-          	category: 'Expense Reports Action',
+          	category: 'Expense Reports Navigation',
         	platform: 'iOS Android'       	
         },
         {
-        	url: 'img/icons/up_arrow.svg', 
+        	url: 'img/icons/arrow_up.svg', 
         	title: 'Arrow Up', 
         	download: 'img/icons/pdf/icon_up_arrow.pdf',
         	ios_18: 'img/icons/black/18/icon_arrow_up_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_arrow_up_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_arrow_up_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_arrow_up_48pt.zip',   
-          	category: 'Expense Reports Action',
+          	category: 'Expense Reports Navigation',
         	platform: 'iOS Android'
         },
         {
@@ -384,30 +384,30 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_badge_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_badge_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_badge_48pt.zip',        	
-          	category: '',
+          	category: 'Menu Alert',
         	platform: 'iOS Android'
         },
         {
         	url: 'img/icons/calendar.svg',
         	title: 'Calendar',
         	download: 'img/icons/pdf/icon_calendar.pdf',
-        	ios_18: 'img/icons/black/18/icon_calender_18pt.zip',        	
-        	ios_24: 'img/icons/black/24/icon_calender_24pt.zip',        	
-        	ios_36: 'img/icons/black/36/icon_calender_36pt.zip',
-        	ios_48: 'img/icons/black/48/icon_calender_48pt.zip',        	
-          	category: 'Expense Reports Travel Date',
+        	ios_18: 'img/icons/black/18/icon_calendar_18pt.zip',        	
+        	ios_24: 'img/icons/black/24/icon_calendar_24pt.zip',        	
+        	ios_36: 'img/icons/black/36/icon_calendar_36pt.zip',
+        	ios_48: 'img/icons/black/48/icon_calendar_48pt.zip',        	
+          	category: 'Expense Reports Travel Milege Date',
         	platform: 'iOS Android'
         },
         {
-        	url: 'img/icons/capture.svg',
-        	title: 'Capture',
+        	url: 'img/icons/camera.svg',
+        	title: 'Camera',
         	download: 'img/icons/pdf/icon_capture.pdf',
         	ios_18: 'img/icons/black/18/icon_camera_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_camera_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_camera_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_camera_48pt.zip',
           	category: 'Expense Action',
-	       	description: 'Camera',
+	       	description: 'Capture',
         	platform: 'iOS Android',
         },        
         {
@@ -419,7 +419,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_cancel_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_cancel_48pt.zip',        	
           	category: 'Onboarding Expense Reports Action',
-        	description: 'Stop',          	
+        	description: 'Camera Stop',          	
         	platform: 'iOS'
         },
         {
@@ -430,7 +430,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_car_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_car_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_car_48pt.zip',
-          	category: 'Expense Reports Mileage Travel',      	
+          	category: 'Expense Reports Travel Mileage',      	
         	platform: 'iOS Android'        	
         },  
         {
@@ -441,10 +441,9 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_change_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_change_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_change_48pt.zip',
-          	category: '',      	
+          	category: 'Travel',      	
         	platform: 'iOS Android'
         },  
-/*
         {
         	url: 'img/icons/clear.svg', 
         	title: 'Clear', 
@@ -456,8 +455,7 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Reports Action',
         	description: 'Clear Favorites',
         	platform: 'iOS Android'
-        },
-*/    
+        },    
         {
         	url: 'img/icons/close.svg', 
         	title: 'Close', 
@@ -467,7 +465,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_close_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_close_48pt.zip',
           	category: 'Reports Action',
-        	description: 'Clear Favorites',
+        	description: 'Dismiss',
         	platform: 'iOS Android'
         },         
         {
@@ -479,7 +477,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_cloud_analyzing_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_cloud_analyzing_48pt.zip',
           	category: 'Expense',
-        	description: 'Upload Waiting',          	
+        	description: 'Upload Waiting Alert',          	
         	platform: 'iOS Android'
         },
         {
@@ -491,7 +489,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_cloud_waiting_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_cloud_waiting_48pt.zip',
           	category: 'Expense',
-        	description: 'Upload',
+        	description: 'Upload Waiting Alert',
         	platform: 'iOS Android'
         },
         {
@@ -538,7 +536,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Branding',      	
         	platform: 'iOS Android'
         },         
-/*
         {
         	url: 'img/icons/cost_center.svg', 
         	title: 'Cost Center', 
@@ -547,13 +544,12 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_cost_center_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_cost_center_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_cost_center_48pt.zip',
-          	category: 'Expense Reports Action Travel',      	
+          	category: 'Expense Reports',      	
         	platform: 'iOS Android'       	
         },
-*/
         {
-        	url: 'img/icons/credit_card.svg', 
-        	title: 'Credit Card', 
+        	url: 'img/icons/credit_charge.svg', 
+        	title: 'Credit Charge', 
         	download: 'img/icons/pdf/icon_credit_card.pdf',
         	ios_18: 'img/icons/black/18/icon_credit_charge_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_credit_charge_24pt.zip',        	
@@ -563,25 +559,25 @@ app.controller('iOSIconFilter', function ($scope) {
         	platform: 'iOS Android'       	
         },         
         {
-        	url: 'img/icons/android_current_location.svg', 
+        	url: 'img/icons/current_location_android.svg', 
         	title: 'Current Location', 
         	download: 'img/icons/pdf/icon_android_current_location.pdf',
         	ios_18: 'img/icons/black/18/icon_current_location_android_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_current_location_android_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_current_location_android_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_current_location_android_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'Android'       	
         },         
 		{
-        	url: 'img/icons/ios_current_location.svg', 
+        	url: 'img/icons/current_location_ios.svg', 
         	title: 'Current Location', 
         	download: 'img/icons/pdf/ios_current_location.pdf',
         	ios_18: 'img/icons/black/18/icon_current_location_ios_18pt.zip',        	
         	ios_24: 'img/icons/black/24/icon_current_location_ios_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_current_location_ios_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_current_location_ios_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'iOS'       	
         },	
         {
@@ -595,7 +591,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Reports Action',
         	platform: 'iOS Android'       	
         },   
-/*
         {
         	url: 'img/icons/dimension.svg', 
         	title: 'Dimension', 
@@ -607,7 +602,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense',
         	platform: 'iOS Android'       	
         },  
-*/
         {
         	url: 'img/icons/directions.svg', 
         	title: 'Directions', 
@@ -619,7 +613,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense',
         	platform: 'iOS Android'       	
         },         
-/*
         {
         	url: 'img/icons/distance.svg', 
         	title: 'Distance', 
@@ -631,20 +624,7 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Action',
         	description: 'Mileage',          	
         	platform: 'iOS Android'   	
-        },      
-*/  
-        {
-        	url: 'img/icons/edge_detection.svg', 
-        	title: 'Edge Detection', 
-        	download: 'img/icons/pdf/icon_edge_detection.pdf',
-        	ios_18: 'img/icons/black/18/icon_edge_detection_18pt.zip',        	
-        	ios_24: 'img/icons/black/24/icon_edge_detection_24pt.zip',        	
-        	ios_36: 'img/icons/black/36/icon_edge_detection_36pt.zip',
-        	ios_48: 'img/icons/black/48/icon_edge_detection_48pt.zip',
-           	description: 'Camera',        	
-          	category: 'Expense Reports Action',      	
-        	platform: 'iOS'       	
-        },        
+        },             
         {
         	url: 'img/icons/edge_detection_disabled.svg', 
         	title: 'Edge Detection Disabled', 
@@ -654,9 +634,21 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_edge_detection_disabled_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_edge_detection_disabled_48pt.zip',
         	description: 'Camera',        	
-          	category: 'Expense Reports Action',      	
+          	category: 'Expense Reports Action Camera',      	
         	platform: 'iOS'       	
-        },          
+        },
+        {
+        	url: 'img/icons/edge_detection_enabled.svg', 
+        	title: 'Edge Detection Enabled', 
+        	download: 'img/icons/pdf/icon_edge_detection.pdf',
+        	ios_18: 'img/icons/black/18/icon_edge_detection_enabled_18pt.zip',        	
+        	ios_24: 'img/icons/black/24/icon_edge_detection_enabled_24pt.zip',        	
+        	ios_36: 'img/icons/black/36/icon_edge_detection_enabled_36pt.zip',
+        	ios_48: 'img/icons/black/48/icon_edge_detection_enabled_48pt.zip',
+           	description: 'Camera Enabled',        	
+          	category: 'Expense Reports Action Camera',      	
+        	platform: 'iOS'       	
+        },                     
         {
         	url: 'img/icons/edit.svg', 
         	title: 'Edit', 
@@ -669,7 +661,6 @@ app.controller('iOSIconFilter', function ($scope) {
         	description: 'Manual Edit',          	
         	platform: 'iOS Android'   	
         },              
-/*
         {
         	url: 'img/icons/error.svg', 
         	title: 'Error', 
@@ -678,31 +669,19 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_error_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_error_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_error_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Report Travel Mileage Alert',      	
         	platform: 'iOS Android'       	
-        }, 
-*/ 
+        },               
         {
-        	url: 'img/icons/emergency.svg', 
-        	title: 'Help', 
-        	download: 'img/icons/pdf/icon_emergency.pdf',
-        	ios_18: 'img/icons/black/18/icon_help.zip',
-        	ios_24: 'img/icons/black/24/icon_help.zip',        	
-        	ios_36: 'img/icons/black/36/icon_help.zip',
-        	ios_48: 'img/icons/black/48/icon_help.zip',
-          	category: 'Expense',      	
-        	platform: 'iOS Android'       	
-        },                
-        {
-        	url: 'img/icons/expenses.svg', 
-        	title: 'Expenses', 
+        	url: 'img/icons/expense.svg', 
+        	title: 'Expense', 
         	download: 'img/icons/pdf/icon_expenses.pdf',
         	ios_18: 'img/icons/black/18/icon_expense_18pt.zip',
         	ios_24: 'img/icons/black/24/icon_expense_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_expense_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_expense_48pt.zip',
         	description: 'Amount',
-          	category: 'Expense Action',      	
+          	category: 'Expense Report Action',      	
         	platform: 'iOS Android'       	
         },         
         {
@@ -734,21 +713,19 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_18: 'img/icons/black/18/icon_flash_disabled_18pt.zip',
         	ios_24: 'img/icons/black/24/icon_flash_disabled_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_flash_disabled_36pt.zip',
-        	ios_48: 'img/icons/black/48/icon_flash_disabled_48pt.zip',
-        	description: 'Camera',        	
-          	category: 'Expense Reports Action',      	
+        	ios_48: 'img/icons/black/48/icon_flash_disabled_48pt.zip',       	
+          	category: 'Expense Reports Action Camera',      	
         	platform: 'iOS'         	
         }, 
         {
-        	url: 'img/icons/flash.svg', 
+        	url: 'img/icons/flash_enabled.svg', 
         	title: 'Flash Enabled', 
         	download: 'img/icons/pdf/icon_flash.pdf',
         	ios_18: 'img/icons/black/18/icon_flash_enabled_18pt.zip',
         	ios_24: 'img/icons/black/24/icon_flash_enabled_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_flash_enabled_36pt.zip',
-        	ios_48: 'img/icons/black/48/icon_flash_enabled_48pt.zip',
-        	description: 'Camera',        	
-          	category: 'Expense Reports Action',      	
+        	ios_48: 'img/icons/black/48/icon_flash_enabled_48pt.zip',  	
+          	category: 'Expense Reports Action Camera',      	
         	platform: 'iOS'       	
         },                 
 
@@ -760,7 +737,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_flight_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_flight_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_flight_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Travel',      	
         	platform: 'iOS Android'       	
         },         
         {
@@ -784,7 +761,19 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_48: 'img/icons/black/48/icon_gallery_48pt.zip',
           	category: 'Expense',      	
         	platform: 'iOS Android'       	
-        },         
+        },
+        {
+        	url: 'img/icons/guest.svg', 
+        	title: 'Guest', 
+        	download: 'img/icons/pdf/icon_person.pdf',
+        	ios_18: 'img/icons/black/18/icon_guest_18pt.zip',
+        	ios_24: 'img/icons/black/24/icon_guest_24pt.zip',        	
+        	ios_36: 'img/icons/black/36/icon_guest_36pt.zip',
+        	ios_48: 'img/icons/black/48/icon_guest_48pt.zip',
+          	category: 'Expense Travel',
+        	description: 'Person',
+        	platform: 'iOS Android'       	
+        },
         {
         	url: 'img/icons/help.svg', 
         	title: 'Help', 
@@ -796,7 +785,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense',      	
         	platform: 'iOS Android'       	
         },
-/*
         {
         	url: 'img/icons/history.svg', 
         	title: 'History', 
@@ -808,7 +796,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense',      	
         	platform: 'iOS Android'       	
         },
-*/
         {
         	url: 'img/icons/home.svg', 
         	title: 'Home', 
@@ -831,7 +818,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
-/*
         {
         	url: 'img/icons/ic.svg', 
         	title: 'IC', 
@@ -840,10 +826,10 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_ic_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_ic_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_ic_48pt.zip',
+        	description: 'Japan',      
           	category: 'Expense Travel Rail',      	
         	platform: 'iOS'       	
         },
-*/
         {
         	url: 'img/icons/info.svg', 
         	title: 'Info', 
@@ -852,7 +838,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_info_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_info_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_info_48pt.zip',
-          	category: 'Expense',      	
+          	category: 'Expense Reports Travel Mileage Action',      	
         	platform: 'iOS'       	
         },
         {
@@ -919,7 +905,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_map_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_map_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_map_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -930,7 +916,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_map_locator_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_map_locator_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_map_locator_48pt.zip',
-          	category: 'Expense Reports Travel',      	
+          	category: 'Expense Reports Travel Mileage',      	
         	description: 'Pin Map Location Travel',
         	platform: 'iOS Android'       	
         },
@@ -953,11 +939,11 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_menu_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_menu_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_menu_48pt.zip',        	
-          	category: 'Expense',      	
+          	category: 'Menu Expense',      	
         	platform: 'iOS Android'       	
         },
         {
-        	url: 'img/icons/mic.svg', 
+        	url: 'img/icons/microphone.svg', 
         	title: 'Microphone', 
         	download: 'img/icons/pdf/icon_mic.pdf',
         	ios_18: 'img/icons/black/18/icon_microphone_18pt.zip',
@@ -976,10 +962,9 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_mileage_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_mileage_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_mileage_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'iOS Android'
         },
-/*
         {
         	url: 'img/icons/more_android.svg', 
         	title: 'More - Android', 
@@ -989,11 +974,10 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_36: 'img/icons/black/36/icon_more_android_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_more_android_48pt.zip',
           	category: 'Reports Navigation',      	
-        	platform: 'iOS'       	
+        	platform: 'Android'       	
         },
-*/
         {
-        	url: 'img/icons/more.svg', 
+        	url: 'img/icons/more_ios.svg', 
         	title: 'More - iOS', 
         	download: 'img/icons/pdf/icon_more.pdf',
         	ios_18: 'img/icons/black/18/icon_more_ios_18pt.zip',
@@ -1011,10 +995,9 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_notifications_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_notifications_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_notifications_48pt.zip',
-          	category: 'Expense',      	
+          	category: 'Expense Alert',      	
         	platform: 'iOS Android'       	
         },
-/*
         {
         	url: 'img/icons/odemeter_end.svg', 
         	title: 'Oodemeter End', 
@@ -1025,9 +1008,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_48: 'img/icons/black/48/icon_odemeter_end_48pt.zip',
           	category: 'Expense Travel Mileage',      	
         	platform: 'iOS Android'       	
-        },
-*/        
-
+        },        
         {
         	url: 'img/icons/office.svg', 
         	title: 'Office', 
@@ -1036,7 +1017,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_office_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_office_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_office_48pt.zip',
-          	category: 'Expense Travel',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -1062,18 +1043,6 @@ app.controller('iOSIconFilter', function ($scope) {
         	platform: 'iOS Android'       	
         },
         {
-        	url: 'img/icons/person.svg', 
-        	title: 'Person', 
-        	download: 'img/icons/pdf/icon_person.pdf',
-        	ios_18: 'img/icons/black/18/icon_person_18pt.zip',
-        	ios_24: 'img/icons/black/24/icon_person_24pt.zip',        	
-        	ios_36: 'img/icons/black/36/icon_person_36pt.zip',
-        	ios_48: 'img/icons/black/48/icon_person_48pt.zip',
-          	category: 'Expense Travel',
-        	description: 'Guest',
-        	platform: 'iOS Android'       	
-        },
-        {
         	url: 'img/icons/phone.svg', 
         	title: 'Phone', 
         	download: 'img/icons/pdf/icon_phone.pdf',
@@ -1095,7 +1064,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Action',
         	platform: 'iOS Android'       	
         },
-/*
         {
         	url: 'img/icons/question.svg', 
         	title: 'Question', 
@@ -1106,8 +1074,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_48: 'img/icons/black/48/icon_question_48pt.zip',
           	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
-        }, 
-*/       
+        },        
         {
         	url: 'img/icons/rail.svg', 
         	title: 'Rail', 
@@ -1151,7 +1118,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_receipt_remove_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_receipt_remove_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_receipt_remove_48pt.zip',
-          	category: 'Expense Action',      	
+          	category: 'Expense Reports Action',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -1252,7 +1219,7 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_social_share_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_social_share_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_social_share_48pt.zip',
-          	category: 'Expense',      	
+          	category: 'Expense Travel Mileage',      	
         	platform: 'iOS Android'       	
         },
         {
@@ -1277,7 +1244,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
-/*
         {
         	url: 'img/icons/star_stroke.svg', 
         	title: 'Star Stroke', 
@@ -1289,7 +1255,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },
-*/
         {
         	url: 'img/icons/submit.svg',
         	title: 'Submit',
@@ -1336,7 +1301,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Travel',      	
         	platform: 'iOS Android'       	
         },          
-/*
         {
         	url: 'img/icons/total_distance.svg', 
         	title: 'Total Distance', 
@@ -1348,7 +1312,6 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense Travel Mileage',
         	platform: 'iOS Android'  	
         },
-*/
         {
         	url: 'img/icons/touch.svg', 
         	title: 'Touch', 
@@ -1392,10 +1355,9 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_upload_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_upload_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_upload_48pt.zip',
-          	category: 'Expense',
+          	category: 'Expense Camera',
         	platform: 'iOS Android'
         },
-/*
         {
         	url: 'img/icons/upload_error.svg', 
         	title: 'Upload Error', 
@@ -1404,10 +1366,9 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_upload_error_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_upload_error_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_upload_error_48pt.zip',
-          	category: 'Expense',
+          	category: 'Expense Alert',
         	platform: 'iOS Android'
         },
-*/
         {
         	url: 'img/icons/user.svg', 
         	title: 'User', 
@@ -1449,11 +1410,10 @@ app.controller('iOSIconFilter', function ($scope) {
         	ios_24: 'img/icons/black/24/icon_warning_24pt.zip',        	
         	ios_36: 'img/icons/black/36/icon_warning_36pt.zip',
         	ios_48: 'img/icons/black/48/icon_warning_48pt.zip',
-          	category: 'Expense Reports Travel',      	
+          	category: 'Expense Reports Travel Alert',      	
         	description: 'Violation',
         	platform: 'iOS Android'
-        }
-/*
+        },
         {
         	url: 'img/icons/wifi.svg', 
         	title: 'Wifi', 
@@ -1465,6 +1425,5 @@ app.controller('iOSIconFilter', function ($scope) {
           	category: 'Expense',      	
         	platform: 'iOS Android'       	
         }
-*/
     ];
 });

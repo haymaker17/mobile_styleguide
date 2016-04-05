@@ -1,48 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-350 644 48 48" style="enable-background:new -350 644 48 48;" xml:space="preserve">
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xml:space="preserve">
 <style type="text/css">
-	.st0{display:none;}
-	.st1{display:inline;fill:#E6E7E8;}
-	.st2{display:inline;}
-	.st3{fill:none;stroke:#544841;stroke-width:8.061200e-02;stroke-miterlimit:10;}
-	.st4{fill:#A7B6BF;}
+	.st0{fill-rule:evenodd;clip-rule:evenodd;}
 </style>
-<g id="bg" class="st0">
-	<path class="st1" d="M-1360.6,2624h-30.8c-4.7,0-8.6-3.9-8.6-8.6v-30.8c0-4.7,3.9-8.6,8.6-8.6h30.8c4.7,0,8.6,3.9,8.6,8.6v30.8
-		C-1352,2620.1-1355.9,2624-1360.6,2624z"/>
-</g>
-<g id="lines" class="st0">
-	<g class="st2">
-		<line class="st3" x1="-1376.1" y1="2576.2" x2="-1376.1" y2="2623.8"/>
-		<line class="st3" x1="-1384.9" y1="2576.2" x2="-1384.9" y2="2623.8"/>
-		<line class="st3" x1="-1367.1" y1="2576.2" x2="-1367.1" y2="2623.8"/>
-		<line class="st3" x1="-1355.3" y1="2576.2" x2="-1355.3" y2="2623.8"/>
-		<line class="st3" x1="-1396.8" y1="2576.2" x2="-1396.8" y2="2623.8"/>
-		<line class="st3" x1="-1399.9" y1="2600" x2="-1352.1" y2="2600"/>
-		<line class="st3" x1="-1399.9" y1="2591.2" x2="-1352.1" y2="2591.2"/>
-		<line class="st3" x1="-1399.9" y1="2608.8" x2="-1352.1" y2="2608.8"/>
-		<line class="st3" x1="-1399.9" y1="2620.8" x2="-1352.1" y2="2620.8"/>
-		<line class="st3" x1="-1399.9" y1="2579.2" x2="-1352.1" y2="2579.2"/>
-		<line class="st3" x1="-1399.9" y1="2576.2" x2="-1352.1" y2="2623.8"/>
-		<line class="st3" x1="-1399.9" y1="2623.8" x2="-1352.1" y2="2576.2"/>
-		<circle class="st3" cx="-1376.1" cy="2600" r="12.5"/>
-		<circle class="st3" cx="-1376.1" cy="2600" r="20.7"/>
-		<g id="_x31_20px_icon_102_">
-			<path id="Rectangle_7_102_" class="st3" d="M-1385.1,2623.8c-5.4,0-8.5,0-11.6-3.1c-3.1-3.1-3.1-6.2-3.1-11.6V2591
-				c0-5.4,0-8.5,3.1-11.7c3.1-3.1,6.2-3.1,11.6-3.1h18.2c5.4,0,8.5,0,11.6,3.1c3.1,3.1,3.1,6.2,3.1,11.6v18.2c0,5.4,0,8.5-3.1,11.6
-				c-3,3.2-6.2,3.2-11.6,3.2L-1385.1,2623.8L-1385.1,2623.8z"/>
-		</g>
-		<path class="st3" d="M-1376.1,2585.2"/>
-		<circle class="st3" cx="-1376.1" cy="2600" r="8.8"/>
-		<path class="st3" d="M-1369.4,2601.2c0.1-0.4,0.1-0.7,0.1-1.1c0-0.4,0-0.8-0.1-1.1c-0.5-2.8-2.7-5.1-5.6-5.6
-			c-0.4-0.1-0.8-0.1-1.1-0.1c-0.4,0-0.8,0-1.1,0.1c-2.9,0.5-5.1,2.7-5.6,5.6c-0.1,0.4-0.1,0.7-0.1,1.1c0,0.4,0,0.8,0.1,1.1
-			c0.5,2.9,2.7,5.1,5.6,5.6c0.4,0.1,0.7,0.1,1.1,0.1s0.8,0,1.1-0.1C-1372.1,2606.2-1369.9,2603.9-1369.4,2601.2z"/>
-	</g>
-</g>
-<path id="receipt_x5F_add" class="st4" d="M-338.9,657.5v15.4h15v-15.4H-338.9z M-337,662.5h5.8v1.4h-5.8V662.5z M-331.3,669.4h-5.8
-	V668h5.8V669.4z M-326.4,666.6H-337v-1.4h10.7L-326.4,666.6L-326.4,666.6z M-326.4,661H-337v-1.4h10.7L-326.4,661L-326.4,661z
-	 M-324,673.6v4.9l0,0l-2.2-2.6l-2.2,2.6h-0.8l-2.2-2.6l-2.2,2.6h-0.7l-2.3-2.6l-2.3,2.6l0,0v-4.9H-324z M-318.8,658.2h1.9v3.1v0.5
-	v0.3h3.8v1.9h-3.8v3.8h-1.9V664h-0.3h-0.5h-3.2v-2h3.2h0.5h0.3v-0.3v-0.5V658.2z"/>
+<path id="receipt_x5F_add_2_" class="st0" d="M4,8v24h24V8H4z M7,15h10v2H7V15z M17,25H7v-2h10V25z M24,21H7v-2h17V21z M24,13H7v-2
+	h17V13z M28,34v7h-1l-3-4l-3,4h-2l-3-4l-3,4h-2l-3-4l-3,4H4v-7H28z"/>
+<polygon class="st0" points="36,8 39,8 39,13 44,13 44,16 39,16 39,21 36,21 36,16 31,16 31,13 36,13 "/>
 </svg>
